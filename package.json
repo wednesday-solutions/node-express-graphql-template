@@ -1,0 +1,117 @@
+{
+    "name": "node",
+    "version": "1.0.0",
+    "description": "",
+    "main": "index.js",
+    "repository": {
+        "type": "git",
+        "url": "git+https://github.com/wednesday-solutions/node-js-hapi-template.git"
+    },
+    "author": "Wednesday Solutions",
+    "license": "MIT",
+    "bugs": {
+        "url": "https://github.com/wednesday-solutions/node-js-hapi-template/issues"
+    },
+    "homepage": "https://github.com/wednesday-solutions/node-js-hapi-template#readme",
+    "dependencies": {
+        "esm": "^3.2.25",
+        "@hapi/boom": "^7.4.9",
+        "@hapi/hapi": "^18.4.0",
+        "@hapi/joi": "^15.1.1",
+        "loadash": "^1.0.0",
+        "hapi-cors": "^1.0.3",
+        "hapi-rate-limit": "^4.1.0",
+        "map-keys-deep": "0.0.2",
+        "qs": "^6.9.1",
+        "semver": "^6.3.0",
+        "wurst": "^4.1.1",
+        "uuid": "^3.3.3",
+        "moment": "^2.24.0",
+        "sequelize": "^5.21.2",
+        "mysql2": "^1.7.0",
+        "hapi-swaggerui": "https://github.com/wednesday-solutions/hapi-swaggerui#master",
+        "@hapi/inert": "5.2.2",
+        "@hapi/vision": "^5.5.4",
+        "hapi-pagination": "^3.0.0",
+        "lodash": "^4.17.15",
+        "@hapi/catbox-redis": "^5.0.5"
+    },
+    "scripts": {
+        "start": "pm2 start ecosystem.config.js --env development",
+        "format": "prettier-standard './**/**/*.js'",
+        "lint": "npm run lint:js",
+        "lint:eslint": "eslint --ignore-path .gitignore --ignore-pattern internals/scripts",
+        "lint:eslint:fix": "eslint --ignore-path .gitignore --ignore-pattern internals/scripts --fix",
+        "lint:js": "npm run lint:eslint -- . ",
+        "lint:staged": "lint-staged",
+        "prettify": "prettier --write",
+        "precommit": "lint:staged",
+        "postinstall": "link-module-alias",
+        "preinstall": "command -v link-module-alias && link-module-alias clean || true",
+        "test": "jest --coverage"
+    },
+    "devDependencies": {
+        "@babel/cli": "^7.6.4",
+        "@babel/core": "^7.6.4",
+        "@babel/node": "^7.6.3",
+        "@babel/plugin-transform-runtime": "^7.6.2",
+        "@babel/preset-env": "^7.6.3",
+        "@babel/preset-react": "^7.6.3",
+        "@babel/register": "^7.6.2",
+        "@babel/runtime": "^7.6.3",
+        "babel-cli": "^6.26.0",
+        "babel-core": "^6.26.3",
+        "babel-eslint": "^10.0.3",
+        "babel-loader": "^8.0.6",
+        "babel-plugin-root-import": "^6.4.1",
+        "babel-plugin-transform-runtime": "^6.23.0",
+        "babel-polyfill": "^6.26.0",
+        "babel-preset-es2015": "^6.24.1",
+        "babel-preset-stage-0": "^6.24.1",
+        "babel-preset-stage-2": "^6.24.1",
+        "eslint": "5.16.0",
+        "eslint-config-prettier": "^4.1.0",
+        "eslint-config-prettier-standard": "^3.0.1",
+        "eslint-config-standard": "^14.1.0",
+        "eslint-plugin-import": "^2.17.2",
+        "eslint-plugin-node": "^10.0.0",
+        "eslint-plugin-prettier": "^3.0.1",
+        "eslint-plugin-promise": "^4.2.1",
+        "eslint-plugin-react": "^7.16.0",
+        "eslint-plugin-standard": "^4.0.1",
+        "jest": "^24.0.0",
+        "link-module-alias": "^1.2.0",
+        "lint-staged": "^9.4.2",
+        "pm2": "^4.1.2",
+        "pre-commit": "1.2.2",
+        "prettier": "1.17.0",
+        "prettier-config-standard": "^1.0.1",
+        "sequelize-cli": "^5.5.1",
+        "sequelize-mock": "^0.10.2",
+        "shelljs": "^0.8.3"
+    },
+    "precommit": "lint:staged",
+    "lint-staged": {
+        "*.js": [
+            "npm run lint:eslint:fix",
+            "git add --force",
+            "jest --findRelatedTests $STAGED_FILES"
+        ],
+        "*.json": [
+            "prettier --write",
+            "git add --force"
+        ]
+    },
+    "husky": {
+        "hooks": {
+            "pre-commit": "pretty-quick --staged"
+        }
+    },
+    "_moduleAliases": {
+        "root": ".",
+        "utils": "utils",
+        "models": "lib/models",
+        "daos": "lib/daos",
+        "config": "config"
+    }
+}
