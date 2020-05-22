@@ -1,9 +1,9 @@
 {
     "development": {
-        "url": "mysql://root:password@localhost/temp_dev",
+        "url": "postgres://reporting_dashboard_role:reportingdashboard123@localhost:5432/reporting_dashboard_dev",
         "logging": true,
         "options": {
-            "dialect": "mysql",
+            "dialect": "postgres",
             "pool": {
                 "min": 0,
                 "max": 10,
