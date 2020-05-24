@@ -1,4 +1,4 @@
-#!/bin/sh -x -e
+#!/bin/sh
 
 ./node_modules/.bin/sequelize db:drop
 ./node_modules/.bin/sequelize db:create

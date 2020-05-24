@@ -1,0 +1,10 @@
+{
+    "exec": "npm run dev",
+    "watch": ["server/*", "./public/*"],
+    "ignore": ["**/__tests__/**", "*.test.js", "*.spec.js"],
+    "events": {
+        "restart": "kill-port 9000",
+        "crash": "kill-port 9000 && npm run dev"
+    },
+    "delay": "1500"
+}
