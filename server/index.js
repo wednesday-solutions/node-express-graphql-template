@@ -35,10 +35,8 @@ const CONNECTIONS = {
     Supplier: SupplierConnection,
     SupplierItem: SupplierItemConnection
 };
-const dotEnvFile =
-    process.env.NODE_ENV === 'production'
-        ? `.env`
-        : `.env.${process.env.NODE_ENV}`;
+
+const dotEnvFile = `.env.${process.env.ENVIRONMENT}`;
 
 dotenv.config({ path: dotEnvFile });
 
@@ -99,6 +97,6 @@ app.use(
         graphiql: true
     })
 );
-app.listen(9000);
+app.listen(8080);
 
 export { app };

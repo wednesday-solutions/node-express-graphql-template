@@ -28,7 +28,9 @@ module.exports = {
                 )
                 .catch(e => {
                     const error = e.original.sqlMessage;
+                    console.log(error);
                     if (
+                        error &&
                         error.startsWith('Table') &&
                         error.endsWith('already exists')
                     ) {
