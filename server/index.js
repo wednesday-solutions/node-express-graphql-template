@@ -4,7 +4,6 @@ import * as graphql from 'graphql';
 import camelCase from 'lodash/camelCase';
 import pluralize from 'pluralize';
 import dotenv from 'dotenv';
-
 import joinMonster from 'join-monster';
 import { client, connect } from 'database';
 import { Item, ItemConnection } from 'models/items';
@@ -60,9 +59,6 @@ const addQueries = () => {
                 first: {
                     type: graphql.GraphQLInt
                 },
-                last: {
-                    type: graphql.GraphQLInt
-                },
                 after: {
                     type: graphql.GraphQLString
                 },
@@ -97,6 +93,6 @@ app.use(
         graphiql: true
     })
 );
-app.listen(8080);
+app.listen(9000);
 
 export { app };

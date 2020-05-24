@@ -4,4 +4,4 @@ ADD . /app
 WORKDIR /app
 RUN yarn
 CMD ["sh", "./migrate-and-run.sh"]
-EXPOSE 8080
+EXPOSE 9000
