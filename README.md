@@ -1,6 +1,6 @@
 # Sales Reporting Dashboard
 
-## Built using
+## A relay compliant server built using
 - Node
 - Express
 - Postgres
