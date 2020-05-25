@@ -4801,7 +4801,7 @@ jest@^24.0.0:
     import-local "^2.0.0"
     jest-cli "^24.9.0"
 
-join-monster@^2.0.0:
+join-monster@^2.1.1:
   version "2.1.1"
   resolved "https://registry.yarnpkg.com/join-monster/-/join-monster-2.1.1.tgz#72ca04c7835daea58fe9715c23354e2311a486e6"
   integrity sha512-Z/JJeDvQ8wS18rl1ytQ/teEiHXe90spTNqJmiUyRPQg/tREWTeY+meiAMTjqu8ltfsk6jer8TfDGUSoHil4Crg==
