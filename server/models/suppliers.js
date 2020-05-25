@@ -4,11 +4,7 @@ import {
     GraphQLNonNull,
     GraphQLInt
 } from 'graphql';
-import {
-    connectionDefinitions,
-    connectionFromArray,
-    forwardConnectionArgs
-} from 'graphql-relay';
+import { connectionDefinitions, forwardConnectionArgs } from 'graphql-relay';
 import { nodeInterface } from 'server/node';
 import { Address } from './addresses';
 import { SupplierItemConnection } from './supplierItems';
@@ -34,9 +30,7 @@ const Supplier = new GraphQLObjectType({
             sqlPaginate: true,
             orderBy: 'id',
             sqlJoin: (storeTable, supplierItemTable, args) =>
-                `${storeTable}.id = ${supplierItemTable}.supplier_id`,
-            resolve: (supplier, args) =>
-                connectionFromArray(supplier.items, args)
+                `${storeTable}.id = ${supplierItemTable}.supplier_id`
         }
     })
 });
