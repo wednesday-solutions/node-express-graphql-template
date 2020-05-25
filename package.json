@@ -102,7 +102,7 @@
     "_moduleAliases": {
         "root": ".",
         "server": "dist-server",
-        "utils": "server/utils",
+        "utils": "dist-server/utils",
         "database": "dist-server/database",
         "models": "dist-server/models",
         "config": "config"
