@@ -2,7 +2,7 @@ import express from 'express';
 import graphqlHTTP from 'express-graphql';
 import { GraphQLSchema, GraphQLObjectType } from 'graphql';
 import dotenv from 'dotenv';
-
+import { Aggregate } from 'models/aggregate';
 import { connect } from 'database';
 import { nodeField } from './node';
 import { addQueries } from './schema';
@@ -17,7 +17,8 @@ const QueryRoot = new GraphQLObjectType({
     name: 'Query',
     fields: () => ({
         node: nodeField,
-        ...addQueries()
+        ...addQueries(),
+        aggregate: Aggregate
     })
 });
 

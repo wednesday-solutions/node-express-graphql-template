@@ -38,6 +38,13 @@ const { connectionType: PurchasedItemConnection } = connectionDefinitions({
     connectionFields: {
         total: {
             type: GraphQLNonNull(GraphQLInt)
+        },
+        totalPrice: {
+            type: GraphQLNonNull(GraphQLInt),
+            resolve: (item, args) => {
+                console.log(item, args);
+                return 10;
+            }
         }
     }
 });
