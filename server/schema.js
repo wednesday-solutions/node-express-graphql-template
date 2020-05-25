@@ -1,8 +1,9 @@
-import { GraphQLNonNull, GraphQLInt, GraphQLString } from 'graphql';
+import { GraphQLNonNull, GraphQLInt, GraphQLString, GraphQLBoolean } from 'graphql';
 import camelCase from 'lodash/camelCase';
 import pluralize from 'pluralize';
 import joinMonster from 'join-monster';
 import { client } from 'database';
+import isEmpty from 'lodash/isEmpty';
 import { Item, ItemConnection } from 'models/items';
 import { PurchasedItem, PurchasedItemConnection } from 'models/purchasedItems';
 import { Address, AddressConnection } from 'models/addresses';
@@ -10,6 +11,7 @@ import { StoreItem, StoreItemConnection } from 'models/storeItems';
 import { Store, StoreConnection } from 'models/stores';
 import { Supplier, SupplierConnection } from 'models/suppliers';
 import { SupplierItem, SupplierItemConnection } from 'models/supplierItems';
+import { addWhereClause } from 'utils';
 
 const DB_TABLES = {
   Item: {
@@ -54,17 +56,36 @@ const CONNECTIONS = {
   PurchasedItem: {
     list: PurchasedItemConnection,
     where: (t, args, context, aliases) => {
-      // get list of purchased items by category
-      aliases.children.forEach(aliasTable => {
-        if (aliasTable.name === 'items' && aliasTable.type === 'table') {
-          aliasTable.where = () => `"item".category = '${args.category}'`;
-        }
-      });
+      if (Object.keys(args).length) {
+        let where = `TRUE`;
+        aliases.children.forEach(aliasTable => {
+          if (aliasTable.name === 'items' && aliasTable.type === 'table') {
+            if (args.category) {
+              // get list of purchased items by category
+              where = addWhereClause(where, `"item".category = '${args.category}'`);
+            }
+
+            // get list of purchased items which have a supplier
+            if (args.hasSupplier) {
+              where = addWhereClause(where, `"supplier_items".id != 0`);
+            }
+            // get list of purchased items which have a store
+            if (args.hasStore) {
+              where = addWhereClause(where, `"store_items".id != 0`);
+            }
+          }
+          if (!isEmpty(where)) {
+            aliasTable.where = () => where;
+          }
+        });
+      }
     },
     args: {
       category: {
         type: GraphQLString
-      }
+      },
+      hasStore: { type: GraphQLBoolean },
+      hasSupplier: { type: GraphQLBoolean }
     }
   },
   Address: {
