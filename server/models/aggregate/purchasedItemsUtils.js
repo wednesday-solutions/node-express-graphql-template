@@ -1,4 +1,6 @@
-import { addWhereClause } from 'utils';
+import moment from 'moment';
+import { QueryTypes } from 'sequelize';
+import { addWhereClause, TIMESTAMP } from 'utils';
 
 export const handleAggregateQueries = args => {
   let where = ``;
@@ -15,3 +17,12 @@ export const handleAggregateQueries = args => {
   }
   return { where, join };
 };
+export const queryOptions = args => ({
+  replacements: {
+    type: QueryTypes.SELECT,
+    startDate: moment(args?.startDate).format(TIMESTAMP),
+    endDate: moment(args?.endDate).format(TIMESTAMP),
+    category: args?.category
+  },
+  type: QueryTypes.SELECT
+});
