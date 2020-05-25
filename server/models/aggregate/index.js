@@ -11,9 +11,10 @@ const Aggregate = new GraphQLObjectType({
   fields: () => ({
     max: {
       type: new GraphQLObjectType({
-        name: 'MaxPriceOfPurchasedItems',
+        name: 'AggregateMax',
         fields: () => ({
-          purchasedItems: {
+          purchasedItemsPrice: {
+            name: 'MaxPriceOfPurchasedItems',
             type: GraphQLInt,
             resolve: async args => {
               const query = `SELECT MAX(price) from purchased_items`;
@@ -36,9 +37,10 @@ const Aggregate = new GraphQLObjectType({
     },
     total: {
       type: new GraphQLObjectType({
-        name: 'TotalPriceOfPurchasedItems',
+        name: 'AggregateSum',
         fields: () => ({
-          purchasedItems: {
+          purchasedItemsPrice: {
+            name: 'TotalPriceOfPurchasedItems',
             type: GraphQLFloat,
             resolve: async args => {
               const query = `SELECT SUM(price) from purchased_items`;
@@ -53,6 +55,33 @@ const Aggregate = new GraphQLObjectType({
                   },
                   type: QueryTypes.SELECT
                 }))[0].sum || 0
+              );
+            }
+          }
+        })
+      }),
+      resolve: args => args
+    },
+    count: {
+      type: new GraphQLObjectType({
+        name: 'AggregateCount',
+        fields: () => ({
+          purchasedItems: {
+            name: 'CountOfPurchasedItems',
+            type: GraphQLFloat,
+            resolve: async args => {
+              const query = `SELECT COUNT(*) from purchased_items`;
+              const { where, join } = handleAggregateQueries(args);
+              return (
+                (await client.query(escape(`${query} ${join} ${where};`), {
+                  replacements: {
+                    type: QueryTypes.SELECT,
+                    startDate: moment(args.startDate).format('YYYY-MM-DD HH:mm:ss'),
+                    endDate: moment(args.endDate).format('YYYY-MM-DD HH:mm:ss'),
+                    category: args?.category
+                  },
+                  type: QueryTypes.SELECT
+                }))[0].count || 0
               );
             }
           }

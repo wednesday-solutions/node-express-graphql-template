@@ -52,7 +52,20 @@ const CONNECTIONS = {
     list: ItemConnection
   },
   PurchasedItem: {
-    list: PurchasedItemConnection
+    list: PurchasedItemConnection,
+    where: (t, args, context, aliases) => {
+      // get list of purchased items by category
+      aliases.children.forEach(aliasTable => {
+        if (aliasTable.name === 'items' && aliasTable.type === 'table') {
+          aliasTable.where = () => `"item".category = '${args.category}'`;
+        }
+      });
+    },
+    args: {
+      category: {
+        type: GraphQLString
+      }
+    }
   },
   Address: {
     list: AddressConnection
@@ -127,9 +140,9 @@ export const addQueries = () => {
         },
         ...CONNECTIONS[table].args
       },
-      where: (t, args, context) => {
+      where: (t, args, context, aliases) => {
         if (CONNECTIONS[table].where) {
-          return CONNECTIONS[table].where(t, args, context);
+          return CONNECTIONS[table].where(t, args, context, aliases);
         }
         return ``;
       },
