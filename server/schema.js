@@ -99,7 +99,19 @@ export const addQueries = () => {
         }
         return `${t}.id = ${args.id}`;
       },
-      resolve: (parent, args, context, resolveInfo) => joinMonster(resolveInfo, {}, sql => client.query(sql), options)
+      resolve: (parent, args, context, resolveInfo) =>
+        joinMonster(
+          resolveInfo,
+          {},
+          async sql => {
+            const result = await client.query(sql);
+            if (result?.length > 0) {
+              return result[1].rows;
+            }
+            return null;
+          },
+          options
+        )
     };
     query[pluralize(camelCase(table))] = {
       type: CONNECTIONS[table].list,
@@ -123,7 +135,19 @@ export const addQueries = () => {
       },
       sqlPaginate: true,
       orderBy: 'id',
-      resolve: (parent, args, context, resolveInfo) => joinMonster(resolveInfo, {}, sql => client.query(sql), options)
+      resolve: (parent, args, context, resolveInfo) =>
+        joinMonster(
+          resolveInfo,
+          {},
+          async sql => {
+            const result = await client.query(sql);
+            if (result?.length > 0) {
+              return result[1].rows;
+            }
+            return null;
+          },
+          options
+        )
     };
   });
   return query;
