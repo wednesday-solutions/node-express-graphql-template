@@ -1,129 +1,129 @@
 {
-    "name": "reporting-dashboard",
-    "version": "1.0.0",
-    "description": "",
-    "main": "server/bin/www",
-    "repository": {
-        "type": "git",
-        "url": "git+https://github.com/wednesday-solutions/reporting-dashboard.git"
-    },
-    "author": "Wednesday Solutions",
-    "license": "MIT",
-    "bugs": {
-        "url": "https://github.com/wednesday-solutions/reporting-dashboard/issues"
-    },
-    "homepage": "https://github.com/wednesday-solutions/reporting-dashboard#readme",
-    "scripts": {
-        "start:local": "nodemon",
-        "local": "kill-port 9000 && ENVIRONMENT=local npm-run-all build start",
-        "start": "node ./dist-server/bin/www",
-        "dev": "kill-port 9000 && ENVIRONMENT=development npm-run-all build start",
-        "prod": "ENVIRONMENT=production && NODE_ENV=production npm-run-all build start",
-        "transpile": "babel ./server --out-dir dist-server",
-        "build": "npm-run-all clean transpile",
-        "clean": "rimraf dist-server",
-        "format": "prettier-standard './**/**/*.js'",
-        "lint": "npm run lint:js",
-        "lint:eslint": "eslint --ignore-path .gitignore --ignore-pattern internals/scripts",
-        "lint:eslint:fix": "eslint --ignore-path .gitignore --ignore-pattern server/bin --fix",
-        "lint:js": "npm run lint:eslint -- . ",
-        "lint:staged": "lint-staged",
-        "prettify": "prettier --write",
-        "precommit": "lint:staged",
-        "postinstall": "link-module-alias",
-        "preinstall": "command -v link-module-alias && link-module-alias clean || true",
-        "test": "jest --coverage"
-    },
-    "dependencies": {
-        "@babel/cli": "^7.8.4",
-        "@babel/core": "^7.9.6",
-        "@babel/plugin-proposal-class-properties": "^7.8.3",
-        "@babel/plugin-proposal-optional-chaining": "^7.9.0",
-        "@babel/plugin-syntax-optional-chaining": "^7.8.3",
-        "@babel/preset-env": "^7.9.6",
-        "babel-eslint": "^10.1.0",
-        "dotenv": "^8.2.0",
-        "express": "^4.17.1",
-        "express-graphql": "^0.9.0",
-        "graphql": "14.6",
-        "graphql-iso-date": "^3.6.1",
-        "graphql-relay": "^0.6.0",
-        "join-monster": "^2.0.0",
-        "loadash": "^1.0.0",
-        "lodash": "^4.17.15",
-        "moment": "^2.26.0",
-        "pg": "^8.2.1",
-        "pg-escape": "^0.2.0",
-        "pg-hstore": "^2.3.3",
-        "pluralize": "^8.0.0",
-        "postgres": "^1.0.2",
-        "sequelize": "^5.21.10"
-    },
-    "devDependencies": {
-        "babel-core": "^6.26.3",
-        "babel-loader": "^8.1.0",
-        "babel-polyfill": "^6.26.0",
-        "babel-preset-es2015": "^6.24.1",
-        "babel-preset-stage-0": "^6.24.1",
-        "eslint": "5.16.0",
-        "eslint-config-prettier": "^4.1.0",
-        "eslint-config-prettier-standard": "^3.0.1",
-        "eslint-config-standard": "^14.1.0",
-        "eslint-plugin-import": "^2.17.2",
-        "eslint-plugin-node": "^10.0.0",
-        "eslint-plugin-prettier": "^3.0.1",
-        "eslint-plugin-promise": "^4.2.1",
-        "eslint-plugin-standard": "^4.0.1",
-        "faker": "^4.1.0",
-        "jest": "^24.0.0",
-        "kill-port": "^1.6.0",
-        "link-module-alias": "^1.2.0",
-        "lint-staged": "^9.4.2",
-        "nodemon": "^2.0.4",
-        "npm-run-all": "^4.1.5",
-        "pre-commit": "1.2.2",
-        "prettier": "1.17.0",
-        "prettier-config-standard": "^1.0.1",
-        "sequelize-cli": "^5.5.1",
-        "sequelize-mock": "^0.10.2",
-        "shelljs": "^0.8.3"
-    },
+  "name": "reporting-dashboard",
+  "version": "1.0.0",
+  "description": "",
+  "main": "server/bin/www",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/wednesday-solutions/reporting-dashboard.git"
+  },
+  "author": "Wednesday Solutions",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/wednesday-solutions/reporting-dashboard/issues"
+  },
+  "homepage": "https://github.com/wednesday-solutions/reporting-dashboard#readme",
+  "scripts": {
+    "start:local": "nodemon",
+    "local": "kill-port 9000 && ENVIRONMENT=local npm-run-all build start",
+    "start": "node ./dist-server/bin/www",
+    "dev": "ENVIRONMENT=development npm-run-all build start",
+    "prod": "ENVIRONMENT=production && NODE_ENV=production npm-run-all build start",
+    "transpile": "babel ./server --out-dir dist-server",
+    "build": "npm-run-all clean transpile",
+    "clean": "rimraf dist-server",
+    "format": "prettier-standard './**/**/*.js'",
+    "lint": "npm run lint:js",
+    "lint:eslint": "eslint --ignore-path .gitignore --ignore-pattern internals/scripts",
+    "lint:eslint:fix": "eslint --ignore-path .gitignore --ignore-pattern server/bin --fix",
+    "lint:js": "npm run lint:eslint -- . ",
+    "lint:staged": "lint-staged",
+    "prettify": "prettier --write",
     "precommit": "lint:staged",
-    "lint-staged": {
-        "*.js": [
-            "npm run lint:eslint:fix",
-            "git add --force",
-            "jest --findRelatedTests $STAGED_FILES"
-        ],
-        "*.json": [
-            "prettier --write",
-            "git add --force"
-        ]
-    },
-    "husky": {
-        "hooks": {
-            "pre-commit": "pretty-quick --staged"
-        }
-    },
-    "_moduleAliases": {
-        "root": ".",
-        "server": "dist-server",
-        "utils": "dist-server/utils",
-        "database": "dist-server/database",
-        "models": "dist-server/models",
-        "config": "config"
-    },
-    "babel": {
-        "presets": [
-            [
-                "@babel/preset-env",
-                {
-                    "useBuiltIns": "entry",
-                    "targets": {
-                        "node": "current"
-                    }
-                }
-            ]
-        ]
+    "postinstall": "link-module-alias",
+    "preinstall": "command -v link-module-alias && link-module-alias clean || true",
+    "test": "jest --coverage"
+  },
+  "dependencies": {
+    "@babel/cli": "^7.8.4",
+    "@babel/core": "^7.9.6",
+    "@babel/plugin-proposal-class-properties": "^7.8.3",
+    "@babel/plugin-proposal-optional-chaining": "^7.9.0",
+    "@babel/plugin-syntax-optional-chaining": "^7.8.3",
+    "@babel/preset-env": "^7.9.6",
+    "babel-eslint": "^10.1.0",
+    "dotenv": "^8.2.0",
+    "express": "^4.17.1",
+    "express-graphql": "^0.9.0",
+    "graphql": "14.6",
+    "graphql-iso-date": "^3.6.1",
+    "graphql-relay": "^0.6.0",
+    "join-monster": "^2.0.0",
+    "loadash": "^1.0.0",
+    "lodash": "^4.17.15",
+    "moment": "^2.26.0",
+    "pg": "^8.2.1",
+    "pg-escape": "^0.2.0",
+    "pg-hstore": "^2.3.3",
+    "pluralize": "^8.0.0",
+    "postgres": "^1.0.2",
+    "sequelize": "^5.21.10"
+  },
+  "devDependencies": {
+    "babel-core": "^6.26.3",
+    "babel-loader": "^8.1.0",
+    "babel-polyfill": "^6.26.0",
+    "babel-preset-es2015": "^6.24.1",
+    "babel-preset-stage-0": "^6.24.1",
+    "eslint": "5.16.0",
+    "eslint-config-prettier": "^4.1.0",
+    "eslint-config-prettier-standard": "^3.0.1",
+    "eslint-config-standard": "^14.1.0",
+    "eslint-plugin-import": "^2.17.2",
+    "eslint-plugin-node": "^10.0.0",
+    "eslint-plugin-prettier": "^3.0.1",
+    "eslint-plugin-promise": "^4.2.1",
+    "eslint-plugin-standard": "^4.0.1",
+    "faker": "^4.1.0",
+    "jest": "^24.0.0",
+    "kill-port": "^1.6.0",
+    "link-module-alias": "^1.2.0",
+    "lint-staged": "^9.4.2",
+    "nodemon": "^2.0.4",
+    "npm-run-all": "^4.1.5",
+    "pre-commit": "1.2.2",
+    "prettier": "1.17.0",
+    "prettier-config-standard": "^1.0.1",
+    "sequelize-cli": "^5.5.1",
+    "sequelize-mock": "^0.10.2",
+    "shelljs": "^0.8.3"
+  },
+  "precommit": "lint:staged",
+  "lint-staged": {
+    "*.js": [
+      "npm run lint:eslint:fix",
+      "git add --force",
+      "jest --findRelatedTests $STAGED_FILES"
+    ],
+    "*.json": [
+      "prettier --write",
+      "git add --force"
+    ]
+  },
+  "husky": {
+    "hooks": {
+      "pre-commit": "pretty-quick --staged"
     }
+  },
+  "_moduleAliases": {
+    "root": ".",
+    "server": "dist-server",
+    "utils": "dist-server/utils",
+    "database": "dist-server/database",
+    "models": "dist-server/models",
+    "config": "config"
+  },
+  "babel": {
+    "presets": [
+      [
+        "@babel/preset-env",
+        {
+          "useBuiltIns": "entry",
+          "targets": {
+            "node": "current"
+          }
+        }
+      ]
+    ]
+  }
 }
