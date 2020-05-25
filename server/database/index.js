@@ -1,22 +1,18 @@
-const { Client } = require('pg');
+// const { Client } = require('pg');
+import Sequelize from 'sequelize';
 let client;
-export const connect = () => {
-    client = new Client({
-        host: process.env.POSTGRES_HOST,
-        user: process.env.POSTGRES_USER,
-        password: process.env.POSTGRES_PASSWORD,
-        database: process.env.POSTGRES_DB
-    });
-    client.connect(err => {
-        if (err) {
-            console.log('Database connection error', err);
-        } else {
-            console.log('Connected to database\n', {
-                host: process.env.POSTGRES_HOST,
-                user: process.env.POSTGRES_USER,
-                database: process.env.POSTGRES_DB
-            });
-        }
-    });
+export const connect = async () => {
+    client = new Sequelize(
+        process.env.POSTGRES_DB,
+        process.env.POSTGRES_USER,
+        process.env.POSTGRES_PASSWORD,
+        { host: process.env.POSTGRES_HOST, dialect: 'postgres' }
+    );
+    try {
+        await client.authenticate();
+        console.log('Connection has been established successfully.');
+    } catch (error) {
+        console.error('Unable to connect to the database:', error);
+    }
 };
 export { client };

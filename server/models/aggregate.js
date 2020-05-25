@@ -1,7 +1,7 @@
 import { GraphQLObjectType, GraphQLInt, GraphQLFloat } from 'graphql';
 import { GraphQLDateTime } from 'graphql-iso-date';
-import isEmpty from 'lodash/isEmpty';
 import moment from 'moment';
+import { QueryTypes } from 'sequelize';
 import escape from 'pg-escape';
 import { client } from 'database';
 import { addWhereClause } from 'utils';
@@ -15,31 +15,32 @@ const Aggregate = new GraphQLObjectType({
                 fields: () => ({
                     purchasedItems: {
                         type: GraphQLInt,
-                        resolve: args => {
+                        resolve: async args => {
                             const query = `SELECT MAX(price) from purchased_items`;
                             let where = ``;
-                            const deps = [];
                             if (args?.startDate) {
                                 where = addWhereClause(where);
-                                deps.push(
-                                    moment(args.startDate).format(
-                                        'YYYY-MM-DD HH:mm:ss'
-                                    )
-                                );
-                                where += ` created_at > $${deps.length} `;
+                                where += ` created_at > :startDate `;
                             }
                             if (args?.endDate) {
                                 where = addWhereClause(where);
-                                deps.push(
-                                    moment(args.endDate).format(
-                                        'YYYY-MM-DD HH:mm:ss'
-                                    )
-                                );
-                                where += ` created_at < $${deps.length}`;
+                                where += ` created_at < :endDate`;
                             }
-                            return client
-                                .query(escape(`${query} ${where};`), deps)
-                                .then(item => item.rows[0].max);
+                            return (await client.query(
+                                escape(`${query} ${where};`),
+                                {
+                                    replacements: {
+                                        type: QueryTypes.SELECT,
+                                        startDate: moment(
+                                            args.startDate
+                                        ).format('YYYY-MM-DD HH:mm:ss'),
+                                        endDate: moment(args.endDate).format(
+                                            'YYYY-MM-DD HH:mm:ss'
+                                        )
+                                    },
+                                    type: QueryTypes.SELECT
+                                }
+                            ))[0].max;
                         }
                     }
                 })
@@ -52,39 +53,32 @@ const Aggregate = new GraphQLObjectType({
                 fields: () => ({
                     purchasedItems: {
                         type: GraphQLFloat,
-                        resolve: args => {
+                        resolve: async args => {
                             const query = `SELECT SUM(price) from purchased_items`;
                             let where = ``;
-                            const deps = [];
-                            if (args.startDate) {
-                                if (isEmpty(where)) {
-                                    where += ' WHERE ';
-                                } else {
-                                    where += ' AND ';
-                                }
-                                where += ` created_at > $${deps.length + 1} `;
-                                deps.push(
-                                    moment(args.startDate).format(
-                                        'YYYY-MM-DD HH:mm:ss'
-                                    )
-                                );
+                            if (args?.startDate) {
+                                where = addWhereClause(where);
+                                where += ` created_at > :startDate `;
                             }
-                            if (args.endDate) {
-                                if (isEmpty(where)) {
-                                    where += ' WHERE ';
-                                } else {
-                                    where += ' AND ';
-                                }
-                                where += ` created_at < $${deps.length + 1}`;
-                                deps.push(
-                                    moment(args.endDate).format(
-                                        'YYYY-MM-DD HH:mm:ss'
-                                    )
-                                );
+                            if (args?.endDate) {
+                                where = addWhereClause(where);
+                                where += ` created_at < :endDate`;
                             }
-                            return client
-                                .query(escape(`${query} ${where};`), deps)
-                                .then(item => item.rows[0].sum);
+                            return (await client.query(
+                                escape(`${query} ${where};`),
+                                {
+                                    replacements: {
+                                        type: QueryTypes.SELECT,
+                                        startDate: moment(
+                                            args.startDate
+                                        ).format('YYYY-MM-DD HH:mm:ss'),
+                                        endDate: moment(args.endDate).format(
+                                            'YYYY-MM-DD HH:mm:ss'
+                                        )
+                                    },
+                                    type: QueryTypes.SELECT
+                                }
+                            ))[0].sum;
                         }
                     }
                 })
