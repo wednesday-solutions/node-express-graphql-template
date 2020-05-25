@@ -6,7 +6,7 @@ import {
 } from 'graphql';
 import { connectionDefinitions, forwardConnectionArgs } from 'graphql-relay';
 import { nodeInterface } from 'server/node';
-import { StoreItemConnection } from './storeItems';
+import { ItemConnection } from './items';
 import { Address } from './addresses';
 import { timestamps } from './timestamps';
 
@@ -15,10 +15,7 @@ const Store = new GraphQLObjectType({
     interface: [nodeInterface],
     args: forwardConnectionArgs,
     sqlPaginate: true,
-    orderBy: {
-        created_at: 'desc',
-        id: 'asc'
-    },
+    orderBy: 'id',
     fields: () => ({
         id: { type: GraphQLInt },
         name: { type: GraphQLString },
@@ -29,12 +26,19 @@ const Store = new GraphQLObjectType({
                 `${addressTable}.id = ${storeTable}.address_id`
         },
         items: {
-            type: StoreItemConnection,
-            args: forwardConnectionArgs,
+            type: ItemConnection,
             sqlPaginate: true,
             orderBy: 'id',
-            sqlJoin: (storeTable, storeItemTable, args) =>
-                `${storeTable}.id = ${storeItemTable}.store_id`
+            args: forwardConnectionArgs,
+            junction: {
+                sqlTable: 'store_items',
+                sqlJoins: [
+                    (storeTable, junctionTable, args) =>
+                        `${storeTable}.id = ${junctionTable}.store_id`,
+                    (junctionTable, itemTable, args) =>
+                        `${itemTable}.id = ${junctionTable}.item_id`
+                ]
+            }
         }
     })
 });

@@ -7,8 +7,8 @@ import {
 import { connectionDefinitions, forwardConnectionArgs } from 'graphql-relay';
 
 import { nodeInterface } from 'server/node';
-import { StoreItemConnection } from './storeItems';
-import { SupplierItemConnection } from './supplierItems';
+import { SupplierConnection } from './suppliers';
+import { StoreConnection } from './stores';
 import { timestamps } from './timestamps';
 
 const Item = new GraphQLObjectType({
@@ -25,24 +25,35 @@ const Item = new GraphQLObjectType({
         category: { type: GraphQLString },
         amount: { type: GraphQLInt },
         ...timestamps,
-        supplierItems: {
-            description: 'A list of suppliers that have this item',
-            type: SupplierItemConnection,
-            args: forwardConnectionArgs,
+        suppliers: {
+            type: SupplierConnection,
             sqlPaginate: true,
             orderBy: 'id',
-            sqlBatch: {
-                thisKey: 'item_id',
-                parentKey: 'id'
+            args: forwardConnectionArgs,
+            junction: {
+                sqlTable: 'supplier_items',
+                sqlJoins: [
+                    (itemsTable, junctionTable, args) =>
+                        `${itemsTable}.id = ${junctionTable}.item_id`,
+                    (junctionTable, supplierTable, args) =>
+                        `${supplierTable}.id = ${junctionTable}.supplier_id`
+                ]
             }
         },
-        storeItems: {
-            type: StoreItemConnection,
-            args: forwardConnectionArgs,
+        stores: {
+            type: StoreConnection,
             sqlPaginate: true,
             orderBy: 'id',
-            sqlJoin: (itemTable, storeItemsTable, args) =>
-                `${itemTable}.id = ${storeItemsTable}.item_id`
+            args: forwardConnectionArgs,
+            junction: {
+                sqlTable: 'store_items',
+                sqlJoins: [
+                    (itemsTable, junctionTable, args) =>
+                        `${itemsTable}.id = ${junctionTable}.item_id`,
+                    (junctionTable, storeTable, args) =>
+                        `${storeTable}.id = ${junctionTable}.store_id`
+                ]
+            }
         }
     })
 });

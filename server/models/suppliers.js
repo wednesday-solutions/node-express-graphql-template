@@ -7,7 +7,7 @@ import {
 import { connectionDefinitions, forwardConnectionArgs } from 'graphql-relay';
 import { nodeInterface } from 'server/node';
 import { Address } from './addresses';
-import { SupplierItemConnection } from './supplierItems';
+import { ItemConnection } from './items';
 import { timestamps } from './timestamps';
 
 const Supplier = new GraphQLObjectType({
@@ -21,16 +21,23 @@ const Supplier = new GraphQLObjectType({
         ...timestamps,
         address: {
             type: Address,
-            sqlJoin: (storeTable, addressTable, args) =>
-                `${addressTable}.id = ${storeTable}.address_id`
+            sqlJoin: (supplierTable, addressTable, args) =>
+                `${addressTable}.id = ${supplierTable}.address_id`
         },
         items: {
-            type: SupplierItemConnection,
-            args: forwardConnectionArgs,
+            type: ItemConnection,
             sqlPaginate: true,
             orderBy: 'id',
-            sqlJoin: (storeTable, supplierItemTable, args) =>
-                `${storeTable}.id = ${supplierItemTable}.supplier_id`
+            args: forwardConnectionArgs,
+            junction: {
+                sqlTable: 'supplier_items',
+                sqlJoins: [
+                    (supplierTable, junctionTable, args) =>
+                        `${supplierTable}.id = ${junctionTable}.supplier_id`,
+                    (junctionTable, itemTable, args) =>
+                        `${itemTable}.id = ${junctionTable}.item_id`
+                ]
+            }
         }
     })
 });
