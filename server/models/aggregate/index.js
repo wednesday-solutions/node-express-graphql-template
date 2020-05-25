@@ -5,6 +5,7 @@ import { QueryTypes } from 'sequelize';
 import escape from 'pg-escape';
 import { client } from 'database';
 import { handleAggregateQueries } from './purchasedItemsUtils';
+import { TIMESTAMP } from 'utils/constants';
 
 const Aggregate = new GraphQLObjectType({
   name: 'Aggregate',
@@ -23,8 +24,8 @@ const Aggregate = new GraphQLObjectType({
                 (await client.query(escape(`${query} ${join} ${where};`), {
                   replacements: {
                     type: QueryTypes.SELECT,
-                    startDate: moment(args.startDate).format('YYYY-MM-DD HH:mm:ss'),
-                    endDate: moment(args.endDate).format('YYYY-MM-DD HH:mm:ss')
+                    startDate: moment(args.startDate).format(TIMESTAMP),
+                    endDate: moment(args.endDate).format(TIMESTAMP)
                   },
                   type: QueryTypes.SELECT
                 }))[0].max || 0
@@ -49,8 +50,8 @@ const Aggregate = new GraphQLObjectType({
                 (await client.query(escape(`${query} ${join} ${where};`), {
                   replacements: {
                     type: QueryTypes.SELECT,
-                    startDate: moment(args.startDate).format('YYYY-MM-DD HH:mm:ss'),
-                    endDate: moment(args.endDate).format('YYYY-MM-DD HH:mm:ss'),
+                    startDate: moment(args.startDate).format(TIMESTAMP),
+                    endDate: moment(args.endDate).format(TIMESTAMP),
                     category: args?.category
                   },
                   type: QueryTypes.SELECT
@@ -76,8 +77,8 @@ const Aggregate = new GraphQLObjectType({
                 (await client.query(escape(`${query} ${join} ${where};`), {
                   replacements: {
                     type: QueryTypes.SELECT,
-                    startDate: moment(args.startDate).format('YYYY-MM-DD HH:mm:ss'),
-                    endDate: moment(args.endDate).format('YYYY-MM-DD HH:mm:ss'),
+                    startDate: moment(args.startDate).format(TIMESTAMP),
+                    endDate: moment(args.endDate).format(TIMESTAMP),
                     category: args?.category
                   },
                   type: QueryTypes.SELECT
