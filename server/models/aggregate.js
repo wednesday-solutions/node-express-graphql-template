@@ -2,8 +2,9 @@ import { GraphQLObjectType, GraphQLInt, GraphQLFloat } from 'graphql';
 import { GraphQLDateTime } from 'graphql-iso-date';
 import isEmpty from 'lodash/isEmpty';
 import moment from 'moment';
-import { client } from 'database';
 import escape from 'pg-escape';
+import { client } from 'database';
+import { addWhereClause } from 'utils';
 
 const Aggregate = new GraphQLObjectType({
     name: 'Aggregate',
@@ -19,30 +20,22 @@ const Aggregate = new GraphQLObjectType({
                             let where = ``;
                             const deps = [];
                             if (args?.startDate) {
-                                if (isEmpty(where)) {
-                                    where += ' WHERE ';
-                                } else {
-                                    where += ' AND ';
-                                }
-                                where += ` created_at > $${deps.length + 1} `;
+                                where = addWhereClause(where);
                                 deps.push(
                                     moment(args.startDate).format(
                                         'YYYY-MM-DD HH:mm:ss'
                                     )
                                 );
+                                where += ` created_at > $${deps.length} `;
                             }
                             if (args?.endDate) {
-                                if (isEmpty(where)) {
-                                    where += ' WHERE ';
-                                } else {
-                                    where += ' AND ';
-                                }
-                                where += ` created_at < $${deps.length + 1}`;
+                                where = addWhereClause(where);
                                 deps.push(
                                     moment(args.endDate).format(
                                         'YYYY-MM-DD HH:mm:ss'
                                     )
                                 );
+                                where += ` created_at < $${deps.length}`;
                             }
                             return client
                                 .query(escape(`${query} ${where};`), deps)
