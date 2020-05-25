@@ -73,6 +73,13 @@ const CONNECTIONS = {
             if (args.hasStore) {
               where = addWhereClause(where, `"store_items".id != 0`);
             }
+
+            if (args.supplierId) {
+              where = addWhereClause(where, `"supplier_items".id = ${args.supplierId}`);
+            }
+            if (args.storeId) {
+              where = addWhereClause(where, `"store_items".id = ${args.storeId}`);
+            }
           }
           if (!isEmpty(where)) {
             aliasTable.where = () => where;
@@ -85,7 +92,9 @@ const CONNECTIONS = {
         type: GraphQLString
       },
       hasStore: { type: GraphQLBoolean },
-      hasSupplier: { type: GraphQLBoolean }
+      hasSupplier: { type: GraphQLBoolean },
+      storeId: { type: GraphQLInt },
+      supplierId: { type: GraphQLInt }
     }
   },
   Address: {
