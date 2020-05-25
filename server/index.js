@@ -14,23 +14,23 @@ dotenv.config({ path: `.env.${process.env.ENVIRONMENT}` });
 connect();
 
 const QueryRoot = new GraphQLObjectType({
-    name: 'Query',
-    fields: () => ({
-        node: nodeField,
-        ...addQueries(),
-        aggregate: Aggregate
-    })
+  name: 'Query',
+  fields: () => ({
+    node: nodeField,
+    ...addQueries(),
+    aggregate: Aggregate
+  })
 });
 
 const schema = new GraphQLSchema({ query: QueryRoot });
 
 const app = express();
 app.use(
-    '/graphql',
-    graphqlHTTP({
-        schema: schema,
-        graphiql: true
-    })
+  '/graphql',
+  graphqlHTTP({
+    schema: schema,
+    graphiql: true
+  })
 );
 app.listen(9000);
 

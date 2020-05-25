@@ -6,42 +6,40 @@ import { Store } from './stores';
 import { timestamps } from './timestamps';
 
 const StoreItem = new GraphQLObjectType({
-    name: 'StoreItem',
-    interface: [nodeInterface],
-    args: forwardConnectionArgs,
-    sqlPaginate: true,
-    orderBy: {
-        created_at: 'desc',
-        id: 'asc'
+  name: 'StoreItem',
+  interface: [nodeInterface],
+  args: forwardConnectionArgs,
+  sqlPaginate: true,
+  orderBy: {
+    created_at: 'desc',
+    id: 'asc'
+  },
+  fields: () => ({
+    id: { type: GraphQLInt },
+    ...timestamps,
+    item: {
+      type: Item,
+      sqlJoin: (storeItemsTable, itemTable, args) => `${itemTable}.id = ${storeItemsTable}.item_id`
     },
-    fields: () => ({
-        id: { type: GraphQLInt },
-        ...timestamps,
-        item: {
-            type: Item,
-            sqlJoin: (storeItemsTable, itemTable, args) =>
-                `${itemTable}.id = ${storeItemsTable}.item_id`
-        },
-        store: {
-            type: Store,
-            sqlJoin: (storeItemsTable, storeTable, args) =>
-                `${storeTable}.id = ${storeItemsTable}.store_id`
-        }
-    })
+    store: {
+      type: Store,
+      sqlJoin: (storeItemsTable, storeTable, args) => `${storeTable}.id = ${storeItemsTable}.store_id`
+    }
+  })
 });
 
 StoreItem._typeConfig = {
-    sqlTable: 'store_items',
-    uniqueKey: 'id'
+  sqlTable: 'store_items',
+  uniqueKey: 'id'
 };
 
 const { connectionType: StoreItemConnection } = connectionDefinitions({
-    nodeType: StoreItem,
-    connectionFields: {
-        total: {
-            type: GraphQLNonNull(GraphQLInt)
-        }
+  nodeType: StoreItem,
+  connectionFields: {
+    total: {
+      type: GraphQLNonNull(GraphQLInt)
     }
+  }
 });
 
 export { StoreItem, StoreItemConnection };
