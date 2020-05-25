@@ -11,7 +11,7 @@ export const connect = () => {
         if (err) {
             console.log('Database connection error', err);
         } else {
-            console.log('connected to databaser', {
+            console.log('Connected to database\n', {
                 host: process.env.POSTGRES_HOST,
                 user: process.env.POSTGRES_USER,
                 database: process.env.POSTGRES_DB
