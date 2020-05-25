@@ -1,18 +1,18 @@
-import * as graphql from 'graphql';
+import { GraphQLObjectType, GraphQLNonNull, GraphQLInt } from 'graphql';
 import { connectionDefinitions, connectionArgs } from 'graphql-relay';
 import { nodeInterface } from 'server/node';
 import { Item } from './items';
 import { Supplier } from './suppliers';
 import { timestamps } from './timestamps';
 
-const SupplierItem = new graphql.GraphQLObjectType({
+const SupplierItem = new GraphQLObjectType({
     name: 'SupplierItem',
     interface: [nodeInterface],
     args: connectionArgs,
     fields: () => ({
-        id: { type: graphql.GraphQLInt },
-        supplierId: { sqlColumn: 'supplier_id', type: graphql.GraphQLInt },
-        itemId: { sqlColumn: 'item_id', type: graphql.GraphQLInt },
+        id: { type: GraphQLInt },
+        supplierId: { sqlColumn: 'supplier_id', type: GraphQLInt },
+        itemId: { sqlColumn: 'item_id', type: GraphQLInt },
         ...timestamps,
         item: {
             type: Item,
@@ -36,7 +36,7 @@ const { connectionType: SupplierItemConnection } = connectionDefinitions({
     nodeType: SupplierItem,
     connectionFields: {
         total: {
-            type: graphql.GraphQLNonNull(graphql.GraphQLInt)
+            type: GraphQLNonNull(GraphQLInt)
         }
     }
 });

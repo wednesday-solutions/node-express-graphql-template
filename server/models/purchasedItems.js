@@ -1,11 +1,11 @@
-import * as graphql from 'graphql';
+import { GraphQLObjectType, GraphQLNonNull, GraphQLInt } from 'graphql';
 import { connectionDefinitions, forwardConnectionArgs } from 'graphql-relay';
 import { nodeInterface } from 'server/node';
 import { Item } from './items';
 import { timestamps } from './timestamps';
 import { GraphQLDateTime } from 'graphql-iso-date';
 
-const PurchasedItem = new graphql.GraphQLObjectType({
+const PurchasedItem = new GraphQLObjectType({
     name: 'PurchasedItem',
     interface: [nodeInterface],
     args: forwardConnectionArgs,
@@ -15,9 +15,9 @@ const PurchasedItem = new graphql.GraphQLObjectType({
         id: 'asc'
     },
     fields: () => ({
-        id: { type: graphql.GraphQLInt },
-        price: { type: graphql.GraphQLInt },
-        discount: { type: graphql.GraphQLInt },
+        id: { type: GraphQLInt },
+        price: { type: GraphQLInt },
+        discount: { type: GraphQLInt },
         deliveryDate: { sqlColumn: 'delivery_date', type: GraphQLDateTime },
         ...timestamps,
         item: {
@@ -37,7 +37,7 @@ const { connectionType: PurchasedItemConnection } = connectionDefinitions({
     nodeType: PurchasedItem,
     connectionFields: {
         total: {
-            type: graphql.GraphQLNonNull(graphql.GraphQLInt)
+            type: GraphQLNonNull(GraphQLInt)
         }
     }
 });

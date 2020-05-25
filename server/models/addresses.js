@@ -1,4 +1,10 @@
-import * as graphql from 'graphql';
+import {
+    GraphQLFloat,
+    GraphQLObjectType,
+    GraphQLNonNull,
+    GraphQLInt,
+    GraphQLString
+} from 'graphql';
 import {
     connectionDefinitions,
     forwardConnectionArgs,
@@ -9,7 +15,7 @@ import { StoreConnection } from './stores';
 import { SupplierConnection } from './suppliers';
 import { timestamps } from './timestamps';
 
-const Address = new graphql.GraphQLObjectType({
+const Address = new GraphQLObjectType({
     name: 'Address',
     interface: [nodeInterface],
     args: forwardConnectionArgs,
@@ -19,16 +25,16 @@ const Address = new graphql.GraphQLObjectType({
         id: 'asc'
     },
     fields: () => ({
-        id: { type: graphql.GraphQLInt },
-        address1: { sqlColumn: 'address_1', type: graphql.GraphQLString },
-        address2: { sqlColumn: 'address_2', type: graphql.GraphQLString },
-        city: { type: graphql.GraphQLString },
-        country: { type: graphql.GraphQLString },
+        id: { type: GraphQLInt },
+        address1: { sqlColumn: 'address_1', type: GraphQLString },
+        address2: { sqlColumn: 'address_2', type: GraphQLString },
+        city: { type: GraphQLString },
+        country: { type: GraphQLString },
         lat: {
-            type: graphql.GraphQLNonNull(graphql.GraphQLFloat)
+            type: GraphQLNonNull(GraphQLFloat)
         },
         long: {
-            type: graphql.GraphQLNonNull(graphql.GraphQLFloat)
+            type: GraphQLNonNull(GraphQLFloat)
         },
         ...timestamps,
         suppliers: {
@@ -62,7 +68,7 @@ const { connectionType: AddressConnection } = connectionDefinitions({
     nodeType: Address,
     connectionFields: {
         total: {
-            type: graphql.GraphQLNonNull(graphql.GraphQLInt)
+            type: GraphQLNonNull(GraphQLInt)
         }
     }
 });

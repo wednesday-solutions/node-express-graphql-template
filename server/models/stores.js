@@ -1,4 +1,9 @@
-import * as graphql from 'graphql';
+import {
+    GraphQLString,
+    GraphQLObjectType,
+    GraphQLNonNull,
+    GraphQLInt
+} from 'graphql';
 import {
     connectionDefinitions,
     connectionFromArray,
@@ -9,7 +14,7 @@ import { StoreItemConnection } from './storeItems';
 import { Address } from './addresses';
 import { timestamps } from './timestamps';
 
-const Store = new graphql.GraphQLObjectType({
+const Store = new GraphQLObjectType({
     name: 'Store',
     interface: [nodeInterface],
     args: forwardConnectionArgs,
@@ -19,8 +24,8 @@ const Store = new graphql.GraphQLObjectType({
         id: 'asc'
     },
     fields: () => ({
-        id: { type: graphql.GraphQLInt },
-        name: { type: graphql.GraphQLString },
+        id: { type: GraphQLInt },
+        name: { type: GraphQLString },
         ...timestamps,
         address: {
             type: Address,
@@ -48,7 +53,7 @@ const { connectionType: StoreConnection } = connectionDefinitions({
     nodeType: Store,
     connectionFields: {
         total: {
-            type: graphql.GraphQLNonNull(graphql.GraphQLInt)
+            type: GraphQLNonNull(GraphQLInt)
         }
     }
 });

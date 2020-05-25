@@ -1,4 +1,9 @@
-import * as graphql from 'graphql';
+import {
+    GraphQLObjectType,
+    GraphQLNonNull,
+    GraphQLInt,
+    GraphQLString
+} from 'graphql';
 import { connectionDefinitions, forwardConnectionArgs } from 'graphql-relay';
 
 import { nodeInterface } from 'server/node';
@@ -6,7 +11,7 @@ import { StoreItemConnection } from './storeItems';
 import { SupplierItemConnection } from './supplierItems';
 import { timestamps } from './timestamps';
 
-const Item = new graphql.GraphQLObjectType({
+const Item = new GraphQLObjectType({
     name: 'Item',
     description: 'items on sale',
     sqlTable: 'items',
@@ -15,10 +20,10 @@ const Item = new graphql.GraphQLObjectType({
     sqlPaginate: true,
     orderBy: 'id',
     fields: () => ({
-        id: { type: graphql.GraphQLInt },
-        name: { type: graphql.GraphQLString },
-        category: { type: graphql.GraphQLString },
-        amount: { type: graphql.GraphQLInt },
+        id: { type: GraphQLInt },
+        name: { type: GraphQLString },
+        category: { type: GraphQLString },
+        amount: { type: GraphQLInt },
         ...timestamps,
         supplierItems: {
             description: 'A list of suppliers that have this item',
@@ -52,7 +57,7 @@ const { connectionType: ItemConnection } = connectionDefinitions({
     name: 'item',
     connectionFields: {
         total: {
-            type: graphql.GraphQLNonNull(graphql.GraphQLInt)
+            type: GraphQLNonNull(GraphQLInt)
         }
     }
 });
