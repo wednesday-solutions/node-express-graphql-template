@@ -11,8 +11,8 @@ const SupplierItem = new graphql.GraphQLObjectType({
     args: connectionArgs,
     fields: () => ({
         id: { type: graphql.GraphQLInt },
-        supplier_id: { type: graphql.GraphQLInt },
-        item_id: { type: graphql.GraphQLInt },
+        supplierId: { sqlColumn: 'supplier_id', type: graphql.GraphQLInt },
+        itemId: { sqlColumn: 'item_id', type: graphql.GraphQLInt },
         ...timestamps,
         item: {
             type: Item,

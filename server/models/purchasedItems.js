@@ -18,7 +18,7 @@ const PurchasedItem = new graphql.GraphQLObjectType({
         id: { type: graphql.GraphQLInt },
         price: { type: graphql.GraphQLInt },
         discount: { type: graphql.GraphQLInt },
-        delivery_date: { type: GraphQLDateTime },
+        deliveryDate: { sqlColumn: 'delivery_date', type: GraphQLDateTime },
         ...timestamps,
         item: {
             type: Item,

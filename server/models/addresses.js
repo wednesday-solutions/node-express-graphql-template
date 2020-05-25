@@ -20,8 +20,8 @@ const Address = new graphql.GraphQLObjectType({
     },
     fields: () => ({
         id: { type: graphql.GraphQLInt },
-        address_1: { type: graphql.GraphQLString },
-        address_2: { type: graphql.GraphQLString },
+        address1: { sqlColumn: 'address_1', type: graphql.GraphQLString },
+        address2: { sqlColumn: 'address_2', type: graphql.GraphQLString },
         city: { type: graphql.GraphQLString },
         country: { type: graphql.GraphQLString },
         lat: {
