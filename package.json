@@ -53,6 +53,7 @@
         "lodash": "^4.17.15",
         "moment": "^2.24.0",
         "pg": "^8.2.1",
+        "pg-escape": "^0.2.0",
         "pg-hstore": "^2.3.3",
         "pluralize": "^8.0.0",
         "postgres": "^1.0.2",
