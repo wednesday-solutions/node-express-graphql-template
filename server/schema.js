@@ -64,22 +64,27 @@ const CONNECTIONS = {
               // get list of purchased items by category
               where = addWhereClause(where, `"item".category = '${args.category}'`);
             }
+            aliasTable.children.forEach(alias => {
+              if (alias.name === 'suppliers' && alias.type === 'table') {
+                if (args.hasSupplier) {
+                  // get list of purchased items which have a supplier
+                  where = addWhereClause(where, `"supplier_items".id != 0`);
+                } else if (args.supplierId) {
+                  // get list of purchased items by supplierId
+                  where = addWhereClause(where, `"supplier_items".id = ${args.supplierId}`);
+                }
+              }
 
-            // get list of purchased items which have a supplier
-            if (args.hasSupplier) {
-              where = addWhereClause(where, `"supplier_items".id != 0`);
-            }
-            // get list of purchased items which have a store
-            if (args.hasStore) {
-              where = addWhereClause(where, `"store_items".id != 0`);
-            }
-
-            if (args.supplierId) {
-              where = addWhereClause(where, `"supplier_items".id = ${args.supplierId}`);
-            }
-            if (args.storeId) {
-              where = addWhereClause(where, `"store_items".id = ${args.storeId}`);
-            }
+              if (alias.name === 'stores' && alias.type === 'table') {
+                if (args.hasStore) {
+                  // get list of purchased items which have a store
+                  where = addWhereClause(where, `"store_items".id != 0`);
+                } else if (args.storeId) {
+                  // get list of purchased items by storeId
+                  where = addWhereClause(where, `"store_items".id = ${args.storeId}`);
+                }
+              }
+            });
           }
           if (!isEmpty(where)) {
             aliasTable.where = () => where;
