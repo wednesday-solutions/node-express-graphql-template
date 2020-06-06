@@ -5,14 +5,17 @@ import { Product } from './products';
 import { Supplier } from './suppliers';
 import { timestamps } from './timestamps';
 
+export const supplierProductFields = {
+  id: { type: GraphQLInt },
+  supplierId: { sqlColumn: 'supplier_id', type: GraphQLInt },
+  productId: { sqlColumn: 'product_id', type: GraphQLInt }
+};
 const SupplierProduct = new GraphQLObjectType({
   name: 'SupplierProduct',
   interface: [nodeInterface],
   args: connectionArgs,
   fields: () => ({
-    id: { type: GraphQLInt },
-    supplierId: { sqlColumn: 'supplier_id', type: GraphQLInt },
-    productId: { sqlColumn: 'product_id', type: GraphQLInt },
+    ...supplierProductFields,
     ...timestamps,
     product: {
       type: Product,

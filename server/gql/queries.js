@@ -4,15 +4,15 @@ import pluralize from 'pluralize';
 import joinMonster from 'join-monster';
 import { client } from 'database';
 import isEmpty from 'lodash/isEmpty';
-import { Aggregate } from 'models/aggregate';
+import { Aggregate } from 'gql/models/aggregate';
 import { nodeField } from 'gql/node';
-import { Product, ProductConnection } from 'models/products';
-import { PurchasedProduct, PurchasedProductConnection } from 'models/purchasedProducts';
-import { Address, AddressConnection } from 'models/addresses';
-import { StoreProduct, StoreProductConnection } from 'models/storeProducts';
-import { Store, StoreConnection } from 'models/stores';
-import { Supplier, SupplierConnection } from 'models/suppliers';
-import { SupplierProduct, SupplierProductConnection } from 'models/supplierProducts';
+import { Product, ProductConnection } from 'gql/models/products';
+import { PurchasedProduct, PurchasedProductConnection } from 'gql/models/purchasedProducts';
+import { Address, AddressConnection } from 'gql/models/addresses';
+import { StoreProduct, StoreProductConnection } from 'gql/models/storeProducts';
+import { Store, StoreConnection } from 'gql/models/stores';
+import { Supplier, SupplierConnection } from 'gql/models/suppliers';
+import { SupplierProduct, SupplierProductConnection } from 'gql/models/supplierProducts';
 import { addWhereClauseToAliasTable, addWhereClause } from 'utils';
 
 export const DB_TABLES = {
@@ -144,10 +144,13 @@ export const addQueries = () => {
         id: { type: GraphQLNonNull(GraphQLInt) }
       },
       where: (t, args, context, aliases) => {
+        let where = `TRUE`;
         if (DB_TABLES[table].where) {
-          return DB_TABLES[table].where(t, args, context, aliases);
+          where = DB_TABLES[table].where(t, args, context, aliases);
         }
-        return `${t}.id = ${args.id}`;
+        where = addWhereClause(where, `${t}.id = ${args.id}`);
+        where = addWhereClause(where, `${t}.deleted_at IS NULL `);
+        return where;
       },
       resolve: (parent, args, context, resolveInfo) =>
         joinMonster(
@@ -178,10 +181,12 @@ export const addQueries = () => {
         ...CONNECTIONS[table].args
       },
       where: (t, args, context, aliases) => {
+        let where = `TRUE`;
         if (CONNECTIONS[table].where) {
-          return CONNECTIONS[table].where(t, args, context, aliases);
+          where = CONNECTIONS[table].where(t, args, context, aliases);
         }
-        return ``;
+        where = addWhereClause(where, `${t}.deleted_at IS NULL `);
+        return where;
       },
       sqlPaginate: true,
       orderBy: 'id',

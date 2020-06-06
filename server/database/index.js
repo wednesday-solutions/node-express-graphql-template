@@ -1,11 +1,17 @@
 import Sequelize from 'sequelize';
 
 let client;
+export const getClient = () => {
+  if (!client) {
+    client = new Sequelize(process.env.POSTGRES_DB, process.env.POSTGRES_USER, process.env.POSTGRES_PASSWORD, {
+      host: process.env.POSTGRES_HOST,
+      dialect: 'postgres'
+    });
+  }
+  return client;
+};
 export const connect = async () => {
-  client = new Sequelize(process.env.POSTGRES_DB, process.env.POSTGRES_USER, process.env.POSTGRES_PASSWORD, {
-    host: process.env.POSTGRES_HOST,
-    dialect: 'postgres'
-  });
+  client = getClient();
   try {
     await client.authenticate();
     console.log('Connection has been established successfully.\n', {

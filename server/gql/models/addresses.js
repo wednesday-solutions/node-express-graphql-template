@@ -5,6 +5,19 @@ import { StoreConnection } from './stores';
 import { SupplierConnection } from './suppliers';
 import { timestamps } from './timestamps';
 
+export const addressFields = {
+  id: { type: GraphQLInt },
+  address1: { sqlColumn: 'address_1', type: GraphQLString },
+  address2: { sqlColumn: 'address_2', type: GraphQLString },
+  city: { type: GraphQLString },
+  country: { type: GraphQLString },
+  lat: {
+    type: GraphQLNonNull(GraphQLFloat)
+  },
+  long: {
+    type: GraphQLNonNull(GraphQLFloat)
+  }
+};
 const Address = new GraphQLObjectType({
   name: 'Address',
   interface: [nodeInterface],
@@ -15,17 +28,7 @@ const Address = new GraphQLObjectType({
     id: 'asc'
   },
   fields: () => ({
-    id: { type: GraphQLInt },
-    address1: { sqlColumn: 'address_1', type: GraphQLString },
-    address2: { sqlColumn: 'address_2', type: GraphQLString },
-    city: { type: GraphQLString },
-    country: { type: GraphQLString },
-    lat: {
-      type: GraphQLNonNull(GraphQLFloat)
-    },
-    long: {
-      type: GraphQLNonNull(GraphQLFloat)
-    },
+    ...addressFields,
     ...timestamps,
     suppliers: {
       type: SupplierConnection,

@@ -6,6 +6,12 @@ import { SupplierConnection } from './suppliers';
 import { StoreConnection } from './stores';
 import { timestamps } from './timestamps';
 
+export const productFields = {
+  id: { type: GraphQLInt },
+  name: { type: GraphQLString },
+  category: { type: GraphQLString },
+  amount: { type: GraphQLInt }
+};
 const Product = new GraphQLObjectType({
   name: 'Product',
   description: 'products on sale',
@@ -15,10 +21,7 @@ const Product = new GraphQLObjectType({
   sqlPaginate: true,
   orderBy: 'id',
   fields: () => ({
-    id: { type: GraphQLInt },
-    name: { type: GraphQLString },
-    category: { type: GraphQLString },
-    amount: { type: GraphQLInt },
+    ...productFields,
     ...timestamps,
     suppliers: {
       type: SupplierConnection,

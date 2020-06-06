@@ -1,23 +1,26 @@
 import { GraphQLString, GraphQLObjectType, GraphQLNonNull, GraphQLInt } from 'graphql';
 import { connectionDefinitions, forwardConnectionArgs } from 'graphql-relay';
 import { nodeInterface } from 'gql/node';
-import { ProductConnection } from './products';
 import { Address } from './addresses';
+import { ProductConnection } from './products';
 import { timestamps } from './timestamps';
 
-const Store = new GraphQLObjectType({
-  name: 'Store',
+export const supplierFields = {
+  id: { type: GraphQLInt },
+  name: { type: GraphQLString },
+  addressId: { sqlColumn: 'address_id', type: GraphQLInt }
+};
+const Supplier = new GraphQLObjectType({
+  name: 'Supplier',
   interface: [nodeInterface],
   args: forwardConnectionArgs,
   sqlPaginate: true,
-  orderBy: 'id',
   fields: () => ({
-    id: { type: GraphQLInt },
-    name: { type: GraphQLString },
+    ...supplierFields,
     ...timestamps,
     address: {
       type: Address,
-      sqlJoin: (storeTable, addressTable, args) => `${addressTable}.id = ${storeTable}.address_id`
+      sqlJoin: (supplierTable, addressTable, args) => `${addressTable}.id = ${supplierTable}.address_id`
     },
     products: {
       type: ProductConnection,
@@ -25,9 +28,9 @@ const Store = new GraphQLObjectType({
       orderBy: 'id',
       args: forwardConnectionArgs,
       junction: {
-        sqlTable: 'store_products',
+        sqlTable: 'supplier_products',
         sqlJoins: [
-          (storeTable, junctionTable, args) => `${storeTable}.id = ${junctionTable}.store_id`,
+          (supplierTable, junctionTable, args) => `${supplierTable}.id = ${junctionTable}.supplier_id`,
           (junctionTable, productTable, args) => `${productTable}.id = ${junctionTable}.product_id`
         ]
       }
@@ -35,13 +38,13 @@ const Store = new GraphQLObjectType({
   })
 });
 
-Store._typeConfig = {
-  sqlTable: 'stores',
+Supplier._typeConfig = {
+  sqlTable: 'suppliers',
   uniqueKey: 'id'
 };
 
-const { connectionType: StoreConnection } = connectionDefinitions({
-  nodeType: Store,
+const { connectionType: SupplierConnection } = connectionDefinitions({
+  nodeType: Supplier,
   connectionFields: {
     total: {
       type: GraphQLNonNull(GraphQLInt)
@@ -49,4 +52,4 @@ const { connectionType: StoreConnection } = connectionDefinitions({
   }
 });
 
-export { Store, StoreConnection };
+export { Supplier, SupplierConnection };

@@ -5,6 +5,12 @@ import { Product } from './products';
 import { timestamps } from './timestamps';
 import { GraphQLDateTime } from 'graphql-iso-date';
 
+export const purchasedProductFields = {
+  id: { type: GraphQLInt },
+  price: { type: GraphQLInt },
+  discount: { type: GraphQLInt },
+  deliveryDate: { sqlColumn: 'delivery_date', type: GraphQLDateTime }
+};
 const PurchasedProduct = new GraphQLObjectType({
   name: 'PurchasedProduct',
   interface: [nodeInterface],
@@ -15,10 +21,7 @@ const PurchasedProduct = new GraphQLObjectType({
     id: 'asc'
   },
   fields: () => ({
-    id: { type: GraphQLInt },
-    price: { type: GraphQLInt },
-    discount: { type: GraphQLInt },
-    deliveryDate: { sqlColumn: 'delivery_date', type: GraphQLDateTime },
+    ...purchasedProductFields,
     ...timestamps,
     product: {
       type: Product,
