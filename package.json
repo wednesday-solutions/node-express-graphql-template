@@ -111,6 +111,7 @@
     "utils": "dist-server/utils",
     "database": "dist-server/database",
     "models": "dist-server/models",
+    "gql": "dist-server/gql",
     "config": "config"
   },
   "babel": {

@@ -1,9 +1,11 @@
-import { GraphQLNonNull, GraphQLInt, GraphQLString, GraphQLBoolean } from 'graphql';
+import { GraphQLNonNull, GraphQLObjectType, GraphQLInt, GraphQLString, GraphQLBoolean } from 'graphql';
 import camelCase from 'lodash/camelCase';
 import pluralize from 'pluralize';
 import joinMonster from 'join-monster';
 import { client } from 'database';
 import isEmpty from 'lodash/isEmpty';
+import { Aggregate } from 'models/aggregate';
+import { nodeField } from 'gql/node';
 import { Product, ProductConnection } from 'models/products';
 import { PurchasedProduct, PurchasedProductConnection } from 'models/purchasedProducts';
 import { Address, AddressConnection } from 'models/addresses';
@@ -11,9 +13,9 @@ import { StoreProduct, StoreProductConnection } from 'models/storeProducts';
 import { Store, StoreConnection } from 'models/stores';
 import { Supplier, SupplierConnection } from 'models/suppliers';
 import { SupplierProduct, SupplierProductConnection } from 'models/supplierProducts';
-import { addWhereClause } from 'utils';
+import { addWhereClauseToAliasTable, addWhereClause } from 'utils';
 
-const DB_TABLES = {
+export const DB_TABLES = {
   Product: {
     table: Product
   },
@@ -49,7 +51,7 @@ const DB_TABLES = {
   }
 };
 
-const CONNECTIONS = {
+export const CONNECTIONS = {
   Product: {
     list: ProductConnection
   },
@@ -71,7 +73,7 @@ const CONNECTIONS = {
                   where = addWhereClause(where, `"supplier_products".id != 0`);
                 } else if (args.supplierId) {
                   // get list of purchased products by supplierId
-                  where = addWhereClause(where, `"supplier_products".id = ${args.supplierId}`);
+                  where = addWhereClause(where, `"supplier_products".supplier_id = ${args.supplierId}`);
                 }
               }
 
@@ -81,14 +83,12 @@ const CONNECTIONS = {
                   where = addWhereClause(where, `"store_products".id != 0`);
                 } else if (args.storeId) {
                   // get list of purchased products by storeId
-                  where = addWhereClause(where, `"store_products".id = ${args.storeId}`);
+                  where = addWhereClause(where, `"store_products".store_id = ${args.storeId}`);
                 }
               }
             });
           }
-          if (!isEmpty(where)) {
-            aliasTable.where = () => where;
-          }
+          aliasTable.where = () => where;
         });
       }
     },
@@ -114,11 +114,13 @@ const CONNECTIONS = {
   Supplier: {
     list: SupplierConnection,
     where: (t, args, context, aliases) => {
-      const where = ``;
-      if (args.productId) {
-        // where +=`${t}.product_id = ${args.productId}`
-      }
-      return `${where}`;
+      aliases.children.forEach(aliasTable => {
+        let w = 'TRUE';
+        w = addWhereClauseToAliasTable(aliasTable, w, 'products.id', args.productId);
+        if (!isEmpty(w)) {
+          aliasTable.where = () => w;
+        }
+      });
     },
     args: {
       productId: {
@@ -200,3 +202,12 @@ export const addQueries = () => {
   });
   return query;
 };
+
+export const QueryRoot = new GraphQLObjectType({
+  name: 'Query',
+  fields: () => ({
+    node: nodeField,
+    ...addQueries(),
+    aggregate: Aggregate
+  })
+});

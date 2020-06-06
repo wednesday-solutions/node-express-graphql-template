@@ -1,6 +1,6 @@
 import { GraphQLString, GraphQLObjectType, GraphQLNonNull, GraphQLInt } from 'graphql';
 import { connectionDefinitions, forwardConnectionArgs } from 'graphql-relay';
-import { nodeInterface } from 'server/node';
+import { nodeInterface } from 'gql/node';
 import { Address } from './addresses';
 import { ProductConnection } from './products';
 import { timestamps } from './timestamps';
