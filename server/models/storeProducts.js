@@ -1,12 +1,12 @@
 import { GraphQLObjectType, GraphQLNonNull, GraphQLInt } from 'graphql';
 import { connectionDefinitions, forwardConnectionArgs } from 'graphql-relay';
 import { nodeInterface } from 'server/node';
-import { Item } from './items';
+import { Product } from './products';
 import { Store } from './stores';
 import { timestamps } from './timestamps';
 
-const StoreItem = new GraphQLObjectType({
-  name: 'StoreItem',
+const StoreProduct = new GraphQLObjectType({
+  name: 'StoreProduct',
   interface: [nodeInterface],
   args: forwardConnectionArgs,
   sqlPaginate: true,
@@ -17,24 +17,24 @@ const StoreItem = new GraphQLObjectType({
   fields: () => ({
     id: { type: GraphQLInt },
     ...timestamps,
-    item: {
-      type: Item,
-      sqlJoin: (storeItemsTable, itemTable, args) => `${itemTable}.id = ${storeItemsTable}.item_id`
+    product: {
+      type: Product,
+      sqlJoin: (storeProductsTable, productTable, args) => `${productTable}.id = ${storeProductsTable}.product_id`
     },
     store: {
       type: Store,
-      sqlJoin: (storeItemsTable, storeTable, args) => `${storeTable}.id = ${storeItemsTable}.store_id`
+      sqlJoin: (storeProductsTable, storeTable, args) => `${storeTable}.id = ${storeProductsTable}.store_id`
     }
   })
 });
 
-StoreItem._typeConfig = {
-  sqlTable: 'store_items',
+StoreProduct._typeConfig = {
+  sqlTable: 'store_products',
   uniqueKey: 'id'
 };
 
-const { connectionType: StoreItemConnection } = connectionDefinitions({
-  nodeType: StoreItem,
+const { connectionType: StoreProductConnection } = connectionDefinitions({
+  nodeType: StoreProduct,
   connectionFields: {
     total: {
       type: GraphQLNonNull(GraphQLInt)
@@ -42,4 +42,4 @@ const { connectionType: StoreItemConnection } = connectionDefinitions({
   }
 });
 
-export { StoreItem, StoreItemConnection };
+export { StoreProduct, StoreProductConnection };

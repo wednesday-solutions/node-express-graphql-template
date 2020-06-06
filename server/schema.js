@@ -4,27 +4,27 @@ import pluralize from 'pluralize';
 import joinMonster from 'join-monster';
 import { client } from 'database';
 import isEmpty from 'lodash/isEmpty';
-import { Item, ItemConnection } from 'models/items';
-import { PurchasedItem, PurchasedItemConnection } from 'models/purchasedItems';
+import { Product, ProductConnection } from 'models/products';
+import { PurchasedProduct, PurchasedProductConnection } from 'models/purchasedProducts';
 import { Address, AddressConnection } from 'models/addresses';
-import { StoreItem, StoreItemConnection } from 'models/storeItems';
+import { StoreProduct, StoreProductConnection } from 'models/storeProducts';
 import { Store, StoreConnection } from 'models/stores';
 import { Supplier, SupplierConnection } from 'models/suppliers';
-import { SupplierItem, SupplierItemConnection } from 'models/supplierItems';
+import { SupplierProduct, SupplierProductConnection } from 'models/supplierProducts';
 import { addWhereClause } from 'utils';
 
 const DB_TABLES = {
-  Item: {
-    table: Item
+  Product: {
+    table: Product
   },
-  PurchasedItem: {
-    table: PurchasedItem
+  PurchasedProduct: {
+    table: PurchasedProduct
   },
   Address: {
     table: Address
   },
-  StoreItem: {
-    table: StoreItem
+  StoreProduct: {
+    table: StoreProduct
   },
   Store: {
     table: Store
@@ -33,55 +33,55 @@ const DB_TABLES = {
     table: Supplier,
     where: (t, args, context) => {
       let where = ``;
-      if (args.itemId) {
-        where += `and ${t}.item_id=${args.itemId}`;
+      if (args.productId) {
+        where += `and ${t}.product_id=${args.productId}`;
       }
       return escape(`${t}.id=${args.id} ${where}`);
     },
     args: {
-      itemId: {
+      productId: {
         type: GraphQLString
       }
     }
   },
-  SupplierItem: {
-    table: SupplierItem
+  SupplierProduct: {
+    table: SupplierProduct
   }
 };
 
 const CONNECTIONS = {
-  Item: {
-    list: ItemConnection
+  Product: {
+    list: ProductConnection
   },
-  PurchasedItem: {
-    list: PurchasedItemConnection,
+  PurchasedProduct: {
+    list: PurchasedProductConnection,
     where: (t, args, context, aliases) => {
       if (Object.keys(args).length) {
         let where = `TRUE`;
         aliases.children.forEach(aliasTable => {
-          if (aliasTable.name === 'items' && aliasTable.type === 'table') {
+          if (aliasTable.name === 'products' && aliasTable.type === 'table') {
             if (args.category) {
-              // get list of purchased items by category
-              where = addWhereClause(where, `"item".category = '${args.category}'`);
+              // get list of purchased products by category
+              where = addWhereClause(where, `"product".category = '${args.category}'`);
             }
             aliasTable.children.forEach(alias => {
               if (alias.name === 'suppliers' && alias.type === 'table') {
                 if (args.hasSupplier) {
-                  // get list of purchased items which have a supplier
-                  where = addWhereClause(where, `"supplier_items".id != 0`);
+                  // get list of purchased products which have a supplier
+                  where = addWhereClause(where, `"supplier_products".id != 0`);
                 } else if (args.supplierId) {
-                  // get list of purchased items by supplierId
-                  where = addWhereClause(where, `"supplier_items".id = ${args.supplierId}`);
+                  // get list of purchased products by supplierId
+                  where = addWhereClause(where, `"supplier_products".id = ${args.supplierId}`);
                 }
               }
 
               if (alias.name === 'stores' && alias.type === 'table') {
                 if (args.hasStore) {
-                  // get list of purchased items which have a store
-                  where = addWhereClause(where, `"store_items".id != 0`);
+                  // get list of purchased products which have a store
+                  where = addWhereClause(where, `"store_products".id != 0`);
                 } else if (args.storeId) {
-                  // get list of purchased items by storeId
-                  where = addWhereClause(where, `"store_items".id = ${args.storeId}`);
+                  // get list of purchased products by storeId
+                  where = addWhereClause(where, `"store_products".id = ${args.storeId}`);
                 }
               }
             });
@@ -105,8 +105,8 @@ const CONNECTIONS = {
   Address: {
     list: AddressConnection
   },
-  StoreItem: {
-    list: StoreItemConnection
+  StoreProduct: {
+    list: StoreProductConnection
   },
   Store: {
     list: StoreConnection
@@ -115,19 +115,19 @@ const CONNECTIONS = {
     list: SupplierConnection,
     where: (t, args, context, aliases) => {
       const where = ``;
-      if (args.itemId) {
-        // where +=`${t}.item_id = ${args.itemId}`
+      if (args.productId) {
+        // where +=`${t}.product_id = ${args.productId}`
       }
       return `${where}`;
     },
     args: {
-      itemId: {
+      productId: {
         type: GraphQLInt
       }
     }
   },
-  SupplierItem: {
-    list: SupplierItemConnection
+  SupplierProduct: {
+    list: SupplierProductConnection
   }
 };
 

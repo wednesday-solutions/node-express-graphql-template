@@ -7,7 +7,7 @@ module.exports = {
       category: faker.commerce.department(),
       amount: parseFloat(faker.commerce.price()) * 100
     }));
-    return queryInterface.bulkInsert('items', arr, {});
+    return queryInterface.bulkInsert('products', arr, {});
   },
-  down: queryInterface => queryInterface.bulkDelete('items', null, {})
+  down: queryInterface => queryInterface.bulkDelete('products', null, {})
 };

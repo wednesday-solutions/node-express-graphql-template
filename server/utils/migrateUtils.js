@@ -3,8 +3,8 @@ const shell = require('shelljs');
 
 function getVersion(currentFileName) {
   let version;
-  shell.ls(`./migrations`).forEach((item, index) => {
-    if (item === currentFileName) {
+  shell.ls(`./migrations`).forEach((product, index) => {
+    if (product === currentFileName) {
       version = index + 1;
     }
   });

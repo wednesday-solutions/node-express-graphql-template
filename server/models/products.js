@@ -6,10 +6,10 @@ import { SupplierConnection } from './suppliers';
 import { StoreConnection } from './stores';
 import { timestamps } from './timestamps';
 
-const Item = new GraphQLObjectType({
-  name: 'Item',
-  description: 'items on sale',
-  sqlTable: 'items',
+const Product = new GraphQLObjectType({
+  name: 'Product',
+  description: 'products on sale',
+  sqlTable: 'products',
   uniqueKey: 'id',
   interface: [nodeInterface],
   sqlPaginate: true,
@@ -26,9 +26,9 @@ const Item = new GraphQLObjectType({
       orderBy: 'id',
       args: forwardConnectionArgs,
       junction: {
-        sqlTable: 'supplier_items',
+        sqlTable: 'supplier_products',
         sqlJoins: [
-          (itemsTable, junctionTable, args) => `${itemsTable}.id = ${junctionTable}.item_id`,
+          (productsTable, junctionTable, args) => `${productsTable}.id = ${junctionTable}.product_id`,
           (junctionTable, supplierTable, args) => `${supplierTable}.id = ${junctionTable}.supplier_id`
         ]
       }
@@ -39,9 +39,9 @@ const Item = new GraphQLObjectType({
       orderBy: 'id',
       args: forwardConnectionArgs,
       junction: {
-        sqlTable: 'store_items',
+        sqlTable: 'store_products',
         sqlJoins: [
-          (itemsTable, junctionTable, args) => `${itemsTable}.id = ${junctionTable}.item_id`,
+          (productsTable, junctionTable, args) => `${productsTable}.id = ${junctionTable}.product_id`,
           (junctionTable, storeTable, args) => `${storeTable}.id = ${junctionTable}.store_id`
         ]
       }
@@ -49,14 +49,14 @@ const Item = new GraphQLObjectType({
   })
 });
 
-Item._typeConfig = {
-  sqlTable: 'items',
+Product._typeConfig = {
+  sqlTable: 'products',
   uniqueKey: 'id'
 };
 
-const { connectionType: ItemConnection } = connectionDefinitions({
-  nodeType: Item,
-  name: 'item',
+const { connectionType: ProductConnection } = connectionDefinitions({
+  nodeType: Product,
+  name: 'product',
   connectionFields: {
     total: {
       type: GraphQLNonNull(GraphQLInt)
@@ -64,4 +64,4 @@ const { connectionType: ItemConnection } = connectionDefinitions({
   }
 });
 
-export { Item, ItemConnection };
+export { Product, ProductConnection };

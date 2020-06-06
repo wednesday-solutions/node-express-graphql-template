@@ -1,12 +1,12 @@
 import { GraphQLObjectType, GraphQLNonNull, GraphQLInt } from 'graphql';
 import { connectionDefinitions, forwardConnectionArgs } from 'graphql-relay';
 import { nodeInterface } from 'server/node';
-import { Item } from './items';
+import { Product } from './products';
 import { timestamps } from './timestamps';
 import { GraphQLDateTime } from 'graphql-iso-date';
 
-const PurchasedItem = new GraphQLObjectType({
-  name: 'PurchasedItem',
+const PurchasedProduct = new GraphQLObjectType({
+  name: 'PurchasedProduct',
   interface: [nodeInterface],
   args: forwardConnectionArgs,
   sqlPaginate: true,
@@ -20,20 +20,20 @@ const PurchasedItem = new GraphQLObjectType({
     discount: { type: GraphQLInt },
     deliveryDate: { sqlColumn: 'delivery_date', type: GraphQLDateTime },
     ...timestamps,
-    item: {
-      type: Item,
-      sqlJoin: (purchasedItemTable, itemTable, args) => `${itemTable}.id = ${purchasedItemTable}.item_id`
+    product: {
+      type: Product,
+      sqlJoin: (purchasedProductTable, productTable, args) => `${productTable}.id = ${purchasedProductTable}.product_id`
     }
   })
 });
 
-PurchasedItem._typeConfig = {
-  sqlTable: 'purchased_items',
+PurchasedProduct._typeConfig = {
+  sqlTable: 'purchased_products',
   uniqueKey: 'id'
 };
 
-const { connectionType: PurchasedItemConnection } = connectionDefinitions({
-  nodeType: PurchasedItem,
+const { connectionType: PurchasedProductConnection } = connectionDefinitions({
+  nodeType: PurchasedProduct,
   connectionFields: {
     total: {
       type: GraphQLNonNull(GraphQLInt)
@@ -41,4 +41,4 @@ const { connectionType: PurchasedItemConnection } = connectionDefinitions({
   }
 });
 
-export { PurchasedItem, PurchasedItemConnection };
+export { PurchasedProduct, PurchasedProductConnection };

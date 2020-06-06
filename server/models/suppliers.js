@@ -2,7 +2,7 @@ import { GraphQLString, GraphQLObjectType, GraphQLNonNull, GraphQLInt } from 'gr
 import { connectionDefinitions, forwardConnectionArgs } from 'graphql-relay';
 import { nodeInterface } from 'server/node';
 import { Address } from './addresses';
-import { ItemConnection } from './items';
+import { ProductConnection } from './products';
 import { timestamps } from './timestamps';
 
 const Supplier = new GraphQLObjectType({
@@ -18,16 +18,16 @@ const Supplier = new GraphQLObjectType({
       type: Address,
       sqlJoin: (supplierTable, addressTable, args) => `${addressTable}.id = ${supplierTable}.address_id`
     },
-    items: {
-      type: ItemConnection,
+    products: {
+      type: ProductConnection,
       sqlPaginate: true,
       orderBy: 'id',
       args: forwardConnectionArgs,
       junction: {
-        sqlTable: 'supplier_items',
+        sqlTable: 'supplier_products',
         sqlJoins: [
           (supplierTable, junctionTable, args) => `${supplierTable}.id = ${junctionTable}.supplier_id`,
-          (junctionTable, itemTable, args) => `${itemTable}.id = ${junctionTable}.item_id`
+          (junctionTable, productTable, args) => `${productTable}.id = ${junctionTable}.product_id`
         ]
       }
     }
