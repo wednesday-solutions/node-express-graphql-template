@@ -23,7 +23,13 @@ app.use(
   graphqlHTTP({
     schema: schema,
     graphiql: true,
-    customFormatErrorFn: e => e.message
+    customFormatErrorFn: e => {
+      if (process.env.ENVIRONMENT !== 'local') {
+        return e.message;
+      }
+      console.log({ e });
+      return e;
+    }
   })
 );
 app.listen(9000);

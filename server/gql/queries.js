@@ -3,7 +3,6 @@ import camelCase from 'lodash/camelCase';
 import pluralize from 'pluralize';
 import joinMonster from 'join-monster';
 import { client } from 'database';
-import isEmpty from 'lodash/isEmpty';
 import { Aggregate } from 'gql/models/aggregate';
 import { nodeField } from 'gql/node';
 import { Product, ProductConnection } from 'gql/models/products';
@@ -13,7 +12,7 @@ import { StoreProduct, StoreProductConnection } from 'gql/models/storeProducts';
 import { Store, StoreConnection } from 'gql/models/stores';
 import { Supplier, SupplierConnection } from 'gql/models/suppliers';
 import { SupplierProduct, SupplierProductConnection } from 'gql/models/supplierProducts';
-import { addWhereClauseToAliasTable, addWhereClause } from 'utils';
+import { addWhereClause } from 'utils';
 
 export const DB_TABLES = {
   Product: {
@@ -112,21 +111,7 @@ export const CONNECTIONS = {
     list: StoreConnection
   },
   Supplier: {
-    list: SupplierConnection,
-    where: (t, args, context, aliases) => {
-      aliases.children.forEach(aliasTable => {
-        let w = 'TRUE';
-        w = addWhereClauseToAliasTable(aliasTable, w, 'products.id', args.productId);
-        if (!isEmpty(w)) {
-          aliasTable.where = () => w;
-        }
-      });
-    },
-    args: {
-      productId: {
-        type: GraphQLInt
-      }
-    }
+    list: SupplierConnection
   },
   SupplierProduct: {
     list: SupplierProductConnection
@@ -146,7 +131,7 @@ export const addQueries = () => {
       where: (t, args, context, aliases) => {
         let where = `TRUE`;
         if (DB_TABLES[table].where) {
-          where = DB_TABLES[table].where(t, args, context, aliases);
+          where = DB_TABLES[table].where(t, args, context, aliases) || where;
         }
         where = addWhereClause(where, `${t}.id = ${args.id}`);
         where = addWhereClause(where, `${t}.deleted_at IS NULL `);
@@ -183,7 +168,7 @@ export const addQueries = () => {
       where: (t, args, context, aliases) => {
         let where = `TRUE`;
         if (CONNECTIONS[table].where) {
-          where = CONNECTIONS[table].where(t, args, context, aliases);
+          where = CONNECTIONS[table].where(t, args, context, aliases) || where;
         }
         where = addWhereClause(where, `${t}.deleted_at IS NULL `);
         return where;
