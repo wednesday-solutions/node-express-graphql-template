@@ -1,11 +1,12 @@
 import express from 'express';
 import graphqlHTTP from 'express-graphql';
-import { GraphQLSchema, GraphQLObjectType } from 'graphql';
+import { GraphQLSchema } from 'graphql';
 import dotenv from 'dotenv';
-import { Aggregate } from 'models/aggregate';
+
 import { connect } from 'database';
-import { nodeField } from './node';
-import { addQueries } from './schema';
+
+import { QueryRoot } from 'gql/queries';
+import { MutationRoot } from 'gql/mutations';
 
 // configure environment variables
 dotenv.config({ path: `.env.${process.env.ENVIRONMENT}` });
@@ -13,23 +14,22 @@ dotenv.config({ path: `.env.${process.env.ENVIRONMENT}` });
 // connect to database
 connect();
 
-const QueryRoot = new GraphQLObjectType({
-  name: 'Query',
-  fields: () => ({
-    node: nodeField,
-    ...addQueries(),
-    aggregate: Aggregate
-  })
-});
-
-const schema = new GraphQLSchema({ query: QueryRoot });
+// create the graphQL schema
+const schema = new GraphQLSchema({ query: QueryRoot, mutation: MutationRoot });
 
 const app = express();
 app.use(
   '/graphql',
   graphqlHTTP({
     schema: schema,
-    graphiql: true
+    graphiql: true,
+    customFormatErrorFn: e => {
+      if (process.env.ENVIRONMENT !== 'local') {
+        return e.message;
+      }
+      console.log({ e });
+      return e;
+    }
   })
 );
 app.listen(9000);

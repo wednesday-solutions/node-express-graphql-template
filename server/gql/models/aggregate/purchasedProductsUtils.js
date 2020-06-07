@@ -12,7 +12,7 @@ export const handleAggregateQueries = args => {
     where = addWhereClause(where, `created_at < :endDate`);
   }
   if (args?.category) {
-    join = `LEFT JOIN items on items.id=purchased_items.item_id`;
+    join = `LEFT JOIN products on products.id=purchased_products.product_id`;
     where = addWhereClause(where, `category = :category`);
   }
   return { where, join };
