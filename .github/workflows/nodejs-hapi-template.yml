@@ -1,4 +1,4 @@
-name: Nodejs Hapi Template
+name: Noe Express graphQL Template
 
 on: push
 
@@ -22,9 +22,5 @@ jobs:
         CI: true
     - name: Lint
       run: npm run lint
-      env:
-        CI: true
-    - name: Test
-      run: npm run test
       env:
         CI: true
