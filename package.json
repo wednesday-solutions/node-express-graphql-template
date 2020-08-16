@@ -92,8 +92,7 @@
   "lint-staged": {
     "*.js": [
       "npm run lint:eslint:fix",
-      "git add --force",
-      "jest --findRelatedTests $STAGED_FILES"
+      "git add --force"
     ],
     "*.json": [
       "prettier --write",

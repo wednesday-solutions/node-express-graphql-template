@@ -1,4 +1,6 @@
-# Sales Reporting Dashboard
+# Node Express GraphQL Template
+
+![Node Express GraphQL Template CI](https://github.com/wednesday-solutions/node-express-graphql-template/workflows/Node%20Express%20GraphQL%20Template%20CI/badge.svg)
 
 ## A relay compliant server built using
 - Node
