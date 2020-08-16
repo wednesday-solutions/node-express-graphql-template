@@ -19,9 +19,9 @@ import {
 import { DeletedId, deleteUsingId, updateUsingId } from 'database/dbUtils';
 
 export const createResolvers = model => ({
-  createResolve: (parent, args, context, resolveInfo) => model.create(args),
-  updateResolve: (parent, args, context, resolveInfo) => updateUsingId(model, args),
-  deleteResolve: (parent, args, context, resolveInfo) => deleteUsingId(model, args)
+  createResolver: (parent, args, context, resolveInfo) => model.create(args),
+  updateResolver: (parent, args, context, resolveInfo) => updateUsingId(model, args),
+  deleteResolver: (parent, args, context, resolveInfo) => deleteUsingId(model, args)
 });
 export const DB_TABLES = {
   Product: {
@@ -68,7 +68,7 @@ export const addMutations = () => {
     mutations[camelCase(`create${table}`)] = {
       type: DB_TABLES[table].table,
       args: DB_TABLES[table].args,
-      resolve: DB_TABLES[table].createResolve
+      resolve: DB_TABLES[table].createResolver
     };
     mutations[camelCase(`update${table}`)] = {
       type: DB_TABLES[table].table,
@@ -76,14 +76,14 @@ export const addMutations = () => {
         ...DB_TABLES[table].args,
         id: { type: GraphQLNonNull(GraphQLInt) }
       },
-      resolve: DB_TABLES[table].updateResolve
+      resolve: DB_TABLES[table].updateResolver
     };
     mutations[camelCase(`delete${table}`)] = {
       type: DeletedId,
       args: {
         id: { type: GraphQLNonNull(GraphQLInt) }
       },
-      resolve: DB_TABLES[table].deleteResolve
+      resolve: DB_TABLES[table].deleteResolver
     };
   });
   return mutations;
