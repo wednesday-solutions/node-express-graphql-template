@@ -5,6 +5,13 @@ import dotenv from 'dotenv';
 
 import { QueryRoot } from 'gql/queries';
 import { MutationRoot } from 'gql/mutations';
+import { client } from 'database';
+
+const connect = async () => {
+  await client.authenticate();
+};
+
+connect();
 
 // configure environment variables
 dotenv.config({ path: `.env.${process.env.ENVIRONMENT}` });
@@ -25,7 +32,17 @@ testApp.use(
       console.log({ e });
       return e;
     }
-  })
+  }),
+  (request, response, next) => {
+    next();
+  }
 );
+
+testApp.use('/', (_, response) => {
+  response
+    .status(200)
+    .json({ message: 'OK' })
+    .send();
+});
 
 export { testApp };
