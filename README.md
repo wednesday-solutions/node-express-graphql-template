@@ -1,4 +1,4 @@
-<img align="left" src="https://github.com/wednesday-solutions/node-express-graphql-template/blob/develop/node_express_graphql_template_github.svg" width="480" height="460" />
+<img align="left" src="https://github.com/wednesday-solutions/node-express-graphql-template/blob/develop/node_express_graphql_template_github.svg" width="480" height="720" />
 
 <div>
   <a href="https://www.wednesday.is?utm_source=gthb&utm_medium=repo&utm_campaign=serverless" align="left" style="margin-left: 0;">
@@ -35,8 +35,6 @@ An enterprise Express GraphQL template application built using Nodejs showcasing
 
   <span>We’re always looking for people who value their work, so come and join us. <a href="https://www.wednesday.is/hiring">We are hiring!</a></span>
 </div>
-
-# Node Express GraphQL Template
 
 ![Node Express GraphQL Template CI](https://github.com/wednesday-solutions/node-express-graphql-template/workflows/Node%20Express%20GraphQL%20Template%20CI/badge.svg)
 
