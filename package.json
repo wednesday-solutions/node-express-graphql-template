@@ -50,7 +50,7 @@
     "graphql-relay": "^0.6.0",
     "join-monster": "^2.1.1",
     "loadash": "^1.0.0",
-    "lodash": "^4.17.15",
+    "lodash": "^4.17.19",
     "moment": "^2.26.0",
     "pg": "^8.2.1",
     "pg-escape": "^0.2.0",
