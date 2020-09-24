@@ -1,9 +1,5 @@
 module.exports = {
-  setupFilesAfterEnv: ['./jest.setup.js'],
-  clearMocks: true,
-  restoreMocks: true,
-  resetMocks: true,
-  globals: {
-    server: null
-  }
+  testEnvironment: 'node',
+  collectCoverageFrom: ['**/server/**', '!**/node_modules/**', '!**/dist-server/**'],
+  testPathIgnorePatterns: ['<rootDir>/dist-server/']
 };

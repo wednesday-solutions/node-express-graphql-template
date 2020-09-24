@@ -32,11 +32,11 @@
     "precommit": "lint:staged",
     "postinstall": "link-module-alias",
     "preinstall": "command -v link-module-alias && link-module-alias clean || true",
-    "test": "jest --coverage"
+    "test": "jest --coverage --detectOpenHandles"
   },
   "dependencies": {
     "@babel/cli": "^7.8.4",
-    "@babel/core": "^7.9.6",
+    "@babel/core": "^7.11.6",
     "@babel/plugin-proposal-class-properties": "^7.8.3",
     "@babel/plugin-proposal-optional-chaining": "^7.9.0",
     "@babel/plugin-syntax-optional-chaining": "^7.8.3",
@@ -57,14 +57,24 @@
     "pg-hstore": "^2.3.3",
     "pluralize": "^8.0.0",
     "postgres": "^1.0.2",
-    "sequelize": "^5.21.10"
+    "sequelize": "^5.21.10",
+    "superagent": "^6.1.0",
+    "supertest": "^4.0.2"
   },
   "devDependencies": {
-    "babel-core": "^6.26.3",
-    "babel-loader": "^8.1.0",
-    "babel-polyfill": "^6.26.0",
-    "babel-preset-es2015": "^6.24.1",
-    "babel-preset-stage-0": "^6.24.1",
+    "@babel/node": "^7.6.3",
+    "@babel/plugin-transform-modules-commonjs": "^7.10.4",
+    "@babel/plugin-transform-runtime": "^7.11.5",
+    "@babel/polyfill": "^7.11.5",
+    "@babel/preset-es2015": "^7.0.0-beta.53",
+    "@babel/preset-react": "^7.6.3",
+    "@babel/preset-stage-0": "^7.8.3",
+    "@babel/preset-stage-2": "^7.8.3",
+    "@babel/register": "^7.6.2",
+    "@babel/runtime": "^7.6.3",
+    "babel-jest": "^26.3.0",
+    "babel-loader": "^8.0.6",
+    "babel-plugin-root-import": "^6.5.0",
     "eslint": "5.16.0",
     "eslint-config-prettier": "^4.1.0",
     "eslint-config-prettier-standard": "^3.0.1",
@@ -76,6 +86,7 @@
     "eslint-plugin-standard": "^4.0.1",
     "faker": "^4.1.0",
     "jest": "^24.0.0",
+    "jest-environment-node": "^26.3.0",
     "kill-port": "^1.6.0",
     "link-module-alias": "^1.2.0",
     "lint-staged": "^9.4.2",
@@ -111,18 +122,5 @@
     "database": "dist-server/database",
     "gql": "dist-server/gql",
     "config": "config"
-  },
-  "babel": {
-    "presets": [
-      [
-        "@babel/preset-env",
-        {
-          "useBuiltIns": "entry",
-          "targets": {
-            "node": "current"
-          }
-        }
-      ]
-    ]
   }
 }
