@@ -1,4 +1,4 @@
-import { testApp } from './testApp';
+import { testApp } from 'utils/testUtils/testApp';
 var request = require('supertest');
 
 describe('Server', () => {
