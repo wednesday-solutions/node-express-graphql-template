@@ -27,7 +27,7 @@ describe('supplier graphQL-server-DB mutation tests', () => {
     }
   `;
 
-  it('should have a mutation to create a new product', async done => {
+  it('should have a mutation to create a new supplier', async done => {
     await request(testApp)
       .post('/graphql')
       .type('form')
@@ -56,7 +56,7 @@ describe('supplier graphQL-server-DB mutation tests', () => {
   }
 `;
 
-  it('should have a mutation to delete a product', async done => {
+  it('should have a mutation to delete a supplier', async done => {
     await request(testApp)
       .post('/graphql')
       .type('form')

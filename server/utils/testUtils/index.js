@@ -57,11 +57,6 @@ export function mockDBClient() {
   };
 }
 
-export const extractModels = callback => {
-  const models = mockDBClient;
-  callback(models);
-};
-
 export async function connectToMockDB() {
   const client = mockDBClient();
   try {

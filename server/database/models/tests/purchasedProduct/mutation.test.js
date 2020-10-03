@@ -10,7 +10,7 @@ beforeEach(() => {
   jest.doMock('database', () => ({ client, getClient: () => client }));
 });
 
-describe('Products graphQL-server-DB mutation tests', () => {
+describe('purchased_products graphQL-server-DB mutation tests', () => {
   const createPurchasedProductMut = `
     mutation {
       createPurchasedProduct (
@@ -28,7 +28,7 @@ describe('Products graphQL-server-DB mutation tests', () => {
     }
   `;
 
-  it('should have a mutation to create a new product', async done => {
+  it('should have a mutation to create a new purchased product', async done => {
     await request(testApp)
       .post('/graphql')
       .type('form')
@@ -57,7 +57,7 @@ describe('Products graphQL-server-DB mutation tests', () => {
   }
 `;
 
-  it('should have a mutation to delete a product', async done => {
+  it('should have a mutation to delete a purchased product', async done => {
     await request(testApp)
       .post('/graphql')
       .type('form')

@@ -6,7 +6,7 @@ var request = require('supertest');
 beforeEach(() => {
   const mockDBClient = require('database');
   const client = mockDBClient.client;
-  client.$queueQueryResult([{}, { rows: [{ ...mockQueryResults.storeProductsTable }] }]);
+  client.$queueQueryResult([{}, { rows: [{ ...mockQueryResults.suppliersTable }] }]);
   jest.doMock('database', () => ({ client, getClient: () => client }));
 });
 

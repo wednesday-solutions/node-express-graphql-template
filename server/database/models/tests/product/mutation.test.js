@@ -10,7 +10,7 @@ beforeEach(() => {
   jest.doMock('database', () => ({ client, getClient: () => client }));
 });
 
-describe('Products graphQL-server-DB mutation tests', () => {
+describe('Product graphQL-server-DB mutation tests', () => {
   const createProductMut = `
     mutation {
       createProduct (

@@ -10,7 +10,7 @@ beforeEach(() => {
   jest.doMock('database', () => ({ client, getClient: () => client }));
 });
 
-describe('Addresses graphQL-server-DB query tests', () => {
+describe('Address graphQL-server-DB query tests', () => {
   const addressOne = `
   query {
     address (id: 1) {
