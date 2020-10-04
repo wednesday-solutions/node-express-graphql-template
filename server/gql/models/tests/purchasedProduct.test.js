@@ -34,4 +34,12 @@ describe('Purchased Product introspection tests', () => {
     const hasCorrectFieldTypes = expectSameTypeNameOrKind(purchasedProductFieldTypes, fields);
     expect(hasCorrectFieldTypes).toBeTruthy();
   });
+
+  it('should have a product field of type Product', async () => {
+    const result = await graphqlSync({ schema, source: query });
+    const purchasedProductFieldTypes = get(result, 'data.__type.fields');
+    const productField = purchasedProductFieldTypes.find(field => field.name === 'product');
+    expect(productField.type.name).toBe('Product');
+    expect(productField.type.kind).toBe('OBJECT');
+  });
 });

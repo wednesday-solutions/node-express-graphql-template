@@ -34,4 +34,20 @@ describe('Supplier Product introspection tests', () => {
     const hasCorrectFieldTypes = expectSameTypeNameOrKind(supplierProductFieldTypes, fields);
     expect(hasCorrectFieldTypes).toBeTruthy();
   });
+
+  it('should have a product field of type Product', async () => {
+    const result = await graphqlSync({ schema, source: query });
+    const purchasedProductFieldTypes = get(result, 'data.__type.fields');
+    const productField = purchasedProductFieldTypes.find(field => field.name === 'product');
+    expect(productField.type.name).toBe('Product');
+    expect(productField.type.kind).toBe('OBJECT');
+  });
+
+  it('should have a supplier field of type Supplier', async () => {
+    const result = await graphqlSync({ schema, source: query });
+    const purchasedProductFieldTypes = get(result, 'data.__type.fields');
+    const productField = purchasedProductFieldTypes.find(field => field.name === 'supplier');
+    expect(productField.type.name).toBe('Supplier');
+    expect(productField.type.kind).toBe('OBJECT');
+  });
 });

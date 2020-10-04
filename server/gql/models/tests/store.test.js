@@ -34,4 +34,11 @@ describe('Store introspection tests', () => {
     const hasCorrectFieldTypes = expectSameTypeNameOrKind(storeFieldTypes, fields);
     expect(hasCorrectFieldTypes).toBeTruthy();
   });
+  it('should have a store connection', async () => {
+    const result = await graphqlSync({ schema, source: query });
+    const addressFieldTypes = get(result, 'data.__type.fields');
+    const storeField = addressFieldTypes.find(field => field.name === 'products');
+    expect(storeField.type.kind).toBe('OBJECT');
+    expect(storeField.type.name).toBe('productConnection');
+  });
 });
