@@ -6,29 +6,25 @@ var request = require('supertest');
 beforeEach(() => {
   const mockDBClient = require('database');
   const client = mockDBClient.client;
-  client.$queueQueryResult([{}, { rows: [{ ...mockQueryResults.addressesTable }] }]);
+  client.$queueQueryResult([{}, { rows: [{ ...mockQueryResults.supplierProductsTable }] }]);
   jest.doMock('database', () => ({ client, getClient: () => client }));
 });
 
-describe('Addresses graphQL-server-DB query tests', () => {
-  const addressOne = `
+describe('supplier_products graphQL-server-DB query tests', () => {
+  const supplierProductId = `
   query {
-    address (id: 1) {
+    supplierProduct (id: 1) {
       id
-      address1
+      productId
     }
   }
   `;
   const allFields = `
   query {
-    address (id: 1) {
+    supplierProduct (id: 1) {
       id
-      address1
-      address2
-      city
-      country
-      lat
-      long
+      productId
+      supplierId
       createdAt
       updatedAt
       deletedAt
@@ -40,12 +36,12 @@ describe('Addresses graphQL-server-DB query tests', () => {
     await request(testApp)
       .post('/graphql')
       .type('form')
-      .send({ query: addressOne })
+      .send({ query: supplierProductId })
       .set('Accept', 'application/json')
       .then(response => {
-        const result = get(response, 'body.data.address');
+        const result = get(response, 'body.data.supplierProduct');
         const resultFields = Object.keys(result);
-        expect(resultFields).toEqual(['id', 'address1']);
+        expect(resultFields).toEqual(['id', 'productId']);
         done();
       });
   });
@@ -57,20 +53,9 @@ describe('Addresses graphQL-server-DB query tests', () => {
       .send({ query: allFields })
       .set('Accept', 'application/json')
       .then(response => {
-        const result = get(response, 'body.data.address');
+        const result = get(response, 'body.data.supplierProduct');
         const resultFields = Object.keys(result);
-        expect(resultFields).toEqual([
-          'id',
-          'address1',
-          'address2',
-          'city',
-          'country',
-          'lat',
-          'long',
-          'createdAt',
-          'updatedAt',
-          'deletedAt'
-        ]);
+        expect(resultFields).toEqual(['id', 'productId', 'supplierId', 'createdAt', 'updatedAt', 'deletedAt']);
         done();
       });
   });

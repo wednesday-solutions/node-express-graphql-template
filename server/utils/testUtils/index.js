@@ -21,7 +21,13 @@ const suppliersTable = { id: 1, name: 'supplier name', addressId: 1 };
 const supplierProductsTable = { id: 1, productId: 1, supplierId: 1 };
 
 export const mockQueryResults = {
-  addressesTable
+  addressesTable,
+  productsTable,
+  purchasedProductsTable,
+  storesTable,
+  storeProductsTable,
+  suppliersTable,
+  supplierProductsTable
 };
 
 export function mockDBClient() {
