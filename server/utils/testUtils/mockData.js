@@ -1,8 +1,7 @@
 import range from 'lodash/range';
 import faker from 'faker';
 
-const testDate = new Date();
-export const addressesTable = range(1, 10).map((value, index) => ({
+export const addressesTable = range(1, 10).map((_, index) => ({
   id: index + 1,
   address1: faker.address.streetName(),
   address2: faker.address.streetAddress(),
@@ -11,9 +10,42 @@ export const addressesTable = range(1, 10).map((value, index) => ({
   lat: faker.address.latitude(),
   long: faker.address.longitude()
 }));
-export const productsTable = { id: 1, name: 'product name', category: 'product category', amount: 10 };
-export const purchasedProductsTable = { id: 1, productId: 1, price: 10, discount: 10, deliveryDate: testDate };
-export const storesTable = { id: 1, name: 'store name', addressId: 1 };
-export const storeProductsTable = { id: 1, productId: 1, storeId: 1 };
-export const suppliersTable = { id: 1, name: 'supplier name', addressId: 1 };
-export const supplierProductsTable = { id: 1, productId: 1, supplierId: 1 };
+
+export const productsTable = range(1, 10).map((_, index) => ({
+  id: index + 1,
+  name: faker.commerce.productName(),
+  category: faker.commerce.department(),
+  amount: faker.commerce.price()
+}));
+
+export const purchasedProductsTable = range(1, 10).map((_, index) => ({
+  id: index + 1,
+  productId: index + 1,
+  price: faker.commerce.price(),
+  discount: faker.random.number(20),
+  deliveryDate: faker.date.past(1)
+}));
+
+export const storesTable = range(1, 10).map((_, index) => ({
+  id: index + 1,
+  name: faker.company.companyName(),
+  addressId: index + 1
+}));
+
+export const storeProductsTable = range(1, 10).map((_, index) => ({
+  id: index + 1,
+  productId: index + 1,
+  storeId: index + 1
+}));
+
+export const suppliersTable = range(1, 10).map((_, index) => ({
+  id: index + 1,
+  name: faker.company.companyName(),
+  addressId: index + 1
+}));
+
+export const supplierProductsTable = range(1, 10).map((_, index) => ({
+  id: index + 1,
+  productId: index + 1,
+  supplierId: index + 1
+}));
