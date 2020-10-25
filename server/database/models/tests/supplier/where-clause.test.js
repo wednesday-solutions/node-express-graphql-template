@@ -27,10 +27,10 @@ describe('Supplier Table where clause tests', () => {
   where = addWhereClause(where, `\"supplier\".deleted_at IS NULL `);
 
   const sqlQuery = `SELECT
-    \"supplier\".\"id\" AS \"id\",
-    \"supplier\".\"name\" AS \"name\"
-  FROM suppliers \"supplier\"
-  WHERE ${where}`;
+  \"supplier\".\"id\" AS \"id\",
+  \"supplier\".\"name\" AS \"name\"
+FROM suppliers \"supplier\"
+WHERE ${where}`;
 
   it('should generate the correct sql query for supplier table', async done => {
     await request(testApp)
