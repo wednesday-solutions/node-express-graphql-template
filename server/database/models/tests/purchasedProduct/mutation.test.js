@@ -1,12 +1,12 @@
 import get from 'lodash/get';
-import { mockQueryResults } from 'server/utils/testUtils';
+import { purchasedProductsTable } from 'server/utils/testUtils/mockData';
 import { testApp } from 'server/utils/testUtils/testApp';
 var request = require('supertest');
 
 beforeEach(() => {
   const mockDBClient = require('database');
   const client = mockDBClient.client;
-  client.$queueQueryResult([{}, { rows: [{ ...mockQueryResults.purchasedProductsTable }] }]);
+  client.$queueQueryResult([{}, { rows: [{ ...purchasedProductsTable }] }]);
   jest.doMock('database', () => ({ client, getClient: () => client }));
 });
 

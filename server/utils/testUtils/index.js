@@ -1,47 +1,17 @@
 import isNil from 'lodash/isNil';
 
-const testDate = new Date();
-const addressesTable = {
-  id: 1,
-  address1: 'address one',
-  address2: 'addresss two',
-  city: 'city',
-  country: 'country',
-  lat: 1,
-  long: 1,
-  createdAt: testDate,
-  updatedAt: testDate,
-  deletedAt: null
-};
-const productsTable = { id: 1, name: 'product name', category: 'product category', amount: 10 };
-const purchasedProductsTable = { id: 1, productId: 1, price: 10, discount: 10, deliveryDate: testDate };
-const storesTable = { id: 1, name: 'store name', addressId: 1 };
-const storeProductsTable = { id: 1, productId: 1, storeId: 1 };
-const suppliersTable = { id: 1, name: 'supplier name', addressId: 1 };
-const supplierProductsTable = { id: 1, productId: 1, supplierId: 1 };
-
-export const mockQueryResults = {
-  addressesTable,
-  productsTable,
-  purchasedProductsTable,
-  storesTable,
-  storeProductsTable,
-  suppliersTable,
-  supplierProductsTable
-};
-
 export function mockDBClient() {
   var SequelizeMock = require('sequelize-mock');
   // Setup the mock database connection
   var DBConnectionMock = new SequelizeMock();
 
-  const addressesMock = DBConnectionMock.define('addresses', addressesTable);
-  const productsMock = DBConnectionMock.define('products', productsTable);
-  const purchasedProductsMock = DBConnectionMock.define('purchased_products', purchasedProductsTable);
-  const storesMock = DBConnectionMock.define('stores', storesTable);
-  const storeProductsMock = DBConnectionMock.define('store_products', storeProductsTable);
-  const suppliersMock = DBConnectionMock.define('suppliers', suppliersTable);
-  const supplierProductsMock = DBConnectionMock.define('supplier_products', supplierProductsTable);
+  const addressesMock = DBConnectionMock.define('addresses');
+  const productsMock = DBConnectionMock.define('products');
+  const purchasedProductsMock = DBConnectionMock.define('purchased_products');
+  const storesMock = DBConnectionMock.define('stores');
+  const storeProductsMock = DBConnectionMock.define('store_products');
+  const suppliersMock = DBConnectionMock.define('suppliers');
+  const supplierProductsMock = DBConnectionMock.define('supplier_products');
 
   return {
     client: DBConnectionMock,
