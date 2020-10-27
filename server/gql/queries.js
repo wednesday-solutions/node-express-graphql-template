@@ -14,9 +14,56 @@ import { Supplier, SupplierConnection } from 'gql/models/suppliers';
 import { SupplierProduct, SupplierProductConnection } from 'gql/models/supplierProducts';
 import { addWhereClause } from 'utils';
 
+const getFieldsFromSelections = selections =>
+  selections
+    .filter(selection => selection.selectionSet)
+    .map(selection => ({ name: selection.name, selectionSet: selection.selectionSet }));
+
+const getProduct = async ({ parent, args, context, resolveInfo }) => {
+  console.log({
+    parent,
+    args,
+    resolveInfo
+  });
+  const selectionSet = resolveInfo.fieldNodes[0].selectionSet.selections;
+  const allJoinFields = getFieldsFromSelections(selectionSet);
+  const product = await client.models.products.findOne({
+    where: {
+      ...args
+    }
+  });
+  const joinFieldPromises = allJoinFields.map(async field => {
+    if (field.name.value === 'stores') {
+      // store join
+      return client.models.products.findOne({
+        where: {
+          ...args
+        },
+        include: {
+          model: client.models.store_products,
+          where: {
+            productId: args.id
+          },
+          as: 'store'
+        }
+      });
+    }
+  });
+  let joinFieldData;
+  await Promise.all(joinFieldPromises)
+    .then(data => {
+      console.log({ data });
+      joinFieldData = data;
+    })
+    .catch(e => console.log(e.message));
+  console.log({ joinFieldData, product });
+  return new Promise((resolve, reject) => resolve({ product, stores: joinFieldData }));
+};
+
 export const DB_TABLES = {
   Product: {
-    table: Product
+    table: Product,
+    resolve: getProduct
   },
   PurchasedProduct: {
     table: PurchasedProduct
@@ -137,8 +184,11 @@ export const addQueries = () => {
         where = addWhereClause(where, `${t}.deleted_at IS NULL `);
         return where;
       },
-      resolve: (parent, args, context, resolveInfo) =>
-        joinMonster(
+      resolve: (parent, args, context, resolveInfo) => {
+        if (resolveInfo.fieldName === 'product') {
+          return DB_TABLES.Product.resolve({ parent, args, context, resolveInfo });
+        }
+        return joinMonster(
           resolveInfo,
           {},
           async sql => {
@@ -149,7 +199,8 @@ export const addQueries = () => {
             return null;
           },
           options
-        )
+        );
+      }
     };
     query[pluralize(camelCase(table))] = {
       type: CONNECTIONS[table].list,
