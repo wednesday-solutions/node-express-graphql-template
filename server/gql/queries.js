@@ -1,10 +1,8 @@
 import { GraphQLNonNull, GraphQLObjectType, GraphQLInt, GraphQLString, GraphQLBoolean } from 'graphql';
 import camelCase from 'lodash/camelCase';
 import pluralize from 'pluralize';
-import joinMonster from 'join-monster';
-import { client } from 'database';
+// import { client } from 'database';
 import { Aggregate } from 'gql/models/aggregate';
-import { nodeField } from 'gql/node';
 import { Product, ProductConnection } from 'gql/models/products';
 import { PurchasedProduct, PurchasedProductConnection } from 'gql/models/purchasedProducts';
 import { Address, AddressConnection } from 'gql/models/addresses';
@@ -118,7 +116,7 @@ export const CONNECTIONS = {
   }
 };
 
-const options = { dialect: 'pg' };
+// const options = { dialect: 'pg' };
 export const addQueries = () => {
   const query = {};
   Object.keys(DB_TABLES).forEach(table => {
@@ -137,19 +135,7 @@ export const addQueries = () => {
         where = addWhereClause(where, `${t}.deleted_at IS NULL `);
         return where;
       },
-      resolve: (parent, args, context, resolveInfo) =>
-        joinMonster(
-          resolveInfo,
-          {},
-          async sql => {
-            const result = await client.query(sql);
-            if (result?.length > 0) {
-              return result[1].rows;
-            }
-            return null;
-          },
-          options
-        )
+      resolve: (parent, args, context, resolveInfo) => 'something'
     };
     query[pluralize(camelCase(table))] = {
       type: CONNECTIONS[table].list,
@@ -175,19 +161,7 @@ export const addQueries = () => {
       },
       sqlPaginate: true,
       orderBy: 'id',
-      resolve: (parent, args, context, resolveInfo) =>
-        joinMonster(
-          resolveInfo,
-          {},
-          async sql => {
-            const result = await client.query(sql);
-            if (result?.length > 0) {
-              return result[1].rows;
-            }
-            return null;
-          },
-          options
-        )
+      resolve: (parent, args, context, resolveInfo) => 'something'
     };
   });
   return query;
@@ -196,7 +170,6 @@ export const addQueries = () => {
 export const QueryRoot = new GraphQLObjectType({
   name: 'Query',
   fields: () => ({
-    node: nodeField,
     ...addQueries(),
     aggregate: Aggregate
   })

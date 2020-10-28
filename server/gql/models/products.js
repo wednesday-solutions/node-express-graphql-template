@@ -1,7 +1,6 @@
-import { GraphQLObjectType, GraphQLNonNull, GraphQLInt, GraphQLString } from 'graphql';
+import { GraphQLInt, GraphQLNonNull, GraphQLObjectType, GraphQLString } from 'graphql';
 import { connectionDefinitions, forwardConnectionArgs } from 'graphql-relay';
 
-import { nodeInterface } from 'gql/node';
 import { SupplierConnection } from './suppliers';
 import { StoreConnection } from './stores';
 import { timestamps } from './timestamps';
@@ -17,7 +16,7 @@ const Product = new GraphQLObjectType({
   description: 'products on sale',
   sqlTable: 'products',
   uniqueKey: 'id',
-  interface: [nodeInterface],
+
   sqlPaginate: true,
   orderBy: 'id',
   fields: () => ({

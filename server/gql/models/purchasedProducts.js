@@ -1,6 +1,6 @@
 import { GraphQLObjectType, GraphQLNonNull, GraphQLInt } from 'graphql';
 import { connectionDefinitions, forwardConnectionArgs } from 'graphql-relay';
-import { nodeInterface } from 'gql/node';
+
 import { Product } from './products';
 import { timestamps } from './timestamps';
 import { GraphQLDateTime } from 'graphql-iso-date';
@@ -13,7 +13,7 @@ export const purchasedProductFields = {
 };
 const PurchasedProduct = new GraphQLObjectType({
   name: 'PurchasedProduct',
-  interface: [nodeInterface],
+
   args: forwardConnectionArgs,
   sqlPaginate: true,
   orderBy: {

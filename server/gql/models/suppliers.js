@@ -1,6 +1,6 @@
 import { GraphQLString, GraphQLObjectType, GraphQLNonNull, GraphQLInt } from 'graphql';
 import { connectionDefinitions, forwardConnectionArgs } from 'graphql-relay';
-import { nodeInterface } from 'gql/node';
+
 import { Address } from './addresses';
 import { ProductConnection } from './products';
 import { timestamps } from './timestamps';
@@ -12,7 +12,7 @@ export const supplierFields = {
 };
 const Supplier = new GraphQLObjectType({
   name: 'Supplier',
-  interface: [nodeInterface],
+
   args: forwardConnectionArgs,
   sqlPaginate: true,
   fields: () => ({

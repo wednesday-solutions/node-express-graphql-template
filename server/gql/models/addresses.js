@@ -1,6 +1,6 @@
 import { GraphQLFloat, GraphQLObjectType, GraphQLNonNull, GraphQLInt, GraphQLString } from 'graphql';
 import { connectionDefinitions, forwardConnectionArgs } from 'graphql-relay';
-import { nodeInterface } from 'gql/node';
+
 import { StoreConnection } from './stores';
 import { SupplierConnection } from './suppliers';
 import { timestamps } from './timestamps';
@@ -20,7 +20,7 @@ export const addressFields = {
 };
 const Address = new GraphQLObjectType({
   name: 'Address',
-  interface: [nodeInterface],
+
   args: forwardConnectionArgs,
   sqlPaginate: true,
   orderBy: {
