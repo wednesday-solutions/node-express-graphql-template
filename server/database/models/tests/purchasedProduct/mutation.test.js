@@ -1,13 +1,13 @@
 import get from 'lodash/get';
-import { purchasedProductsTable } from 'server/utils/testUtils/mockData';
-import { testApp } from 'server/utils/testUtils/testApp';
+import { purchasedProductsTable } from '@server/utils/testUtils/mockData';
+import { testApp } from '@server/utils/testUtils/testApp';
 var request = require('supertest');
 
 beforeEach(() => {
-  const mockDBClient = require('database');
+  const mockDBClient = require('@database');
   const client = mockDBClient.client;
   client.$queueQueryResult([{}, { rows: [{ ...purchasedProductsTable }] }]);
-  jest.doMock('database', () => ({ client, getClient: () => client }));
+  jest.doMock('@database', () => ({ client, getClient: () => client }));
 });
 
 describe('purchased_products graphQL-server-DB mutation tests', () => {

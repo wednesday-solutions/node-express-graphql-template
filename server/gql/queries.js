@@ -1,16 +1,16 @@
 import { GraphQLNonNull, GraphQLObjectType, GraphQLInt, GraphQLString, GraphQLBoolean } from 'graphql';
 import camelCase from 'lodash/camelCase';
 import pluralize from 'pluralize';
-// import { client } from 'database';
-import { Aggregate } from 'gql/models/aggregate';
-import { Product, ProductConnection } from 'gql/models/products';
-import { PurchasedProduct, PurchasedProductConnection } from 'gql/models/purchasedProducts';
-import { Address, AddressConnection } from 'gql/models/addresses';
-import { StoreProduct, StoreProductConnection } from 'gql/models/storeProducts';
-import { Store, StoreConnection } from 'gql/models/stores';
-import { Supplier, SupplierConnection } from 'gql/models/suppliers';
-import { SupplierProduct, SupplierProductConnection } from 'gql/models/supplierProducts';
-import { addWhereClause } from 'utils';
+// import { client } from '@database';
+import { Aggregate } from '@gql/models/aggregate';
+import { Product, ProductConnection } from '@gql/models/products';
+import { PurchasedProduct, PurchasedProductConnection } from '@gql/models/purchasedProducts';
+import { Address, AddressConnection } from '@gql/models/addresses';
+import { StoreProduct, StoreProductConnection } from '@gql/models/storeProducts';
+import { Store, StoreConnection } from '@gql/models/stores';
+import { Supplier, SupplierConnection } from '@gql/models/suppliers';
+import { SupplierProduct, SupplierProductConnection } from '@gql/models/supplierProducts';
+import { addWhereClause } from '@utils';
 
 export const DB_TABLES = {
   Product: {

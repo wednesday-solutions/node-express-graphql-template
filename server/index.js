@@ -3,9 +3,9 @@ import graphqlHTTP from 'express-graphql';
 import { GraphQLSchema } from 'graphql';
 import dotenv from 'dotenv';
 
-import { connect } from 'database';
+import { connect } from '@database';
 
-import { QueryRoot } from 'gql/queries';
+import { QueryRoot } from '@gql/queries';
 
 // configure environment variables
 dotenv.config({ path: `.env.${process.env.ENVIRONMENT}` });

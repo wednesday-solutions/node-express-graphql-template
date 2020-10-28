@@ -1,6 +1,6 @@
 import { GraphQLObjectType, GraphQLString, GraphQLInt, GraphQLFloat } from 'graphql';
 import { GraphQLDateTime } from 'graphql-iso-date';
-import { client } from 'database';
+import { client } from '@database';
 import { handleAggregateQueries, queryOptions } from './purchasedProductsUtils';
 
 const Aggregate = new GraphQLObjectType({

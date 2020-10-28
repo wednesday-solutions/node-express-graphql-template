@@ -1,12 +1,12 @@
 import { GraphQLNonNull, GraphQLObjectType, GraphQLInt } from 'graphql';
 import camelCase from 'lodash/camelCase';
-import { Product, productFields } from 'gql/models/products';
-import { PurchasedProduct, purchasedProductFields } from 'gql/models/purchasedProducts';
-import { Address, addressFields } from 'gql/models/addresses';
-import { StoreProduct, storeProductFields } from 'gql/models/storeProducts';
-import { Store, storeFields } from 'gql/models/stores';
-import { Supplier, supplierFields } from 'gql/models/suppliers';
-import { SupplierProduct, supplierProductFields } from 'gql/models/supplierProducts';
+import { Product, productFields } from '@gql/models/products';
+import { PurchasedProduct, purchasedProductFields } from '@gql/models/purchasedProducts';
+import { Address, addressFields } from '@gql/models/addresses';
+import { StoreProduct, storeProductFields } from '@gql/models/storeProducts';
+import { Store, storeFields } from '@gql/models/stores';
+import { Supplier, supplierFields } from '@gql/models/suppliers';
+import { SupplierProduct, supplierProductFields } from '@gql/models/supplierProducts';
 import {
   products as productsModel,
   purchased_products as purchasedProductsModel,
@@ -15,8 +15,8 @@ import {
   stores as storesModel,
   supplier_products as supplerProductsModel,
   suppliers as suppliersModel
-} from 'database/models';
-import { DeletedId, deleteUsingId, updateUsingId } from 'database/dbUtils';
+} from '@database/models';
+import { DeletedId, deleteUsingId, updateUsingId } from '@database/dbUtils';
 
 export const createResolvers = model => ({
   createResolver: (parent, args, context, resolveInfo) => model.create(args),

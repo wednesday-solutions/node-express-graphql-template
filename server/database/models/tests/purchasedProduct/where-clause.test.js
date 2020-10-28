@@ -1,16 +1,16 @@
 /* eslint-disable no-useless-escape */
-import { purchasedProductsTable } from 'server/utils/testUtils/mockData';
-import { testApp } from 'server/utils/testUtils/testApp';
-import { addWhereClause } from 'utils';
+import { purchasedProductsTable } from '@server/utils/testUtils/mockData';
+import { testApp } from '@server/utils/testUtils/testApp';
+import { addWhereClause } from '@utils';
 
 var request = require('supertest');
 let spy;
 beforeEach(() => {
-  const mockDBClient = require('database');
+  const mockDBClient = require('@database');
   const client = mockDBClient.client;
   spy = jest.spyOn(client, 'query');
   client.$queueQueryResult([{}, { rows: [{ ...purchasedProductsTable }] }]);
-  jest.doMock('database', () => ({ client, getClient: () => client }));
+  jest.doMock('@database', () => ({ client, getClient: () => client }));
 });
 
 describe('PurchasedProduct Table where clause tests', () => {

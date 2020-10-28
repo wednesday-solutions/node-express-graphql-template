@@ -3,9 +3,9 @@ import graphqlHTTP from 'express-graphql';
 import { GraphQLSchema } from 'graphql';
 import dotenv from 'dotenv';
 
-import { QueryRoot } from 'gql/queries';
-import { MutationRoot } from 'gql/mutations';
-import { client } from 'database';
+import { QueryRoot } from '@gql/queries';
+import { MutationRoot } from '@gql/mutations';
+import { client } from '@database';
 
 const connect = async () => {
   await client.authenticate();
@@ -26,6 +26,8 @@ testApp.use(
     schema: schema,
     graphiql: false,
     customFormatErrorFn: e => {
+      console.log(process.env.ENVIRONMENT)
+      console.log(e)
       if (process.env.ENVIRONMENT !== 'local') {
         return e.message;
       }

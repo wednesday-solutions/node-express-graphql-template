@@ -1,6 +1,6 @@
 import get from 'lodash/get';
-import { productsTable } from 'server/utils/testUtils/mockData';
-import { testApp } from 'server/utils/testUtils/testApp';
+import { productsTable } from '@server/utils/testUtils/mockData';
+import { testApp } from '@server/utils/testUtils/testApp';
 var request = require('supertest');
 var cursor = {};
 
@@ -35,7 +35,7 @@ describe('Products graphQL-server-DB pagination tests', () => {
 `;
 
   it('should have a query to get the products', async done => {
-    const mockDBClient = require('database');
+    const mockDBClient = require('@database');
     const client = mockDBClient.client;
     client.$queueQueryResult([
       {},
@@ -43,7 +43,7 @@ describe('Products graphQL-server-DB pagination tests', () => {
         rows: [{ ...productsTable[0], $total: 10 }]
       }
     ]);
-    jest.doMock('database', () => ({ client, getClient: () => client }));
+    jest.doMock('@database', () => ({ client, getClient: () => client }));
     await getResponse(productsQuery).then(response => {
       const result = get(response, 'body.data.products.edges[0].node');
       expect(result).toEqual(
@@ -59,7 +59,7 @@ describe('Products graphQL-server-DB pagination tests', () => {
   });
 
   it('should have the correct pageInfo', async done => {
-    const mockDBClient = require('database');
+    const mockDBClient = require('@database');
     const client = mockDBClient.client;
     client.$queueQueryResult([
       {},
@@ -67,7 +67,7 @@ describe('Products graphQL-server-DB pagination tests', () => {
         rows: [{ ...productsTable, $total: 10 }]
       }
     ]);
-    jest.doMock('database', () => ({ client, getClient: () => client }));
+    jest.doMock('@database', () => ({ client, getClient: () => client }));
     await getResponse(productsQuery).then(response => {
       const result = get(response, 'body.data.products.pageInfo');
       expect(result).toEqual(
@@ -81,7 +81,7 @@ describe('Products graphQL-server-DB pagination tests', () => {
   });
 
   it('should return the correct product after the provided cursor', async done => {
-    const mockDBClient = require('database');
+    const mockDBClient = require('@database');
     const client = mockDBClient.client;
     client.$queueQueryResult([
       {},
@@ -95,7 +95,7 @@ describe('Products graphQL-server-DB pagination tests', () => {
         rows: [{ ...productsTable[0], ...productsTable[1], $total: 2 }]
       }
     ]);
-    jest.doMock('database', () => ({ client, getClient: () => client }));
+    jest.doMock('@database', () => ({ client, getClient: () => client }));
 
     await getResponse(productsQuery).then(response => {
       const result = get(response, 'body.data.products.pageInfo');

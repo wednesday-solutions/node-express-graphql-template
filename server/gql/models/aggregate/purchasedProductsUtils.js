@@ -1,7 +1,7 @@
 import moment from 'moment';
 import { QueryTypes } from 'sequelize';
-import { TIMESTAMP } from 'utils/constants';
-import { addWhereClause } from 'utils';
+import { TIMESTAMP } from '@utils/constants';
+import { addWhereClause } from '@utils';
 
 export const handleAggregateQueries = args => {
   let where = ``;

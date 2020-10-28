@@ -1,6 +1,6 @@
 import get from 'lodash/get';
-import { suppliersTable } from 'server/utils/testUtils/mockData';
-import { testApp } from 'server/utils/testUtils/testApp';
+import { suppliersTable } from '@server/utils/testUtils/mockData';
+import { testApp } from '@server/utils/testUtils/testApp';
 var request = require('supertest');
 var cursor = {};
 
@@ -34,7 +34,7 @@ describe('Suppliers graphQL-server-DB pagination tests', () => {
 `;
 
   it('should have a query to get the storeProducts', async done => {
-    const mockDBClient = require('database');
+    const mockDBClient = require('@database');
     const client = mockDBClient.client;
     client.$queueQueryResult([
       {},
@@ -42,7 +42,7 @@ describe('Suppliers graphQL-server-DB pagination tests', () => {
         rows: [{ ...suppliersTable[0], $total: 10 }]
       }
     ]);
-    jest.doMock('database', () => ({ client, getClient: () => client }));
+    jest.doMock('@database', () => ({ client, getClient: () => client }));
     await getResponse(suppliersQuery).then(response => {
       const result = get(response, 'body.data.suppliers.edges[0].node');
       expect(result).toEqual(
@@ -57,7 +57,7 @@ describe('Suppliers graphQL-server-DB pagination tests', () => {
   });
 
   it('should have the correct pageInfo', async done => {
-    const mockDBClient = require('database');
+    const mockDBClient = require('@database');
     const client = mockDBClient.client;
     client.$queueQueryResult([
       {},
@@ -65,7 +65,7 @@ describe('Suppliers graphQL-server-DB pagination tests', () => {
         rows: [{ ...suppliersTable, $total: 10 }]
       }
     ]);
-    jest.doMock('database', () => ({ client, getClient: () => client }));
+    jest.doMock('@database', () => ({ client, getClient: () => client }));
     await getResponse(suppliersQuery).then(response => {
       const result = get(response, 'body.data.suppliers.pageInfo');
       expect(result).toEqual(
@@ -79,7 +79,7 @@ describe('Suppliers graphQL-server-DB pagination tests', () => {
   });
 
   it('should return the correct supplier after the provided cursor', async done => {
-    const mockDBClient = require('database');
+    const mockDBClient = require('@database');
     const client = mockDBClient.client;
     client.$queueQueryResult([
       {},
@@ -93,7 +93,7 @@ describe('Suppliers graphQL-server-DB pagination tests', () => {
         rows: [{ ...suppliersTable[0], ...suppliersTable[1], $total: 2 }]
       }
     ]);
-    jest.doMock('database', () => ({ client, getClient: () => client }));
+    jest.doMock('@database', () => ({ client, getClient: () => client }));
 
     await getResponse(suppliersQuery).then(response => {
       const result = get(response, 'body.data.suppliers.pageInfo');

@@ -1,10 +1,10 @@
 import get from 'lodash/get';
 import { graphqlSync, GraphQLSchema } from 'graphql';
-import { createFieldsWithType, expectSameTypeNameOrKind } from 'server/utils/testUtils';
+import { createFieldsWithType, expectSameTypeNameOrKind } from '@server/utils/testUtils';
 import { QueryRoot } from '../../queries';
 import { MutationRoot } from '../../mutations';
-import { timestamps } from 'gql/models/timestamps';
-import { storeFields } from 'gql/models/stores';
+import { timestamps } from '@gql/models/timestamps';
+import { storeFields } from '@gql/models/stores';
 
 const schema = new GraphQLSchema({ query: QueryRoot, mutation: MutationRoot });
 
