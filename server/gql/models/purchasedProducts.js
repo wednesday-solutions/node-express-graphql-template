@@ -55,3 +55,9 @@ export const purchasedProductQueries = {
   },
   model: db.purchasedProducts
 };
+
+export const purchasedProductMutations = {
+  args: purchasedProductFields,
+  type: PurchasedProduct,
+  model: db.purchasedProducts
+};

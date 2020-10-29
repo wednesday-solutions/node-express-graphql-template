@@ -89,3 +89,9 @@ export const storeQueries = {
   },
   model: db.stores
 };
+
+export const storeMutations = {
+  args: storeFields,
+  type: Store,
+  model: db.stores
+};

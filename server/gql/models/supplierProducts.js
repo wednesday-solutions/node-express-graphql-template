@@ -61,3 +61,8 @@ export const supplierProductQueries = {
   },
   model: db.products
 };
+
+export const supplierProductMutations = {
+  args: supplierProductFields,
+  type: SupplierProduct
+};

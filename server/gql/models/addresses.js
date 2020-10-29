@@ -100,3 +100,9 @@ export const addressQueries = {
   },
   model: db.addresses
 };
+
+export const addressMutations = {
+  args: addressFields,
+  type: Address,
+  model: db.addresses
+};

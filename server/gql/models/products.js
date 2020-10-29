@@ -110,3 +110,9 @@ export const productQueries = {
   },
   model: db.products
 };
+
+export const productMutations = {
+  args: productFields,
+  type: Product,
+  model: db.products
+};

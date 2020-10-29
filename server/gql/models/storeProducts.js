@@ -59,3 +59,9 @@ export const storeProductQueries = {
   },
   model: db.storeProducts
 };
+
+export const storeProductMutations = {
+  args: storeProductFields,
+  type: StoreProduct,
+  model: db.storeProducts
+};

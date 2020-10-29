@@ -6,6 +6,7 @@ import dotenv from 'dotenv';
 import { connect } from '@database';
 
 import { QueryRoot } from '@gql/queries';
+import { MutationRoot } from '@gql/mutations';
 
 // configure environment variables
 dotenv.config({ path: `.env.${process.env.ENVIRONMENT}` });
@@ -14,7 +15,7 @@ dotenv.config({ path: `.env.${process.env.ENVIRONMENT}` });
 connect();
 
 // create the graphQL schema
-const schema = new GraphQLSchema({ query: QueryRoot });
+const schema = new GraphQLSchema({ query: QueryRoot, mutation: MutationRoot });
 
 const app = express();
 app.use(
