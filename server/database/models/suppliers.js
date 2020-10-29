@@ -12,7 +12,8 @@ module.exports = function(sequelize, DataTypes) {
         type: DataTypes.TEXT,
         allowNull: false
       },
-      address_id: {
+      addressId: {
+        field: 'address_id',
         type: DataTypes.INTEGER,
         allowNull: false,
         references: {
@@ -44,9 +45,19 @@ module.exports = function(sequelize, DataTypes) {
     }
   );
   suppliers.associate = function(models) {
-    suppliers.hasOne(models.store_products, {
-      foreignKey: 'storeId',
+    suppliers.supplierProducts = suppliers.hasOne(models.supplierProducts, {
+      foreignKey: 'supplier_id',
       sourceKey: 'id'
+    });
+    suppliers.products = suppliers.belongsToMany(models.products, {
+      through: models.supplierProducts,
+      otherKey: 'supplier_id',
+      sourceKey: 'id'
+    });
+
+    suppliers.belongsTo(models.addresses, {
+      targetKey: 'id',
+      sourceKey: 'address_id'
     });
   };
   return suppliers;

@@ -1,45 +1,45 @@
-import { GraphQLObjectType, GraphQLNonNull, GraphQLInt } from 'graphql';
-import { connectionDefinitions, forwardConnectionArgs } from 'graphql-relay';
-
-import { Product } from './products';
-import { Store } from './stores';
+import { GraphQLID, GraphQLInt, GraphQLNonNull, GraphQLObjectType } from 'graphql';
+import { createConnection } from 'graphql-sequelize';
+import { productQueries } from './products';
+import { storeQueries } from './stores';
 import { timestamps } from './timestamps';
+import { getNode } from '@gql/node';
+import db from '@database/models';
+
+const { nodeInterface } = getNode();
 
 export const storeProductFields = {
-  id: { type: GraphQLInt },
+  id: { type: GraphQLNonNull(GraphQLID) },
   productId: { type: GraphQLInt, sqlColumn: 'product_id' },
   storeId: { type: GraphQLInt, sqlColumn: 'store_id' }
 };
-const StoreProduct = new GraphQLObjectType({
+export const StoreProduct = new GraphQLObjectType({
   name: 'StoreProduct',
-
-  args: forwardConnectionArgs,
-  sqlPaginate: true,
-  orderBy: {
-    created_at: 'desc',
-    id: 'asc'
-  },
+  interfaces: [nodeInterface],
   fields: () => ({
     ...storeProductFields,
     ...timestamps,
-    product: {
-      type: Product,
-      sqlJoin: (storeProductsTable, productTable, args) => `${productTable}.id = ${storeProductsTable}.product_id`
+    products: {
+      ...productQueries.list,
+      resolve: (source, args, context, info) =>
+        productQueries.list.resolve(source, args, { ...context, storeProduct: source.dataValues }, info)
     },
-    store: {
-      type: Store,
-      sqlJoin: (storeProductsTable, storeTable, args) => `${storeTable}.id = ${storeProductsTable}.store_id`
+    stores: {
+      ...storeQueries.list,
+      resolve: (source, args, context, info) =>
+        storeQueries.list.resolve(source, args, { ...context, storeProduct: source.dataValues }, info)
     }
   })
 });
 
-StoreProduct._typeConfig = {
-  sqlTable: 'store_products',
-  uniqueKey: 'id'
-};
-
-const { connectionType: StoreProductConnection } = connectionDefinitions({
+export const StoreProductConnection = createConnection({
   nodeType: StoreProduct,
+  name: 'storeProducts',
+  target: db.storeProducts,
+  where: function(key, value, currentWhere) {
+    // for custom args other than connectionArgs return a sequelize where parameter
+    return { [key]: value };
+  },
   connectionFields: {
     total: {
       type: GraphQLNonNull(GraphQLInt)
@@ -47,4 +47,15 @@ const { connectionType: StoreProductConnection } = connectionDefinitions({
   }
 });
 
-export { StoreProduct, StoreProductConnection };
+// queries on the storeProducts table
+export const storeProductQueries = {
+  query: {
+    type: StoreProduct
+  },
+  list: {
+    ...StoreProductConnection,
+    type: StoreProductConnection.connectionType,
+    args: StoreProductConnection.connectionArgs
+  },
+  model: db.storeProducts
+};

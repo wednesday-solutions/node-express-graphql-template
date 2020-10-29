@@ -5,8 +5,9 @@ const path = require('path');
 const webpack = require('webpack');
 const dotenv = require('dotenv');
 
-const dotEnvFile = process.env.NODE_ENV === 'production' ? `.env` : `.env.${process.env.NODE_ENV || 'local'}`;
+const dotEnvFile = process.env.ENVIRONMENT === 'production' ? `.env` : `.env.${process.env.ENVIRONMENT || 'local'}`;
 
+console.log({ dotEnvFile });
 const env = dotenv.config({ path: dotEnvFile }).parsed;
 
 const envKeys = {
@@ -115,6 +116,7 @@ module.exports = (options = {}) => ({
       '@root': '.',
       '@server': path.resolve(__dirname, './server'),
       '@utils': path.resolve(__dirname, './server/utils'),
+      '@daos': path.resolve(__dirname, './server/daos'),
       '@database': path.resolve(__dirname, './server/database'),
       '@gql': path.resolve(__dirname, './server/gql'),
       '@config': path.resolve(__dirname, 'config')

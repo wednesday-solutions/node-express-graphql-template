@@ -46,9 +46,19 @@ module.exports = function(sequelize, DataTypes) {
   );
 
   stores.associate = function(models) {
-    stores.hasOne(models.store_products, {
-      foreignKey: 'storeId',
+    stores.storeProducts = stores.hasOne(models.storeProducts, {
+      foreignKey: 'store_id',
       sourceKey: 'id'
+    });
+    stores.products = stores.belongsToMany(models.products, {
+      through: models.storeProducts,
+      otherKey: 'store_id',
+      sourceKey: 'id'
+    });
+
+    stores.belongsTo(models.addresses, {
+      targetKey: 'id',
+      sourceKey: 'address_id'
     });
   };
   return stores;

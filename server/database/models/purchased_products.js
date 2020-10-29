@@ -59,11 +59,11 @@ module.exports = function(sequelize, DataTypes) {
       foreignKey: 'id',
       sourceKey: 'productId'
     });
-    purchasedProducts.hasOne(models.store_products, {
-      foreignKey: 'productId',
+    purchasedProducts.hasOne(models.storeProducts, {
+      foreignKey: 'product_id',
       sourceKey: 'productId'
     });
-    purchasedProducts.hasOne(models.supplier_products, {
+    purchasedProducts.hasOne(models.supplierProducts, {
       foreignKey: 'productId',
       sourceKey: 'productId'
     });

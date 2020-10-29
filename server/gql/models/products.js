@@ -1,64 +1,96 @@
-import { GraphQLInt, GraphQLNonNull, GraphQLObjectType, GraphQLString } from 'graphql';
-import { connectionDefinitions, forwardConnectionArgs } from 'graphql-relay';
-
+import { GraphQLID, GraphQLInt, GraphQLNonNull, GraphQLObjectType, GraphQLString } from 'graphql';
+import { createConnection } from 'graphql-sequelize';
+import { getNode } from '@gql/node';
 import { SupplierConnection } from './suppliers';
-import { StoreConnection } from './stores';
+import { storeQueries } from './stores';
 import { timestamps } from './timestamps';
+import db from '@database/models';
 
+const { nodeInterface } = getNode();
 export const productFields = {
-  id: { type: GraphQLInt },
+  id: { type: GraphQLNonNull(GraphQLID) },
   name: { type: GraphQLString },
   category: { type: GraphQLString },
   amount: { type: GraphQLInt }
 };
-const Product = new GraphQLObjectType({
-  name: 'Product',
-  description: 'products on sale',
-  sqlTable: 'products',
-  uniqueKey: 'id',
 
-  sqlPaginate: true,
-  orderBy: 'id',
+// Product
+export const Product = new GraphQLObjectType({
+  name: 'Product',
+  interfaces: [nodeInterface],
   fields: () => ({
     ...productFields,
     ...timestamps,
     suppliers: {
-      type: SupplierConnection,
-      sqlPaginate: true,
-      orderBy: 'id',
-      args: forwardConnectionArgs,
-      junction: {
-        sqlTable: 'supplier_products',
-        sqlJoins: [
-          (productsTable, junctionTable, args) => `${productsTable}.id = ${junctionTable}.product_id`,
-          (junctionTable, supplierTable, args) => `${supplierTable}.id = ${junctionTable}.supplier_id`
-        ]
-      }
+      type: SupplierConnection.connectionType,
+      args: SupplierConnection.connectionArgs,
+      resolve: (source, args, context, info) =>
+        SupplierConnection.resolve(source, args, { ...context, product: source.dataValues }, info)
     },
     stores: {
-      type: StoreConnection,
-      sqlPaginate: true,
-      orderBy: 'id',
-      args: forwardConnectionArgs,
-      junction: {
-        sqlTable: 'store_products',
-        sqlJoins: [
-          (productsTable, junctionTable, args) => `${productsTable}.id = ${junctionTable}.product_id`,
-          (junctionTable, storeTable, args) => `${storeTable}.id = ${junctionTable}.store_id`
-        ]
-      }
+      ...storeQueries.list,
+      resolve: (source, args, context, info) =>
+        storeQueries.list.resolve(source, args, { ...context, product: source.dataValues }, info)
     }
   })
 });
 
-Product._typeConfig = {
-  sqlTable: 'products',
-  uniqueKey: 'id'
-};
-
-const { connectionType: ProductConnection } = connectionDefinitions({
+// relay compliant list
+export const ProductConnection = createConnection({
   nodeType: Product,
-  name: 'product',
+  name: 'products',
+  target: db.products,
+  before: (findOptions, args, context) => {
+    findOptions.include = findOptions.include || [];
+    if (context?.purchasedProduct?.id) {
+      findOptions.include.push({
+        model: db.purchasedProducts,
+        where: {
+          id: context.purchasedProduct.id
+        }
+      });
+    }
+
+    if (context?.supplier?.id) {
+      findOptions.include.push({
+        model: db.suppliers,
+        where: {
+          id: context.supplier?.id
+        }
+      });
+    }
+
+    if (context?.store?.id) {
+      findOptions.include.push({
+        model: db.stores,
+        where: {
+          id: context.store?.id
+        }
+      });
+    }
+
+    if (context?.supplierProduct?.id) {
+      findOptions.include.push({
+        model: db.supplierProducts,
+        where: {
+          id: context.supplierProduct.id
+        }
+      });
+    }
+
+    if (context?.storeProduct?.productId) {
+      findOptions.include.push({
+        model: db.storeProducts,
+        where: {
+          productId: context.storeProduct.productId
+        }
+      });
+    }
+    return findOptions;
+  },
+  where: function(key, value, currentWhere) {
+    return { [key]: value };
+  },
   connectionFields: {
     total: {
       type: GraphQLNonNull(GraphQLInt)
@@ -66,4 +98,15 @@ const { connectionType: ProductConnection } = connectionDefinitions({
   }
 });
 
-export { Product, ProductConnection };
+// queries on the product table
+export const productQueries = {
+  query: {
+    type: Product
+  },
+  list: {
+    ...ProductConnection,
+    type: ProductConnection.connectionType,
+    args: ProductConnection.connectionArgs
+  },
+  model: db.products
+};

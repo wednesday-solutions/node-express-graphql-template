@@ -51,13 +51,11 @@ module.exports = function(sequelize, DataTypes) {
   );
 
   storeProducts.associate = function(models) {
-    storeProducts.hasOne(models.stores, {
-      foreignKey: 'id',
-      sourceKey: 'storeId'
+    storeProducts.stores = storeProducts.hasOne(models.stores, {
+      foreignKey: 'id'
     });
-    storeProducts.hasOne(models.products, {
-      foreignKey: 'id',
-      sourceKey: 'productId'
+    storeProducts.products = storeProducts.hasOne(models.products, {
+      foreignKey: 'id'
     });
   };
   return storeProducts;

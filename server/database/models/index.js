@@ -1,20 +1,21 @@
-import fs from 'fs';
-import path from 'path';
+import Sequelize from 'sequelize';
 import dotenv from 'dotenv';
 import { getClient } from '../index';
 
-const basename = path.basename(__filename);
-
-const db = {};
+export const db = {};
 
 dotenv.config({ path: `.env.${process.env.ENVIRONMENT}` });
+
 const sequelize = getClient();
-fs.readdirSync(__dirname)
-  .filter(file => file.indexOf('.') !== 0 && file !== basename && file.slice(-3) === '.js')
-  .forEach(file => {
-    const model = sequelize.import(path.join(__dirname, file));
-    db[model.name] = model;
-  });
+
+db.products = require('@database/models/products')(sequelize, Sequelize.DataTypes);
+db.stores = require('@database/models/stores')(sequelize, Sequelize.DataTypes);
+db.addresses = require('@database/models/addresses')(sequelize, Sequelize.DataTypes);
+db.suppliers = require('@database/models/suppliers')(sequelize, Sequelize.DataTypes);
+
+db.purchasedProducts = require('@database/models/purchased_products')(sequelize, Sequelize.DataTypes);
+db.storeProducts = require('@database/models/store_products')(sequelize, Sequelize.DataTypes);
+db.supplierProducts = require('@database/models/supplier_products')(sequelize, Sequelize.DataTypes);
 
 Object.keys(db).forEach(modelName => {
   if (db[modelName].associate) {
@@ -25,4 +26,4 @@ Object.keys(db).forEach(modelName => {
 db.sequelize = sequelize;
 db.Sequelize = sequelize;
 
-module.exports = db;
+export default db;

@@ -45,16 +45,28 @@ module.exports = function(sequelize, DataTypes) {
   );
 
   products.associate = function(models) {
-    products.hasOne(models.supplier_products, {
+    products.supplierProducts = products.hasOne(models.supplierProducts, {
       foreignKey: 'productId',
       sourceKey: 'id'
     });
-    products.hasOne(models.purchased_products, {
+    products.purchasedProducts = products.hasOne(models.purchasedProducts, {
       foreignKey: 'productId',
       sourceKey: 'id'
     });
-    products.hasOne(models.store_products, {
-      foreignKey: 'productId',
+    products.storeProducts = products.hasOne(models.storeProducts, {
+      foreignKey: 'product_id',
+      sourceKey: 'id'
+    });
+
+    products.suppliers = products.belongsToMany(models.suppliers, {
+      through: models.supplierProducts,
+      otherKey: 'supplier_id',
+      sourceKey: 'id'
+    });
+
+    products.stores = products.belongsToMany(models.stores, {
+      through: models.storeProducts,
+      otherKey: 'store_id',
       sourceKey: 'id'
     });
   };
