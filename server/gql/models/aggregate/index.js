@@ -1,4 +1,4 @@
-import { GraphQLObjectType, GraphQLString, GraphQLInt, GraphQLFloat } from 'graphql';
+import { GraphQLFloat, GraphQLObjectType, GraphQLString } from 'graphql';
 import { GraphQLDateTime } from 'graphql-iso-date';
 import { client } from '@database';
 import { handleAggregateQueries, queryOptions } from './purchasedProductsUtils';
@@ -6,23 +6,6 @@ import { handleAggregateQueries, queryOptions } from './purchasedProductsUtils';
 const Aggregate = new GraphQLObjectType({
   name: 'Aggregate',
   fields: () => ({
-    max: {
-      type: new GraphQLObjectType({
-        name: 'AggregateMax',
-        fields: () => ({
-          purchasedProductsPrice: {
-            name: 'MaxPriceOfPurchasedProducts',
-            type: GraphQLInt,
-            resolve: async args => {
-              const query = `SELECT MAX(price) from purchased_products`;
-              const { where, join } = handleAggregateQueries(args);
-              return (await client.query(`${query} ${join} ${where};`, queryOptions(args)))[0].max || 0;
-            }
-          }
-        }),
-        resolve: args => args
-      })
-    },
     total: {
       type: new GraphQLObjectType({
         name: 'AggregateSum',
@@ -32,8 +15,25 @@ const Aggregate = new GraphQLObjectType({
             type: GraphQLFloat,
             resolve: async args => {
               const query = `SELECT SUM(price) from purchased_products`;
-              const { where, join } = handleAggregateQueries(args);
+              const { where, join } = handleAggregateQueries(args, 'purchased_products');
               return (await client.query(`${query} ${join} ${where};`, queryOptions(args)))[0].sum || 0;
+            }
+          }
+        })
+      }),
+      resolve: args => args
+    },
+    max: {
+      type: new GraphQLObjectType({
+        name: 'AggregateMaximum',
+        fields: () => ({
+          purchasedProductsPrice: {
+            name: 'MaxPriceOfPurchasedProducts',
+            type: GraphQLFloat,
+            resolve: async args => {
+              const query = `SELECT MAX(price) from purchased_products`;
+              const { where, join } = handleAggregateQueries(args, 'purchased_products');
+              return (await client.query(`${query} ${join} ${where};`, queryOptions(args)))[0].max || 0;
             }
           }
         })
@@ -49,7 +49,7 @@ const Aggregate = new GraphQLObjectType({
             type: GraphQLFloat,
             resolve: async args => {
               const query = `SELECT COUNT(*) from purchased_products`;
-              const { where, join } = handleAggregateQueries(args);
+              const { where, join } = handleAggregateQueries(args, 'purchased_products');
               return (await client.query(`${query} ${join} ${where};`, queryOptions(args)))[0].count || 0;
             }
           }

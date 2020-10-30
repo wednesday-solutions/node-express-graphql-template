@@ -25,7 +25,9 @@ const DB_TABLES = {
 };
 
 export const addQueries = () => {
-  const query = {};
+  const query = {
+    aggregate: Aggregate
+  };
   Object.keys(DB_TABLES).forEach(table => {
     query[camelCase(table)] = {
       ...DB_TABLES[table].query,
