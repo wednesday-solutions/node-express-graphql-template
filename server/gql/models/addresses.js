@@ -89,12 +89,7 @@ export const addressQueries = {
   },
   list: {
     ...AddressConnection,
-    resolve: async (a, b, c, d) => {
-      // console.log({ a, b, c, d });
-      const e = await AddressConnection.resolve(a, b, c, d);
-
-      return e;
-    },
+    resolve: AddressConnection.resolve,
     type: AddressConnection.connectionType,
     args: AddressConnection.connectionArgs
   },
