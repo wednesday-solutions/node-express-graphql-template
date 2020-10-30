@@ -117,7 +117,6 @@ module.exports = (options = {}) => ({
       '@root': '.',
       '@server': path.resolve(__dirname, './server'),
       '@utils': path.resolve(__dirname, './server/utils'),
-      '@daos': path.resolve(__dirname, './server/daos'),
       '@database': path.resolve(__dirname, './server/database'),
       '@gql': path.resolve(__dirname, './server/gql'),
       '@config': path.resolve(__dirname, 'config')
