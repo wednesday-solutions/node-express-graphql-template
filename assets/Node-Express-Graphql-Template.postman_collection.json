@@ -227,6 +227,28 @@
         }
       },
       "response": []
+    },
+    {
+      "name": "Aggregation",
+      "request": {
+        "method": "POST",
+        "header": [],
+        "body": {
+          "mode": "graphql",
+          "graphql": {
+            "query": "query Aggregate {\n  aggregate (startDate: \"2007-12-03T10:15:30Z\", endDate:\"2020-10-03T10:15:30Z\", category:\"Baby\") {\n    max {\n      purchasedProductsPrice\n    }\n    total {\n      purchasedProductsPrice\n    }\n    count {\n      purchasedProducts\n    }\n  }\n}",
+            "variables": ""
+          }
+        },
+        "url": {
+          "raw": "http://localhost:9000/graphql",
+          "protocol": "http",
+          "host": ["localhost"],
+          "port": "9000",
+          "path": ["graphql"]
+        }
+      },
+      "response": []
     }
   ],
   "protocolProfileBehavior": {}
