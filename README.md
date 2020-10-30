@@ -45,6 +45,14 @@ An enterprise Express GraphQL template application built using Nodejs showcasing
 - GraphQL
 - Docker
 
+## Dependencies
+
+### graphql-sequelize
+
+Please go through the [documentation](https://github.com/mickhansen/graphql-sequelize) to understand the control flow.  
+
+Relay support has been added by following [this](https://github.com/mickhansen/graphql-sequelize/blob/master/docs/relay.md) documentation 
+
 ## Setup
 
 ### Setup and run locally using 
@@ -84,3 +92,4 @@ yarn prod
 ```
 yarn build
 ```
+

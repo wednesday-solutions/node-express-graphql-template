@@ -7,8 +7,11 @@
   "item": [
     {
       "name": "SupplierProducts",
+      "protocolProfileBehavior": {
+        "disableBodyPruning": true
+      },
       "request": {
-        "method": "POST",
+        "method": "GET",
         "header": [],
         "body": {
           "mode": "graphql",
@@ -146,6 +149,72 @@
           "mode": "graphql",
           "graphql": {
             "query": "query Products {\n  products(first: 10) {\n    edges {\n      node {\n        id\n        name\n        category\n        amount\n        stores {\n          edges {\n            node {\n              name\n              id\n            }\n          }\n        }\n        suppliers {\n          edges {\n            node {\n              id\n              name\n            }\n          }\n        }\n      }\n    }\n  }\n}\n",
+            "variables": ""
+          }
+        },
+        "url": {
+          "raw": "http://localhost:9000/graphql",
+          "protocol": "http",
+          "host": ["localhost"],
+          "port": "9000",
+          "path": ["graphql"]
+        }
+      },
+      "response": []
+    },
+    {
+      "name": "Create Product",
+      "request": {
+        "method": "POST",
+        "header": [],
+        "body": {
+          "mode": "graphql",
+          "graphql": {
+            "query": "mutation CreateProduct {\n  createProduct (name:\"123\", category:\"a\", amount:1000) {\n    id\n    name\n    category\n    amount\n  }\n}",
+            "variables": ""
+          }
+        },
+        "url": {
+          "raw": "http://localhost:9000/graphql",
+          "protocol": "http",
+          "host": ["localhost"],
+          "port": "9000",
+          "path": ["graphql"]
+        }
+      },
+      "response": []
+    },
+    {
+      "name": "Delete Product",
+      "request": {
+        "method": "POST",
+        "header": [],
+        "body": {
+          "mode": "graphql",
+          "graphql": {
+            "query": "mutation DeleteProduct {\n  deleteProduct (id:205) {\n    id\n  }\n}",
+            "variables": ""
+          }
+        },
+        "url": {
+          "raw": "http://localhost:9000/graphql",
+          "protocol": "http",
+          "host": ["localhost"],
+          "port": "9000",
+          "path": ["graphql"]
+        }
+      },
+      "response": []
+    },
+    {
+      "name": "Update Product",
+      "request": {
+        "method": "POST",
+        "header": [],
+        "body": {
+          "mode": "graphql",
+          "graphql": {
+            "query": "mutation UpdateProduct {\n  updateProduct (id:245, name:\"1231233\", category:\"a\", amount:1000) {\n    id\n    name\n    category\n    amount\n  }\n}",
             "variables": ""
           }
         },
