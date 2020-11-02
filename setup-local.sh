@@ -1,9 +1,9 @@
 #!/bin/sh
 
-export ENVIRONMENT=local
+export ENVIRONMENT_NAME=local
 export NODE_ENV=local
-./node_modules/.bin/sequelize db:drop
-./node_modules/.bin/sequelize db:create
-./node_modules/.bin/sequelize db:migrate
-./node_modules/.bin/sequelize db:seed:all
+npx sequelize db:drop
+npx sequelize db:create
+npx sequelize db:migrate
+npx sequelize db:seed:all
 yarn start:local
