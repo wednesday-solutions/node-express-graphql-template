@@ -18,11 +18,11 @@ export function mockDBClient() {
     models: {
       addresses: addressesMock,
       products: productsMock,
-      purchased_products: purchasedProductsMock,
+      purchasedProducts: purchasedProductsMock,
       stores: storesMock,
-      store_products: storeProductsMock,
+      storeProducts: storeProductsMock,
       suppliers: suppliersMock,
-      supplier_products: supplierProductsMock
+      supplierProducts: supplierProductsMock
     }
   };
 }
