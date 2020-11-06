@@ -113,6 +113,7 @@ module.exports = (options = {}) => ({
   resolve: {
     modules: ['node_modules', 'app'],
     alias: {
+      moment$: path.resolve(__dirname, './node_modules/moment/moment.js'),
       '@root': '.',
       '@server': path.resolve(__dirname, './server'),
       '@utils': path.resolve(__dirname, './server/utils'),
