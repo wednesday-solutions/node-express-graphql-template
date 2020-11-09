@@ -35,13 +35,11 @@ describe('store graphQL-server-DB mutation tests', () => {
       .set('Accept', 'application/json')
       .then(response => {
         const result = get(response, 'body.data.createStore');
-        expect(result).toEqual(
-          expect.objectContaining({
-            id: 1,
-            name: 'new store name',
-            addressId: 1
-          })
-        );
+        expect(result).toMatchObject({
+          id: '1',
+          name: 'new store name',
+          addressId: '1'
+        });
         done();
       });
   });

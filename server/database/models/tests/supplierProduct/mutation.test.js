@@ -1,19 +1,19 @@
 import get from 'lodash/get';
-import { suppliersProductTable } from '@server/utils/testUtils/mockData';
+import { supplierProductsTable } from '@server/utils/testUtils/mockData';
 import { testApp } from '@server/utils/testUtils/testApp';
 var request = require('supertest');
 
 beforeEach(() => {
   const mockDBClient = require('@database');
   const client = mockDBClient.client;
-  client.$queueQueryResult([{}, { rows: [{ ...suppliersProductTable }] }]);
+  client.$queueQueryResult([{}, { rows: [{ ...supplierProductsTable }] }]);
   jest.doMock('@database', () => ({ client, getClient: () => client }));
 });
 
 describe('supplier_product graphQL-server-DB mutation tests', () => {
   const createSupplierProductMut = `
     mutation {
-      createSupplierProduct (
+      createSupplierproduct (
         productId: 1
         supplierId: 1
       ) {
@@ -34,21 +34,19 @@ describe('supplier_product graphQL-server-DB mutation tests', () => {
       .send({ query: createSupplierProductMut })
       .set('Accept', 'application/json')
       .then(response => {
-        const result = get(response, 'body.data.createSupplierProduct');
-        expect(result).toEqual(
-          expect.objectContaining({
-            id: 1,
-            productId: 1,
-            supplierId: 1
-          })
-        );
+        const result = get(response, 'body.data.createSupplierproduct');
+        expect(result).toMatchObject({
+          id: '1',
+          productId: 1,
+          supplierId: 1
+        });
         done();
       });
   });
 
   const deleteSupplierProductMut = `
   mutation {
-    deleteSupplierProduct (
+    deleteSupplierproduct (
         id: 1
     ) {
       id
@@ -63,7 +61,7 @@ describe('supplier_product graphQL-server-DB mutation tests', () => {
       .send({ query: deleteSupplierProductMut })
       .set('Accept', 'application/json')
       .then(response => {
-        const result = get(response, 'body.data.deleteSupplierProduct');
+        const result = get(response, 'body.data.deleteSupplierproduct');
         expect(result).toEqual(
           expect.objectContaining({
             id: 1
