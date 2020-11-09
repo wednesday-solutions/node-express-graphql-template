@@ -6,7 +6,6 @@ import { timestamps } from './timestamps';
 import { getNode } from '@gql/node';
 import db from '@database/models';
 import { addressQueries } from '@gql/models/addresses';
-import { SupplierProduct } from '@gql/models/supplierProducts';
 
 const { nodeInterface } = getNode();
 
@@ -97,6 +96,6 @@ export const supplierQueries = {
 
 export const supplierMutations = {
   args: supplierFields,
-  type: SupplierProduct,
+  type: Supplier,
   model: db.suppliers
 };
