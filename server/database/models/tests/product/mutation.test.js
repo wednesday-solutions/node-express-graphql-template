@@ -35,13 +35,11 @@ describe('Product graphQL-server-DB mutation tests', () => {
       .set('Accept', 'application/json')
       .then(response => {
         const result = get(response, 'body.data.createProduct');
-        expect(result).toEqual(
-          expect.objectContaining({
-            id: 1,
-            name: 'New produce',
-            amount: 10
-          })
-        );
+        expect(result).toMatchObject({
+          id: '1',
+          name: 'New produce',
+          amount: 10
+        });
         done();
       });
   });

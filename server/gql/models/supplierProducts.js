@@ -59,10 +59,11 @@ export const supplierProductQueries = {
     type: SupplierProductConnection.connectionType,
     args: SupplierProductConnection.connectionArgs
   },
-  model: db.products
+  model: db.supplierProducts
 };
 
 export const supplierProductMutations = {
   args: supplierProductFields,
-  type: SupplierProduct
+  type: SupplierProduct,
+  model: db.supplierProducts
 };

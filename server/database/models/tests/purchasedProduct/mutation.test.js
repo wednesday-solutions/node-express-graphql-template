@@ -11,9 +11,9 @@ beforeEach(() => {
 });
 
 describe('purchased_products graphQL-server-DB mutation tests', () => {
-  const createPurchasedProductMut = `
+  const createPurchasedProductMutation = `
     mutation {
-      createPurchasedProduct (
+      createPurchasedproduct (
         price: 100
         discount: 10
       ) {
@@ -32,24 +32,22 @@ describe('purchased_products graphQL-server-DB mutation tests', () => {
     await request(testApp)
       .post('/graphql')
       .type('form')
-      .send({ query: createPurchasedProductMut })
+      .send({ query: createPurchasedProductMutation })
       .set('Accept', 'application/json')
       .then(response => {
-        const result = get(response, 'body.data.createPurchasedProduct');
-        expect(result).toEqual(
-          expect.objectContaining({
-            id: 1,
-            price: 100,
-            discount: 10
-          })
-        );
+        const result = get(response, 'body.data.createPurchasedproduct');
+        expect(result).toMatchObject({
+          id: '1',
+          price: 100,
+          discount: 10
+        });
         done();
       });
   });
 
   const deletePurchasedProductMut = `
   mutation {
-    deletePurchasedProduct (
+    deletePurchasedproduct (
         id: 1
     ) {
       id
@@ -64,7 +62,7 @@ describe('purchased_products graphQL-server-DB mutation tests', () => {
       .send({ query: deletePurchasedProductMut })
       .set('Accept', 'application/json')
       .then(response => {
-        const result = get(response, 'body.data.deletePurchasedProduct');
+        const result = get(response, 'body.data.deletePurchasedproduct');
         expect(result).toEqual(
           expect.objectContaining({
             id: 1
