@@ -39,6 +39,6 @@ describe('Supplier introspection tests', () => {
     const addressFieldTypes = get(result, 'data.__type.fields');
     const storeField = addressFieldTypes.find(field => field.name === 'products');
     expect(storeField.type.kind).toBe('OBJECT');
-    expect(storeField.type.name).toBe('productConnection');
+    expect(storeField.type.name).toBe('productsConnection');
   });
 });

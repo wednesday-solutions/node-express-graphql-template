@@ -39,13 +39,13 @@ describe('Address introspection tests', () => {
     const addressFieldTypes = get(result, 'data.__type.fields');
     const supplierField = addressFieldTypes.find(field => field.name === 'suppliers');
     expect(supplierField.type.kind).toBe('OBJECT');
-    expect(supplierField.type.name).toBe('SupplierConnection');
+    expect(supplierField.type.name).toBe('suppliersConnection');
   });
   it('should have a store connection', async () => {
     const result = await graphqlSync({ schema, source: query });
     const addressFieldTypes = get(result, 'data.__type.fields');
     const storeField = addressFieldTypes.find(field => field.name === 'stores');
     expect(storeField.type.kind).toBe('OBJECT');
-    expect(storeField.type.name).toBe('StoreConnection');
+    expect(storeField.type.name).toBe('storeConnection');
   });
 });
