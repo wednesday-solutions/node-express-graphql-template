@@ -45,6 +45,11 @@ const PurchasedProductConnection = createConnection({
 
 // queries on the purchasedProducts table
 export const purchasedProductQueries = {
+  args: {
+    id: {
+      type: GraphQLNonNull(GraphQLInt)
+    }
+  },
   query: {
     type: PurchasedProduct
   },

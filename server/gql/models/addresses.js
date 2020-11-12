@@ -84,6 +84,11 @@ export { AddressConnection, Address };
 
 // queries on the address table
 export const addressQueries = {
+  args: {
+    id: {
+      type: GraphQLNonNull(GraphQLInt)
+    }
+  },
   query: {
     type: Address
   },
