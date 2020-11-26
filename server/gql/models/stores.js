@@ -79,6 +79,11 @@ export const StoreConnection = createConnection({
 
 // queries on the suppliers table
 export const storeQueries = {
+  args: {
+    id: {
+      type: GraphQLNonNull(GraphQLInt)
+    }
+  },
   query: {
     type: Store
   },

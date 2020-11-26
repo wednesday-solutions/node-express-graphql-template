@@ -49,6 +49,11 @@ export const StoreProductConnection = createConnection({
 
 // queries on the storeProducts table
 export const storeProductQueries = {
+  args: {
+    id: {
+      type: GraphQLNonNull(GraphQLInt)
+    }
+  },
   query: {
     type: StoreProduct
   },

@@ -100,6 +100,11 @@ export const ProductConnection = createConnection({
 
 // queries on the product table
 export const productQueries = {
+  args: {
+    id: {
+      type: GraphQLNonNull(GraphQLInt)
+    }
+  },
   query: {
     type: Product
   },
