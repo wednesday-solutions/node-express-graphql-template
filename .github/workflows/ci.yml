@@ -11,19 +11,13 @@ jobs:
         node-version: [10.x]
     steps:
       - uses: actions/checkout@v2
-      - name: Use Node.js ${{ matrix.node-version }}
-        uses: actions/setup-node@v1
+      - name: Setup environment
+        uses: actions/setup-node@v2-beta
         with:
-          node-version: ${{ matrix.node-version }}
+          node-version: "12"
       - name: Install dependencies
-        uses: borales/actions-yarn@v2.0.0
-        with:
-          cmd: install
+        run: yarn install
       - name: Lint
-        uses: borales/actions-yarn@v2.0.0
-        with:
-          cmd: lint
+        run: yarn lint
       - name: Build
-        uses: borales/actions-yarn@v2.0.0
-        with:
-          cmd: build
+        run: yarn build
