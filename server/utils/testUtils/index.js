@@ -1,17 +1,68 @@
 import isNil from 'lodash/isNil';
+import {
+  addressesTable,
+  productsTable,
+  purchasedProductsTable,
+  storeProductsTable,
+  storesTable,
+  supplierProductsTable,
+  suppliersTable
+} from '@server/utils/testUtils/mockData';
+import sequelize from 'sequelize';
+
+const defineAndAddAttributes = (connection, name, mock, attr) => {
+  const mockTable = connection.define(name, mock);
+  mockTable.rawAttributes = attr;
+  return mockTable;
+};
 
 export function mockDBClient() {
-  var SequelizeMock = require('sequelize-mock');
+  const SequelizeMock = require('sequelize-mock');
   // Setup the mock database connection
-  var DBConnectionMock = new SequelizeMock();
+  const DBConnectionMock = new SequelizeMock();
 
-  const addressesMock = DBConnectionMock.define('addresses');
-  const productsMock = DBConnectionMock.define('products');
-  const purchasedProductsMock = DBConnectionMock.define('purchased_products');
-  const storesMock = DBConnectionMock.define('stores');
-  const storeProductsMock = DBConnectionMock.define('store_products');
-  const suppliersMock = DBConnectionMock.define('suppliers');
-  const supplierProductsMock = DBConnectionMock.define('supplier_products');
+  const addressesMock = defineAndAddAttributes(
+    DBConnectionMock,
+    'addresses',
+    addressesTable[0],
+    require('@database/models/addresses').getAttributes(sequelize, sequelize.DataTypes)
+  );
+  const productsMock = defineAndAddAttributes(
+    DBConnectionMock,
+    'products',
+    productsTable[0],
+    require('@database/models/products').getAttributes(sequelize, sequelize.DataTypes)
+  );
+  const purchasedProductsMock = defineAndAddAttributes(
+    DBConnectionMock,
+    'purchased_products',
+    purchasedProductsTable[0],
+    require('@database/models/purchased_products').getAttributes(sequelize, sequelize.DataTypes)
+  );
+  const storesMock = defineAndAddAttributes(
+    DBConnectionMock,
+    'stores',
+    storesTable[0],
+    require('@database/models/stores').getAttributes(sequelize, sequelize.DataTypes)
+  );
+  const storeProductsMock = defineAndAddAttributes(
+    DBConnectionMock,
+    'store_products',
+    storeProductsTable[0],
+    require('@database/models/store_products').getAttributes(sequelize, sequelize.DataTypes)
+  );
+  const supplierProductsMock = defineAndAddAttributes(
+    DBConnectionMock,
+    'supplier_products',
+    supplierProductsTable[0],
+    require('@database/models/supplier_products').getAttributes(sequelize, sequelize.DataTypes)
+  );
+  const suppliersMock = defineAndAddAttributes(
+    DBConnectionMock,
+    'suppliers',
+    suppliersTable[0],
+    require('@database/models/purchased_products').getAttributes(sequelize, sequelize.DataTypes)
+  );
 
   return {
     client: DBConnectionMock,

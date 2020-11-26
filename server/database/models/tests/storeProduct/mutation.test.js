@@ -1,7 +1,7 @@
 import get from 'lodash/get';
 import { storeProductsTable } from '@server/utils/testUtils/mockData';
 import { testApp } from '@server/utils/testUtils/testApp';
-var request = require('supertest');
+const request = require('supertest');
 
 beforeEach(() => {
   const mockDBClient = require('@database');

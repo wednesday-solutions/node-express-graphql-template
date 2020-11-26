@@ -1,48 +1,48 @@
-module.exports = function(sequelize, DataTypes) {
-  const products = sequelize.define(
-    'products',
-    {
-      id: {
-        type: DataTypes.INTEGER,
-        allowNull: false,
-        primaryKey: true,
-        autoIncrement: true
-      },
-      name: {
-        type: DataTypes.TEXT,
-        allowNull: false
-      },
-      category: {
-        type: DataTypes.TEXT,
-        allowNull: false
-      },
-      amount: {
-        type: DataTypes.BIGINT,
-        allowNull: false
-      },
-      createdAt: {
-        field: 'created_at',
-        type: DataTypes.DATE,
-        allowNull: true,
-        defaultValue: sequelize.fn('now')
-      },
-      updatedAt: {
-        field: 'updated_at',
-        type: DataTypes.DATE,
-        allowNull: true
-      },
-      deletedAt: {
-        field: 'deleted_at',
-        type: DataTypes.DATE,
-        allowNull: true
-      }
+export function getAttributes(sequelize, DataTypes) {
+  return {
+    id: {
+      type: DataTypes.INTEGER,
+      allowNull: false,
+      primaryKey: true,
+      autoIncrement: true
     },
-    {
-      tableName: 'products',
-      paranoid: true,
-      timestamps: true
+    name: {
+      type: DataTypes.TEXT,
+      allowNull: false
+    },
+    category: {
+      type: DataTypes.TEXT,
+      allowNull: false
+    },
+    amount: {
+      type: DataTypes.BIGINT,
+      allowNull: false
+    },
+    createdAt: {
+      field: 'created_at',
+      type: DataTypes.DATE,
+      allowNull: true,
+      defaultValue: sequelize.fn('now')
+    },
+    updatedAt: {
+      field: 'updated_at',
+      type: DataTypes.DATE,
+      allowNull: true
+    },
+    deletedAt: {
+      field: 'deleted_at',
+      type: DataTypes.DATE,
+      allowNull: true
     }
-  );
+  };
+}
+
+export function model(sequelize, DataTypes) {
+  const products = sequelize.define('products', getAttributes(sequelize, DataTypes), {
+    tableName: 'products',
+    paranoid: true,
+    timestamps: true
+  });
 
   products.associate = function(models) {
     products.supplierProducts = products.hasOne(models.supplierProducts, {
@@ -71,4 +71,4 @@ module.exports = function(sequelize, DataTypes) {
     });
   };
   return products;
-};
+}

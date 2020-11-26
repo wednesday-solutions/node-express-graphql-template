@@ -2,7 +2,7 @@
 import { suppliersTable } from '@server/utils/testUtils/mockData';
 import { testApp } from '@server/utils/testUtils/testApp';
 import { addWhereClause } from '@utils';
-var request = require('supertest');
+const request = require('supertest');
 let spy;
 beforeEach(() => {
   const mockDBClient = require('@database');

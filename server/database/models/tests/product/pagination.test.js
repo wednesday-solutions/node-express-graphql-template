@@ -1,8 +1,8 @@
 import get from 'lodash/get';
 import { productsTable } from '@server/utils/testUtils/mockData';
 import { testApp } from '@server/utils/testUtils/testApp';
-var request = require('supertest');
-var cursor = {};
+const request = require('supertest');
+let cursor = {};
 
 const getResponse = async query =>
   await request(testApp)
