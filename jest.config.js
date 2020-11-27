@@ -7,7 +7,6 @@ module.exports = {
     '!**/dist/**',
     '!**/server/database/models/**',
     '!**/server/utils/testUtils/**',
-    '!**/server/utils/migrateUtils.js',
     '!**/server/utils/configureEnv.js'
   ],
   testPathIgnorePatterns: ['<rootDir>/dist/'],

@@ -1,0 +1,15 @@
+import { addWhereClause, isTestEnv } from '@utils/index';
+
+describe('isTestEnv', () => {
+  it("should return true if the ENVIRONMENT is 'test'", () => {
+    expect(isTestEnv()).toBe(true);
+  });
+});
+
+describe('addWhereClause', () => {
+  it("should construct the whereClause correctly'", () => {
+    const where = addWhereClause('', 'A = B');
+    expect(where).toBe('  WHERE ( A = B ) ');
+    expect(addWhereClause(where, 'A = B')).toBe('   WHERE ( A = B )  AND ( A = B ) ');
+  });
+});
