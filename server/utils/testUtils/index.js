@@ -121,7 +121,7 @@ export const resetAndMockDB = (mockCallback, config) => {
     if (mockCallback) {
       mockCallback(db.client, db.models);
     }
-    return { getClient: () => db.client, client: db.client };
+    return { getClient: () => db.client, client: db.client, connect: () => {} };
   });
   jest.doMock('@database/models', () => {
     if (mockCallback) {
