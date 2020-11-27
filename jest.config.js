@@ -1,6 +1,6 @@
 module.exports = {
   testEnvironment: 'node',
-  setupFiles: ['./jest.setup.js'],
+  setupFilesAfterEnv: ['./jest.setup.js'],
   collectCoverageFrom: ['**/server/**', '!**/node_modules/**', '!**/dist/**'],
   testPathIgnorePatterns: ['<rootDir>/dist/'],
   moduleNameMapper: {

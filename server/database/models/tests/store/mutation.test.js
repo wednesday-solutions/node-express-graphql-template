@@ -38,7 +38,7 @@ describe('store graphQL-server-DB mutation tests', () => {
         expect(result).toMatchObject({
           id: '1',
           name: 'new store name',
-          addressId: '1'
+          addressId: 1
         });
         done();
       });

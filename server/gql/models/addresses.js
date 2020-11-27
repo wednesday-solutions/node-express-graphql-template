@@ -5,6 +5,7 @@ import { supplierQueries } from './suppliers';
 import { timestamps } from './timestamps';
 import db from '@database/models';
 import { storeQueries } from '@gql/models/stores';
+import { totalConnectionFields } from '@utils/index';
 
 const { nodeInterface } = getNode();
 export const addressFields = {
@@ -73,11 +74,7 @@ const AddressConnection = createConnection({
     // for custom args other than connectionArgs return a sequelize where parameter
     return { [key]: value };
   },
-  connectionFields: {
-    total: {
-      type: GraphQLNonNull(GraphQLInt)
-    }
-  }
+  ...totalConnectionFields
 });
 
 export { AddressConnection, Address };

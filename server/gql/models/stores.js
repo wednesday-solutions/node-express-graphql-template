@@ -5,13 +5,14 @@ import { addressQueries } from './addresses';
 import { timestamps } from './timestamps';
 import { getNode } from '@gql/node';
 import db from '@database/models';
+import { totalConnectionFields } from '@utils/index';
 
 const { nodeInterface } = getNode();
 
 export const storeFields = {
   id: { type: GraphQLNonNull(GraphQLID) },
   name: { type: GraphQLString },
-  addressId: { sqlColumn: 'address_id', type: GraphQLNonNull(GraphQLID) }
+  addressId: { type: GraphQLNonNull(GraphQLInt) }
 };
 
 export const Store = new GraphQLObjectType({
@@ -70,18 +71,14 @@ export const StoreConnection = createConnection({
     // for custom args other than connectionArgs return a sequelize where parameter
     return { [key]: value };
   },
-  connectionFields: {
-    total: {
-      type: GraphQLNonNull(GraphQLInt)
-    }
-  }
+  ...totalConnectionFields
 });
 
 // queries on the suppliers table
 export const storeQueries = {
   args: {
     id: {
-      type: GraphQLNonNull(GraphQLInt)
+      type: GraphQLNonNull(GraphQLID)
     }
   },
   query: {

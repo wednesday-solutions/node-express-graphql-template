@@ -6,13 +6,14 @@ import { timestamps } from './timestamps';
 import { getNode } from '@gql/node';
 import db from '@database/models';
 import { productQueries } from '@gql/models/products';
+import { totalConnectionFields } from '@utils/index';
 
 const { nodeInterface } = getNode();
 
 export const supplierProductFields = {
   id: { type: GraphQLNonNull(GraphQLID) },
-  supplierId: { sqlColumn: 'supplier_id', type: GraphQLInt },
-  productId: { sqlColumn: 'product_id', type: GraphQLInt }
+  supplierId: { type: GraphQLInt },
+  productId: { type: GraphQLInt }
 };
 export const SupplierProduct = new GraphQLObjectType({
   name: 'SupplierProduct',
@@ -42,11 +43,7 @@ export const SupplierProductConnection = createConnection({
     // for custom args other than connectionArgs return a sequelize where parameter
     return { [key]: value };
   },
-  connectionFields: {
-    total: {
-      type: GraphQLNonNull(GraphQLInt)
-    }
-  }
+  ...totalConnectionFields
 });
 
 // queries on the product table
