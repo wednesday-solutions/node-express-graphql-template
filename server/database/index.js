@@ -11,6 +11,7 @@ export const getClient = () => {
       });
     } catch (err) {
       console.log({ err });
+      throw err;
     }
   }
   return client;
@@ -26,6 +27,7 @@ export const connect = async () => {
     });
   } catch (error) {
     console.error('Unable to connect to the database:', error);
+    throw error;
   }
 };
 export { client };
