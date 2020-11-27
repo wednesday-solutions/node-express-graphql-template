@@ -1,8 +1,8 @@
 import get from 'lodash/get';
 import { graphqlSync, GraphQLSchema } from 'graphql';
-import { createFieldsWithType, expectSameTypeNameOrKind } from '@server/utils/testUtils';
-import { QueryRoot } from '../../queries';
-import { MutationRoot } from '../../mutations';
+import { createFieldsWithType, expectSameTypeNameOrKind } from '@utils/testUtils';
+import { QueryRoot } from '../../../queries';
+import { MutationRoot } from '../../../mutations';
 import { timestamps } from '@gql/models/timestamps';
 import { storeFields } from '@gql/models/stores';
 
