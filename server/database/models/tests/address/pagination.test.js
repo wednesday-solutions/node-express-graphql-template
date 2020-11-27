@@ -1,8 +1,9 @@
 import get from 'lodash/get';
+import { mockDBClient } from '@server/utils/testUtils';
 import { addressesTable } from '@server/utils/testUtils/mockData';
 import { testApp } from '@server/utils/testUtils/testApp';
-var request = require('supertest');
-var cursor = {};
+const request = require('supertest');
+let cursor = {};
 
 const getResponse = async query =>
   await request(testApp)
@@ -79,22 +80,32 @@ describe('Address graphQL-server-DB mutation tests', () => {
   });
 
   it('should return the correct address after the provided cursor', async done => {
-    const mockDBClient = require('@database');
-    const client = mockDBClient.client;
-    client.$queueQueryResult([
-      {},
-      {
-        rows: [{ ...addressesTable[0], ...addressesTable[1], $total: 2 }]
-      }
-    ]);
-    client.$queueQueryResult([
-      {},
-      {
-        rows: [{ ...addressesTable[0], ...addressesTable[1], $total: 2 }]
-      }
-    ]);
-    jest.doMock('@database', () => ({ client, getClient: () => client }));
+    jest.clearAllMocks();
+    jest.resetAllMocks();
+    jest.resetModules();
+    const client = mockDBClient().client;
 
+    // const mockDBClient = require('@database');
+    // const client = mockDBClient.client;
+    client.$queueQueryResult([
+      {},
+      {
+        rows: [{ ...addressesTable[0], ...addressesTable[1], $total: 2 }]
+      }
+    ]);
+    client.$queueQueryResult([
+      {},
+      {
+        rows: [{ ...addressesTable[0], ...addressesTable[1], $total: 2 }]
+      }
+    ]);
+    jest.doMock('@database', () => ({
+      client,
+      getClient: () => {
+        console.log('mocking');
+        return client;
+      }
+    }));
     await getResponse(addressesQuery).then(response => {
       const result = get(response, 'body.data.addresses.pageInfo');
       cursor = {
@@ -134,9 +145,9 @@ describe('Address graphQL-server-DB mutation tests', () => {
       const result = get(response, 'body.data.addresses.edges[0].node');
       expect(result).toEqual(
         expect.objectContaining({
-          id: addressesTable[1].id,
-          address1: addressesTable[1].address1,
-          address2: addressesTable[1].address2
+          id: addressesTable[0].id,
+          address1: addressesTable[0].address1,
+          address2: addressesTable[0].address2
         })
       );
       done();

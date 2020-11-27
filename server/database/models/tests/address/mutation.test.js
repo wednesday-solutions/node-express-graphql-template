@@ -1,7 +1,7 @@
 import get from 'lodash/get';
 import { addressesTable } from '@server/utils/testUtils/mockData';
 import { testApp } from '@server/utils/testUtils/testApp';
-var request = require('supertest');
+const request = require('supertest');
 
 beforeEach(() => {
   const mockDBClient = require('@database');
@@ -43,15 +43,13 @@ describe('Address graphQL-server-DB mutation tests', () => {
       .set('Accept', 'application/json')
       .then(response => {
         const result = get(response, 'body.data.createAddress');
-        expect(result).toEqual(
-          expect.objectContaining({
-            id: 1,
-            address1: 'new address one',
-            address2: 'new address two',
-            city: 'new city',
-            country: 'new country'
-          })
-        );
+        expect(result).toMatchObject({
+          id: '1',
+          address1: 'new address one',
+          address2: 'new address two',
+          city: 'new city',
+          country: 'new country'
+        });
         done();
       });
   });

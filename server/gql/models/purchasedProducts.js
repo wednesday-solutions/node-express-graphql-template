@@ -5,6 +5,7 @@ import { timestamps } from './timestamps';
 import { GraphQLDateTime } from 'graphql-iso-date';
 import { getNode } from '@gql/node';
 import db from '@database/models';
+import { totalConnectionFields } from '@utils/index';
 
 const { nodeInterface } = getNode();
 
@@ -36,15 +37,16 @@ const PurchasedProductConnection = createConnection({
     return { [key]: value };
   },
   nodeType: PurchasedProduct,
-  connectionFields: {
-    total: {
-      type: GraphQLNonNull(GraphQLInt)
-    }
-  }
+  ...totalConnectionFields
 });
 
 // queries on the purchasedProducts table
 export const purchasedProductQueries = {
+  args: {
+    id: {
+      type: GraphQLNonNull(GraphQLInt)
+    }
+  },
   query: {
     type: PurchasedProduct
   },

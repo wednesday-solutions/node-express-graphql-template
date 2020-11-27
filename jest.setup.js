@@ -1,10 +1,15 @@
 import { mockDBClient } from '@server/utils/testUtils';
 
-jest.mock('@database', () => ({
+jest.doMock('@database', () => ({
   getClient: () => mockDBClient().client,
   client: mockDBClient().client
 }));
-
-jest.mock('@database/models', () => ({
+jest.doMock('@database/models', () => ({
   ...mockDBClient().models
 }));
+
+afterEach(() => {
+  jest.clearAllMocks();
+  jest.resetAllMocks();
+  jest.resetModules();
+});

@@ -5,6 +5,7 @@ import { SupplierConnection } from './suppliers';
 import { storeQueries } from './stores';
 import { timestamps } from './timestamps';
 import db from '@database/models';
+import { totalConnectionFields } from '@utils/index';
 
 const { nodeInterface } = getNode();
 export const productFields = {
@@ -91,15 +92,16 @@ export const ProductConnection = createConnection({
   where: function(key, value, currentWhere) {
     return { [key]: value };
   },
-  connectionFields: {
-    total: {
-      type: GraphQLNonNull(GraphQLInt)
-    }
-  }
+  ...totalConnectionFields
 });
 
 // queries on the product table
 export const productQueries = {
+  args: {
+    id: {
+      type: GraphQLNonNull(GraphQLInt)
+    }
+  },
   query: {
     type: Product
   },

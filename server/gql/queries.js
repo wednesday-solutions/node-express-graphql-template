@@ -1,4 +1,4 @@
-import { GraphQLObjectType } from 'graphql';
+import { GraphQLObjectType, GraphQLNonNull, GraphQLInt } from 'graphql';
 import camelCase from 'lodash/camelCase';
 import pluralize from 'pluralize';
 import { defaultArgs, resolver } from 'graphql-sequelize';
@@ -33,6 +33,7 @@ export const addQueries = () => {
       ...DB_TABLES[table].query,
       resolve: resolver(DB_TABLES[table].model),
       args: {
+        id: { type: GraphQLNonNull(GraphQLInt) },
         ...DB_TABLES[table].args,
         ...defaultArgs(DB_TABLES[table].model)
       }

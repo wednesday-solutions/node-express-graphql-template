@@ -1,7 +1,7 @@
 import get from 'lodash/get';
 import { storeProductsTable } from '@server/utils/testUtils/mockData';
 import { testApp } from '@server/utils/testUtils/testApp';
-var request = require('supertest');
+const request = require('supertest');
 
 beforeEach(() => {
   const mockDBClient = require('@database');
@@ -13,7 +13,7 @@ beforeEach(() => {
 describe('store_products graphQL-server-DB mutation tests', () => {
   const createStoreProductMut = `
     mutation {
-        createStoreProduct (
+        createStoreproduct (
         productId: 1
         storeId: 1
       ) {
@@ -34,21 +34,19 @@ describe('store_products graphQL-server-DB mutation tests', () => {
       .send({ query: createStoreProductMut })
       .set('Accept', 'application/json')
       .then(response => {
-        const result = get(response, 'body.data.createStoreProduct');
-        expect(result).toEqual(
-          expect.objectContaining({
-            id: 1,
-            productId: 1,
-            storeId: 1
-          })
-        );
+        const result = get(response, 'body.data.createStoreproduct');
+        expect(result).toMatchObject({
+          id: '1',
+          productId: 1,
+          storeId: 1
+        });
         done();
       });
   });
 
   const deleteStoreProductMut = `
   mutation {
-    deleteStoreProduct (
+    deleteStoreproduct (
         id: 1
     ) {
       id
@@ -63,7 +61,7 @@ describe('store_products graphQL-server-DB mutation tests', () => {
       .send({ query: deleteStoreProductMut })
       .set('Accept', 'application/json')
       .then(response => {
-        const result = get(response, 'body.data.deleteStoreProduct');
+        const result = get(response, 'body.data.deleteStoreproduct');
         expect(result).toEqual(
           expect.objectContaining({
             id: 1

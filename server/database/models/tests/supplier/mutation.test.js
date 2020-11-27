@@ -1,7 +1,7 @@
 import get from 'lodash/get';
 import { suppliersTable } from '@server/utils/testUtils/mockData';
 import { testApp } from '@server/utils/testUtils/testApp';
-var request = require('supertest');
+const request = require('supertest');
 
 beforeEach(() => {
   const mockDBClient = require('@database');
@@ -35,13 +35,11 @@ describe('supplier graphQL-server-DB mutation tests', () => {
       .set('Accept', 'application/json')
       .then(response => {
         const result = get(response, 'body.data.createSupplier');
-        expect(result).toEqual(
-          expect.objectContaining({
-            id: 1,
-            name: 'new supplier name',
-            addressId: 1
-          })
-        );
+        expect(result).toMatchObject({
+          id: '1',
+          name: 'new supplier name',
+          addressId: 1
+        });
         done();
       });
   });

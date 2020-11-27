@@ -5,6 +5,7 @@ import { storeQueries } from './stores';
 import { timestamps } from './timestamps';
 import { getNode } from '@gql/node';
 import db from '@database/models';
+import { totalConnectionFields } from '@utils/index';
 
 const { nodeInterface } = getNode();
 
@@ -40,15 +41,16 @@ export const StoreProductConnection = createConnection({
     // for custom args other than connectionArgs return a sequelize where parameter
     return { [key]: value };
   },
-  connectionFields: {
-    total: {
-      type: GraphQLNonNull(GraphQLInt)
-    }
-  }
+  ...totalConnectionFields
 });
 
 // queries on the storeProducts table
 export const storeProductQueries = {
+  args: {
+    id: {
+      type: GraphQLNonNull(GraphQLInt)
+    }
+  },
   query: {
     type: StoreProduct
   },

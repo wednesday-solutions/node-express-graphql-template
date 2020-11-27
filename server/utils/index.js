@@ -1,4 +1,5 @@
 import isEmpty from 'lodash/isEmpty';
+import { GraphQLInt, GraphQLNonNull } from 'graphql';
 
 export const addWhereClause = (where, clause) => {
   if (isEmpty(where)) {
@@ -16,4 +17,13 @@ export const addWhereClauseToAliasTable = (aliasTable, where, queryTerm, arg) =>
     }
   }
   return where;
+};
+
+export const totalConnectionFields = {
+  connectionFields: {
+    total: {
+      resolve: meta => meta.fullCount,
+      type: GraphQLNonNull(GraphQLInt)
+    }
+  }
 };

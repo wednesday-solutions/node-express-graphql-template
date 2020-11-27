@@ -6,7 +6,7 @@ import { timestamps } from './timestamps';
 import { getNode } from '@gql/node';
 import db from '@database/models';
 import { addressQueries } from '@gql/models/addresses';
-import { SupplierProduct } from '@gql/models/supplierProducts';
+import { totalConnectionFields } from '@utils/index';
 
 const { nodeInterface } = getNode();
 
@@ -75,15 +75,16 @@ export const SupplierConnection = createConnection({
     // for custom args other than connectionArgs return a sequelize where parameter
     return { [key]: value };
   },
-  connectionFields: {
-    total: {
-      type: GraphQLNonNull(GraphQLInt)
-    }
-  }
+  ...totalConnectionFields
 });
 
 // queries on the suppliers table
 export const supplierQueries = {
+  args: {
+    id: {
+      type: GraphQLNonNull(GraphQLInt)
+    }
+  },
   query: {
     type: Supplier
   },
@@ -97,6 +98,6 @@ export const supplierQueries = {
 
 export const supplierMutations = {
   args: supplierFields,
-  type: SupplierProduct,
+  type: Supplier,
   model: db.suppliers
 };
