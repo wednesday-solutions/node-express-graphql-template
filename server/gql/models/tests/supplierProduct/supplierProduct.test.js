@@ -1,20 +1,20 @@
 import get from 'lodash/get';
 import { graphqlSync, GraphQLSchema } from 'graphql';
-import { createFieldsWithType, expectSameTypeNameOrKind } from '@server/utils/testUtils';
-import { QueryRoot } from '../../queries';
-import { MutationRoot } from '../../mutations';
+import { createFieldsWithType, expectSameTypeNameOrKind } from '@utils/testUtils';
+import { QueryRoot } from '../../../queries';
+import { MutationRoot } from '../../../mutations';
 import { timestamps } from '@gql/models/timestamps';
-import { storeProductFields } from '@gql/models/storeProducts';
+import { supplierProductFields } from '@gql/models/supplierProducts';
 
 const schema = new GraphQLSchema({ query: QueryRoot, mutation: MutationRoot });
 
 let fields = [];
 
-fields = createFieldsWithType({ ...storeProductFields, ...timestamps });
+fields = createFieldsWithType({ ...supplierProductFields, ...timestamps });
 
 const query = `
   {
-    __type(name: "StoreProduct") {
+    __type(name: "SupplierProduct") {
         name
         kind
         fields {
@@ -27,11 +27,11 @@ const query = `
       }    
   }
 `;
-describe('Store Product introspection tests', () => {
+describe('Supplier Product introspection tests', () => {
   it('should have the correct fields and types', async () => {
     const result = await graphqlSync({ schema, source: query });
-    const storeProductFieldTypes = get(result, 'data.__type.fields');
-    const hasCorrectFieldTypes = expectSameTypeNameOrKind(storeProductFieldTypes, fields);
+    const supplierProductFieldTypes = get(result, 'data.__type.fields');
+    const hasCorrectFieldTypes = expectSameTypeNameOrKind(supplierProductFieldTypes, fields);
     expect(hasCorrectFieldTypes).toBeTruthy();
   });
 
@@ -43,11 +43,11 @@ describe('Store Product introspection tests', () => {
     expect(productField.type.kind).toBe('OBJECT');
   });
 
-  it('should have a store field of type Store', async () => {
+  it('should have a supplier field of type Supplier', async () => {
     const result = await graphqlSync({ schema, source: query });
     const purchasedProductFieldTypes = get(result, 'data.__type.fields');
-    const productField = purchasedProductFieldTypes.find(field => field.name === 'stores');
-    expect(productField.type.name).toBe('storeConnection');
-    expect(productField.type.kind).toBe('OBJECT');
+    const supplierField = purchasedProductFieldTypes.find(field => field.name === 'suppliers');
+    expect(supplierField.type.name).toBe('suppliersConnection');
+    expect(supplierField.type.kind).toBe('OBJECT');
   });
 });
