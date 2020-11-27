@@ -29,14 +29,12 @@ export const init = () => {
       schema: schema,
       graphiql: true,
       customFormatErrorFn: e => {
-        if (process.env.ENVIRONMENT !== 'local') {
-          return e.message;
-        }
         console.log({ e });
         return e;
       }
     })
   );
+  /* istanbul ignore next */
   if (!isTestEnv()) {
     app.listen(9000);
   }
