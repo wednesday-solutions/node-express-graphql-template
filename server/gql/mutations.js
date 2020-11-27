@@ -3,7 +3,7 @@ import capitalize from 'lodash/capitalize';
 import { productMutations } from '@gql/models/products';
 import { purchasedProductMutations } from '@gql/models/purchasedProducts';
 import { supplierMutations } from '@gql/models/suppliers';
-import { DeletedId, deleteUsingId, updateUsingId } from '@database/dbUtils';
+import { deletedId, deleteUsingId, updateUsingId } from '@database/dbUtils';
 import { addressMutations } from '@gql/models/addresses';
 import { storeMutations } from '@gql/models/stores';
 import { storeProductMutations } from '@gql/models/storeProducts';
@@ -39,7 +39,7 @@ export const addMutations = () => {
       resolve: createResolvers(DB_TABLES[table].model).updateResolver
     };
     mutations[`delete${capitalize(table)}`] = {
-      type: DeletedId,
+      type: deletedId,
       args: {
         id: { type: GraphQLNonNull(GraphQLInt) }
       },
