@@ -1,46 +1,71 @@
-import { GraphQLObjectType, GraphQLNonNull, GraphQLInt } from 'graphql';
-import { connectionDefinitions, connectionArgs } from 'graphql-relay';
-import { nodeInterface } from 'gql/node';
-import { Product } from './products';
-import { Supplier } from './suppliers';
+import { GraphQLID, GraphQLInt, GraphQLNonNull, GraphQLObjectType } from 'graphql';
+import { connectionArgs } from 'graphql-relay';
+import { createConnection } from 'graphql-sequelize';
+import { supplierQueries } from './suppliers';
 import { timestamps } from './timestamps';
+import { getNode } from '@gql/node';
+import db from '@database/models';
+import { productQueries } from '@gql/models/products';
+import { totalConnectionFields } from '@utils/index';
+
+const { nodeInterface } = getNode();
 
 export const supplierProductFields = {
-  id: { type: GraphQLInt },
-  supplierId: { sqlColumn: 'supplier_id', type: GraphQLInt },
-  productId: { sqlColumn: 'product_id', type: GraphQLInt }
+  id: { type: GraphQLNonNull(GraphQLID) },
+  supplierId: { type: GraphQLInt },
+  productId: { type: GraphQLInt }
 };
-const SupplierProduct = new GraphQLObjectType({
+export const SupplierProduct = new GraphQLObjectType({
   name: 'SupplierProduct',
-  interface: [nodeInterface],
+  interfaces: [nodeInterface],
   args: connectionArgs,
   fields: () => ({
     ...supplierProductFields,
     ...timestamps,
-    product: {
-      type: Product,
-      sqlJoin: (supplierProductsTable, productTable, args) => `${productTable}.id = ${supplierProductsTable}.product_id`
+    products: {
+      ...productQueries.list,
+      resolve: (source, args, context, info) =>
+        productQueries.list.resolve(source, args, { ...context, supplierProduct: source.dataValues }, info)
     },
-    supplier: {
-      type: Supplier,
-      sqlJoin: (supplierProductsTable, supplierTable, args) =>
-        `${supplierTable}.id = ${supplierProductsTable}.supplier_id`
+    suppliers: {
+      ...supplierQueries.list,
+      resolve: (source, args, context, info) =>
+        supplierQueries.list.resolve(source, args, { ...context, supplierProduct: source.dataValues }, info)
     }
   })
 });
 
-SupplierProduct._typeConfig = {
-  sqlTable: 'supplier_products',
-  uniqueKey: 'id'
-};
-
-const { connectionType: SupplierProductConnection } = connectionDefinitions({
+export const SupplierProductConnection = createConnection({
   nodeType: SupplierProduct,
-  connectionFields: {
-    total: {
-      type: GraphQLNonNull(GraphQLInt)
-    }
-  }
+  name: 'supplierProducts',
+  target: db.supplierProducts,
+  where: function(key, value, currentWhere) {
+    // for custom args other than connectionArgs return a sequelize where parameter
+    return { [key]: value };
+  },
+  ...totalConnectionFields
 });
 
-export { SupplierProduct, SupplierProductConnection };
+// queries on the product table
+export const supplierProductQueries = {
+  args: {
+    id: {
+      type: GraphQLNonNull(GraphQLInt)
+    }
+  },
+  query: {
+    type: SupplierProduct
+  },
+  list: {
+    ...SupplierProductConnection,
+    type: SupplierProductConnection.connectionType,
+    args: SupplierProductConnection.connectionArgs
+  },
+  model: db.supplierProducts
+};
+
+export const supplierProductMutations = {
+  args: supplierProductFields,
+  type: SupplierProduct,
+  model: db.supplierProducts
+};

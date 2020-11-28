@@ -30,7 +30,7 @@ export const deleteUsingId = async (model, args) => {
   return args;
 };
 
-export const DeletedId = new GraphQLObjectType({
+export const deletedId = new GraphQLObjectType({
   name: 'Id',
   fields: () => ({ id: { type: GraphQLNonNull(GraphQLInt) } })
 });

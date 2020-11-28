@@ -1,0 +1,255 @@
+{
+  "info": {
+    "_postman_id": "74521f58-ec71-444d-8cc2-bbc3a1308adb",
+    "name": "Node-Express-Graphql-Template",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+  },
+  "item": [
+    {
+      "name": "SupplierProducts",
+      "protocolProfileBehavior": {
+        "disableBodyPruning": true
+      },
+      "request": {
+        "method": "GET",
+        "header": [],
+        "body": {
+          "mode": "graphql",
+          "graphql": {
+            "query": "query SupplierProducts {\n  supplierProducts(first: 2) {\n    edges {\n      node {\n        id\n        suppliers (first: 1){\n          edges {\n            node {\n              id\n              name\n            }\n          }\n        }\n        products(first: 1) {\n          edges {\n            node {\n              id\n              name\n            }\n          }\n        }\n      }\n    }\n  }\n}\n",
+            "variables": ""
+          }
+        },
+        "url": {
+          "raw": "http://localhost:9000/graphql",
+          "protocol": "http",
+          "host": ["localhost"],
+          "port": "9000",
+          "path": ["graphql"]
+        }
+      },
+      "response": []
+    },
+    {
+      "name": "StoreProducts",
+      "request": {
+        "method": "POST",
+        "header": [],
+        "body": {
+          "mode": "graphql",
+          "graphql": {
+            "query": "query StoreProducts {\n  storeProducts(first: 2) {\n    edges {\n      node {\n        id\n        stores (first: 1){\n          edges {\n            node {\n              id\n              name\n            }\n          }\n        }\n        products(first: 1) {\n          edges {\n            node {\n              id\n              name\n            }\n          }\n        }\n      }\n    }\n  }\n}\n",
+            "variables": ""
+          }
+        },
+        "url": {
+          "raw": "http://localhost:9000/graphql",
+          "protocol": "http",
+          "host": ["localhost"],
+          "port": "9000",
+          "path": ["graphql"]
+        }
+      },
+      "response": []
+    },
+    {
+      "name": "PurchasedProducts",
+      "request": {
+        "method": "POST",
+        "header": [],
+        "body": {
+          "mode": "graphql",
+          "graphql": {
+            "query": "query PurchasedProducts {\n  purchasedProducts(first: 2) {\n    pageInfo {\n      hasNextPage\n      endCursor\n    }\n    edges {\n      node {\n        id   \n        discount\n        price\n        createdAt\n        product(first: 5) {\n          pageInfo {\n            hasPreviousPage\n          }\n          edges {\n            node {\n              category\n              id \n              name\n              amount\n              createdAt\n            }\n          }\n        }\n      }\n    }\n  }\n}\n",
+            "variables": ""
+          }
+        },
+        "url": {
+          "raw": "http://localhost:9000/graphql",
+          "protocol": "http",
+          "host": ["localhost"],
+          "port": "9000",
+          "path": ["graphql"]
+        }
+      },
+      "response": []
+    },
+    {
+      "name": "Addresses",
+      "request": {
+        "method": "POST",
+        "header": [],
+        "body": {
+          "mode": "graphql",
+          "graphql": {
+            "query": "query Address {\n  addresses (first:10){\n    edges {\n      node {\n        id\n        address1\n        address2\n        suppliers {\n          edges {\n            node{\n              id\n              name\n            }\n          }\n        }\n        stores {\n          edges {\n            node {\n              id\n              name\n            }\n          }\n        }\n      }\n    }\n  }\n}",
+            "variables": ""
+          }
+        },
+        "url": {
+          "raw": "http://localhost:9000/graphql",
+          "protocol": "http",
+          "host": ["localhost"],
+          "port": "9000",
+          "path": ["graphql"]
+        }
+      },
+      "response": []
+    },
+    {
+      "name": "Suppliers",
+      "request": {
+        "method": "POST",
+        "header": [],
+        "body": {
+          "mode": "graphql",
+          "graphql": {
+            "query": "query Suppliers {\n  suppliers (first:10){\n    edges {\n      node {\n        id\n        name\n        addressId\n        address {\n          edges {\n            node {\n              id\n              address1\n            }\n          }\n        }\n        products {\n          edges {\n            node {\n              id\n              name\n            }\n          }\n        }\n      }\n    }\n  }\n}",
+            "variables": ""
+          }
+        },
+        "url": {
+          "raw": "http://localhost:9000/graphql",
+          "protocol": "http",
+          "host": ["localhost"],
+          "port": "9000",
+          "path": ["graphql"]
+        }
+      },
+      "response": []
+    },
+    {
+      "name": "Stores",
+      "request": {
+        "method": "POST",
+        "header": [],
+        "body": {
+          "mode": "graphql",
+          "graphql": {
+            "query": "query Stores {\n  stores (first:10){\n    edges {\n      node {\n        id\n        name\n        addressId\n        address {\n          edges {\n            node {\n              id\n              address1\n            }\n          }\n        }\n        products {\n          edges {\n            node {\n              id\n              name\n            }\n          }\n        }\n      }\n    }\n  }\n}",
+            "variables": ""
+          }
+        },
+        "url": {
+          "raw": "http://localhost:9000/graphql",
+          "protocol": "http",
+          "host": ["localhost"],
+          "port": "9000",
+          "path": ["graphql"]
+        }
+      },
+      "response": []
+    },
+    {
+      "name": "Products",
+      "request": {
+        "method": "POST",
+        "header": [],
+        "body": {
+          "mode": "graphql",
+          "graphql": {
+            "query": "query Products {\n  products(first: 10) {\n    edges {\n      node {\n        id\n        name\n        category\n        amount\n        stores {\n          edges {\n            node {\n              name\n              id\n            }\n          }\n        }\n        suppliers {\n          edges {\n            node {\n              id\n              name\n            }\n          }\n        }\n      }\n    }\n  }\n}\n",
+            "variables": ""
+          }
+        },
+        "url": {
+          "raw": "http://localhost:9000/graphql",
+          "protocol": "http",
+          "host": ["localhost"],
+          "port": "9000",
+          "path": ["graphql"]
+        }
+      },
+      "response": []
+    },
+    {
+      "name": "Create Product",
+      "request": {
+        "method": "POST",
+        "header": [],
+        "body": {
+          "mode": "graphql",
+          "graphql": {
+            "query": "mutation CreateProduct {\n  createProduct (name:\"123\", category:\"a\", amount:1000) {\n    id\n    name\n    category\n    amount\n  }\n}",
+            "variables": ""
+          }
+        },
+        "url": {
+          "raw": "http://localhost:9000/graphql",
+          "protocol": "http",
+          "host": ["localhost"],
+          "port": "9000",
+          "path": ["graphql"]
+        }
+      },
+      "response": []
+    },
+    {
+      "name": "Delete Product",
+      "request": {
+        "method": "POST",
+        "header": [],
+        "body": {
+          "mode": "graphql",
+          "graphql": {
+            "query": "mutation DeleteProduct {\n  deleteProduct (id:205) {\n    id\n  }\n}",
+            "variables": ""
+          }
+        },
+        "url": {
+          "raw": "http://localhost:9000/graphql",
+          "protocol": "http",
+          "host": ["localhost"],
+          "port": "9000",
+          "path": ["graphql"]
+        }
+      },
+      "response": []
+    },
+    {
+      "name": "Update Product",
+      "request": {
+        "method": "POST",
+        "header": [],
+        "body": {
+          "mode": "graphql",
+          "graphql": {
+            "query": "mutation UpdateProduct {\n  updateProduct (id:245, name:\"1231233\", category:\"a\", amount:1000) {\n    id\n    name\n    category\n    amount\n  }\n}",
+            "variables": ""
+          }
+        },
+        "url": {
+          "raw": "http://localhost:9000/graphql",
+          "protocol": "http",
+          "host": ["localhost"],
+          "port": "9000",
+          "path": ["graphql"]
+        }
+      },
+      "response": []
+    },
+    {
+      "name": "Aggregation",
+      "request": {
+        "method": "POST",
+        "header": [],
+        "body": {
+          "mode": "graphql",
+          "graphql": {
+            "query": "query Aggregate {\n  aggregate (startDate: \"2007-12-03T10:15:30Z\", endDate:\"2020-10-03T10:15:30Z\", category:\"Baby\") {\n    max {\n      purchasedProductsPrice\n    }\n    total {\n      purchasedProductsPrice\n    }\n    count {\n      purchasedProducts\n    }\n  }\n}",
+            "variables": ""
+          }
+        },
+        "url": {
+          "raw": "http://localhost:9000/graphql",
+          "protocol": "http",
+          "host": ["localhost"],
+          "port": "9000",
+          "path": ["graphql"]
+        }
+      },
+      "response": []
+    }
+  ],
+  "protocolProfileBehavior": {}
+}

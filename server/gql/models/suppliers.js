@@ -1,55 +1,103 @@
-import { GraphQLString, GraphQLObjectType, GraphQLNonNull, GraphQLInt } from 'graphql';
-import { connectionDefinitions, forwardConnectionArgs } from 'graphql-relay';
-import { nodeInterface } from 'gql/node';
-import { Address } from './addresses';
-import { ProductConnection } from './products';
+import { GraphQLID, GraphQLInt, GraphQLNonNull, GraphQLObjectType, GraphQLString } from 'graphql';
+import { createConnection } from 'graphql-sequelize';
+// import { Address } from './addresses';
+import { productQueries } from './products';
 import { timestamps } from './timestamps';
+import { getNode } from '@gql/node';
+import db from '@database/models';
+import { addressQueries } from '@gql/models/addresses';
+import { totalConnectionFields } from '@utils/index';
+
+const { nodeInterface } = getNode();
 
 export const supplierFields = {
-  id: { type: GraphQLInt },
+  id: { type: GraphQLNonNull(GraphQLID) },
   name: { type: GraphQLString },
   addressId: { sqlColumn: 'address_id', type: GraphQLInt }
 };
 const Supplier = new GraphQLObjectType({
   name: 'Supplier',
-  interface: [nodeInterface],
-  args: forwardConnectionArgs,
+  interfaces: [nodeInterface],
+
   sqlPaginate: true,
   fields: () => ({
     ...supplierFields,
     ...timestamps,
-    address: {
-      type: Address,
-      sqlJoin: (supplierTable, addressTable, args) => `${addressTable}.id = ${supplierTable}.address_id`
+    addresses: {
+      ...addressQueries.list,
+      resolve: (source, args, context, info) =>
+        addressQueries.list.resolve(source, args, { ...context, supplier: source.dataValues }, info)
     },
     products: {
-      type: ProductConnection,
-      sqlPaginate: true,
-      orderBy: 'id',
-      args: forwardConnectionArgs,
-      junction: {
-        sqlTable: 'supplier_products',
-        sqlJoins: [
-          (supplierTable, junctionTable, args) => `${supplierTable}.id = ${junctionTable}.supplier_id`,
-          (junctionTable, productTable, args) => `${productTable}.id = ${junctionTable}.product_id`
-        ]
-      }
+      ...productQueries.list,
+      resolve: (source, args, context, info) =>
+        productQueries.list.resolve(source, args, { ...context, supplier: source.dataValues }, info)
     }
   })
 });
 
-Supplier._typeConfig = {
-  sqlTable: 'suppliers',
-  uniqueKey: 'id'
-};
-
-const { connectionType: SupplierConnection } = connectionDefinitions({
+export const SupplierConnection = createConnection({
   nodeType: Supplier,
-  connectionFields: {
-    total: {
-      type: GraphQLNonNull(GraphQLInt)
+  name: 'suppliers',
+  target: db.suppliers,
+  before: (findOptions, args, context) => {
+    findOptions.include = findOptions.include || [];
+    if (context?.product?.id) {
+      findOptions.include.push({
+        model: db.supplierProducts,
+        where: {
+          productId: context.product.id
+        }
+      });
     }
-  }
+
+    if (context?.address?.id) {
+      findOptions.include.push({
+        model: db.addresses,
+        where: {
+          id: context.address.id
+        }
+      });
+    }
+
+    if (context?.supplierProduct?.supplierId) {
+      findOptions.include.push({
+        model: db.supplierProducts,
+        where: {
+          supplierId: context.supplierProduct.supplierId
+        }
+      });
+    }
+    return findOptions;
+  },
+  where: function(key, value, currentWhere) {
+    console.log({ key, value, currentWhere });
+    // for custom args other than connectionArgs return a sequelize where parameter
+    return { [key]: value };
+  },
+  ...totalConnectionFields
 });
 
-export { Supplier, SupplierConnection };
+// queries on the suppliers table
+export const supplierQueries = {
+  args: {
+    id: {
+      type: GraphQLNonNull(GraphQLInt)
+    }
+  },
+  query: {
+    type: Supplier
+  },
+  list: {
+    ...SupplierConnection,
+    type: SupplierConnection.connectionType,
+    args: SupplierConnection.connectionArgs
+  },
+  model: db.suppliers
+};
+
+export const supplierMutations = {
+  args: supplierFields,
+  type: Supplier,
+  model: db.suppliers
+};

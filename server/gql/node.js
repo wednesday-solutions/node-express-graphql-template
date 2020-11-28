@@ -1,17 +1,12 @@
-import { nodeDefinitions, fromGlobalId } from 'graphql-relay';
-import { client } from 'database';
-import joinMonster from 'join-monster';
+import { createNodeInterface } from 'graphql-sequelize';
+import { getClient } from '@database/index';
 
-const { nodeInterface, nodeField } = nodeDefinitions(
-  // resolve the ID to an object
-  (globalId, context, resolveInfo) => {
-    // parse the globalID
-    const { type, id } = fromGlobalId(globalId);
+let nodeInterface;
 
-    // pass the type name and other info. `joinMonster` will find the type from the name and write the SQL
-    return joinMonster.getNode(type, resolveInfo, context, parseInt(id), sql => client.query(sql));
-  },
-  // determines the type. Join Monster places that type onto the result object on the "__type__" property
-  obj => obj.__type__
-);
-export { nodeInterface, nodeField };
+export function getNode() {
+  if (!nodeInterface) {
+    nodeInterface = createNodeInterface(getClient());
+    return nodeInterface;
+  }
+  return nodeInterface;
+}
