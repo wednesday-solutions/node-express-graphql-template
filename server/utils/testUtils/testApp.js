@@ -26,7 +26,6 @@ testApp.use(
     schema: schema,
     graphiql: false,
     customFormatErrorFn: e => {
-      console.log(process.env.ENVIRONMENT);
       console.log(e);
       if (process.env.ENVIRONMENT !== 'local') {
         return e.message;

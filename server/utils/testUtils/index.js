@@ -1,4 +1,5 @@
 import isNil from 'lodash/isNil';
+import set from 'lodash/set';
 import {
   addressesTable,
   productsTable,
@@ -12,10 +13,15 @@ import sequelize from 'sequelize';
 import request from 'supertest';
 
 const defineAndAddAttributes = (connection, name, mock, attr, total = 10) => {
-  const mockTable = connection.define(name, mock);
+  const mockTable = connection.define(name, mock, {
+    instanceMethods: {
+      findAll: () => [mock],
+      findOne: () => mock
+    }
+  });
   mockTable.rawAttributes = attr;
   mockTable.manyFromSource = { count: () => new Promise(resolve => resolve(total)) };
-  require('lodash/set')(mockTable, 'sequelize.dialect', 'mysql');
+  set(mockTable, 'sequelize.dialect', 'posgres');
   return mockTable;
 };
 export const getResponse = async query => {
@@ -112,8 +118,10 @@ export async function connectToMockDB() {
   }
 }
 
-export const resetAndMockDB = (mockCallback, config) => {
-  const db = mockDBClient(config);
+export const resetAndMockDB = (mockCallback, config, db) => {
+  if (!db) {
+    db = mockDBClient(config);
+  }
   jest.clearAllMocks();
   jest.resetAllMocks();
   jest.resetModules();
