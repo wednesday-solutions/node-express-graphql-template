@@ -3,9 +3,10 @@ import { getResponse, mockDBClient, resetAndMockDB } from '@server/utils/testUti
 import { addressesTable } from '@server/utils/testUtils/mockData';
 
 describe('Address graphQL-server-DB mutation tests', () => {
+  const id = 1;
   const addressesQuery = `
   query {
-    addresses (first: 1){
+    addresses (first: ${id}){
       edges {
         node {
           id
@@ -62,12 +63,12 @@ describe('Address graphQL-server-DB mutation tests', () => {
     // check if suppliers.findAll is being called once
     expect(dbClient.models.suppliers.findAll.mock.calls.length).toBe(1);
     // check if suppliers.findAll is being called with the correct whereclause
-    expect(dbClient.models.suppliers.findAll.mock.calls[0][0].include[0].where).toEqual({ id: '1' });
+    expect(dbClient.models.suppliers.findAll.mock.calls[0][0].include[0].where).toEqual({ id: id.toString() });
     // check if the included model has name: addresses
     expect(dbClient.models.suppliers.findAll.mock.calls[0][0].include[0].model.name).toEqual('addresses');
 
     expect(dbClient.models.stores.findAll.mock.calls.length).toBe(1);
-    expect(dbClient.models.stores.findAll.mock.calls[0][0].include[0].where).toEqual({ id: '1' });
+    expect(dbClient.models.stores.findAll.mock.calls[0][0].include[0].where).toEqual({ id: id.toString() });
     expect(dbClient.models.stores.findAll.mock.calls[0][0].include[0].model.name).toEqual('addresses');
     done();
   });
