@@ -21,7 +21,7 @@ export const Store = new GraphQLObjectType({
   fields: () => ({
     ...storeFields,
     ...timestamps,
-    address: {
+    addresses: {
       ...addressQueries.list,
       resolve: (source, args, context, info) =>
         addressQueries.list.resolve(source, args, { ...context, store: source.dataValues }, info)

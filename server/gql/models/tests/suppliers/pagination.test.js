@@ -11,6 +11,20 @@ describe('Suppliers graphQL-server-DB pagination tests', () => {
           id
           name
           addressId
+          addresses {
+            edges {
+              node {
+                id
+              }
+            }
+          }
+          products {
+            edges {
+              node {
+                id
+              }
+            }
+          }
         }
       }
       pageInfo {
@@ -25,15 +39,6 @@ describe('Suppliers graphQL-server-DB pagination tests', () => {
 `;
 
   it('should have a query to get the storeProducts', async done => {
-    const mockDBClient = require('@database');
-    const client = mockDBClient.client;
-    client.$queueQueryResult([
-      {},
-      {
-        rows: [{ ...suppliersTable[0], $total: 10 }]
-      }
-    ]);
-    jest.doMock('@database', () => ({ client, getClient: () => client }));
     await getResponse(suppliersQuery).then(response => {
       const result = get(response, 'body.data.suppliers.edges[0].node');
       expect(result).toEqual(
@@ -48,15 +53,6 @@ describe('Suppliers graphQL-server-DB pagination tests', () => {
   });
 
   it('should have the correct pageInfo', async done => {
-    const mockDBClient = require('@database');
-    const client = mockDBClient.client;
-    client.$queueQueryResult([
-      {},
-      {
-        rows: [{ ...suppliersTable, $total: 10 }]
-      }
-    ]);
-    jest.doMock('@database', () => ({ client, getClient: () => client }));
     await getResponse(suppliersQuery).then(response => {
       const result = get(response, 'body.data.suppliers.pageInfo');
       expect(result).toEqual(

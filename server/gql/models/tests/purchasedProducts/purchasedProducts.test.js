@@ -38,7 +38,7 @@ describe('Purchased Product introspection tests', () => {
   it('should have a product field of type Product', async () => {
     const result = await graphqlSync({ schema, source: query });
     const purchasedProductFieldTypes = get(result, 'data.__type.fields');
-    const productField = purchasedProductFieldTypes.find(field => field.name === 'product');
+    const productField = purchasedProductFieldTypes.find(field => field.name === 'products');
     expect(productField.type.name).toBe('productsConnection');
     expect(productField.type.kind).toBe('OBJECT');
   });

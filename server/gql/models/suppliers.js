@@ -23,7 +23,7 @@ const Supplier = new GraphQLObjectType({
   fields: () => ({
     ...supplierFields,
     ...timestamps,
-    address: {
+    addresses: {
       ...addressQueries.list,
       resolve: (source, args, context, info) =>
         addressQueries.list.resolve(source, args, { ...context, supplier: source.dataValues }, info)

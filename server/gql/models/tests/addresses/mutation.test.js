@@ -1,14 +1,5 @@
 import get from 'lodash/get';
-import { addressesTable } from '@server/utils/testUtils/mockData';
-import { testApp } from '@server/utils/testUtils/testApp';
-const request = require('supertest');
-
-beforeEach(() => {
-  const mockDBClient = require('@database');
-  const client = mockDBClient.client;
-  client.$queueQueryResult([{}, { rows: [{ ...addressesTable }] }]);
-  jest.doMock('@database', () => ({ client, getClient: () => client }));
-});
+import { getResponse } from '@utils/testUtils';
 
 describe('Address graphQL-server-DB mutation tests', () => {
   const createAddressMut = `
@@ -31,26 +22,35 @@ describe('Address graphQL-server-DB mutation tests', () => {
       createdAt
       updatedAt
       deletedAt
+      suppliers {
+        edges {
+          node {
+            name
+          }
+        }
+      }
+      stores {
+        edges {
+          node {
+            name
+          }
+        }
+      }
     }
   }
 `;
 
   it('should have a mutation to create a new address', async done => {
-    await request(testApp)
-      .post('/graphql')
-      .type('form')
-      .send({ query: createAddressMut })
-      .set('Accept', 'application/json')
-      .then(response => {
-        const result = get(response, 'body.data.createAddress');
-        expect(result).toMatchObject({
-          id: '1',
-          address1: 'new address one',
-          address2: 'new address two',
-          city: 'new city',
-          country: 'new country'
-        });
-        done();
+    await getResponse(createAddressMut).then(response => {
+      const result = get(response, 'body.data.createAddress');
+      expect(result).toMatchObject({
+        id: '1',
+        address1: 'new address one',
+        address2: 'new address two',
+        city: 'new city',
+        country: 'new country'
       });
+      done();
+    });
   });
 });

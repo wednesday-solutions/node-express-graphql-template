@@ -26,15 +26,6 @@ describe('Products graphQL-server-DB pagination tests', () => {
 `;
 
   it('should have a query to get the products', async done => {
-    const mockDBClient = require('@database');
-    const client = mockDBClient.client;
-    client.$queueQueryResult([
-      {},
-      {
-        rows: [{ ...productsTable[0], $total: 10 }]
-      }
-    ]);
-    jest.doMock('@database', () => ({ client, getClient: () => client }));
     await getResponse(productsQuery).then(response => {
       const result = get(response, 'body.data.products.edges[0].node');
       expect(result).toEqual(
@@ -50,15 +41,6 @@ describe('Products graphQL-server-DB pagination tests', () => {
   });
 
   it('should have the correct pageInfo', async done => {
-    const mockDBClient = require('@database');
-    const client = mockDBClient.client;
-    client.$queueQueryResult([
-      {},
-      {
-        rows: [{ ...productsTable, $total: 10 }]
-      }
-    ]);
-    jest.doMock('@database', () => ({ client, getClient: () => client }));
     await getResponse(productsQuery).then(response => {
       const result = get(response, 'body.data.products.pageInfo');
       expect(result).toEqual(

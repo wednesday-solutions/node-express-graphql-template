@@ -20,7 +20,7 @@ export const init = () => {
   // create the graphQL schema
   const schema = new GraphQLSchema({ query: QueryRoot, mutation: MutationRoot });
 
-  if (isTestEnv() && !app) {
+  if (!app) {
     app = express();
   }
   app.use(

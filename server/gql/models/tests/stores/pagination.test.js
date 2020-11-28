@@ -11,6 +11,20 @@ describe('Stores graphQL-server-DB pagination tests', () => {
           id
           name
           addressId
+          addresses {
+            edges {
+              node {
+                id
+              }
+            }
+          }
+          products {
+            edges {
+              node {
+                id
+              }
+            }
+          }
         }
       }
       pageInfo {

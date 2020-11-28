@@ -21,7 +21,7 @@ const PurchasedProduct = new GraphQLObjectType({
   fields: () => ({
     ...purchasedProductFields,
     ...timestamps,
-    product: {
+    products: {
       ...productQueries.list,
       resolve: (source, args, context, info) =>
         productQueries.list.resolve(source, args, { ...context, purchasedProduct: source.dataValues }, info)

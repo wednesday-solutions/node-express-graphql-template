@@ -1,14 +1,5 @@
 import get from 'lodash/get';
-import { storesTable } from '@server/utils/testUtils/mockData';
-import { testApp } from '@server/utils/testUtils/testApp';
-const request = require('supertest');
-
-beforeEach(() => {
-  const mockDBClient = require('@database');
-  const client = mockDBClient.client;
-  client.$queueQueryResult([{}, { rows: [{ ...storesTable }] }]);
-  jest.doMock('@database', () => ({ client, getClient: () => client }));
-});
+import { getResponse } from '@utils/testUtils';
 
 describe('store graphQL-server-DB mutation tests', () => {
   const createStoreMut = `
@@ -28,20 +19,15 @@ describe('store graphQL-server-DB mutation tests', () => {
   `;
 
   it('should have a mutation to create a new store', async done => {
-    await request(testApp)
-      .post('/graphql')
-      .type('form')
-      .send({ query: createStoreMut })
-      .set('Accept', 'application/json')
-      .then(response => {
-        const result = get(response, 'body.data.createStore');
-        expect(result).toMatchObject({
-          id: '1',
-          name: 'new store name',
-          addressId: 1
-        });
-        done();
+    await getResponse(createStoreMut).then(response => {
+      const result = get(response, 'body.data.createStore');
+      expect(result).toMatchObject({
+        id: '1',
+        name: 'new store name',
+        addressId: 1
       });
+      done();
+    });
   });
 
   const deleteStoreMut = `
@@ -55,19 +41,14 @@ describe('store graphQL-server-DB mutation tests', () => {
 `;
 
   it('should have a mutation to delete a store', async done => {
-    await request(testApp)
-      .post('/graphql')
-      .type('form')
-      .send({ query: deleteStoreMut })
-      .set('Accept', 'application/json')
-      .then(response => {
-        const result = get(response, 'body.data.deleteStore');
-        expect(result).toEqual(
-          expect.objectContaining({
-            id: 1
-          })
-        );
-        done();
-      });
+    await getResponse(deleteStoreMut).then(response => {
+      const result = get(response, 'body.data.deleteStore');
+      expect(result).toEqual(
+        expect.objectContaining({
+          id: 1
+        })
+      );
+      done();
+    });
   });
 });
