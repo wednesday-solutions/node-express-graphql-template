@@ -37,10 +37,7 @@ export const StoreProductConnection = createConnection({
   nodeType: StoreProduct,
   name: 'storeProducts',
   target: db.storeProducts,
-  where: function(key, value, currentWhere) {
-    // for custom args other than connectionArgs return a sequelize where parameter
-    return { [key]: value };
-  },
+
   ...totalConnectionFields
 });
 

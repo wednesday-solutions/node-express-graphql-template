@@ -1,7 +1,6 @@
 import get from 'lodash/get';
-import { productsTable } from '@server/utils/testUtils/mockData';
-import { testApp } from '@server/utils/testUtils/testApp';
-const request = require('supertest');
+import { productsTable, storesTable, suppliersTable } from '@server/utils/testUtils/mockData';
+import { getResponse, mockDBClient, resetAndMockDB } from '@utils/testUtils';
 
 beforeEach(() => {
   const mockDBClient = require('@database');
@@ -11,53 +10,52 @@ beforeEach(() => {
 });
 
 describe('Product graphQL-server-DB query tests', () => {
-  const productName = `
+  const id = 1;
+  const productQuery = `
   query {
-    product (id: 1) {
+    product (id: ${id}) {
       id
       name
+        suppliers {
+          edges {
+            node {
+              id
+            }  
+          }
+        }
+        stores {
+          edges {
+            node {
+              id
+            }  
+          }
+        }
     }
   }
   `;
-  const allFields = `
-  query {
-    product (id: 1) {
-      id
-      name
-      category
-      amount
-      createdAt
-      updatedAt
-      deletedAt
-    }
-  }
-  `;
+  it('should request for suppliers and stores related to the address', async done => {
+    const dbClient = mockDBClient();
+    resetAndMockDB(null, {}, dbClient);
 
-  it('should return the fields mentioned in the query', async done => {
-    await request(testApp)
-      .post('/graphql')
-      .type('form')
-      .send({ query: productName })
-      .set('Accept', 'application/json')
-      .then(response => {
-        const result = get(response, 'body.data.product');
-        const resultFields = Object.keys(result);
-        expect(resultFields).toEqual(['id', 'name']);
-        done();
-      });
-  });
+    // since we are requesting for a list of suppliers check if all suppliers are being requested
+    jest.spyOn(dbClient.models.suppliers, 'findAll').mockImplementation(() => [suppliersTable[0]]);
 
-  it('should return all the valid fields in the model definition', async done => {
-    await request(testApp)
-      .post('/graphql')
-      .type('form')
-      .send({ query: allFields })
-      .set('Accept', 'application/json')
-      .then(response => {
-        const result = get(response, 'body.data.product');
-        const resultFields = Object.keys(result);
-        expect(resultFields).toEqual(['id', 'name', 'category', 'amount', 'createdAt', 'updatedAt', 'deletedAt']);
-        done();
-      });
+    // since we are requesting for a list of stores check if all stores are being requested
+    jest.spyOn(dbClient.models.stores, 'findAll').mockImplementation(() => [storesTable[0]]);
+
+    await getResponse(productQuery).then(response => {
+      expect(get(response, 'body.data.product')).toBeTruthy();
+      // check if suppliers.findAll is being called once
+      expect(dbClient.models.suppliers.findAll.mock.calls.length).toBe(1);
+      // check if suppliers.findAll is being called with the correct whereclause
+      expect(dbClient.models.suppliers.findAll.mock.calls[0][0].include[0].where).toEqual({ productId: id });
+      // check if the included model has name: addresses
+      expect(dbClient.models.suppliers.findAll.mock.calls[0][0].include[0].model.name).toEqual('supplier_products');
+
+      expect(dbClient.models.stores.findAll.mock.calls.length).toBe(1);
+      expect(dbClient.models.stores.findAll.mock.calls[0][0].include[0].where).toEqual({ productId: id });
+      expect(dbClient.models.stores.findAll.mock.calls[0][0].include[0].model.name).toEqual('store_products');
+      done();
+    });
   });
 });

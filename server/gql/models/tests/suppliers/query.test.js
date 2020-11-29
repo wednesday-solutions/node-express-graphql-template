@@ -1,7 +1,6 @@
 import get from 'lodash/get';
 import { suppliersTable } from '@server/utils/testUtils/mockData';
-import { testApp } from '@server/utils/testUtils/testApp';
-const request = require('supertest');
+import { getResponse } from '@utils/testUtils';
 
 beforeEach(() => {
   const mockDBClient = require('@database');
@@ -33,30 +32,20 @@ describe('supplier graphQL-server-DB query tests', () => {
   `;
 
   it('should return the fields mentioned in the query', async done => {
-    await request(testApp)
-      .post('/graphql')
-      .type('form')
-      .send({ query: supplierName })
-      .set('Accept', 'application/json')
-      .then(response => {
-        const result = get(response, 'body.data.supplier');
-        const resultFields = Object.keys(result);
-        expect(resultFields).toEqual(['id', 'name']);
-        done();
-      });
+    await getResponse(supplierName).then(response => {
+      const result = get(response, 'body.data.supplier');
+      const resultFields = Object.keys(result);
+      expect(resultFields).toEqual(['id', 'name']);
+      done();
+    });
   });
 
   it('should return all the valid fields in the model definition', async done => {
-    await request(testApp)
-      .post('/graphql')
-      .type('form')
-      .send({ query: allFields })
-      .set('Accept', 'application/json')
-      .then(response => {
-        const result = get(response, 'body.data.supplier');
-        const resultFields = Object.keys(result);
-        expect(resultFields).toEqual(['id', 'name', 'addressId', 'createdAt', 'updatedAt', 'deletedAt']);
-        done();
-      });
+    await getResponse(allFields).then(response => {
+      const result = get(response, 'body.data.supplier');
+      const resultFields = Object.keys(result);
+      expect(resultFields).toEqual(['id', 'name', 'addressId', 'createdAt', 'updatedAt', 'deletedAt']);
+      done();
+    });
   });
 });

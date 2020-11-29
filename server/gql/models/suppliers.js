@@ -70,11 +70,6 @@ export const SupplierConnection = createConnection({
     }
     return findOptions;
   },
-  where: function(key, value, currentWhere) {
-    console.log({ key, value, currentWhere });
-    // for custom args other than connectionArgs return a sequelize where parameter
-    return { [key]: value };
-  },
   ...totalConnectionFields
 });
 

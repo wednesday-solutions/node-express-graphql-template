@@ -89,9 +89,6 @@ export const ProductConnection = createConnection({
     }
     return findOptions;
   },
-  where: function(key, value, currentWhere) {
-    return { [key]: value };
-  },
   ...totalConnectionFields
 });
 

@@ -21,12 +21,14 @@ const defineAndAddAttributes = (connection, name, mock, attr, total = 10) => {
   });
   mockTable.rawAttributes = attr;
   mockTable.manyFromSource = { count: () => new Promise(resolve => resolve(total)) };
-  set(mockTable, 'sequelize.dialect', 'posgres');
+  set(mockTable, 'sequelize.dialect', 'postgres');
   return mockTable;
 };
-export const getResponse = async query => {
-  const testApp = require('@server/utils/testUtils/testApp').testApp;
-  return await request(testApp)
+export const getResponse = async (query, app) => {
+  if (!app) {
+    app = await require('@server/utils/testUtils/testApp').testApp;
+  }
+  return await request(app)
     .post('/graphql')
     .type('form')
     .send({ query })
