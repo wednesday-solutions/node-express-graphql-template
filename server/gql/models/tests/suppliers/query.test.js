@@ -1,62 +1,49 @@
 import get from 'lodash/get';
-import { suppliersTable } from '@server/utils/testUtils/mockData';
-import { testApp } from '@server/utils/testUtils/testApp';
-const request = require('supertest');
-
-beforeEach(() => {
-  const mockDBClient = require('@database');
-  const client = mockDBClient.client;
-  client.$queueQueryResult([{}, { rows: [{ ...suppliersTable }] }]);
-  jest.doMock('@database', () => ({ client, getClient: () => client }));
-});
+import { addressesTable, productsTable } from '@server/utils/testUtils/mockData';
+import { getResponse, mockDBClient, resetAndMockDB } from '@utils/testUtils';
 
 describe('supplier graphQL-server-DB query tests', () => {
+  const id = 1;
   const supplierName = `
   query {
-    supplier (id: 1) {
+    supplier (id: ${id}) {
       id
       name
+      addresses {
+        edges {
+          node {
+            id
+          }
+        }
+      }
+      products {
+        edges {
+          node {
+            id
+          }
+        }
+      }
     }
   }
   `;
-  const allFields = `
-  query {
-    supplier (id: 1) {
-      id
-      name
-      addressId
-      createdAt
-      updatedAt
-      deletedAt
-    }
-  }
-  `;
+  it('should request for products and addresses related to the suppliers', async done => {
+    const dbClient = mockDBClient();
+    resetAndMockDB(null, {}, dbClient);
 
-  it('should return the fields mentioned in the query', async done => {
-    await request(testApp)
-      .post('/graphql')
-      .type('form')
-      .send({ query: supplierName })
-      .set('Accept', 'application/json')
-      .then(response => {
-        const result = get(response, 'body.data.supplier');
-        const resultFields = Object.keys(result);
-        expect(resultFields).toEqual(['id', 'name']);
-        done();
-      });
-  });
+    jest.spyOn(dbClient.models.products, 'findAll').mockImplementation(() => [productsTable[0]]);
+    jest.spyOn(dbClient.models.addresses, 'findAll').mockImplementation(() => [addressesTable[0]]);
 
-  it('should return all the valid fields in the model definition', async done => {
-    await request(testApp)
-      .post('/graphql')
-      .type('form')
-      .send({ query: allFields })
-      .set('Accept', 'application/json')
-      .then(response => {
-        const result = get(response, 'body.data.supplier');
-        const resultFields = Object.keys(result);
-        expect(resultFields).toEqual(['id', 'name', 'addressId', 'createdAt', 'updatedAt', 'deletedAt']);
-        done();
-      });
+    await getResponse(supplierName).then(response => {
+      expect(get(response, 'body.data.supplier')).toBeTruthy();
+
+      expect(dbClient.models.products.findAll.mock.calls.length).toBe(1);
+      expect(dbClient.models.products.findAll.mock.calls[0][0].include[0].where).toEqual({ id });
+      expect(dbClient.models.products.findAll.mock.calls[0][0].include[0].model.name).toEqual('suppliers');
+
+      expect(dbClient.models.addresses.findAll.mock.calls.length).toBe(1);
+      expect(dbClient.models.addresses.findAll.mock.calls[0][0].include[0].where).toEqual({ id });
+      expect(dbClient.models.addresses.findAll.mock.calls[0][0].include[0].model.name).toEqual('suppliers');
+      done();
+    });
   });
 });

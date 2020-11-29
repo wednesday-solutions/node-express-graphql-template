@@ -1,62 +1,38 @@
 import get from 'lodash/get';
-import { storesTable } from '@server/utils/testUtils/mockData';
-import { testApp } from '@server/utils/testUtils/testApp';
-const request = require('supertest');
-
-beforeEach(() => {
-  const mockDBClient = require('@database');
-  const client = mockDBClient.client;
-  client.$queueQueryResult([{}, { rows: [{ ...storesTable }] }]);
-  jest.doMock('@database', () => ({ client, getClient: () => client }));
-});
+import { productsTable } from '@server/utils/testUtils/mockData';
+import { getResponse, mockDBClient, resetAndMockDB } from '@utils/testUtils';
 
 describe('store graphQL-server-DB query tests', () => {
+  const id = '1';
   const storeName = `
   query {
-    store (id: 1) {
+    store (id: ${id}) {
       id
       name
-    }
-  }
-  `;
-  const allFields = `
-  query {
-    store (id: 1) {
-      id
-      name
-      addressId
-      createdAt
-      updatedAt
-      deletedAt
+      products {
+        edges {
+          node {
+            id
+          }
+        }
+      }
     }
   }
   `;
 
-  it('should return the fields mentioned in the query', async done => {
-    await request(testApp)
-      .post('/graphql')
-      .type('form')
-      .send({ query: storeName })
-      .set('Accept', 'application/json')
-      .then(response => {
-        const result = get(response, 'body.data.store');
-        const resultFields = Object.keys(result);
-        expect(resultFields).toEqual(['id', 'name']);
-        done();
-      });
-  });
+  it('should request for products related to the stores', async done => {
+    const dbClient = mockDBClient();
+    resetAndMockDB(null, {}, dbClient);
 
-  it('should return all the valid fields in the model definition', async done => {
-    await request(testApp)
-      .post('/graphql')
-      .type('form')
-      .send({ query: allFields })
-      .set('Accept', 'application/json')
-      .then(response => {
-        const result = get(response, 'body.data.store');
-        const resultFields = Object.keys(result);
-        expect(resultFields).toEqual(['id', 'name', 'addressId', 'createdAt', 'updatedAt', 'deletedAt']);
-        done();
-      });
+    jest.spyOn(dbClient.models.products, 'findAll').mockImplementation(() => [productsTable[0]]);
+
+    await getResponse(storeName).then(response => {
+      expect(get(response, 'body.data.store')).toBeTruthy();
+
+      expect(dbClient.models.products.findAll.mock.calls.length).toBe(1);
+      expect(dbClient.models.products.findAll.mock.calls[0][0].include[0].where).toEqual({ id });
+      expect(dbClient.models.products.findAll.mock.calls[0][0].include[0].model.name).toEqual('stores');
+      done();
+    });
   });
 });

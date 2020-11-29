@@ -1,5 +1,4 @@
-import { testApp } from '@utils/testUtils/testApp';
-const request = require('supertest');
+import { getResponse, resetAndMockDB } from '@utils/testUtils';
 
 const query = `
   query {
@@ -51,54 +50,30 @@ describe('init', () => {
 
   it('should succeed when a valid request is made ', async () => {
     const { app } = await require('../index');
-    await request(app)
-      .post('/graphql')
-      .type('form')
-      .send({ query })
-      .set('Accept', 'application/json')
-      .then(response => {
-        console.log(response.body);
-        expect(response.statusCode).toBe(200);
-        expect(response.body.data.__schema).toBeTruthy();
-      });
+    await getResponse(query, app).then(response => {
+      expect(response.statusCode).toBe(200);
+      expect(response.body.data.__schema).toBeTruthy();
+    });
   });
 
   it('should fail when an invalid request is made ', async () => {
     const { app } = await require('../index');
-    await request(app)
-      .post('/graphql')
-      .type('form')
-      .send({
-        query: `
-  query {
-    __schema1 {
-      queryType {
-        fields {
-          name
-        }
-      }
-    }
-  }
-  `
-      })
-      .set('Accept', 'application/json')
-      .then(response => {
-        expect(response.statusCode).toBe(400);
-        expect(response.body.errors).toBeTruthy();
-      });
+    await getResponse(
+      `\n  query {\n    __schema1 {\n      queryType {\n        fields {\n          name\n        }\n      }\n    }\n  }\n  `,
+      app
+    ).then(response => {
+      expect(response.statusCode).toBe(400);
+      expect(response.body.errors).toBeTruthy();
+    });
   });
 });
 describe('TestApp: Server', () => {
   it('should respond to /graphql', async done => {
-    await request(testApp)
-      .post('/graphql')
-      .type('form')
-      .send({ query })
-      .set('Accept', 'application/json')
-      .then(response => {
-        expect(response.statusCode).toBe(200);
-        expect(response.body.data.__schema.queryType.fields[0].name).toBeTruthy();
-        done();
-      });
+    resetAndMockDB();
+    await getResponse(query).then(response => {
+      expect(response.statusCode).toBe(200);
+      expect(response.body.data.__schema.queryType.fields[0].name).toBeTruthy();
+      done();
+    });
   });
 });

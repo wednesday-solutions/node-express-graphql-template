@@ -70,10 +70,6 @@ const AddressConnection = createConnection({
     }
     return findOptions;
   },
-  where: function(key, value, currentWhere) {
-    // for custom args other than connectionArgs return a sequelize where parameter
-    return { [key]: value };
-  },
   ...totalConnectionFields
 });
 
