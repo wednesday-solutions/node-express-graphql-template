@@ -4,7 +4,7 @@ import { getResponse } from '@utils/testUtils';
 describe('store_products graphQL-server-DB mutation tests', () => {
   const createStoreProductMut = `
     mutation {
-        createStoreproduct (
+        createStoreProduct (
         productId: 1
         storeId: 1
       ) {
@@ -20,7 +20,7 @@ describe('store_products graphQL-server-DB mutation tests', () => {
 
   it('should have a mutation to create a new store product', async done => {
     await getResponse(createStoreProductMut).then(response => {
-      const result = get(response, 'body.data.createStoreproduct');
+      const result = get(response, 'body.data.createStoreProduct');
       expect(result).toMatchObject({
         id: '1',
         productId: 1,
@@ -32,7 +32,7 @@ describe('store_products graphQL-server-DB mutation tests', () => {
 
   const deleteStoreProductMut = `
   mutation {
-    deleteStoreproduct (
+    deleteStoreProduct (
         id: 1
     ) {
       id
@@ -42,7 +42,7 @@ describe('store_products graphQL-server-DB mutation tests', () => {
 
   it('should have a mutation to delete a store product', async done => {
     await getResponse(deleteStoreProductMut).then(response => {
-      const result = get(response, 'body.data.deleteStoreproduct');
+      const result = get(response, 'body.data.deleteStoreProduct');
       expect(result).toEqual(
         expect.objectContaining({
           id: 1
