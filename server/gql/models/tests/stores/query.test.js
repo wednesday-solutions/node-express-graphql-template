@@ -1,50 +1,37 @@
 import get from 'lodash/get';
-import { storesTable } from '@server/utils/testUtils/mockData';
-import { getResponse } from '@utils/testUtils';
-
-beforeEach(() => {
-  const mockDBClient = require('@database');
-  const client = mockDBClient.client;
-  client.$queueQueryResult([{}, { rows: [{ ...storesTable }] }]);
-  jest.doMock('@database', () => ({ client, getClient: () => client }));
-});
+import { productsTable } from '@server/utils/testUtils/mockData';
+import { getResponse, mockDBClient, resetAndMockDB } from '@utils/testUtils';
 
 describe('store graphQL-server-DB query tests', () => {
+  const id = '1';
   const storeName = `
   query {
-    store (id: 1) {
+    store (id: ${id}) {
       id
       name
-    }
-  }
-  `;
-  const allFields = `
-  query {
-    store (id: 1) {
-      id
-      name
-      addressId
-      createdAt
-      updatedAt
-      deletedAt
+      products {
+        edges {
+          node {
+            id
+          }
+        }
+      }
     }
   }
   `;
 
-  it('should return the fields mentioned in the query', async done => {
+  it('should request for products related to the stores', async done => {
+    const dbClient = mockDBClient();
+    resetAndMockDB(null, {}, dbClient);
+
+    jest.spyOn(dbClient.models.products, 'findAll').mockImplementation(() => [productsTable[0]]);
+
     await getResponse(storeName).then(response => {
-      const result = get(response, 'body.data.store');
-      const resultFields = Object.keys(result);
-      expect(resultFields).toEqual(['id', 'name']);
-      done();
-    });
-  });
+      expect(get(response, 'body.data.store')).toBeTruthy();
 
-  it('should return all the valid fields in the model definition', async done => {
-    await getResponse(allFields).then(response => {
-      const result = get(response, 'body.data.store');
-      const resultFields = Object.keys(result);
-      expect(resultFields).toEqual(['id', 'name', 'addressId', 'createdAt', 'updatedAt', 'deletedAt']);
+      expect(dbClient.models.products.findAll.mock.calls.length).toBe(1);
+      expect(dbClient.models.products.findAll.mock.calls[0][0].include[0].where).toEqual({ id });
+      expect(dbClient.models.products.findAll.mock.calls[0][0].include[0].model.name).toEqual('stores');
       done();
     });
   });

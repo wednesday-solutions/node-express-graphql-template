@@ -1,50 +1,53 @@
 import get from 'lodash/get';
-import { storeProductsTable } from '@server/utils/testUtils/mockData';
-import { getResponse } from '@utils/testUtils';
-
-beforeEach(() => {
-  const mockDBClient = require('@database');
-  const client = mockDBClient.client;
-  client.$queueQueryResult([{}, { rows: [{ ...storeProductsTable }] }]);
-  jest.doMock('@database', () => ({ client, getClient: () => client }));
-});
+import { productsTable, storesTable } from '@server/utils/testUtils/mockData';
+import { getResponse, mockDBClient, resetAndMockDB } from '@utils/testUtils';
 
 describe('store_product graphQL-server-DB query tests', () => {
+  const id = 1;
   const storeProductStoreId = `
   query {
-    storeProduct (id: 1) {
+    storeProduct (id: ${id}) {
       id
       storeId
-    }
-  }
-  `;
-  const allFields = `
-  query {
-    storeProduct (id: 1) {
-      id
-      productId
-      storeId
-      createdAt
-      updatedAt
-      deletedAt
+        stores {
+          edges {
+            node {
+              id    
+            }
+          }
+        }
+        products {
+          edges {
+            node {
+              id    
+            }
+          }
+        }
     }
   }
   `;
 
-  it('should return the fields mentioned in the query', async done => {
+  it('should request for stores and products related to the storeProducts', async done => {
+    const dbClient = mockDBClient();
+    resetAndMockDB(null, {}, dbClient);
+
+    jest.spyOn(dbClient.models.stores, 'findAll').mockImplementation(() => [storesTable[0]]);
+
+    jest.spyOn(dbClient.models.products, 'findAll').mockImplementation(() => [productsTable[0]]);
+
     await getResponse(storeProductStoreId).then(response => {
-      const result = get(response, 'body.data.storeProduct');
-      const resultFields = Object.keys(result);
-      expect(resultFields).toEqual(['id', 'storeId']);
-      done();
-    });
-  });
+      expect(get(response, 'body.data.storeProduct')).toBeTruthy();
 
-  it('should return all the valid fields in the model definition', async done => {
-    await getResponse(allFields).then(response => {
-      const result = get(response, 'body.data.storeProduct');
-      const resultFields = Object.keys(result);
-      expect(resultFields).toEqual(['id', 'productId', 'storeId', 'createdAt', 'updatedAt', 'deletedAt']);
+      // check if stores.findAll is being called once
+      expect(dbClient.models.stores.findAll.mock.calls.length).toBe(1);
+      // check if stores.findAll is being called with the correct whereclause
+      expect(dbClient.models.stores.findAll.mock.calls[0][0].include[0].where).toEqual({ storeId: id });
+      // check if the included model has name: store_products
+      expect(dbClient.models.stores.findAll.mock.calls[0][0].include[0].model.name).toEqual('store_products');
+
+      expect(dbClient.models.products.findAll.mock.calls.length).toBe(1);
+      expect(dbClient.models.products.findAll.mock.calls[0][0].include[0].where).toEqual({ productId: id });
+      expect(dbClient.models.products.findAll.mock.calls[0][0].include[0].model.name).toEqual('store_products');
       done();
     });
   });

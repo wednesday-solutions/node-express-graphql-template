@@ -1,51 +1,40 @@
 import get from 'lodash/get';
-import { purchasedProductsTable } from '@server/utils/testUtils/mockData';
-import { getResponse } from '@utils/testUtils';
-
-beforeEach(() => {
-  const mockDBClient = require('@database');
-  const client = mockDBClient.client;
-  client.$queueQueryResult([{}, { rows: [{ ...purchasedProductsTable }] }]);
-  jest.doMock('@database', () => ({ client, getClient: () => client }));
-});
+import { getResponse, mockDBClient, resetAndMockDB } from '@utils/testUtils';
+import { productsTable } from '@utils/testUtils/mockData';
 
 describe('purchased_product graphQL-server-DB query tests', () => {
+  const id = 1;
   const purchasedProductPrice = `
   query {
-    purchasedProduct (id: 1) {
+    purchasedProduct (id: ${id}) {
       id
       price
-    }
-  }
-  `;
-  const allFields = `
-  query {
-    purchasedProduct (id: 1) {
-      id
-      price
-      discount
-      deliveryDate
-      createdAt
-      updatedAt
-      deletedAt
+      products {
+        edges {
+          node {
+            id
+          }
+        }
+      }
     }
   }
   `;
 
-  it('should return the fields mentioned in the query', async done => {
+  it('should request for products related to the purchasedProducts', async done => {
+    const dbClient = mockDBClient();
+    resetAndMockDB(null, {}, dbClient);
+
+    jest.spyOn(dbClient.models.products, 'findAll').mockImplementation(() => [productsTable[0]]);
+
     await getResponse(purchasedProductPrice).then(response => {
-      const result = get(response, 'body.data.purchasedProduct');
-      const resultFields = Object.keys(result);
-      expect(resultFields).toEqual(['id', 'price']);
-      done();
-    });
-  });
+      expect(get(response, 'body.data.purchasedProduct')).toBeTruthy();
 
-  it('should return all the valid fields in the model definition', async done => {
-    await getResponse(allFields).then(response => {
-      const result = get(response, 'body.data.purchasedProduct');
-      const resultFields = Object.keys(result);
-      expect(resultFields).toEqual(['id', 'price', 'discount', 'deliveryDate', 'createdAt', 'updatedAt', 'deletedAt']);
+      // check if products.findAll is being called once
+      expect(dbClient.models.products.findAll.mock.calls.length).toBe(1);
+      // check if products.findAll is being called with the correct whereclause
+      expect(dbClient.models.products.findAll.mock.calls[0][0].include[0].where).toEqual({ id });
+      // check if the included model has name: purchased_products
+      expect(dbClient.models.products.findAll.mock.calls[0][0].include[0].model.name).toEqual('purchased_products');
       done();
     });
   });

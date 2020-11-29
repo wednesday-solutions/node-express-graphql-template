@@ -31,10 +31,8 @@ describe('Address graphQL-server-DB query tests', () => {
     const dbClient = mockDBClient();
     resetAndMockDB(null, {}, dbClient);
 
-    // since we are requesting for a list of suppliers check if all suppliers are being requested
     jest.spyOn(dbClient.models.suppliers, 'findAll').mockImplementation(() => [suppliersTable[0]]);
 
-    // since we are requesting for a list of stores check if all stores are being requested
     jest.spyOn(dbClient.models.stores, 'findAll').mockImplementation(() => [storesTable[0]]);
 
     await getResponse(addressOne).then(response => {
