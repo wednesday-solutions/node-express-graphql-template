@@ -34,6 +34,10 @@ export const init = () => {
       }
     })
   );
+
+  app.use('/', (req, res) => {
+    res.send('Service up and running!');
+  });
   /* istanbul ignore next */
   if (!isTestEnv()) {
     app.listen(9000);
