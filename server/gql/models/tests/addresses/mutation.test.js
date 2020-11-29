@@ -1,16 +1,22 @@
 import get from 'lodash/get';
-import { getResponse } from '@utils/testUtils';
+import { getResponse, mockDBClient, resetAndMockDB } from '@utils/testUtils';
+import { addressesTable } from '@utils/testUtils/mockData';
 
 describe('Address graphQL-server-DB mutation tests', () => {
+  let dbClient;
+  beforeEach(() => {
+    dbClient = mockDBClient();
+    resetAndMockDB(null, {}, dbClient);
+  });
   const createAddressMut = `
   mutation {
     createAddress (
-      address1: "new address one"
-      address2: "new address two"
-      city: "new city"
-      country: "new country"
-      lat: 2
-      long: 2
+      address1: "${addressesTable[0].address1}"
+      address2: "${addressesTable[0].address2}"
+      city: "${addressesTable[0].city}"
+      country: "${addressesTable[0].country}"
+      lat: ${addressesTable[0].lat}
+      long: ${addressesTable[0].long}
     ) {
       id
       address1
@@ -40,17 +46,17 @@ describe('Address graphQL-server-DB mutation tests', () => {
   }
 `;
 
-  it('should have a mutation to create a new address', async done => {
-    await getResponse(createAddressMut).then(response => {
-      const result = get(response, 'body.data.createAddress');
-      expect(result).toMatchObject({
-        id: '1',
-        address1: 'new address one',
-        address2: 'new address two',
-        city: 'new city',
-        country: 'new country'
-      });
-      done();
+  it('should have a mutation to create a new address', async () => {
+    jest.spyOn(dbClient.models.addresses, 'create');
+    const response = await getResponse(createAddressMut);
+    const result = get(response, 'body.data.createAddress');
+    expect(result).toBeTruthy();
+    const { id, ...address } = addressesTable[0];
+    expect(dbClient.models.addresses.create.mock.calls.length).toBe(1);
+    expect(dbClient.models.addresses.create.mock.calls[0][0]).toEqual({
+      ...address,
+      lat: parseFloat(address.lat),
+      long: parseFloat(address.long)
     });
   });
 });

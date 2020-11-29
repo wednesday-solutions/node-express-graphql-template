@@ -1,5 +1,5 @@
 import { GraphQLInt, GraphQLNonNull, GraphQLObjectType } from 'graphql';
-import capitalize from 'lodash/capitalize';
+import upperFirst from 'lodash/upperFirst';
 import { productMutations } from '@gql/models/products';
 import { purchasedProductMutations } from '@gql/models/purchasedProducts';
 import { supplierMutations } from '@gql/models/suppliers';
@@ -29,16 +29,16 @@ export const addMutations = () => {
 
   Object.keys(DB_TABLES).forEach(table => {
     const { id, ...createArgs } = DB_TABLES[table].args;
-    mutations[`create${capitalize(table)}`] = {
+    mutations[`create${upperFirst(table)}`] = {
       ...DB_TABLES[table],
       args: createArgs,
       resolve: createResolvers(DB_TABLES[table].model).createResolver
     };
-    mutations[`update${capitalize(table)}`] = {
+    mutations[`update${upperFirst(table)}`] = {
       ...DB_TABLES[table],
       resolve: createResolvers(DB_TABLES[table].model).updateResolver
     };
-    mutations[`delete${capitalize(table)}`] = {
+    mutations[`delete${upperFirst(table)}`] = {
       type: deletedId,
       args: {
         id: { type: GraphQLNonNull(GraphQLInt) }
