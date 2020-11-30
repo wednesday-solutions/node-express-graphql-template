@@ -10,7 +10,7 @@
   </p>
 
   <p>
-An enterprise Express GraphQL template application built using Nodejs showcasing - Testing Strategies, DB seeding & migrations, integration with an ORM, containerization using Docker, a GraphQL Interface, support for GraphQL relay, integration with join-monster for out of the box DB table join support, support for aggregation queries, and PostgreSQL.
+An enterprise Express GraphQL template application built using nodejs showcasing - Testing Strategy, DB migrations and seeding, integration with an ORM, containerization using Docker, GraphQL Interface, support for GraphQL relay, integration with graphql-sequelize, support for aggregation queries, PostgreSQL
   </p>
 
   ___
