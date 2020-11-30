@@ -1,4 +1,5 @@
 import { getResponse, resetAndMockDB } from '@utils/testUtils';
+import request from 'supertest';
 
 const query = `
   query {
@@ -33,8 +34,17 @@ describe('init', () => {
     await init();
 
     // check if the server has been started
-    expect(mocks.app.use.mock.calls.length).toBe(1);
+    expect(mocks.app.use.mock.calls.length).toBe(2);
+
     expect(mocks.app.use.mock.calls[0][0]).toEqual('/graphql');
+
+    expect(mocks.app.use.mock.calls[1][0]).toEqual('/');
+  });
+
+  it('should have a health check api(/) that responds with 200', async () => {
+    const { app } = await require('../index');
+    const res = await request(app).get('/');
+    expect(res.statusCode).toBe(200);
   });
 
   it('should invoke @database.connect ', async () => {
