@@ -34,11 +34,10 @@ describe('init', () => {
     await init();
 
     // check if the server has been started
-    expect(mocks.app.use.mock.calls.length).toBe(2);
-
-    expect(mocks.app.use.mock.calls[0][0]).toEqual('/graphql');
-
-    expect(mocks.app.use.mock.calls[1][0]).toEqual('/');
+    expect(mocks.app.use.mock.calls.length).toBe(3);
+    expect(mocks.app.use.mock.calls[0][0]).toEqual(expect.any(Function));
+    expect(mocks.app.use.mock.calls[1][0]).toEqual('/graphql');
+    expect(mocks.app.use.mock.calls[2][0]).toEqual('/');
   });
 
   it('should have a health check api(/) that responds with 200', async () => {
