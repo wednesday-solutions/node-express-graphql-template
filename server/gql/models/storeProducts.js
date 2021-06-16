@@ -11,8 +11,8 @@ const { nodeInterface } = getNode();
 
 export const storeProductFields = {
   id: { type: GraphQLNonNull(GraphQLID) },
-  productId: { type: GraphQLInt, sqlColumn: 'product_id' },
-  storeId: { type: GraphQLInt, sqlColumn: 'store_id' }
+  productId: { type: GraphQLInt },
+  storeId: { type: GraphQLInt }
 };
 export const StoreProduct = new GraphQLObjectType({
   name: 'StoreProduct',

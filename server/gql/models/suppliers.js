@@ -13,7 +13,7 @@ const { nodeInterface } = getNode();
 export const supplierFields = {
   id: { type: GraphQLNonNull(GraphQLID) },
   name: { type: GraphQLString },
-  addressId: { sqlColumn: 'address_id', type: GraphQLInt }
+  addressId: { type: GraphQLInt }
 };
 const Supplier = new GraphQLObjectType({
   name: 'Supplier',
