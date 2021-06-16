@@ -13,7 +13,7 @@ export const purchasedProductFields = {
   id: { type: GraphQLNonNull(GraphQLID) },
   price: { type: GraphQLInt },
   discount: { type: GraphQLInt },
-  deliveryDate: { sqlColumn: 'delivery_date', type: GraphQLDateTime }
+  deliveryDate: { type: GraphQLDateTime }
 };
 const PurchasedProduct = new GraphQLObjectType({
   name: 'PurchasedProduct',

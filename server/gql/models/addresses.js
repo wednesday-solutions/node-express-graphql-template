@@ -10,8 +10,8 @@ import { totalConnectionFields } from '@utils/index';
 const { nodeInterface } = getNode();
 export const addressFields = {
   id: { type: GraphQLNonNull(GraphQLID) },
-  address1: { sqlColumn: 'address_1', type: GraphQLString },
-  address2: { sqlColumn: 'address_2', type: GraphQLString },
+  address1: { type: GraphQLString },
+  address2: { type: GraphQLString },
   city: { type: GraphQLString },
   country: { type: GraphQLString },
   lat: {
