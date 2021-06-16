@@ -1,7 +1,7 @@
 import { GraphQLObjectType, GraphQLNonNull, GraphQLInt } from 'graphql';
 import camelCase from 'lodash/camelCase';
 import pluralize from 'pluralize';
-import { defaultArgs, resolver } from 'graphql-sequelize';
+import { defaultListArgs, defaultArgs, resolver } from 'graphql-sequelize';
 import { Aggregate } from '@gql/models/aggregate';
 import { getNode } from '@gql/node';
 import { Product, productQueries } from '@gql/models/products';
@@ -39,7 +39,8 @@ export const addQueries = () => {
       }
     };
     query[pluralize(camelCase(table))] = {
-      ...DB_TABLES[table].list
+      ...DB_TABLES[table].list,
+      args: { ...DB_TABLES[table].list?.args, ...defaultListArgs(DB_TABLES[table].model) }
     };
   });
   return query;
