@@ -7,6 +7,9 @@
     "type": "git",
     "url": "git+https://github.com/wednesday-solutions/reporting-dashboard.git"
   },
+  "engines": {
+    "node": ">=0.12"
+  },
   "author": "Wednesday Solutions",
   "license": "MIT",
   "bugs": {
@@ -55,6 +58,7 @@
     "graphql-sequelize": "^9.4.0",
     "html-webpack-plugin": "^4.5.0",
     "http": "^0.0.1-security",
+    "libpq": "^1.8.9",
     "loadash": "^1.0.0",
     "lodash": "^4.17.15",
     "moment": "^2.29.1",
