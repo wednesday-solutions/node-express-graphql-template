@@ -50,6 +50,12 @@ export const supplierProductsTable = range(1, 10).map((_, index) => ({
   supplierId: index + 1
 }));
 
+export const manufacturersTable = range(1, 10).map((_, index) => ({
+  id: (index + 1).toString(),
+  name: faker.company.companyName(),
+  orign_country: faker.address.country()
+}));
+
 export const DB_ENV = {
   POSTGRES_HOST: 'host',
   POSTGRES_USER: 'user',

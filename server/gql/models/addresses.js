@@ -59,7 +59,6 @@ const AddressConnection = createConnection({
         }
       });
     }
-
     if (context?.store?.id) {
       findOptions.include.push({
         model: db.stores,
