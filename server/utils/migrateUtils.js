@@ -11,6 +11,16 @@ function getVersion(currentFileName) {
   return version;
 }
 
+function updateManufacturerIdInProducts(queryInterface) {
+  const range = require('lodash/range');
+  return Promise.all(
+    range(1, 2000).map(async (value, index) => {
+      const manufacturerId = 1 + parseInt(Math.random() * 299);
+      return queryInterface.bulkUpdate('products', { manufacturer_id: manufacturerId }, { id: index + 1 });
+    })
+  );
+}
+
 module.exports = {
   migrate: async function(currentFileName, queryInterface) {
     const version = getVersion(currentFileName.split('/')[currentFileName.split('/').length - 1]);
@@ -28,5 +38,6 @@ module.exports = {
       });
     }
   },
-  getVersion
+  getVersion,
+  updateManufacturerIdInProducts
 };
