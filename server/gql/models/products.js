@@ -121,7 +121,7 @@ export const productQueries = {
   list: {
     ...ProductConnection,
     type: ProductConnection.connectionType,
-    args: ProductConnection.connectionArgs
+    args: { ...ProductConnection.connectionArgs, likeName: { type: GraphQLString } }
   },
   model: db.products
 };
