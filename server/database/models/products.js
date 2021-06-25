@@ -33,6 +33,11 @@ export function getAttributes(sequelize, DataTypes) {
       field: 'deleted_at',
       type: DataTypes.DATE,
       allowNull: true
+    },
+    manufacturerId: {
+      field: 'manufacturer_id',
+      type: DataTypes.INTEGER,
+      allowNull: false
     }
   };
 }
@@ -67,6 +72,11 @@ export function model(sequelize, DataTypes) {
     products.stores = products.belongsToMany(models.stores, {
       through: models.storeProducts,
       otherKey: 'store_id',
+      sourceKey: 'id'
+    });
+
+    products.manufacturers = products.hasOne(models.manufacturers, {
+      foreignKey: 'id',
       sourceKey: 'id'
     });
   };

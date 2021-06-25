@@ -8,6 +8,7 @@ import { addressMutations } from '@gql/models/addresses';
 import { storeMutations } from '@gql/models/stores';
 import { storeProductMutations } from '@gql/models/storeProducts';
 import { supplierProductMutations } from '@gql/models/supplierProducts';
+import { manufacturerMutations } from '@gql/models/manufacturers';
 
 export const createResolvers = model => ({
   createResolver: (parent, args, context, resolveInfo) => model.create(args),
@@ -21,7 +22,8 @@ export const DB_TABLES = {
   store: storeMutations,
   storeProduct: storeProductMutations,
   supplier: supplierMutations,
-  supplierProduct: supplierProductMutations
+  supplierProduct: supplierProductMutations,
+  manufacturer: manufacturerMutations
 };
 
 export const addMutations = () => {

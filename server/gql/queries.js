@@ -11,6 +11,7 @@ import { storeProductQueries } from '@gql/models/storeProducts';
 import { storeQueries } from '@gql/models/stores';
 import { supplierQueries } from '@gql/models/suppliers';
 import { supplierProductQueries } from '@gql/models/supplierProducts';
+import { manufacturerQueries } from '@gql/models/manufacturers';
 
 const { nodeField, nodeTypeMapper } = getNode();
 
@@ -21,7 +22,8 @@ const DB_TABLES = {
   storeProduct: storeProductQueries,
   store: storeQueries,
   supplier: supplierQueries,
-  supplierProduct: supplierProductQueries
+  supplierProduct: supplierProductQueries,
+  manufacturer: manufacturerQueries
 };
 
 export const addQueries = () => {

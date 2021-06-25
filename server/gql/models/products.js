@@ -6,6 +6,8 @@ import { storeQueries } from './stores';
 import { timestamps } from './timestamps';
 import db from '@database/models';
 import { totalConnectionFields } from '@utils/index';
+import { sequelizedWhere } from '@database/dbUtils';
+import { manufacturerQueries } from './manufacturers';
 
 const { nodeInterface } = getNode();
 export const productFields = {
@@ -32,6 +34,11 @@ export const Product = new GraphQLObjectType({
       ...storeQueries.list,
       resolve: (source, args, context, info) =>
         storeQueries.list.resolve(source, args, { ...context, product: source.dataValues }, info)
+    },
+    manufacturers: {
+      ...manufacturerQueries.list,
+      resolve: (source, args, context, info) =>
+        manufacturerQueries.list.resolve(source, args, { ...context, product: source.dataValues }, info)
     }
   })
 });
@@ -48,6 +55,14 @@ export const ProductConnection = createConnection({
         model: db.purchasedProducts,
         where: {
           id: context.purchasedProduct.id
+        }
+      });
+    }
+    if (context?.manufacturer?.id) {
+      findOptions.include.push({
+        model: db.manufacturers,
+        where: {
+          id: context.manufacturer?.id
         }
       });
     }
@@ -87,6 +102,7 @@ export const ProductConnection = createConnection({
         }
       });
     }
+    findOptions.where = sequelizedWhere(findOptions.where, args.where);
     return findOptions;
   },
   ...totalConnectionFields

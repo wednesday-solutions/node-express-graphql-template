@@ -5,6 +5,7 @@ import { supplierQueries } from './suppliers';
 import { timestamps } from './timestamps';
 import db from '@database/models';
 import { storeQueries } from '@gql/models/stores';
+import { sequelizedWhere } from '@database/dbUtils';
 import { totalConnectionFields } from '@utils/index';
 
 const { nodeInterface } = getNode();
@@ -59,7 +60,6 @@ const AddressConnection = createConnection({
         }
       });
     }
-
     if (context?.store?.id) {
       findOptions.include.push({
         model: db.stores,
@@ -68,6 +68,7 @@ const AddressConnection = createConnection({
         }
       });
     }
+    findOptions.where = sequelizedWhere(findOptions.where, args.where);
     return findOptions;
   },
   ...totalConnectionFields

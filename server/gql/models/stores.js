@@ -5,6 +5,7 @@ import { addressQueries } from './addresses';
 import { timestamps } from './timestamps';
 import { getNode } from '@gql/node';
 import db from '@database/models';
+import { sequelizedWhere } from '@database/dbUtils';
 import { totalConnectionFields } from '@utils/index';
 
 const { nodeInterface } = getNode();
@@ -65,6 +66,7 @@ export const StoreConnection = createConnection({
         }
       });
     }
+    findOptions.where = sequelizedWhere(findOptions.where, args.where);
     return findOptions;
   },
 
