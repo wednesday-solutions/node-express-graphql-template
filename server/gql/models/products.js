@@ -62,7 +62,7 @@ export const ProductConnection = createConnection({
       findOptions.include.push({
         model: db.manufacturers,
         where: {
-          id: context.supplier?.id
+          id: context.manufacturer?.id
         }
       });
     }
@@ -121,7 +121,7 @@ export const productQueries = {
   list: {
     ...ProductConnection,
     type: ProductConnection.connectionType,
-    args: { ...ProductConnection.connectionArgs, likeName: { type: GraphQLString } }
+    args: ProductConnection.connectionArgs
   },
   model: db.products
 };
