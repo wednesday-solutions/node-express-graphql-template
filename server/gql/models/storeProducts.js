@@ -5,6 +5,7 @@ import { storeQueries } from './stores';
 import { timestamps } from './timestamps';
 import { getNode } from '@gql/node';
 import db from '@database/models';
+import { sequelizedWhere } from '@database/dbUtils';
 import { totalConnectionFields } from '@utils/index';
 
 const { nodeInterface } = getNode();
@@ -37,6 +38,19 @@ export const StoreProductConnection = createConnection({
   nodeType: StoreProduct,
   name: 'storeProducts',
   target: db.storeProducts,
+  before: (findOptions, args, context) => {
+    findOptions.include = findOptions.include || [];
+    if (context?.storeProducts?.id) {
+      findOptions.include.push({
+        model: db.storeProducts,
+        where: {
+          id: context.storeProducts.id
+        }
+      });
+    }
+    findOptions.where = sequelizedWhere(findOptions.where, args.where);
+    return findOptions;
+  },
 
   ...totalConnectionFields
 });
