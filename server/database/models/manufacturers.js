@@ -42,10 +42,6 @@ export function model(sequelize, DataTypes) {
   });
 
   manufacturers.associate = function(models) {
-    manufacturers.products = manufacturers.hasOne(models.products, {
-      foreignKey: 'id',
-      sourceKey: 'id'
-    });
     manufacturers.products = manufacturers.hasMany(models.products, {
       sourceKey: 'id'
     });
