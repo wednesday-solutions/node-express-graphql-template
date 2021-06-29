@@ -11,6 +11,8 @@ export const addressesTable = range(1, 10).map((_, index) => ({
   long: faker.address.longitude()
 }));
 
+export const usersTable = [];
+
 export const productsTable = range(1, 10).map((_, index) => ({
   id: (index + 1).toString(),
   name: faker.commerce.productName(),
