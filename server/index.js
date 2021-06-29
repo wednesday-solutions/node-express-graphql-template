@@ -2,13 +2,14 @@ import express from 'express';
 import graphqlHTTP from 'express-graphql';
 import { GraphQLSchema } from 'graphql';
 import dotenv from 'dotenv';
-
-import { connect } from '@database';
+import multer from 'multer';
 import rTracer from 'cls-rtracer';
-
+import bodyParser from 'body-parser';
+import { connect } from '@database';
 import { QueryRoot } from '@gql/queries';
 import { MutationRoot } from '@gql/mutations';
 import { isTestEnv, logger } from '@utils/index';
+import authRoutes from '@server/auth';
 
 let app;
 export const init = () => {
@@ -37,6 +38,14 @@ export const init = () => {
       }
     })
   );
+
+  const createBodyParsedRoutes = routeConfigs => {
+    if (!routeConfigs.length) return;
+    app.use(bodyParser.json());
+    app.use(bodyParser.urlencoded({ extended: true }));
+    routeConfigs.forEach(({ path, handler, method }) => app[method](path, multer().array(), handler));
+  };
+  createBodyParsedRoutes(authRoutes);
 
   app.use('/', (req, res) => {
     const message = 'Service up and running!';
