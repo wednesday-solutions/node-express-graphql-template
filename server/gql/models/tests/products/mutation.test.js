@@ -7,6 +7,7 @@ describe('Product graphQL-server-DB mutation tests', () => {
       createProduct (
         name: "New produce"
         amount: 10
+        category: "Tools"
       ) {
         id
         name

@@ -6,21 +6,22 @@ import { timestamps } from './timestamps';
 import { getNode } from '@gql/node';
 import db from '@database/models';
 import { productQueries } from '@gql/models/products';
-import { totalConnectionFields } from '@utils/index';
+import { totalConnectionFields, getQueryFields, REQUIRED_ARGS } from '@utils/index';
+import { TYPE_ATTRIBUTES } from '@utils/constants';
 
 const { nodeInterface } = getNode();
 
 export const supplierProductFields = {
   id: { type: GraphQLNonNull(GraphQLID) },
-  supplierId: { type: GraphQLInt },
-  productId: { type: GraphQLInt }
+  supplierId: { type: GraphQLInt, ...REQUIRED_ARGS },
+  productId: { type: GraphQLInt, ...REQUIRED_ARGS }
 };
 export const SupplierProduct = new GraphQLObjectType({
   name: 'SupplierProduct',
   interfaces: [nodeInterface],
   args: connectionArgs,
   fields: () => ({
-    ...supplierProductFields,
+    ...getQueryFields(supplierProductFields, TYPE_ATTRIBUTES.isNonNull),
     ...timestamps,
     products: {
       ...productQueries.list,

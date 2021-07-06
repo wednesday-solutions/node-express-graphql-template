@@ -5,21 +5,22 @@ import { addressQueries } from './addresses';
 import { timestamps } from './timestamps';
 import { getNode } from '@gql/node';
 import db from '@database/models';
-import { totalConnectionFields } from '@utils/index';
+import { totalConnectionFields, getQueryFields, REQUIRED_ARGS } from '@utils/index';
+import { TYPE_ATTRIBUTES } from '@utils/constants';
 
 const { nodeInterface } = getNode();
 
 export const storeFields = {
   id: { type: GraphQLNonNull(GraphQLID) },
-  name: { type: GraphQLString },
-  addressId: { type: GraphQLNonNull(GraphQLInt) }
+  name: { type: GraphQLString, ...REQUIRED_ARGS, isUpdateRequired: false },
+  addressId: { type: GraphQLInt, ...REQUIRED_ARGS }
 };
 
 export const Store = new GraphQLObjectType({
   name: 'Store',
   interfaces: [nodeInterface],
   fields: () => ({
-    ...storeFields,
+    ...getQueryFields(storeFields, TYPE_ATTRIBUTES.isNonNull),
     ...timestamps,
     addresses: {
       ...addressQueries.list,
