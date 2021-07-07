@@ -6,14 +6,15 @@ import { timestamps } from './timestamps';
 import { getNode } from '@gql/node';
 import db from '@database/models';
 import { addressQueries } from '@gql/models/addresses';
-import { totalConnectionFields } from '@utils/index';
+import { totalConnectionFields, getQueryFields, REQUIRED_ARGS, CREATE_AND_QUERY_REQUIRED_ARGS } from '@utils/index';
+import { TYPE_ATTRIBUTES } from '@utils/constants';
 
 const { nodeInterface } = getNode();
 
 export const supplierFields = {
   id: { type: GraphQLNonNull(GraphQLID) },
-  name: { type: GraphQLString },
-  addressId: { type: GraphQLInt }
+  name: { type: GraphQLString, ...CREATE_AND_QUERY_REQUIRED_ARGS },
+  addressId: { type: GraphQLInt, ...REQUIRED_ARGS }
 };
 const Supplier = new GraphQLObjectType({
   name: 'Supplier',
@@ -21,7 +22,7 @@ const Supplier = new GraphQLObjectType({
 
   sqlPaginate: true,
   fields: () => ({
-    ...supplierFields,
+    ...getQueryFields(supplierFields, TYPE_ATTRIBUTES.isNonNull),
     ...timestamps,
     addresses: {
       ...addressQueries.list,

@@ -5,20 +5,23 @@ import { supplierQueries } from './suppliers';
 import { timestamps } from './timestamps';
 import db from '@database/models';
 import { storeQueries } from '@gql/models/stores';
-import { totalConnectionFields } from '@utils/index';
+import { totalConnectionFields, getQueryFields, CREATE_AND_QUERY_REQUIRED_ARGS } from '@utils/index';
+import { TYPE_ATTRIBUTES } from '@utils/constants';
 
 const { nodeInterface } = getNode();
 export const addressFields = {
   id: { type: GraphQLNonNull(GraphQLID) },
-  address1: { type: GraphQLString },
-  address2: { type: GraphQLString },
-  city: { type: GraphQLString },
-  country: { type: GraphQLString },
+  address1: { type: GraphQLString, ...CREATE_AND_QUERY_REQUIRED_ARGS },
+  address2: { type: GraphQLString, ...CREATE_AND_QUERY_REQUIRED_ARGS },
+  city: { type: GraphQLString, ...CREATE_AND_QUERY_REQUIRED_ARGS },
+  country: { type: GraphQLString, ...CREATE_AND_QUERY_REQUIRED_ARGS },
   lat: {
-    type: GraphQLNonNull(GraphQLFloat)
+    type: GraphQLFloat,
+    ...CREATE_AND_QUERY_REQUIRED_ARGS
   },
   long: {
-    type: GraphQLNonNull(GraphQLFloat)
+    type: GraphQLFloat,
+    ...CREATE_AND_QUERY_REQUIRED_ARGS
   }
 };
 const Address = new GraphQLObjectType({
@@ -30,7 +33,7 @@ const Address = new GraphQLObjectType({
     id: 'asc'
   },
   fields: () => ({
-    ...addressFields,
+    ...getQueryFields(addressFields, TYPE_ATTRIBUTES.isNonNull),
     ...timestamps,
     suppliers: {
       ...supplierQueries.list,

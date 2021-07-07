@@ -8,7 +8,8 @@ import { addressMutations } from '@gql/models/addresses';
 import { storeMutations } from '@gql/models/stores';
 import { storeProductMutations } from '@gql/models/storeProducts';
 import { supplierProductMutations } from '@gql/models/supplierProducts';
-
+import { TYPE_ATTRIBUTES } from '../utils/constants';
+import { getQueryFields } from '../utils';
 export const createResolvers = model => ({
   createResolver: (parent, args, context, resolveInfo) => model.create(args),
   updateResolver: (parent, args, context, resolveInfo) => updateUsingId(model, args),
@@ -31,11 +32,12 @@ export const addMutations = () => {
     const { id, ...createArgs } = DB_TABLES[table].args;
     mutations[`create${upperFirst(table)}`] = {
       ...DB_TABLES[table],
-      args: createArgs,
+      args: getQueryFields(createArgs, TYPE_ATTRIBUTES.isCreateRequired),
       resolve: createResolvers(DB_TABLES[table].model).createResolver
     };
     mutations[`update${upperFirst(table)}`] = {
       ...DB_TABLES[table],
+      args: getQueryFields({ id, ...createArgs }, TYPE_ATTRIBUTES.isUpdateRequired),
       resolve: createResolvers(DB_TABLES[table].model).updateResolver
     };
     mutations[`delete${upperFirst(table)}`] = {

@@ -7,6 +7,8 @@ describe('purchased_products graphQL-server-DB mutation tests', () => {
       createPurchasedProduct (
         price: 100
         discount: 10
+        deliveryDate: "2363-01-30T10:05:32.880Z"
+        productId: 1 
       ) {
         id
         price
@@ -25,7 +27,8 @@ describe('purchased_products graphQL-server-DB mutation tests', () => {
       expect(result).toMatchObject({
         id: '1',
         price: 100,
-        discount: 10
+        discount: 10,
+        deliveryDate: '2363-01-30T10:05:32.880Z'
       });
       done();
     });

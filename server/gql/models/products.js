@@ -5,14 +5,15 @@ import { SupplierConnection } from './suppliers';
 import { storeQueries } from './stores';
 import { timestamps } from './timestamps';
 import db from '@database/models';
-import { totalConnectionFields } from '@utils/index';
+import { totalConnectionFields, getQueryFields, CREATE_AND_QUERY_REQUIRED_ARGS } from '@utils/index';
+import { TYPE_ATTRIBUTES } from '@utils/constants';
 
 const { nodeInterface } = getNode();
 export const productFields = {
   id: { type: GraphQLNonNull(GraphQLID) },
-  name: { type: GraphQLString },
-  category: { type: GraphQLString },
-  amount: { type: GraphQLInt }
+  name: { type: GraphQLString, ...CREATE_AND_QUERY_REQUIRED_ARGS },
+  category: { type: GraphQLString, ...CREATE_AND_QUERY_REQUIRED_ARGS },
+  amount: { type: GraphQLInt, ...CREATE_AND_QUERY_REQUIRED_ARGS }
 };
 
 // Product
@@ -20,7 +21,7 @@ export const Product = new GraphQLObjectType({
   name: 'Product',
   interfaces: [nodeInterface],
   fields: () => ({
-    ...productFields,
+    ...getQueryFields(productFields, TYPE_ATTRIBUTES.isNonNull),
     ...timestamps,
     suppliers: {
       type: SupplierConnection.connectionType,
