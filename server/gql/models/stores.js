@@ -5,14 +5,14 @@ import { addressQueries } from './addresses';
 import { timestamps } from './timestamps';
 import { getNode } from '@gql/node';
 import db from '@database/models';
-import { totalConnectionFields, getQueryFields, REQUIRED_ARGS } from '@utils/index';
+import { totalConnectionFields, getQueryFields, REQUIRED_ARGS, CREATE_AND_QUERY_REQUIRED_ARGS } from '@utils/index';
 import { TYPE_ATTRIBUTES } from '@utils/constants';
 
 const { nodeInterface } = getNode();
 
 export const storeFields = {
   id: { type: GraphQLNonNull(GraphQLID) },
-  name: { type: GraphQLString, ...REQUIRED_ARGS, isUpdateRequired: false },
+  name: { type: GraphQLString, ...CREATE_AND_QUERY_REQUIRED_ARGS },
   addressId: { type: GraphQLInt, ...REQUIRED_ARGS }
 };
 

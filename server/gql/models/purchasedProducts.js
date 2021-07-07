@@ -5,7 +5,7 @@ import { timestamps } from './timestamps';
 import { GraphQLDateTime } from 'graphql-iso-date';
 import { getNode } from '@gql/node';
 import db from '@database/models';
-import { totalConnectionFields, getQueryFields, REQUIRED_ARGS } from '@utils/index';
+import { totalConnectionFields, getQueryFields, REQUIRED_ARGS, CREATE_AND_QUERY_REQUIRED_ARGS } from '@utils/index';
 import { TYPE_ATTRIBUTES } from '@utils/constants';
 
 const { nodeInterface } = getNode();
@@ -13,9 +13,9 @@ const { nodeInterface } = getNode();
 export const purchasedProductFields = {
   id: { type: GraphQLNonNull(GraphQLID) },
   productId: { type: GraphQLInt, ...REQUIRED_ARGS },
-  price: { type: GraphQLInt, ...REQUIRED_ARGS, isUpdateRequired: false },
-  discount: { type: GraphQLInt, ...REQUIRED_ARGS, isUpdateRequired: false },
-  deliveryDate: { type: GraphQLDateTime, ...REQUIRED_ARGS, isUpdateRequired: false }
+  price: { type: GraphQLInt, ...CREATE_AND_QUERY_REQUIRED_ARGS },
+  discount: { type: GraphQLInt, ...CREATE_AND_QUERY_REQUIRED_ARGS },
+  deliveryDate: { type: GraphQLDateTime, ...CREATE_AND_QUERY_REQUIRED_ARGS }
 };
 const PurchasedProduct = new GraphQLObjectType({
   name: 'PurchasedProduct',

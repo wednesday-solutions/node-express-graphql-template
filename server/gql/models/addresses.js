@@ -5,25 +5,23 @@ import { supplierQueries } from './suppliers';
 import { timestamps } from './timestamps';
 import db from '@database/models';
 import { storeQueries } from '@gql/models/stores';
-import { totalConnectionFields, getQueryFields, REQUIRED_ARGS } from '@utils/index';
+import { totalConnectionFields, getQueryFields, CREATE_AND_QUERY_REQUIRED_ARGS } from '@utils/index';
 import { TYPE_ATTRIBUTES } from '@utils/constants';
 
 const { nodeInterface } = getNode();
 export const addressFields = {
   id: { type: GraphQLNonNull(GraphQLID) },
-  address1: { type: GraphQLString, ...REQUIRED_ARGS, isUpdateRequired: false },
-  address2: { type: GraphQLString, ...REQUIRED_ARGS, isUpdateRequired: false },
-  city: { type: GraphQLString, ...REQUIRED_ARGS, isUpdateRequired: false },
-  country: { type: GraphQLString, ...REQUIRED_ARGS, isUpdateRequired: false },
+  address1: { type: GraphQLString, ...CREATE_AND_QUERY_REQUIRED_ARGS },
+  address2: { type: GraphQLString, ...CREATE_AND_QUERY_REQUIRED_ARGS },
+  city: { type: GraphQLString, ...CREATE_AND_QUERY_REQUIRED_ARGS },
+  country: { type: GraphQLString, ...CREATE_AND_QUERY_REQUIRED_ARGS },
   lat: {
     type: GraphQLFloat,
-    ...REQUIRED_ARGS,
-    isUpdateRequired: false
+    ...CREATE_AND_QUERY_REQUIRED_ARGS
   },
   long: {
     type: GraphQLFloat,
-    ...REQUIRED_ARGS,
-    isUpdateRequired: false
+    ...CREATE_AND_QUERY_REQUIRED_ARGS
   }
 };
 const Address = new GraphQLObjectType({

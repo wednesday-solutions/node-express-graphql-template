@@ -51,3 +51,8 @@ export const REQUIRED_ARGS = {
   isUpdateRequired: true,
   isCreateRequired: true
 };
+
+export const CREATE_AND_QUERY_REQUIRED_ARGS = {
+  isNonNull: true,
+  isCreateRequired: true
+};
