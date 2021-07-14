@@ -29,7 +29,7 @@ export const handleSignIn = async (req, res) => {
   }
 };
 
-export default [
+const routes = [
   {
     path: '/sign-up',
     method: 'post',
@@ -41,3 +41,4 @@ export default [
     handler: handleSignIn
   }
 ];
+export default routes;
