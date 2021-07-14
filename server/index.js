@@ -10,6 +10,7 @@ import { QueryRoot } from '@gql/queries';
 import { MutationRoot } from '@gql/mutations';
 import { isTestEnv, logger } from '@utils/index';
 import authRoutes from '@server/auth';
+import authenticateToken from './middleware/authenticate/index';
 
 let app;
 export const init = () => {
@@ -25,8 +26,9 @@ export const init = () => {
   if (!app) {
     app = express();
   }
+  app.use(express.json());
   app.use(rTracer.expressMiddleware());
-
+  app.use(authenticateToken);
   app.use(
     '/graphql',
     graphqlHTTP({
@@ -50,7 +52,7 @@ export const init = () => {
   app.use('/', (req, res) => {
     const message = 'Service up and running!';
     logger().info(message);
-    res.send(message);
+    res.json(message);
   });
   /* istanbul ignore next */
   if (!isTestEnv()) {
