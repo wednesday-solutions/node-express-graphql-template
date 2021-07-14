@@ -3,7 +3,7 @@ import jwt from 'jsonwebtoken';
 export const TIMESTAMP = 'YYYY-MM-DD HH:mm:ss';
 
 export class Token {
-  static secret = 'express-graphql-template-v0';
+  static secret = process.env.ACCESS_TOKEN_SECRET;
   expiresIn = '1d';
 
   constructor({ user, overrideExpiration }) {
@@ -22,7 +22,7 @@ export class Token {
       {
         userId: this.user.id
       },
-      this.secret,
+      process.env.ACCESS_TOKEN_SECRET,
       {
         expiresIn: this.expiresIn
       }
