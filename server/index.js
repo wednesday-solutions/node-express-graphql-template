@@ -26,9 +26,17 @@ export const init = () => {
   if (!app) {
     app = express();
   }
+
+  const unless = function(middleware, ...paths) {
+    return function(req, res, next) {
+      const pathCheck = paths.some(path => path === req.path);
+      pathCheck ? next() : middleware(req, res, next);
+    };
+  };
+
   app.use(express.json());
   app.use(rTracer.expressMiddleware());
-  app.use(authenticateToken);
+  app.use(unless(authenticateToken, '/sign-in', '/sign-up'));
   app.use(
     '/graphql',
     graphqlHTTP({
