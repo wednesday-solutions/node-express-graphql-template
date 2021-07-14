@@ -11,18 +11,12 @@ export const userFields = {
   id: { type: GraphQLNonNull(GraphQLID) },
   firstName: { type: GraphQLNonNull(GraphQLString) },
   lastName: { type: GraphQLNonNull(GraphQLString) },
-  email: { type: GraphQLNonNull(GraphQLString) },
-  password: { type: GraphQLNonNull(GraphQLString) }
+  email: { type: GraphQLNonNull(GraphQLString) }
 };
 
 const User = new GraphQLObjectType({
   name: 'user',
   interfaces: [nodeInterface],
-  sqlPaginate: true,
-  orderBy: {
-    created_at: 'desc',
-    id: 'asc'
-  },
   fields: () => ({
     ...userFields,
     ...timestamps
@@ -33,27 +27,6 @@ const UserConnection = createConnection({
   name: 'users',
   target: db.users,
   nodeType: User,
-  // before: (findOptions, args, context) => {
-  //   // findOptions.include = findOptions.include || [];
-  //   // if (context?.supplier?.id) {
-  //   //   findOptions.include.push({
-  //   //     model: db.suppliers,
-  //   //     where: {
-  //   //       id: context.supplier.id
-  //   //     }
-  //   //   });
-  //   // }
-
-  //   // if (context?.store?.id) {
-  //   //   findOptions.include.push({
-  //   //     model: db.stores,
-  //   //     where: {
-  //   //       id: context.store.id
-  //   //     }
-  //   //   });
-  //   // }
-  //   return findOptions;
-  // },
   ...totalConnectionFields
 });
 

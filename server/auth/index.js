@@ -1,28 +1,11 @@
-import { Op } from 'sequelize';
-import db from '@database/models';
-import { Token } from '@utils/constants';
-
+import { Token } from '../utils/token';
+import { getUserBySignIn, createUserBySignup } from '../daos/auth';
 const getSignedToken = user => new Token({ user }).get();
-
-export const getUserBySignIn = async (email, password) => {
-  convertDbResponseToRawResponse(
-      await db.users.findOne({
-        where: {
-          [Op.and]: [{ email }, { password }]
-        }
-      })
-  );
-};
 
 export const handleSignUp = async (req, res) => {
   try {
     const { firstName, lastName, email, password } = req.body || {};
-    const newUser = await db.users.create({
-      firstName,
-      lastName,
-      email,
-      password
-    });
+    const newUser = createUserBySignup(firstName, lastName, email, password);
     res.data = newUser;
     const token = getSignedToken(newUser);
     const { dataValues } = newUser;
@@ -35,9 +18,9 @@ export const handleSignUp = async (req, res) => {
 export const handleSignIn = async (req, res) => {
   try {
     const { email, password } = req.body || {};
-    const user = getUserBySignIn(email,password)
+    const user = getUserBySignIn(email, password);
     if (!user) {
-      res.sendStatus(401);
+      res.send(401, { error: 'User not found!' });
       return;
     }
     res.send({ token: getSignedToken(user) });
