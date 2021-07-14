@@ -4,6 +4,16 @@ import { Token } from '@utils/constants';
 
 const getSignedToken = user => new Token({ user }).get();
 
+export const getUserBySignIn = async (email, password) => {
+  convertDbResponseToRawResponse(
+      await db.users.findOne({
+        where: {
+          [Op.and]: [{ email }, { password }]
+        }
+      })
+  );
+};
+
 export const handleSignUp = async (req, res) => {
   try {
     const { firstName, lastName, email, password } = req.body || {};
@@ -25,11 +35,7 @@ export const handleSignUp = async (req, res) => {
 export const handleSignIn = async (req, res) => {
   try {
     const { email, password } = req.body || {};
-    const user = await db.users.findOne({
-      where: {
-        [Op.and]: [{ email }, { password }]
-      }
-    });
+    const user = getUserBySignIn(email,password)
     if (!user) {
       res.sendStatus(401);
       return;
