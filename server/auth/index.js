@@ -5,7 +5,7 @@ const getSignedToken = user => new Token({ user }).get();
 export const handleSignUp = async (req, res) => {
   try {
     const { firstName, lastName, email, password } = req.body || {};
-    const newUser = createUserBySignup(firstName, lastName, email, password);
+    const newUser = await createUserBySignup(firstName, lastName, email, password);
     res.data = newUser;
     const token = getSignedToken(newUser);
     const { dataValues } = newUser;
@@ -18,7 +18,7 @@ export const handleSignUp = async (req, res) => {
 export const handleSignIn = async (req, res) => {
   try {
     const { email, password } = req.body || {};
-    const user = getUserBySignIn(email, password);
+    const user = await getUserBySignIn(email, password);
     if (!user) {
       res.send(401, { error: 'User not found!' });
       return;
