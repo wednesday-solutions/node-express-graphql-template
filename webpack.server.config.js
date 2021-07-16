@@ -7,7 +7,6 @@ const dotenv = require('dotenv');
 
 const dotEnvFile = process.env.ENVIRONMENT === 'production' ? `.env` : `.env.${process.env.ENVIRONMENT || 'local'}`;
 
-console.log({ dotEnvFile });
 const env = dotenv.config({ path: dotEnvFile }).parsed;
 
 const envKeys = {

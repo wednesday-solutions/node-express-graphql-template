@@ -16,7 +16,7 @@ export const usersTable = range(1, 10).map((_, index) => ({
   firstName: faker.name.firstName(),
   lastName: faker.name.lastName(),
   email: faker.internet.email()
-}));;
+}));
 
 export const productsTable = range(1, 10).map((_, index) => ({
   id: (index + 1).toString(),

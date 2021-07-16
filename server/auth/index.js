@@ -20,12 +20,12 @@ export const handleSignIn = async (req, res) => {
     const { email, password } = req.body || {};
     const user = await getUserBySignIn(email, password);
     if (!user) {
-      res.send(401, { error: 'User not found!' });
+      res.json(401, { error: 'User not found!' });
       return;
     }
-    res.send({ token: getSignedToken(user) });
+    res.json({ token: getSignedToken(user) });
   } catch (err) {
-    res.send(err.message);
+    res.json(err.message);
   }
 };
 

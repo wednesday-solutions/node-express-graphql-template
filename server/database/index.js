@@ -1,6 +1,7 @@
 import Sequelize from 'sequelize';
 import * as pg from 'pg';
 let client;
+
 export const getClient = () => {
   if (!client) {
     try {
@@ -10,7 +11,7 @@ export const getClient = () => {
         dialect: 'postgres'
       });
     } catch (err) {
-      console.log({ err });
+      console.error(err);
       throw err;
     }
   }

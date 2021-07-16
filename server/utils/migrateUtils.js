@@ -19,7 +19,6 @@ module.exports = {
       const fileName = directories[index];
       await queryInterface.sequelize.query(fs.readFileSync(`./resources/v${version}/${fileName}`, 'utf-8')).catch(e => {
         const error = e.original.sqlMessage;
-        console.log(error);
         if (error && error.startsWith('Table') && error.endsWith('already exists')) {
           // If the database is already built add this migration to sequelizeMeta table.
           return;
