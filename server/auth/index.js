@@ -9,9 +9,9 @@ export const handleSignUp = async (req, res) => {
     res.data = newUser;
     const token = getSignedToken(newUser);
     const { dataValues } = newUser;
-    res.send({ ...dataValues, token: token });
+    res.json({ ...dataValues, token: token });
   } catch (err) {
-    res.send(err.message);
+    res.json(err.message);
   }
 };
 

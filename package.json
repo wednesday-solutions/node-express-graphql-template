@@ -3,8 +3,8 @@
   "version": "1.0.0",
   "description": "",
   "main": "server/index.js",
+  "type": "module",
   "repository": {
-    "type": "git",
     "url": "git+https://github.com/wednesday-solutions/reporting-dashboard.git"
   },
   "author": "Wednesday Solutions",
