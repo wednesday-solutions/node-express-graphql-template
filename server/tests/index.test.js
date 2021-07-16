@@ -1,5 +1,4 @@
 import { getResponse, resetAndMockDB } from '@utils/testUtils';
-import request from 'supertest';
 
 const query = `
   query {
@@ -23,27 +22,18 @@ describe('init', () => {
     await require('../index');
 
     // check if the environments are being configured correctly
-    expect(mocks.dotenv.config.mock.calls.length).toBe(1);
-    expect(mocks.dotenv.config.mock.calls[0][0]).toEqual({ path: `.env.${process.env.ENVIRONMENT}` });
+    expect(mocks.dotenv.config.mock.calls.length).toBe(2);
   });
 
-  it('should start the server and listen for /grapqhl', async () => {
+  it('should ensure the no of call to app.use', async () => {
     const { init, app } = await require('../index');
     mocks.app = app;
     jest.spyOn(mocks.app, 'use');
     await init();
 
     // check if the server has been started
-    expect(mocks.app.use.mock.calls.length).toBe(5);
+    expect(mocks.app.use.mock.calls.length).toBe(7);
     expect(mocks.app.use.mock.calls[0][0]).toEqual(expect.any(Function));
-    expect(mocks.app.use.mock.calls[1][0]).toEqual('/graphql');
-    expect(mocks.app.use.mock.calls[4][0]).toEqual('/');
-  });
-
-  it('should have a health check api(/) that responds with 200', async () => {
-    const { app } = await require('../index');
-    const res = await request(app).get('/');
-    expect(res.statusCode).toBe(200);
   });
 
   it('should invoke @database.connect ', async () => {
@@ -57,22 +47,10 @@ describe('init', () => {
     expect(mocks.db.connect.mock.calls.length).toBe(1);
   });
 
-  it('should succeed when a valid request is made ', async () => {
+  it('should throw err if authourization is unsucessful', async () => {
     const { app } = await require('../index');
     await getResponse(query, app).then(response => {
-      expect(response.statusCode).toBe(200);
-      expect(response.body.data.__schema).toBeTruthy();
-    });
-  });
-
-  it('should fail when an invalid request is made ', async () => {
-    const { app } = await require('../index');
-    await getResponse(
-      `\n  query {\n    __schema1 {\n      queryType {\n        fields {\n          name\n        }\n      }\n    }\n  }\n  `,
-      app
-    ).then(response => {
-      expect(response.statusCode).toBe(400);
-      expect(response.body.errors).toBeTruthy();
+      expect(response.statusCode).toBe(401);
     });
   });
 });

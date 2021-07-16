@@ -7,7 +7,8 @@ module.exports = {
     '!**/dist/**',
     '!**/server/database/models/**',
     '!**/server/utils/testUtils/**',
-    '!**/server/utils/configureEnv.js'
+    '!**/server/utils/configureEnv.js',
+    '!**server/middleware/logger/index.js'
   ],
   testPathIgnorePatterns: ['<rootDir>/dist/'],
   moduleNameMapper: {
