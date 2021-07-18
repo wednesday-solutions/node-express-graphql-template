@@ -4,9 +4,10 @@ require('dotenv').config();
 export default function authenticateToken(req, res, next) {
   const authHeader = req.headers.authorization;
   const token = authHeader && authHeader.split(' ')[1];
-  if (!token) return res.sendStatus(401);
+
+  if (!token) return res.json(401, { error: 'Token not found!' });
   jwt.verify(token, process.env.ACCESS_TOKEN_SECRET, (err, user) => {
-    if (err) return res.sendStatus(403);
+    if (err) return res.json(403, { error: 'Unauthorized Access!' });
     req.user = user;
     next();
   });

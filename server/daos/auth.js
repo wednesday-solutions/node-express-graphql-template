@@ -1,9 +1,5 @@
 import db from '@database/models';
-import md5 from 'md5';
-
-export const createPassword = password => md5(password);
-
-export const checkPassword = (password, hash) => md5(password) === hash;
+import { checkPassword, createPassword } from '@utils/passwordUtils';
 
 export const getUserBySignIn = async (email, password) => {
   const user = await db.users.findOne({
