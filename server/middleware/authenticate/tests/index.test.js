@@ -27,6 +27,6 @@ describe('authentication tests', () => {
     };
     const res = mockResponse();
     authenticateToken(req, res, next);
-    expect(res.json).toBeCalledWith(401, { error: 'Token not found!' });
+    expect(res.json).toBeCalledWith(401, { errors: ['Token not found!'] });
   });
 });

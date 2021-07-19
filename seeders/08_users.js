@@ -11,7 +11,7 @@ module.exports = {
         first_name: faker.name.firstName(),
         last_name: faker.name.lastName(),
         email: faker.internet.email(),
-        password: md5(faker.internet.password()),
+        password: md5('wednesdaySolution'),
         created_at: faker.date.recent(createdBefore)
       };
     });

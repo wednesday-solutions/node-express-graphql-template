@@ -47,7 +47,16 @@ export const init = () => {
     if (!routeConfigs.length) return;
     app.use(bodyParser.json());
     app.use(bodyParser.urlencoded({ extended: true }));
-    routeConfigs.forEach(({ path, handler, method }) => app[method](path, multer().array(), handler));
+    const validate = configs => configs.every(({ path, handler, method }) => !!path && !!handler && !!method);
+    try {
+      if (validate(routeConfigs)) {
+        routeConfigs.forEach(({ path, handler, method }) => app[method](path, multer().array(), handler));
+      } else {
+        throw new Error('Invalid route config');
+      }
+    } catch (error) {
+      console.error(error);
+    }
   };
   createBodyParsedRoutes([signUpRoute, signInRoute]);
 

@@ -10,8 +10,7 @@ const { nodeInterface } = getNode();
 export const userFields = {
   id: { type: GraphQLNonNull(GraphQLID) },
   firstName: { type: GraphQLNonNull(GraphQLString) },
-  lastName: { type: GraphQLNonNull(GraphQLString) },
-  email: { type: GraphQLNonNull(GraphQLString) }
+  lastName: { type: GraphQLNonNull(GraphQLString) }
 };
 
 const User = new GraphQLObjectType({
@@ -19,6 +18,7 @@ const User = new GraphQLObjectType({
   interfaces: [nodeInterface],
   fields: () => ({
     ...userFields,
+    email: { type: GraphQLNonNull(GraphQLString) },
     ...timestamps
   })
 });

@@ -11,7 +11,7 @@ import {
 } from '@server/utils/testUtils/mockData';
 import sequelize from 'sequelize';
 import request from 'supertest';
-import logger from '../../middleware/logger/index';
+import logger from '@middleware/logger/index';
 
 const defineAndAddAttributes = (connection, name, mock, attr, total = 10) => {
   const mockTable = connection.define(name, mock, {
