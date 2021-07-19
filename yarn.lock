@@ -2949,10 +2949,10 @@ atob@^2.1.2:
   resolved "https://registry.yarnpkg.com/atob/-/atob-2.1.2.tgz#6d9517eb9e030d2436666651e86bd9f6f13533c9"
   integrity sha512-Wm6ukoaOGJi/73p/cl2GvLjTI5JM1k/O14isD73YML8StrH/7/lRFgmg8nICZgD3bZZvjwCGxtMOD3wWNAu8cg==
 
-aws-sdk@^2.780.0:
-  version "2.780.0"
-  resolved "https://registry.yarnpkg.com/aws-sdk/-/aws-sdk-2.780.0.tgz#ac88e5222cb4a09385791fbb5a58114ad5abc9c1"
-  integrity sha512-pz/3dJdrkqgJn2YPwu6/VaGBSvYm33wjb6Ic7zSuFPOduqo42Se70BQASNmUg1E8EBqSwsrYEW04f5XGOJ0mMA==
+aws-sdk@^2.949.0:
+  version "2.949.0"
+  resolved "https://registry.yarnpkg.com/aws-sdk/-/aws-sdk-2.949.0.tgz#b36a7f8d1631d58922a6e2b9fd28f7cbcc4b4fa7"
+  integrity sha512-n9vqtsLPmSvJcvYvBLBbI1n4GZokwc/5zgHZD7VxdioLNXo1nHQ3VUi4MiW+3kIN40NUNf+Gc5vpc82yNYCvsw==
   dependencies:
     buffer "4.9.2"
     events "1.1.1"
@@ -3774,10 +3774,10 @@ clone-response@^1.0.2:
   dependencies:
     mimic-response "^1.0.0"
 
-cls-rtracer@^2.5.1:
-  version "2.5.1"
-  resolved "https://registry.yarnpkg.com/cls-rtracer/-/cls-rtracer-2.5.1.tgz#82875265689dbcfd3b47891824b920ece0935147"
-  integrity sha512-SBJlGe4WpZneLiymtOaMCF7mHazkGEo12xXIUzy/weGXq+Bsh8+PdWPxDaMpFkayCxVuKheO7didbDL9RnFwow==
+cls-rtracer@^2.6.0:
+  version "2.6.0"
+  resolved "https://registry.yarnpkg.com/cls-rtracer/-/cls-rtracer-2.6.0.tgz#2d1965d8be80311bf9ba4782a7f53b921b267ab3"
+  integrity sha512-AkerGNOczlS5mj7giIGi0KvqwLy2sckUF7RQe5r0dV4Z/SWUclUwVEhIOJQ3rOcTOBqlBVAtmGbSWirkW1GK4w==
   dependencies:
     uuid "8.3.1"
 
