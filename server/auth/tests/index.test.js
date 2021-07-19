@@ -1,5 +1,5 @@
 import { handleSignUp, handleSignIn } from '../index';
-import * as AuthDoas from '../../daos/auth';
+import * as AuthDoas from '@daos/auth';
 
 describe('handleSignUp tests', () => {
   const email = 'rohansaroha2@wednesday.is';

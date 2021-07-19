@@ -8,8 +8,9 @@ import bodyParser from 'body-parser';
 import { connect } from '@database';
 import { QueryRoot } from '@gql/queries';
 import { MutationRoot } from '@gql/mutations';
-import { isTestEnv, logger } from '@utils/index';
+import { isTestEnv, logger, unless } from '@utils/index';
 import { signUpRoute, signInRoute } from '@server/auth';
+
 import authenticateToken from '@middleware/authenticate/index';
 
 let app;
@@ -26,13 +27,6 @@ export const init = () => {
   if (!app) {
     app = express();
   }
-
-  const unless = function(middleware, ...paths) {
-    return function(req, res, next) {
-      const pathCheck = paths.some(path => path === req.path);
-      pathCheck ? next() : middleware(req, res, next);
-    };
-  };
 
   app.use(express.json());
   app.use(rTracer.expressMiddleware());
