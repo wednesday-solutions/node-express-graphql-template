@@ -10,7 +10,7 @@ import { QueryRoot } from '@gql/queries';
 import { MutationRoot } from '@gql/mutations';
 import { isTestEnv, logger } from '@utils/index';
 import authRoutes from '@server/auth';
-import authenticateToken from './middleware/authenticate/index';
+import authenticateToken from '@middleware/authenticate/index';
 
 let app;
 export const init = () => {

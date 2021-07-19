@@ -9,5 +9,5 @@ CREATE TABLE users (
     deleted_at timestamp WITH time zone
 );
 
-CREATE INDEX user_email ON users USING btree (email);
+CREATE INDEX user_email ON users(email);
 

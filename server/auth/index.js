@@ -28,7 +28,8 @@ export const handleSignIn = async (req, res) => {
     res.json(err.message);
   }
 };
-export default [
+
+export const routes = [
   {
     path: '/sign-up',
     method: 'post',
