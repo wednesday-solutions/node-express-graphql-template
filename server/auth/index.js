@@ -29,15 +29,14 @@ export const handleSignIn = async (req, res) => {
   }
 };
 
-export const routes = [
-  {
-    path: '/sign-up',
-    method: 'post',
-    handler: handleSignUp
-  },
-  {
-    path: '/sign-in',
-    method: 'post',
-    handler: handleSignIn
-  }
-];
+export const signUpRoute = {
+  path: '/sign-up',
+  method: 'post',
+  handler: handleSignUp
+};
+
+export const signInRoute = {
+  path: '/sign-in',
+  method: 'post',
+  handler: handleSignIn
+};

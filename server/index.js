@@ -9,7 +9,7 @@ import { connect } from '@database';
 import { QueryRoot } from '@gql/queries';
 import { MutationRoot } from '@gql/mutations';
 import { isTestEnv, logger } from '@utils/index';
-import authRoutes from '@server/auth';
+import { signUpRoute, signInRoute } from '@server/auth';
 import authenticateToken from '@middleware/authenticate/index';
 
 let app;
@@ -55,7 +55,7 @@ export const init = () => {
     app.use(bodyParser.urlencoded({ extended: true }));
     routeConfigs.forEach(({ path, handler, method }) => app[method](path, multer().array(), handler));
   };
-  createBodyParsedRoutes(authRoutes);
+  createBodyParsedRoutes([signUpRoute, signInRoute]);
 
   app.use('/', (req, res) => {
     const message = 'Service up and running!';
