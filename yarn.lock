@@ -5754,17 +5754,15 @@ graphql-parse-resolve-info@4.12.0:
     debug "^4.1.1"
     tslib "^2.0.1"
 
-graphql-relay@^0.6.0:
-  version "0.6.0"
-  resolved "https://registry.yarnpkg.com/graphql-relay/-/graphql-relay-0.6.0.tgz#18ec36b772cfcb3dbb9bd369c3f8004cf42c7b93"
-  integrity sha512-OVDi6C9/qOT542Q3KxZdXja3NrDvqzbihn1B44PH8P/c5s0Q90RyQwT6guhGqXqbYEH6zbeLJWjQqiYvcg2vVw==
-  dependencies:
-    prettier "^1.16.0"
+graphql-relay@^0.8.0:
+  version "0.8.0"
+  resolved "https://registry.yarnpkg.com/graphql-relay/-/graphql-relay-0.8.0.tgz#35f0090f0f056192767c1acdaa402daed19ede6d"
+  integrity sha512-NU7CkwNxPzkqpBgv76Cgycrc3wmWVA2K5Sxm9DHSSLLuQTpaSRAUsX1sf2gITf+XQpkccsv56/z0LojXTyQbUw==
 
-graphql-sequelize@^9.4.0:
-  version "9.4.0"
-  resolved "https://registry.yarnpkg.com/graphql-sequelize/-/graphql-sequelize-9.4.0.tgz#451223fdf0c27021b8bf50824ae8ec66e979e91f"
-  integrity sha512-hEoNoEcHn+v4dmWDb1yAh6/AFX6RcMGoHq3H3oiJcmRDRmS+8CVpPgaIW7E3ibWVpf/o2I1HOzgB+QFnPJ2LhQ==
+graphql-sequelize@^9.4.3:
+  version "9.4.3"
+  resolved "https://registry.yarnpkg.com/graphql-sequelize/-/graphql-sequelize-9.4.3.tgz#5fe1f91827ffdcf2076ed7db09667709c2c18ccd"
+  integrity sha512-4Ad3FJgZz05aIIJs+MeGyDEG+VY1DtNW5q8VoP2ZPV0ZDt/q1/Cssskam9AvVaQAyqNmfmB2+BFH6ydfoTiAnQ==
   dependencies:
     bluebird "^3.4.0"
     invariant "2.2.1"
@@ -5775,15 +5773,10 @@ graphql-ws@^4.1.1:
   resolved "https://registry.yarnpkg.com/graphql-ws/-/graphql-ws-4.9.0.tgz#5cfd8bb490b35e86583d8322f5d5d099c26e365c"
   integrity sha512-sHkK9+lUm20/BGawNEWNtVAeJzhZeBg21VmvmLoT5NdGVeZWv5PdIhkcayQIAgjSyyQ17WMKmbDijIPG2On+Ag==
 
-"graphql@>=0.9 <0.14 || ^14.0.2 || ^15.4.0", "graphql@^0.6.0 || ^0.7.0 || ^0.8.0-b || ^0.9.0 || ^0.10.0 || ^0.11.0 || ^0.12.0 || ^0.13.0 || ^14.0.2 || ^15.0.0":
+"graphql@>=0.9 <0.14 || ^14.0.2 || ^15.4.0", "graphql@^0.6.0 || ^0.7.0 || ^0.8.0-b || ^0.9.0 || ^0.10.0 || ^0.11.0 || ^0.12.0 || ^0.13.0 || ^14.0.2 || ^15.0.0", graphql@^15.5.1:
   version "15.5.1"
   resolved "https://registry.yarnpkg.com/graphql/-/graphql-15.5.1.tgz#f2f84415d8985e7b84731e7f3536f8bb9d383aad"
   integrity sha512-FeTRX67T3LoE3LWAxxOlW2K3Bz+rMYAC18rRguK4wgXaTZMiJwSUwDmPFo3UadAKbzirKIg5Qy+sNJXbpPRnQw==
-
-graphql@^15.4.0:
-  version "15.4.0"
-  resolved "https://registry.yarnpkg.com/graphql/-/graphql-15.4.0.tgz#e459dea1150da5a106486ba7276518b5295a4347"
-  integrity sha512-EB3zgGchcabbsU9cFe1j+yxdzKQKAbGUWRb13DsrsMN1yyfmmIq+2+L5MqVWcDCE4V89R5AyUOi7sMOGxdsYtA==
 
 growly@^1.3.0:
   version "1.3.0"
@@ -9137,11 +9130,6 @@ prettier@1.17.0:
   version "1.17.0"
   resolved "https://registry.yarnpkg.com/prettier/-/prettier-1.17.0.tgz#53b303676eed22cc14a9f0cec09b477b3026c008"
   integrity sha512-sXe5lSt2WQlCbydGETgfm1YBShgOX4HxQkFPvbxkcwgDvGDeqVau8h+12+lmSVlP3rHPz0oavfddSZg/q+Szjw==
-
-prettier@^1.16.0:
-  version "1.19.1"
-  resolved "https://registry.yarnpkg.com/prettier/-/prettier-1.19.1.tgz#f7d7f5ff8a9cd872a7be4ca142095956a60797cb"
-  integrity sha512-s7PoyDv/II1ObgQunCbB9PdLmUcBZcnWOcxDh7O0N/UwDEsHyqkW+Qh28jW+mVuCdx7gLB0BotYI1Y6uI9iyew==
 
 pretty-error@^2.1.1:
   version "2.1.2"
