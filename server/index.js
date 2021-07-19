@@ -1,25 +1,37 @@
-import express from 'express';
-import graphqlHTTP from 'express-graphql';
-import { GraphQLSchema } from 'graphql';
 import dotenv from 'dotenv';
-
-import { connect } from '@database';
+import express from 'express';
 import rTracer from 'cls-rtracer';
+import { GraphQLSchema } from 'graphql';
+import graphqlHTTP from 'express-graphql';
+import { connect } from '@database';
+import { isTestEnv, logger } from '@utils';
+import { initialize } from '@database/models/index';
 
-import { QueryRoot } from '@gql/queries';
-import { MutationRoot } from '@gql/mutations';
-import { isTestEnv, logger } from '@utils/index';
-
+let db;
 let app;
-export const init = () => {
+
+export const init = async () => {
   // configure environment variables
   dotenv.config({ path: `.env.${process.env.ENVIRONMENT}` });
 
   // connect to database
   connect();
 
+  db = await initialize();
+
+  const getSchema = async () => {
+    if (!db) {
+      throw new Error('DB Models not initialised!');
+    }
+    const { createRootQuery } = await import('@gql/queries');
+    const { createRootMutation } = await import('@gql/mutations');
+    const query = await createRootQuery();
+    const mutation = await createRootMutation();
+    return new GraphQLSchema({ query, mutation });
+  };
+
   // create the graphQL schema
-  const schema = new GraphQLSchema({ query: QueryRoot, mutation: MutationRoot });
+  const schema = await getSchema();
 
   if (!app) {
     app = express();
@@ -29,7 +41,7 @@ export const init = () => {
   app.use(
     '/graphql',
     graphqlHTTP({
-      schema: schema,
+      schema,
       graphiql: true,
       customFormatErrorFn: e => {
         logger().info({ e });
@@ -53,4 +65,11 @@ logger().info({ ENV: process.env.NODE_ENV });
 
 init();
 
-export { app };
+function getDb() {
+  if (db) {
+    return db;
+  }
+  return {};
+}
+
+export { app, db, getDb };
