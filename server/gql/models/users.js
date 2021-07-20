@@ -8,7 +8,6 @@ import { totalConnectionFields } from '@utils/index';
 const { nodeInterface } = getNode();
 
 export const userFields = {
-  id: { type: GraphQLNonNull(GraphQLID) },
   firstName: { type: GraphQLNonNull(GraphQLString) },
   lastName: { type: GraphQLNonNull(GraphQLString) }
 };
@@ -18,6 +17,7 @@ const User = new GraphQLObjectType({
   interfaces: [nodeInterface],
   fields: () => ({
     ...userFields,
+    id: { type: GraphQLNonNull(GraphQLID) },
     email: { type: GraphQLNonNull(GraphQLString) },
     ...timestamps
   })
