@@ -7,7 +7,6 @@ module.exports = {
     const arr = range(1, 100).map((value, index) => {
       const createdBefore = parseInt(Math.random() * 1000);
       return {
-        id: index,
         first_name: faker.name.firstName(),
         last_name: faker.name.lastName(),
         email: faker.internet.email(),
