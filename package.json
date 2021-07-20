@@ -109,7 +109,7 @@
     "eslint-plugin-prettier": "^3.4.0",
     "eslint-plugin-promise": "^5.1.0",
     "eslint-plugin-standard": "^5.0.0",
-    "faker": "^4.1.0",
+    "faker": "^5.5.3",
     "jest": "^24.0.0",
     "jest-environment-node": "^26.3.0",
     "kill-port": "^1.6.0",
