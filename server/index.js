@@ -44,7 +44,9 @@ export const init = () => {
   );
 
   const createBodyParsedRoutes = routeConfigs => {
-    if (!routeConfigs.length) return;
+    if (!routeConfigs.length) {
+      return;
+    }
     app.use(bodyParser.json());
     app.use(bodyParser.urlencoded({ extended: true }));
     const validate = configs => configs.every(({ path, handler, method }) => !!path && !!handler && !!method);

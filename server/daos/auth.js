@@ -8,7 +8,9 @@ export const getUserBySignIn = async (email, password) => {
 
   if (await checkPassword(password, user.password)) {
     return user;
-  } else throw Error('Invalid Password');
+  } else {
+    throw Error('Invalid Password');
+  }
 };
 
 export const createUserBySignup = async (firstName, lastName, email, password) => {
