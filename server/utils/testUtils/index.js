@@ -174,4 +174,5 @@ export const expectSameTypeNameOrKind = (result, expected) =>
     if (!isNil(expectedField)) {
       return expectedField.type.name === field.type.name || expectedField.type.kind === field.type.kind;
     }
+    return false;
   }).length === 0;
