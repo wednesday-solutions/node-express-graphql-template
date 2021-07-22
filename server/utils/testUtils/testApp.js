@@ -1,3 +1,4 @@
+/* eslint-disable no-console */
 import express from 'express';
 import graphqlHTTP from 'express-graphql';
 import { GraphQLSchema } from 'graphql';
@@ -5,11 +6,7 @@ import dotenv from 'dotenv';
 
 import { QueryRoot } from '@gql/queries';
 import { MutationRoot } from '@gql/mutations';
-import { client } from '@database';
-
-const connect = async () => {
-  await client.authenticate();
-};
+import { connect } from '@database';
 
 connect();
 

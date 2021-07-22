@@ -1,6 +1,6 @@
 import get from 'lodash/get';
 import { storesTable } from '@server/utils/testUtils/mockData';
-import { getResponse } from '@utils/testUtils';
+import { getResponse } from '@utils/testUtils/index';
 
 describe('Stores graphQL-server-DB pagination tests', () => {
   const storesQuery = `
@@ -47,7 +47,6 @@ describe('Stores graphQL-server-DB pagination tests', () => {
         rows: [{ ...storesTable[0], $total: 10 }]
       }
     ]);
-    jest.doMock('@database', () => ({ client, getClient: () => client }));
     await getResponse(storesQuery).then(response => {
       const result = get(response, 'body.data.stores.edges[0].node');
       expect(result).toEqual(
@@ -61,6 +60,8 @@ describe('Stores graphQL-server-DB pagination tests', () => {
     });
   });
 
+  jest.resetModules();
+
   it('should have the correct pageInfo', async done => {
     const mockDBClient = require('@database');
     const client = mockDBClient.client;
@@ -70,7 +71,6 @@ describe('Stores graphQL-server-DB pagination tests', () => {
         rows: [{ ...storesTable, $total: 10 }]
       }
     ]);
-    jest.doMock('@database', () => ({ client, getClient: () => client }));
     await getResponse(storesQuery).then(response => {
       const result = get(response, 'body.data.stores.pageInfo');
       expect(result).toEqual(

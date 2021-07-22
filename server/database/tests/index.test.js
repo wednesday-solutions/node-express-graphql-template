@@ -1,3 +1,5 @@
+/* eslint-disable no-console */
+import Sequelize from 'sequelize';
 import SequelizeMock from 'sequelize-mock';
 import { resetAndMockDB } from '@utils/testUtils';
 import { DB_ENV } from '@utils/testUtils/mockData';
@@ -12,18 +14,17 @@ describe('getClient', () => {
     jest.unmock('@database');
     mocks.sequelize = SequelizeMock;
     jest.doMock('sequelize', () => mocks.sequelize);
-    jest.spyOn(mocks, 'sequelize');
+    const sequelizeSpy = jest.spyOn(Sequelize, 'Sequelize');
 
-    const { getClient } = require('../../database');
+    const { getClient } = require('@database');
     const client = await getClient();
 
-    await expect(client).toBeInstanceOf(mocks.sequelize);
-
-    expect(mocks.sequelize.mock.calls.length).toEqual(1);
-    expect(mocks.sequelize.mock.calls[0][0]).toEqual(DB_ENV.POSTGRES_DB);
-    expect(mocks.sequelize.mock.calls[0][1]).toEqual(DB_ENV.POSTGRES_USER);
-    expect(mocks.sequelize.mock.calls[0][2]).toEqual(DB_ENV.POSTGRES_PASSWORD);
-    expect(mocks.sequelize.mock.calls[0][3]).toEqual({
+    await expect(client).toBeInstanceOf(Sequelize);
+    expect(sequelizeSpy.mock.calls.length).toEqual(1);
+    expect(sequelizeSpy.mock.calls[0][0]).toEqual(DB_ENV.POSTGRES_DB);
+    expect(sequelizeSpy.mock.calls[0][1]).toEqual(DB_ENV.POSTGRES_USER);
+    expect(sequelizeSpy.mock.calls[0][2]).toEqual(DB_ENV.POSTGRES_PASSWORD);
+    expect(sequelizeSpy.mock.calls[0][3]).toEqual({
       dialectModule: pg,
       dialect: 'postgres',
       host: DB_ENV.POSTGRES_HOST

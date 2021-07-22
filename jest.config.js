@@ -13,7 +13,7 @@ module.exports = {
   moduleNameMapper: {
     'server(.*)$': '<rootDir>/server/$1',
     '^@server(.*)$': '<rootDir>/server/$1',
-    '^@(database|gql)/(.*)$': '<rootDir>/server/$1/$2',
-    '^@(utils)(.*)$': '<rootDir>/server/$1/$2'
+    '@(database|gql)(.*)$': '<rootDir>/server/$1/$2',
+    '@(utils)(.*)$': '<rootDir>/server/$1/$2'
   }
 };

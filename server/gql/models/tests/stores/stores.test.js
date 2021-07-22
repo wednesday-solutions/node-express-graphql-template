@@ -1,16 +1,21 @@
 import get from 'lodash/get';
 import { graphqlSync, GraphQLSchema } from 'graphql';
 import { createFieldsWithType, expectSameTypeNameOrKind } from '@utils/testUtils';
-import { QueryRoot } from '../../../queries';
-import { MutationRoot } from '../../../mutations';
+import { createRootQuery } from '@gql/queries';
+import { createRootMutation } from '@gql/mutations';
 import { timestamps } from '@gql/models/timestamps';
 import { storeFields } from '@gql/models/stores';
 
-const schema = new GraphQLSchema({ query: QueryRoot, mutation: MutationRoot });
+let schema = null;
 
 let fields = [];
 
-fields = createFieldsWithType({ ...storeFields, ...timestamps });
+beforeAll(async () => {
+  const query = await createRootQuery();
+  const mutation = await createRootMutation();
+  schema = new GraphQLSchema({ query, mutation });
+  fields = createFieldsWithType({ ...storeFields, ...timestamps });
+});
 
 const query = `
   {

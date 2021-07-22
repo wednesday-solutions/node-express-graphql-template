@@ -11,65 +11,83 @@ let db;
 let app;
 
 export const init = async () => {
-  // configure environment variables
-  dotenv.config({ path: `.env.${process.env.ENVIRONMENT}` });
+  try {
+    // configure environment variables
+    dotenv.config({ path: `.env.${process.env.ENVIRONMENT}` });
 
-  // connect to database
-  connect();
+    // connect to database
+    connect();
+    db = await initialize();
+    let schema = null;
 
-  db = await initialize();
-
-  const getSchema = async () => {
-    if (!db) {
-      throw new Error('DB Models not initialised!');
-    }
-    const { createRootQuery } = await import('@gql/queries');
-    const { createRootMutation } = await import('@gql/mutations');
-    const query = await createRootQuery();
-    const mutation = await createRootMutation();
-    return new GraphQLSchema({ query, mutation });
-  };
-
-  // create the graphQL schema
-  const schema = await getSchema();
-
-  if (!app) {
-    app = express();
-  }
-  app.use(rTracer.expressMiddleware());
-
-  app.use(
-    '/graphql',
-    graphqlHTTP({
-      schema,
-      graphiql: true,
-      customFormatErrorFn: e => {
-        logger().info({ e });
-        return e;
+    const getSchema = async () => {
+      if (!db) {
+        throw new Error('DB Models not initialised!');
       }
-    })
-  );
+      const { createRootQuery } = await import('@gql/queries');
+      const { createRootMutation } = await import('@gql/mutations');
+      const query = await createRootQuery();
+      const mutation = await createRootMutation();
+      if (!schema) {
+        return new GraphQLSchema({ query, mutation });
+      }
+      return schema;
+    };
 
-  app.use('/', (req, res) => {
-    const message = 'Service up and running!';
-    logger().info(message);
-    res.send(message);
-  });
-  /* istanbul ignore next */
-  if (!isTestEnv()) {
-    app.listen(9000);
+    // create the graphQL schema
+    schema = await getSchema();
+
+    if (!app) {
+      app = express();
+    }
+    app.use(rTracer.expressMiddleware());
+
+    app.use(
+      '/graphql',
+      graphqlHTTP({
+        schema,
+        graphiql: true,
+        customFormatErrorFn: e => {
+          logger().info({ e });
+          return e;
+        }
+      })
+    );
+
+    app.use('/', (req, res) => {
+      const message = 'Service up and running!';
+      logger().info(message);
+      res.send(message);
+    });
+    /* istanbul ignore next */
+    if (!isTestEnv()) {
+      app.listen(9000);
+    }
+    return app;
+  } catch (error) {
+    // eslint-disable-next-line no-console
+    console.error(error);
   }
 };
 
 logger().info({ ENV: process.env.NODE_ENV });
 
-init();
+if (!isTestEnv()) {
+  init();
+}
 
-function getDb() {
+export const getDb = () => {
   if (db) {
     return db;
   }
   return {};
-}
+};
 
-export { app, db, getDb };
+export const getApp = async () => {
+  if (app) {
+    return app;
+  }
+  return await init();
+};
+
+export { app, db };

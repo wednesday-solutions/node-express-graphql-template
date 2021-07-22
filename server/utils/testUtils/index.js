@@ -26,7 +26,8 @@ const defineAndAddAttributes = (connection, name, mock, attr, total = 10) => {
 };
 export const getResponse = async (query, app) => {
   if (!app) {
-    app = await require('@server/utils/testUtils/testApp').testApp;
+    const { init } = require('@server');
+    app = await init();
   }
   return await request(app)
     .post('/graphql')
@@ -63,7 +64,7 @@ export function mockDBClient(config = {}) {
     config.total
   );
 
-  purchasedProductsMock.$queryInterface.$useHandler(function(query, queryOptions) {
+  purchasedProductsMock.$queryInterface.$useHandler(function(query) {
     if (query === 'findAll') {
       return config?.purchasedProducts?.findAll;
     }
@@ -116,6 +117,7 @@ export async function connectToMockDB() {
   try {
     client.authenticate();
   } catch (error) {
+    // eslint-disable-next-line no-console
     console.error(error);
   }
 }
@@ -127,19 +129,33 @@ export const resetAndMockDB = (mockCallback, config, db) => {
   jest.clearAllMocks();
   jest.resetAllMocks();
   jest.resetModules();
+  jest.doMock('@server', () => {
+    const server = jest.requireActual('@server');
+    return {
+      ...server,
+      db: mockDBClient().models
+    };
+  });
+
   jest.doMock('@database', () => {
     if (mockCallback) {
       mockCallback(db.client, db.models);
     }
-    return { getClient: () => db.client, client: db.client, connect: () => {} };
+    return {
+      getClient: () => db.client,
+      client: db.client,
+      connect: () => {}
+    };
   });
+
   jest.doMock('@database/models', () => {
     if (mockCallback) {
       mockCallback(db.client, db.models);
     }
-    return db.models;
+    return { ...db.models, initialize: async () => mockDBClient().models };
   });
-  return db.client;
+
+  return { ...db.models, initialize: async () => mockDBClient().models };
 };
 export const createFieldsWithType = fields => {
   const fieldsWithType = [];
@@ -157,7 +173,7 @@ export const createFieldsWithType = fields => {
 const getExpectedField = (expectedFields, name) => expectedFields.filter(field => field.name === name);
 
 export const expectSameTypeNameOrKind = (result, expected) =>
-  result.filter(field => {
+  (result || []).filter(field => {
     const expectedField = getExpectedField(expected, field.name)[0];
     // @todo check for connection types.
     if (!isNil(expectedField)) {

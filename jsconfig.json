@@ -2,7 +2,6 @@
   "compilerOptions": {
     "target": "esnext",
     "baseUrl": ".",
-    "allowSyntheticDefaultImports": false,
     "paths": {
       "@server": ["./server/index"],
       "@gql/*": ["./server/gql/*"],
@@ -10,7 +9,11 @@
       "@utils": ["./server/utils/index"],
       "@config/*": ["./server/config/*"],
       "@database/*": ["./server/database/*"],
-      "@database": ["./server/database/index"]
+      "@database": ["./server/database/index"],
+      "@database/models": ["./server/database/models"],
+      "@database/models/*": ["./server/database/models/*"],
+      "@utils/testUtils": ["./server/utils/testUtils"],
+      "@utils/testUtils/*": ["./server/utils/testUtils/*"]
     }
   }
 }

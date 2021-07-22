@@ -6,9 +6,21 @@ jest.doMock('@database', () => ({
   client: mockDBClient().client,
   connect: () => {}
 }));
+
+jest.doMock('@server', () => {
+  const server = jest.requireActual('@server');
+  return {
+    ...server,
+    db: mockDBClient().models
+  };
+});
+
 jest.doMock('@database/models', () => ({
-  ...mockDBClient().models
+  ...mockDBClient().models,
+  initialize: async () => mockDBClient().models
 }));
+
+jest.mock('sequelize');
 
 process.env.ENVIRONMENT = 'test';
 beforeEach(() => {
