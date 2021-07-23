@@ -21,8 +21,6 @@ jest.doMock('@database/models', () => ({
   getModels: async () => mockDBClient().models
 }));
 
-jest.mock('sequelize');
-
 process.env.ENVIRONMENT = 'test';
 beforeEach(() => {
   process.env = { ...process.env, ...DB_ENV, ENVIRONMENT: 'test' };
