@@ -8,7 +8,7 @@ dotenv.config({ path: `.env.${process.env.ENVIRONMENT}` });
 
 const sequelize = getClient();
 
-async function getModels(dir) {
+export async function getModels(dir) {
   const db = {};
   const files = getFileNames(dir);
   const importFile = async name => {
@@ -16,11 +16,12 @@ async function getModels(dir) {
     const module = await import(`${modulePath}`);
     db[camelCase(name)] = module.model(sequelize, Sequelize.DataTypes);
   };
-  await Promise.all(files.map(importFile));
+  await Promise.all((files || []).map(importFile));
   return db;
 }
 
 export async function initialize() {
+  console.log({ getModels });
   const db = await getModels('./server/database/models');
   Object.keys(db).forEach(modelName => {
     if (db[modelName].associate) {

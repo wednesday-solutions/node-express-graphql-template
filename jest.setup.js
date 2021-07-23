@@ -17,7 +17,8 @@ jest.doMock('@server', () => {
 
 jest.doMock('@database/models', () => ({
   ...mockDBClient().models,
-  initialize: async () => mockDBClient().models
+  initialize: async () => mockDBClient().models,
+  getModels: async () => mockDBClient().models
 }));
 
 jest.mock('sequelize');

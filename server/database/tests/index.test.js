@@ -1,25 +1,22 @@
 /* eslint-disable no-console */
-import Sequelize from 'sequelize';
+import * as Sequelize from 'sequelize';
 import SequelizeMock from 'sequelize-mock';
 import { resetAndMockDB } from '@utils/testUtils';
 import { DB_ENV } from '@utils/testUtils/mockData';
 import * as pg from 'pg';
+import { getClient } from '@database/index';
 
 const mocks = {};
+jest.unmock('@database');
 describe('getClient', () => {
   afterAll(() => {
     resetAndMockDB();
   });
+
   it('successfully get DB Client', async () => {
-    jest.unmock('@database');
-    mocks.sequelize = SequelizeMock;
-    jest.doMock('sequelize', () => mocks.sequelize);
-    const sequelizeSpy = jest.spyOn(Sequelize, 'Sequelize');
-
-    const { getClient } = require('@database');
-    const client = await getClient();
-
-    await expect(client).toBeInstanceOf(Sequelize);
+    const sequelizeSpy = jest.spyOn(Sequelize, 'default');
+    const client = getClient();
+    expect(client).toBeInstanceOf(Sequelize.default);
     expect(sequelizeSpy.mock.calls.length).toEqual(1);
     expect(sequelizeSpy.mock.calls[0][0]).toEqual(DB_ENV.POSTGRES_DB);
     expect(sequelizeSpy.mock.calls[0][1]).toEqual(DB_ENV.POSTGRES_USER);

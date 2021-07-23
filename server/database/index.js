@@ -1,6 +1,7 @@
 import Sequelize from 'sequelize';
 import * as pg from 'pg';
 let client;
+
 export const getClient = () => {
   if (!client) {
     try {
