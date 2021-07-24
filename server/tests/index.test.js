@@ -1,4 +1,5 @@
-import { getResponse, resetAndMockDB } from '@utils/testUtils';
+import { getResponse } from '@utils/testUtils';
+import { mockDBClient } from '@utils/testUtils/index';
 import request from 'supertest';
 
 const query = `
@@ -61,6 +62,26 @@ describe('init', () => {
     expect(mocks.db.connect.mock.calls.length).toBe(1);
   });
 
+  it('should log an Error if db is not initialised', async () => {
+    mocks.dbModels = { initialize: () => null };
+    jest.doMock('@database/models/index', () => mocks.dbModels);
+    const { init } = require('../index');
+    await expect(init()).rejects.toBeTruthy();
+  });
+
+  it('should create the graphql schema if db is initialized', async () => {
+    jest.doMock('@database/models/index', () => ({
+      ...mockDBClient().models,
+      initialize: async () => mockDBClient().models,
+      getModels: async () => mockDBClient().models
+    }));
+    const queries = require('@gql/queries');
+    jest.spyOn(queries, 'createRootQuery');
+    const { init } = require('../index');
+    await init();
+    expect(queries.createRootQuery.mock.calls.length).toBe(1);
+  });
+
   it('should succeed when a valid request is made ', async () => {
     const { app, init } = require('../index');
     await init();
@@ -79,18 +100,6 @@ describe('init', () => {
     ).then(response => {
       expect(response.statusCode).toBe(400);
       expect(response.body.errors).toBeTruthy();
-    });
-  });
-});
-describe('TestApp: Server', () => {
-  it('should respond to /graphql', async done => {
-    const { init } = require('..');
-    resetAndMockDB();
-    const app = await init();
-    await getResponse(query, app).then(response => {
-      expect(response.statusCode).toBe(200);
-      expect(response.body.data.__schema.queryType.fields[0].name).toBeTruthy();
-      done();
     });
   });
 });
