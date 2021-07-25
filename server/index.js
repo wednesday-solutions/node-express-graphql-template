@@ -10,7 +10,7 @@ import { QueryRoot } from '@gql/queries';
 import { MutationRoot } from '@gql/mutations';
 import { isTestEnv, logger, unless } from '@utils/index';
 import { signUpRoute, signInRoute } from '@server/auth';
-
+import { runScheduledJobs } from '@server/crons';
 import authenticateToken from '@middleware/authenticate/index';
 
 let app;
@@ -67,6 +67,7 @@ export const init = () => {
     logger().info(message);
     res.json(message);
   });
+  runScheduledJobs();
   /* istanbul ignore next */
   if (!isTestEnv()) {
     app.listen(9000);

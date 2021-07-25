@@ -41,3 +41,22 @@ export const unless = function(middleware, ...paths) {
     pathCheck ? next() : middleware(req, res, next);
   };
 };
+
+export const registerSchedulerLoggers = (worker, scheduler) => {
+  // //////////////////////
+  // REGISTER FOR EVENTS //
+  // //////////////////////
+  worker.on('success', (queue, job, result, duration) => {
+    console.log(`job success ${queue} ${JSON.stringify(job)} >> ${result} (${duration}ms)`);
+  });
+  worker.on('failure', (queue, job, failure, duration) => {
+    console.log(`job failure ${queue} ${JSON.stringify(job)} >> ${failure} (${duration}ms)`);
+  });
+  worker.on('error', (error, queue, job) => {
+    console.log(`error ${queue} ${JSON.stringify(job)}  >> ${error}`);
+  });
+
+  scheduler.on('error', error => {
+    console.log(`scheduler error >> ${error}`);
+  });
+};
