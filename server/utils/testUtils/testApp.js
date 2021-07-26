@@ -1,6 +1,6 @@
 /* eslint-disable no-console */
 import express from 'express';
-import graphqlHTTP from 'express-graphql';
+import { graphqlHTTP } from 'express-graphql';
 import { GraphQLSchema } from 'graphql';
 import dotenv from 'dotenv';
 
@@ -23,11 +23,9 @@ testApp.use(
     schema: schema,
     graphiql: false,
     customFormatErrorFn: e => {
-      console.log(e);
       if (process.env.ENVIRONMENT !== 'local') {
         return e.message;
       }
-      console.log({ e });
       return e;
     }
   }),

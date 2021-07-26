@@ -7,13 +7,14 @@ module.exports = {
     '!**/dist/**',
     '!**/server/database/models/**',
     '!**/server/utils/testUtils/**',
-    '!**/server/utils/configureEnv.js'
+    '!**/server/utils/configureEnv.js',
+    '!**server/middleware/logger/index.js'
   ],
   testPathIgnorePatterns: ['<rootDir>/dist/'],
   moduleNameMapper: {
     'server(.*)$': '<rootDir>/server/$1',
     '^@server(.*)$': '<rootDir>/server/$1',
-    '@(database|gql)(.*)$': '<rootDir>/server/$1/$2',
+    '@(database|gql|middleware|daos)(.*)$': '<rootDir>/server/$1/$2',
     '@(utils)(.*)$': '<rootDir>/server/$1/$2'
   }
 };

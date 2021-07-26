@@ -27,8 +27,7 @@ describe('init', () => {
     await init();
 
     // check if the environments are being configured correctly
-    expect(mocks.dotenv.config.mock.calls.length).toBe(1);
-    expect(mocks.dotenv.config.mock.calls[0][0]).toEqual({ path: `.env.${process.env.ENVIRONMENT}` });
+    expect(mocks.dotenv.config.mock.calls.length).toBe(2);
   });
 
   it('should start the server and listen for /grapqhl', async () => {
@@ -37,7 +36,7 @@ describe('init', () => {
     jest.spyOn(mocks.app, 'use');
     await init();
     // check if the server has been started
-    expect(mocks.app.use.mock.calls.length).toBe(3);
+    expect(mocks.app.use.mock.calls.length).toBe(7);
     expect(mocks.app.use.mock.calls[0][0]).toEqual(expect.any(Function));
     expect(mocks.app.use.mock.calls[1][0]).toEqual('/graphql');
     expect(mocks.app.use.mock.calls[2][0]).toEqual('/');

@@ -12,7 +12,7 @@ export const getClient = () => {
         dialect: 'postgres'
       });
     } catch (err) {
-      console.log({ err });
+      console.error({ err });
       throw err;
     }
   }

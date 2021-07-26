@@ -1,5 +1,7 @@
 import range from 'lodash/range';
 import faker from 'faker';
+import md5 from 'md5';
+const createdBefore = parseInt(Math.random() * 1000);
 
 export const addressesTable = range(1, 10).map((_, index) => ({
   id: (index + 1).toString(),
@@ -9,6 +11,15 @@ export const addressesTable = range(1, 10).map((_, index) => ({
   country: faker.address.country(),
   lat: faker.address.latitude(),
   long: faker.address.longitude()
+}));
+
+export const usersTable = range(1, 10).map((_, index) => ({
+  id: (index + 1).toString(),
+  firstName: faker.name.firstName(),
+  lastName: faker.name.lastName(),
+  email: faker.internet.email(),
+  password: md5(faker.internet.password()),
+  created_at: faker.date.recent(createdBefore)
 }));
 
 export const productsTable = range(1, 10).map((_, index) => ({
@@ -22,7 +33,7 @@ export const purchasedProductsTable = range(1, 10).map((_, index) => ({
   id: (index + 1).toString(),
   productId: (index + 1).toString(),
   price: faker.commerce.price(),
-  discount: faker.random.number(20),
+  discount: faker.datatype.number(20),
   deliveryDate: faker.date.past(1)
 }));
 

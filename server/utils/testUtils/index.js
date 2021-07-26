@@ -11,6 +11,7 @@ import {
 } from '@server/utils/testUtils/mockData';
 import sequelize from 'sequelize';
 import request from 'supertest';
+import logger from '@middleware/logger/index';
 
 const defineAndAddAttributes = (connection, name, mock, attr, total = 10) => {
   const mockTable = connection.define(name, mock, {
@@ -24,6 +25,7 @@ const defineAndAddAttributes = (connection, name, mock, attr, total = 10) => {
   set(mockTable, 'sequelize.dialect', 'postgres');
   return mockTable;
 };
+
 export const getResponse = async (query, app) => {
   if (!app) {
     const { init } = require('@server');
@@ -56,6 +58,14 @@ export function mockDBClient(config = {}) {
     require('@database/models/products').getAttributes(sequelize, sequelize.DataTypes),
     config.total
   );
+  const usersMock = defineAndAddAttributes(
+    dbConnectionMock,
+    'users',
+    {},
+    require('@database/models/users').getAttributes(sequelize, sequelize.DataTypes),
+    config.total
+  );
+
   const purchasedProductsMock = defineAndAddAttributes(
     dbConnectionMock,
     'purchased_products',
@@ -107,7 +117,8 @@ export function mockDBClient(config = {}) {
       stores: storesMock,
       storeProducts: storeProductsMock,
       suppliers: suppliersMock,
-      supplierProducts: supplierProductsMock
+      supplierProducts: supplierProductsMock,
+      users: usersMock
     }
   };
 }
@@ -117,8 +128,7 @@ export async function connectToMockDB() {
   try {
     client.authenticate();
   } catch (error) {
-    // eslint-disable-next-line no-console
-    console.error(error);
+    logger().error(error);
   }
 }
 
@@ -179,4 +189,5 @@ export const expectSameTypeNameOrKind = (result, expected) =>
     if (!isNil(expectedField)) {
       return expectedField.type.name === field.type.name || expectedField.type.kind === field.type.kind;
     }
+    return false;
   }).length === 0;
