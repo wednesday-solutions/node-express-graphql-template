@@ -62,9 +62,9 @@ export function model(sequelize, DataTypes) {
       sourceKey: 'id'
     });
 
-    addresses.hasMany(models.stores, {
-      sourceKey: 'id'
-    });
+    // addresses.hasMany(models.stores, {
+    //   sourceKey: 'id'
+    // });
   };
 
   return addresses;

@@ -1,3 +1,4 @@
+/* eslint-disable no-console */
 import Sequelize from 'sequelize';
 import * as pg from 'pg';
 let client;
@@ -17,6 +18,7 @@ export const getClient = () => {
   }
   return client;
 };
+
 export const connect = async () => {
   client = getClient();
   try {

@@ -1,6 +1,6 @@
 import get from 'lodash/get';
 import { productsTable } from '@server/utils/testUtils/mockData';
-import { getResponse, mockDBClient, resetAndMockDB } from '@utils/testUtils';
+import { getResponse } from '@utils/testUtils/index';
 
 describe('store graphQL-server-DB query tests', () => {
   const id = '1';
@@ -21,17 +21,15 @@ describe('store graphQL-server-DB query tests', () => {
   `;
 
   it('should request for products related to the stores', async done => {
-    const dbClient = mockDBClient();
-    resetAndMockDB(null, {}, dbClient);
-
-    jest.spyOn(dbClient.models.products, 'findAll').mockImplementation(() => [productsTable[0]]);
+    const { db } = require('@server');
+    const findAllProductsSpy = jest.spyOn(db.products, 'findAll').mockImplementation(() => [productsTable[0]]);
 
     await getResponse(storeName).then(response => {
       expect(get(response, 'body.data.store')).toBeTruthy();
 
-      expect(dbClient.models.products.findAll.mock.calls.length).toBe(1);
-      expect(dbClient.models.products.findAll.mock.calls[0][0].include[0].where).toEqual({ id });
-      expect(dbClient.models.products.findAll.mock.calls[0][0].include[0].model.name).toEqual('stores');
+      expect(findAllProductsSpy.mock.calls.length).toBe(1);
+      expect(findAllProductsSpy.mock.calls[0][0].include[0].where).toEqual({ id });
+      expect(findAllProductsSpy.mock.calls[0][0].include[0].model.name).toEqual('stores');
       done();
     });
   });

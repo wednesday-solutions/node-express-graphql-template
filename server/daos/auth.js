@@ -1,4 +1,4 @@
-import db from '@database/models';
+import { db } from '@server';
 import { checkPassword, createPassword } from '@utils/passwordUtils';
 
 export const getUserBySignIn = async (email, password) => {
@@ -6,7 +6,7 @@ export const getUserBySignIn = async (email, password) => {
     where: { email }
   });
 
-  if (await checkPassword(password, user.password)) {
+  if (checkPassword(password, user.password)) {
     return user;
   } else {
     throw Error('Invalid Password');
@@ -14,7 +14,7 @@ export const getUserBySignIn = async (email, password) => {
 };
 
 export const createUserBySignup = async (firstName, lastName, email, password) => {
-  const encryptedPassword = await createPassword(password);
+  const encryptedPassword = createPassword(password);
   return await db.users.create({
     firstName,
     lastName,

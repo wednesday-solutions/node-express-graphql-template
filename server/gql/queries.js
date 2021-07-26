@@ -1,35 +1,38 @@
-import { GraphQLObjectType, GraphQLNonNull, GraphQLInt } from 'graphql';
-import camelCase from 'lodash/camelCase';
 import pluralize from 'pluralize';
+import camelCase from 'lodash/camelCase';
+import { GraphQLObjectType, GraphQLNonNull, GraphQLInt } from 'graphql';
 import { defaultListArgs, defaultArgs, resolver } from 'graphql-sequelize';
-import { Aggregate } from '@gql/models/aggregate';
 import { getNode } from '@gql/node';
-import { Product, productQueries } from '@gql/models/products';
-import { addressQueries } from '@gql/models/addresses';
-import { purchasedProductQueries } from '@gql/models/purchasedProducts';
-import { storeProductQueries } from '@gql/models/storeProducts';
-import { storeQueries } from '@gql/models/stores';
-import { supplierQueries } from '@gql/models/suppliers';
-import { supplierProductQueries } from '@gql/models/supplierProducts';
-import { userQueries } from '@gql/models/users';
+import { Product } from '@gql/models/products';
+import { Aggregate } from '@gql/models/aggregate';
+import { GRAPHQL_MODEL_EXCLUDES } from '@utils/constants';
+import { getFileNames, createModelGetter } from '@utils';
 
 const { nodeField, nodeTypeMapper } = getNode();
 
-const DB_TABLES = {
-  product: productQueries,
-  address: addressQueries,
-  purchasedProduct: purchasedProductQueries,
-  storeProduct: storeProductQueries,
-  store: storeQueries,
-  supplier: supplierQueries,
-  supplierProduct: supplierProductQueries,
-  user: userQueries
+const getModelQueries = async dir => {
+  const tables = {};
+  const setQueries = createModelGetter({ append: 'Queries', tables });
+  const models = await getFileNames(dir, GRAPHQL_MODEL_EXCLUDES);
+  const importModels = async (fileName, callback) => {
+    const modelPath = `${'./models'}/${fileName}`;
+    const model = await import(`${modelPath}`);
+    if (fileName && model) {
+      callback(fileName, model);
+    } else {
+      throw new Error('Missing Params');
+    }
+  };
+  await Promise.all(models.map(modelName => importModels(modelName, setQueries)));
+  return tables;
 };
 
-export const addQueries = () => {
+export const addQueries = async () => {
   const query = {
     aggregate: Aggregate
   };
+  const DB_TABLES = await getModelQueries('./server/gql/models');
+
   Object.keys(DB_TABLES).forEach(table => {
     query[camelCase(table)] = {
       ...DB_TABLES[table].query,
@@ -51,11 +54,15 @@ export const addQueries = () => {
 nodeTypeMapper.mapTypes({
   products: Product
 });
-export const QueryRoot = new GraphQLObjectType({
-  name: 'Query',
-  node: nodeField,
-  fields: () => ({
-    ...addQueries(),
-    aggregate: Aggregate
-  })
-});
+
+export const createRootQuery = async () => {
+  const queries = await addQueries();
+  return new GraphQLObjectType({
+    name: 'Query',
+    node: nodeField,
+    fields: () => ({
+      ...queries,
+      aggregate: Aggregate
+    })
+  });
+};

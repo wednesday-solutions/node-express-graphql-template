@@ -3,7 +3,7 @@ import { getNode } from '@gql/node';
 import { createConnection } from 'graphql-sequelize';
 import { supplierQueries } from './suppliers';
 import { timestamps } from './timestamps';
-import db from '@database/models';
+import { db } from '@server/index';
 import { storeQueries } from '@gql/models/stores';
 import { totalConnectionFields } from '@utils/index';
 

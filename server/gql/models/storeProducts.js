@@ -4,7 +4,7 @@ import { productQueries } from './products';
 import { storeQueries } from './stores';
 import { timestamps } from './timestamps';
 import { getNode } from '@gql/node';
-import db from '@database/models';
+import { db } from '@server/index';
 import { totalConnectionFields } from '@utils/index';
 
 const { nodeInterface } = getNode();

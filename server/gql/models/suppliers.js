@@ -4,7 +4,7 @@ import { createConnection } from 'graphql-sequelize';
 import { productQueries } from './products';
 import { timestamps } from './timestamps';
 import { getNode } from '@gql/node';
-import db from '@database/models';
+import { db } from '@server/index';
 import { addressQueries } from '@gql/models/addresses';
 import { totalConnectionFields } from '@utils/index';
 

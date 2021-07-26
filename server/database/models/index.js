@@ -1,30 +1,34 @@
-import Sequelize from 'sequelize';
+import { camelCase } from 'lodash';
 import dotenv from 'dotenv';
+import Sequelize from 'sequelize';
+import { getFileNames } from '@utils';
 import { getClient } from '../index';
-
-export const db = {};
 
 dotenv.config({ path: `.env.${process.env.ENVIRONMENT}` });
 
 const sequelize = getClient();
 
-db.products = require('@database/models/products').model(sequelize, Sequelize.DataTypes);
-db.stores = require('@database/models/stores').model(sequelize, Sequelize.DataTypes);
-db.addresses = require('@database/models/addresses').model(sequelize, Sequelize.DataTypes);
-db.suppliers = require('@database/models/suppliers').model(sequelize, Sequelize.DataTypes);
-db.users = require('@database/models/users').model(sequelize, Sequelize.DataTypes);
+export async function getModels(dir) {
+  const db = {};
+  const files = getFileNames(dir);
+  const importFile = async name => {
+    const modulePath = `./${name}`;
+    const module = await import(`${modulePath}`);
+    db[camelCase(name)] = module.model(sequelize, Sequelize.DataTypes);
+  };
+  await Promise.all((files || []).map(importFile));
+  return db;
+}
 
-db.purchasedProducts = require('@database/models/purchased_products').model(sequelize, Sequelize.DataTypes);
-db.storeProducts = require('@database/models/store_products').model(sequelize, Sequelize.DataTypes);
-db.supplierProducts = require('@database/models/supplier_products').model(sequelize, Sequelize.DataTypes);
-
-Object.keys(db).forEach(modelName => {
-  if (db[modelName].associate) {
-    db[modelName].associate(db);
-  }
-});
-
-db.sequelize = sequelize;
-db.Sequelize = sequelize;
-
-export default db;
+export async function initialize() {
+  console.log({ getModels });
+  const db = await getModels('./server/database/models');
+  Object.keys(db).forEach(modelName => {
+    if (db[modelName].associate) {
+      db[modelName].associate(db);
+    }
+  });
+  db.sequelize = sequelize;
+  db.Sequelize = sequelize;
+  return db;
+}

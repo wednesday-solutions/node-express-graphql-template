@@ -1,38 +1,39 @@
+/* eslint-disable no-console */
 import SequelizeMock from 'sequelize-mock';
 import { resetAndMockDB } from '@utils/testUtils';
 import { DB_ENV } from '@utils/testUtils/mockData';
 import * as pg from 'pg';
 
 const mocks = {};
+
+jest.unmock('@database');
+jest.mock('sequelize');
+
+afterAll(() => {
+  resetAndMockDB();
+  jest.unmock('sequelize');
+});
 describe('getClient', () => {
-  afterAll(() => {
-    resetAndMockDB();
-  });
+  const { getClient } = require('@database/index');
   it('successfully get DB Client', async () => {
-    jest.unmock('@database');
-    mocks.sequelize = SequelizeMock;
-    jest.doMock('sequelize', () => mocks.sequelize);
-    jest.spyOn(mocks, 'sequelize');
-
-    const { getClient } = require('../../database');
-    const client = await getClient();
-
-    await expect(client).toBeInstanceOf(mocks.sequelize);
-
-    expect(mocks.sequelize.mock.calls.length).toEqual(1);
-    expect(mocks.sequelize.mock.calls[0][0]).toEqual(DB_ENV.POSTGRES_DB);
-    expect(mocks.sequelize.mock.calls[0][1]).toEqual(DB_ENV.POSTGRES_USER);
-    expect(mocks.sequelize.mock.calls[0][2]).toEqual(DB_ENV.POSTGRES_PASSWORD);
-    expect(mocks.sequelize.mock.calls[0][3]).toEqual({
+    jest.doMock('sequelize', () => ({
+      __esModule: true,
+      default: function() {
+        return true;
+      }
+    }));
+    const sequelize = require('sequelize');
+    const sequelizeSpy = jest.spyOn(sequelize, 'default');
+    getClient();
+    expect(sequelizeSpy).toBeCalledWith(DB_ENV.POSTGRES_DB, DB_ENV.POSTGRES_USER, DB_ENV.POSTGRES_PASSWORD, {
       dialectModule: pg,
       dialect: 'postgres',
       host: DB_ENV.POSTGRES_HOST
     });
   });
   it('throw error on failure', async () => {
-    jest.unmock('@database');
     mocks.sequelize = SequelizeMock;
-    jest.doMock('sequelize', () => new Error());
+    jest.doMock('sequelize', () => new Error('THROW'));
     jest.spyOn(mocks, 'sequelize');
 
     const { getClient } = require('../../database');
@@ -41,13 +42,16 @@ describe('getClient', () => {
 });
 
 describe('connect', () => {
+  beforeAll(() => {
+    console.log('before all');
+    jest.unmock('sequelize');
+  });
+  afterAll(() => {
+    jest.unmock('sequelize');
+  });
+  const { getClient, connect } = require('@database/index');
   it('successfully connect to the database', async () => {
-    jest.unmock('@database');
-    mocks.sequelize = SequelizeMock;
-    jest.doMock('sequelize', () => mocks.sequelize);
-
-    const { getClient, connect } = require('../../database');
-    const client = await getClient();
+    const client = getClient();
     jest.spyOn(client, 'authenticate');
     jest.spyOn(console, 'log');
     await connect();
@@ -63,14 +67,12 @@ describe('connect', () => {
   });
 
   it('should throw an error if connection fails', async () => {
-    jest.unmock('@database');
-    mocks.sequelize = SequelizeMock;
-    jest.doMock('sequelize', () => mocks.sequelize);
-
     const { getClient, connect } = require('../../database');
     const client = await getClient();
     const error = new Error('failed');
-    client.authenticate = () => throw error;
+    client.authenticate = () => {
+      throw error;
+    };
     jest.spyOn(client, 'authenticate');
     jest.spyOn(console, 'log');
     await expect(connect()).rejects.toEqual(error);

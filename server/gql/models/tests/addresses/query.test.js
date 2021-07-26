@@ -1,5 +1,5 @@
 import get from 'lodash/get';
-import { getResponse, mockDBClient, resetAndMockDB } from '@utils/testUtils';
+import { getResponse } from '@utils/testUtils';
 import { storesTable, suppliersTable } from '@utils/testUtils/mockData';
 
 describe('Address graphQL-server-DB query tests', () => {
@@ -28,25 +28,22 @@ describe('Address graphQL-server-DB query tests', () => {
   `;
 
   it('should request for suppliers and stores related to the address', async done => {
-    const dbClient = mockDBClient();
-    resetAndMockDB(null, {}, dbClient);
-
-    jest.spyOn(dbClient.models.suppliers, 'findAll').mockImplementation(() => [suppliersTable[0]]);
-
-    jest.spyOn(dbClient.models.stores, 'findAll').mockImplementation(() => [storesTable[0]]);
+    const { db } = require('@server');
+    const findSuppliersSpy = jest.spyOn(db.suppliers, 'findAll').mockImplementation(() => [suppliersTable[0]]);
+    const findAllStoresSpy = jest.spyOn(db.stores, 'findAll').mockImplementation(() => [storesTable[0]]);
 
     await getResponse(addressOne).then(response => {
       expect(get(response, 'body.data.address')).toBeTruthy();
       // check if suppliers.findAll is being called once
-      expect(dbClient.models.suppliers.findAll.mock.calls.length).toBe(1);
+      expect(findSuppliersSpy.mock.calls.length).toBe(1);
       // check if suppliers.findAll is being called with the correct whereclause
-      expect(dbClient.models.suppliers.findAll.mock.calls[0][0].include[0].where).toEqual({ id });
+      expect(findSuppliersSpy.mock.calls[0][0].include[0].where).toEqual({ id });
       // check if the included model has name: addresses
-      expect(dbClient.models.suppliers.findAll.mock.calls[0][0].include[0].model.name).toEqual('addresses');
+      expect(findSuppliersSpy.mock.calls[0][0].include[0].model.name).toEqual('addresses');
 
-      expect(dbClient.models.stores.findAll.mock.calls.length).toBe(1);
-      expect(dbClient.models.stores.findAll.mock.calls[0][0].include[0].where).toEqual({ id });
-      expect(dbClient.models.stores.findAll.mock.calls[0][0].include[0].model.name).toEqual('addresses');
+      expect(findAllStoresSpy.mock.calls.length).toBe(1);
+      expect(findAllStoresSpy.mock.calls[0][0].include[0].where).toEqual({ id });
+      expect(findAllStoresSpy.mock.calls[0][0].include[0].model.name).toEqual('addresses');
       done();
     });
   });

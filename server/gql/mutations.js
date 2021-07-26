@@ -1,15 +1,8 @@
-import { GraphQLInt, GraphQLNonNull, GraphQLObjectType } from 'graphql';
 import upperFirst from 'lodash/upperFirst';
-import { productMutations } from '@gql/models/products';
-import { purchasedProductMutations } from '@gql/models/purchasedProducts';
-import { supplierMutations } from '@gql/models/suppliers';
+import { GraphQLInt, GraphQLNonNull, GraphQLObjectType } from 'graphql';
+import { createModelGetter, getFileNames } from '@utils';
+import { MUTATION_TYPE, GRAPHQL_MODEL_EXCLUDES } from '@utils/constants';
 import { deletedId, deleteUsingId, updateUsingId } from '@database/dbUtils';
-import { addressMutations } from '@gql/models/addresses';
-import { storeMutations } from '@gql/models/stores';
-import { storeProductMutations } from '@gql/models/storeProducts';
-import { supplierProductMutations } from '@gql/models/supplierProducts';
-import { userMutations } from '@gql/models/users';
-import { MUTATION_TYPE } from '@utils/constants';
 
 const shouldNotAddMutation = (type, table) => {
   if (type === MUTATION_TYPE.CREATE) {
@@ -33,20 +26,25 @@ export const createResolvers = model => ({
   updateResolver: (parent, args, context, resolveInfo) => updateUsingId(model, args),
   deleteResolver: (parent, args, context, resolveInfo) => deleteUsingId(model, args)
 });
-export const DB_TABLES = {
-  product: productMutations,
-  purchasedProduct: purchasedProductMutations,
-  address: addressMutations,
-  store: storeMutations,
-  storeProduct: storeProductMutations,
-  supplier: supplierMutations,
-  supplierProduct: supplierProductMutations,
-  users: userMutations
+
+const getModelMutations = async dir => {
+  const tables = {};
+  const setMutations = createModelGetter({ append: 'Mutations', tables });
+  const models = getFileNames(dir, GRAPHQL_MODEL_EXCLUDES);
+  const importModels = async (fileName, callback) => {
+    const modelPath = `${'./models'}/${fileName}`;
+    const model = await import(`${modelPath}`);
+    if (callback) {
+      callback(fileName, model);
+    }
+  };
+  await Promise.all(models.map(modelName => importModels(modelName, setMutations)));
+  return tables;
 };
 
-export const addMutations = () => {
+export const addMutations = async () => {
   const mutations = {};
-
+  const DB_TABLES = await getModelMutations('./server/gql/models');
   Object.keys(DB_TABLES).forEach(table => {
     const { id, ...createArgs } = DB_TABLES[table].args;
 
@@ -78,9 +76,12 @@ export const addMutations = () => {
   return mutations;
 };
 
-export const MutationRoot = new GraphQLObjectType({
-  name: 'Mutation',
-  fields: () => ({
-    ...addMutations()
-  })
-});
+export const createRootMutation = async () => {
+  const mutations = await addMutations();
+  return new GraphQLObjectType({
+    name: 'Mutation',
+    fields: () => ({
+      ...mutations
+    })
+  });
+};

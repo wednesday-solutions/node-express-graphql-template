@@ -1,4 +1,4 @@
-import { mockDBClient } from '@server/utils/testUtils';
+import { mockDBClient } from '@utils/testUtils';
 import { DB_ENV } from '@utils/testUtils/mockData';
 
 jest.doMock('@database', () => ({
@@ -6,8 +6,19 @@ jest.doMock('@database', () => ({
   client: mockDBClient().client,
   connect: () => {}
 }));
+
+jest.doMock('@server', () => {
+  const server = jest.requireActual('@server');
+  return {
+    ...server,
+    db: mockDBClient().models
+  };
+});
+
 jest.doMock('@database/models', () => ({
-  ...mockDBClient().models
+  ...mockDBClient().models,
+  initialize: async () => mockDBClient().models,
+  getModels: async () => mockDBClient().models
 }));
 
 process.env.ENVIRONMENT = 'test';

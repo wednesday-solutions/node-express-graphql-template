@@ -1,6 +1,6 @@
 import md5 from 'md5';
 import { getUserBySignIn, createUserBySignup } from '../auth';
-import db from '@database/models';
+import { db } from '@server';
 
 describe('getUserBySign tests', () => {
   const email = 'rohansaroha2@wednesday.is';

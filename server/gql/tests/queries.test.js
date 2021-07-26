@@ -2,11 +2,17 @@ import get from 'lodash/get';
 import includes from 'lodash/includes';
 import pluralize from 'pluralize';
 import { graphql, GraphQLSchema } from 'graphql';
+import { createRootQuery } from '@gql/queries';
+import { createRootMutation } from '@gql/mutations';
 
-import { QueryRoot } from '../queries';
-import { MutationRoot } from '../mutations';
+let schema = null;
 
-const schema = new GraphQLSchema({ query: QueryRoot, mutation: MutationRoot });
+beforeAll(async () => {
+  const query = await createRootQuery();
+  const mutation = await createRootMutation();
+  schema = new GraphQLSchema({ query, mutation });
+});
+
 const allModels = ['address', 'product', 'purchasedProduct', 'storeProduct', 'store', 'supplierProduct', 'supplier'];
 
 allModels.forEach(model => allModels.push(pluralize(model)));

@@ -2,7 +2,7 @@ import { GraphQLID, GraphQLInt, GraphQLNonNull, GraphQLObjectType, GraphQLString
 import { getNode } from '@gql/node';
 import { createConnection } from 'graphql-sequelize';
 import { timestamps } from './timestamps';
-import db from '@database/models';
+import { db } from '@server';
 import { totalConnectionFields } from '@utils/index';
 
 const { nodeInterface } = getNode();

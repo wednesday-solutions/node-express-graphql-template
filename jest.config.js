@@ -13,6 +13,7 @@ module.exports = {
   testPathIgnorePatterns: ['<rootDir>/dist/'],
   moduleNameMapper: {
     'server(.*)$': '<rootDir>/server/$1',
+    '^@server(.*)$': '<rootDir>/server/$1',
     '@(database|gql|middleware|daos)(.*)$': '<rootDir>/server/$1/$2',
     '@(utils)(.*)$': '<rootDir>/server/$1/$2'
   }
