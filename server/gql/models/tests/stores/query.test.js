@@ -1,6 +1,6 @@
 import get from 'lodash/get';
 import { productsTable } from '@server/utils/testUtils/mockData';
-import { getResponse } from '@utils/testUtils';
+import { getResponse } from '@utils/testUtils/index';
 
 describe('store graphQL-server-DB query tests', () => {
   const id = '1';
