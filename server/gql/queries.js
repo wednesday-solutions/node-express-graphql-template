@@ -13,7 +13,7 @@ const { nodeField, nodeTypeMapper } = getNode();
 const getModelQueries = async dir => {
   const tables = {};
   const setQueries = createModelGetter({ append: 'Queries', tables });
-  const models = getFileNames(dir, GRAPHQL_MODEL_EXCLUDES);
+  const models = await getFileNames(dir, GRAPHQL_MODEL_EXCLUDES);
   const importModels = async (fileName, callback) => {
     const modelPath = `${'./models'}/${fileName}`;
     const model = await import(`${modelPath}`);
