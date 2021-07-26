@@ -36,7 +36,7 @@ describe('init', () => {
     jest.spyOn(mocks.app, 'use');
     await init();
     // check if the server has been started
-    expect(mocks.app.use.mock.calls.length).toBe(7);
+    expect(mocks.app.use.mock.calls.length).toBe(9);
     expect(mocks.app.use.mock.calls[0][0]).toEqual(expect.any(Function));
     expect(mocks.app.use.mock.calls[1][0]).toEqual('/graphql');
     expect(mocks.app.use.mock.calls[2][0]).toEqual('/');
