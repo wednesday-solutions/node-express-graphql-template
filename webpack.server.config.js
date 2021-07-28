@@ -5,7 +5,8 @@ const path = require('path');
 const webpack = require('webpack');
 const dotenv = require('dotenv');
 
-const dotEnvFile = process.env.ENVIRONMENT === 'production' ? `.env` : `.env.${process.env.ENVIRONMENT || 'local'}`;
+const dotEnvFile =
+  process.env.ENVIRONMENT_NAME === 'production' ? `.env` : `.env.${process.env.ENVIRONMENT_NAME || 'local'}`;
 
 console.log({ dotEnvFile });
 

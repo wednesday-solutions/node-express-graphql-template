@@ -1,5 +1,5 @@
 {
-  "exec": "export ENVIRONMENT=local && npm run local",
+  "exec": "export ENVIRONMENT_NAME=local && npm run local",
   "watch": ["server/*", "./public/*"],
   "ignore": ["**/__tests__/**", "*.test.js", "*.spec.js"],
   "events": {

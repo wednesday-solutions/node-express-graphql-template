@@ -14,7 +14,7 @@ const connect = async () => {
 connect();
 
 // configure environment variables
-dotenv.config({ path: `.env.${process.env.ENVIRONMENT}` });
+dotenv.config({ path: `.env.${process.env.ENVIRONMENT_NAME}` });
 
 // create the graphQL schema
 const schema = new GraphQLSchema({ query: QueryRoot, mutation: MutationRoot });
@@ -26,7 +26,7 @@ testApp.use(
     schema: schema,
     graphiql: false,
     customFormatErrorFn: e => {
-      if (process.env.ENVIRONMENT !== 'local') {
+      if (process.env.ENVIRONMENT_NAME !== 'local') {
         return e.message;
       }
       return e;

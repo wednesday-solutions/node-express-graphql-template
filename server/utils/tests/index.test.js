@@ -1,7 +1,7 @@
 import { addWhereClause, isTestEnv, totalConnectionFields } from '@utils/index';
 
 describe('isTestEnv', () => {
-  it("should return true if the ENVIRONMENT is 'test'", () => {
+  it("should return true if the ENVIRONMENT_NAME is 'test'", () => {
     expect(isTestEnv()).toBe(true);
   });
 });

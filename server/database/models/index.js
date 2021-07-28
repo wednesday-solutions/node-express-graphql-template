@@ -4,7 +4,7 @@ import { getClient } from '../index';
 
 export const db = {};
 
-dotenv.config({ path: `.env.${process.env.ENVIRONMENT}` });
+dotenv.config({ path: `.env.${process.env.ENVIRONMENT_NAME}` });
 
 const sequelize = getClient();
 

@@ -16,7 +16,7 @@ import authenticateToken from '@middleware/authenticate/index';
 let app;
 export const init = () => {
   // configure environment variables
-  dotenv.config({ path: `.env.${process.env.ENVIRONMENT}` });
+  dotenv.config({ path: `.env.${process.env.ENVIRONMENT_NAME}` });
 
   // connect to database
   connect();
@@ -30,7 +30,7 @@ export const init = () => {
 
   app.use(express.json());
   app.use(rTracer.expressMiddleware());
-  app.use(unless(authenticateToken, '/sign-in', '/sign-up'));
+  app.use(unless(authenticateToken, '/', '/sign-in', '/sign-up'));
   app.use(
     '/graphql',
     graphqlHTTP({

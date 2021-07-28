@@ -10,9 +10,9 @@ jest.doMock('@database/models', () => ({
   ...mockDBClient().models
 }));
 
-process.env.ENVIRONMENT = 'test';
+process.env.ENVIRONMENT_NAME = 'test';
 beforeEach(() => {
-  process.env = { ...process.env, ...DB_ENV, ENVIRONMENT: 'test' };
+  process.env = { ...process.env, ...DB_ENV, ENVIRONMENT_NAME: 'test' };
 });
 afterEach(() => {
   jest.clearAllMocks();

@@ -4,7 +4,7 @@ import { createLogger, format, transports } from 'winston';
 import rTracer from 'cls-rtracer';
 
 const { combine, timestamp, printf } = format;
-export const isTestEnv = () => process.env.ENVIRONMENT === 'test';
+export const isTestEnv = () => process.env.ENVIRONMENT_NAME === 'test';
 
 export const addWhereClause = (where, clause) => {
   if (isEmpty(where)) {
