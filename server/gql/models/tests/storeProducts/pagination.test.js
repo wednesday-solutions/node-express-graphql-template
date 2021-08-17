@@ -5,7 +5,7 @@ import { getResponse } from '@utils/testUtils';
 describe('StoresProducts graphQL-server-DB pagination tests', () => {
   const storeProductsQuery = `
   query {
-    storeProducts (first: 1){
+    storeProducts (first: 1, limit: 1, offset: 0){
       edges {
         node {
           id

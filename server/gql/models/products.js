@@ -5,6 +5,7 @@ import { SupplierConnection } from './suppliers';
 import { storeQueries } from './stores';
 import { timestamps } from './timestamps';
 import db from '@database/models';
+import { sequelizedWhere } from '@database/dbUtils';
 import { totalConnectionFields } from '@utils/index';
 
 const { nodeInterface } = getNode();
@@ -87,6 +88,7 @@ export const ProductConnection = createConnection({
         }
       });
     }
+    findOptions.where = sequelizedWhere(findOptions.where, args.where);
     return findOptions;
   },
   ...totalConnectionFields

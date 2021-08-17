@@ -30,7 +30,7 @@
     "lint:staged": "lint-staged",
     "prettify": "prettier --write",
     "precommit": "lint:staged",
-    "test": "jest --coverage --detectOpenHandles"
+    "test": "jest --coverage --forceExit --detectOpenHandles"
   },
   "dependencies": {
     "@babel/cli": "^7.14.5",
@@ -44,6 +44,7 @@
     "babel-eslint": "^10.1.0",
     "cls-rtracer": "^2.6.0",
     "crypto": "^1.0.1",
+    "deep-map-keys": "^2.0.1",
     "dotenv": "^10.0.0",
     "eslint-loader": "^4.0.2",
     "express": "^4.17.1",
@@ -52,7 +53,7 @@
     "graphql": "^15.5.1",
     "graphql-iso-date": "^3.6.1",
     "graphql-relay": "^0.8.0",
-    "graphql-sequelize": "^9.4.3",
+    "graphql-sequelize": "https://github.com/wednesday-solutions/graphql-sequelize#master",
     "html-webpack-plugin": "^4.5.0",
     "http": "^0.0.1-security",
     "jsonwebtoken": "^8.5.1",
@@ -67,9 +68,9 @@
     "pg-hstore": "^2.3.4",
     "pg-native": "^3.0.0",
     "pluralize": "^8.0.0",
-    "postgraphile": "^4.12.3",
     "postgres": "^1.0.2",
     "sequelize": "^6.6.5",
+    "source-map-support": "^0.5.19",
     "sqlite3": "^5.0.2",
     "stream": "^0.0.2",
     "superagent": "^6.1.0",

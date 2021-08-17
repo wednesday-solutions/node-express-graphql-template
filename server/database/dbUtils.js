@@ -1,4 +1,16 @@
 import { GraphQLNonNull, GraphQLInt, GraphQLObjectType } from 'graphql';
+import { Op } from 'sequelize';
+import deepMapKeys from 'deep-map-keys';
+
+export const sequelizedWhere = (currentWhere = {}, where = {}) => {
+  where = deepMapKeys(where, k => {
+    if (Op[k]) {
+      return Op[k];
+    }
+    return k;
+  });
+  return { ...currentWhere, ...where };
+};
 export const updateUsingId = async (model, args) => {
   let affectedRows;
   try {

@@ -6,6 +6,7 @@ import { GraphQLDateTime } from 'graphql-iso-date';
 import { getNode } from '@gql/node';
 import db from '@database/models';
 import { totalConnectionFields } from '@utils/index';
+import { sequelizedWhere } from '@database/dbUtils';
 
 const { nodeInterface } = getNode();
 
@@ -32,7 +33,11 @@ const PurchasedProduct = new GraphQLObjectType({
 const PurchasedProductConnection = createConnection({
   name: 'purchasedProducts',
   target: db.purchasedProducts,
-
+  before: (findOptions, args, context) => {
+    findOptions.include = findOptions.include || [];
+    findOptions.where = sequelizedWhere(findOptions.where, args.where);
+    return findOptions;
+  },
   nodeType: PurchasedProduct,
   ...totalConnectionFields
 });
