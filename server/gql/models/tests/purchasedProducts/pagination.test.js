@@ -5,7 +5,7 @@ import { getResponse, resetAndMockDB } from '@utils/testUtils';
 describe('PurchasedProducts graphQL-server-DB pagination tests', () => {
   const purchasedProductsQuery = `
   query {
-    purchasedProducts (first: 1){
+    purchasedProducts (first: 1, limit: 1, offset: 0){
       edges {
         node {
           id

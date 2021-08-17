@@ -5,7 +5,7 @@ import { getResponse } from '@utils/testUtils';
 describe('Stores graphQL-server-DB pagination tests', () => {
   const storesQuery = `
   query {
-    stores (first: 1){
+    stores (first: 1, limit: 1, offset: 0){
       edges {
         node {
           id
@@ -75,6 +75,8 @@ describe('Stores graphQL-server-DB pagination tests', () => {
       const result = get(response, 'body.data.stores.pageInfo');
       expect(result).toEqual(
         expect.objectContaining({
+          startCursor: 'W251bGwsMF0=',
+          endCursor: 'W251bGwsMF0=',
           hasNextPage: true,
           hasPreviousPage: false
         })

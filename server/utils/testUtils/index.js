@@ -37,7 +37,7 @@ export const getResponse = async (query, app) => {
     .set('Accept', 'application/json');
 };
 
-export function mockDBClient(config = {}) {
+export function mockDBClient(config = { total: 10 }) {
   const SequelizeMock = require('sequelize-mock');
   // Setup the mock database connection
   const dbConnectionMock = new SequelizeMock();

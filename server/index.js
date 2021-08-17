@@ -13,6 +13,7 @@ import { signUpRoute, signInRoute } from '@server/auth';
 import cluster from 'cluster';
 import os from 'os';
 import authenticateToken from '@middleware/authenticate/index';
+import 'source-map-support/register';
 
 const totalCPUs = os.cpus().length;
 
@@ -78,7 +79,7 @@ export const init = () => {
 
 logger().info({ ENV: process.env.NODE_ENV });
 
-if (cluster.isMaster) {
+if (!isTestEnv() && cluster.isMaster) {
   console.log(`Number of CPUs is ${totalCPUs}`);
   console.log(`Master ${process.pid} is running`);
 

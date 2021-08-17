@@ -5,7 +5,7 @@ import { addressesTable } from '@server/utils/testUtils/mockData';
 describe('Address graphQL-server-DB mutation tests', () => {
   const addressesQuery = `
   query {
-    addresses (first: 1){
+    addresses (first: 1, limit: 1, offset: 0){
       edges {
         node {
           id
