@@ -42,7 +42,12 @@ export const addQueries = () => {
     };
     query[pluralize(camelCase(table))] = {
       ...DB_TABLES[table].list,
-      args: { ...DB_TABLES[table].list?.args, ...defaultListArgs(DB_TABLES[table].model) }
+      args: {
+        ...DB_TABLES[table].list?.args,
+        ...defaultListArgs(DB_TABLES[table].model),
+        limit: { type: GraphQLNonNull(GraphQLInt) },
+        offset: { type: GraphQLNonNull(GraphQLInt) }
+      }
     };
   });
   return query;

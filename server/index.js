@@ -10,8 +10,11 @@ import { QueryRoot } from '@gql/queries';
 import { MutationRoot } from '@gql/mutations';
 import { isTestEnv, logger, unless } from '@utils/index';
 import { signUpRoute, signInRoute } from '@server/auth';
-
+import cluster from 'cluster';
+import os from 'os';
 import authenticateToken from '@middleware/authenticate/index';
+
+const totalCPUs = os.cpus().length;
 
 let app;
 export const init = () => {
@@ -75,6 +78,22 @@ export const init = () => {
 
 logger().info({ ENV: process.env.NODE_ENV });
 
-init();
+if (cluster.isMaster) {
+  console.log(`Number of CPUs is ${totalCPUs}`);
+  console.log(`Master ${process.pid} is running`);
+
+  // Fork workers.
+  for (let i = 0; i < totalCPUs; i++) {
+    cluster.fork();
+  }
+
+  cluster.on('exit', (worker, code, signal) => {
+    console.log(`worker ${worker.process.pid} died`);
+    console.log("Let's fork another worker!");
+    cluster.fork();
+  });
+} else {
+  init();
+}
 
 export { app };

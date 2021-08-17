@@ -4007,6 +4007,14 @@ deep-is@^0.1.3, deep-is@~0.1.3:
   resolved "https://registry.yarnpkg.com/deep-is/-/deep-is-0.1.3.tgz#b369d6fb5dbc13eecf524f91b070feedc357cf34"
   integrity sha1-s2nW+128E+7PUk+RsHD+7cNXzzQ=
 
+deep-map-keys@^2.0.1:
+  version "2.0.1"
+  resolved "https://registry.yarnpkg.com/deep-map-keys/-/deep-map-keys-2.0.1.tgz#a61d6bf1dee01de732d6ca6667ed27303580d7b3"
+  integrity sha512-hvsUEzDow++fTMwM2f2S7ttG39Y20mprBGwsydPpgmHwPQGwG10KJW44JgYVImJtXlDY983jIiqU9W2+DS2yzg==
+  dependencies:
+    es6-weak-map "^2.0.1"
+    lodash "^4.13.1"
+
 defer-to-connect@^1.0.1:
   version "1.1.3"
   resolved "https://registry.yarnpkg.com/defer-to-connect/-/defer-to-connect-1.1.3.tgz#331ae050c08dcf789f8c83a7b81f0ed94f4ac591"
@@ -4381,7 +4389,7 @@ es6-symbol@^3.1.1, es6-symbol@~3.1.3:
     d "^1.0.1"
     ext "^1.1.2"
 
-es6-weak-map@^2.0.2:
+es6-weak-map@^2.0.1, es6-weak-map@^2.0.2:
   version "2.0.3"
   resolved "https://registry.yarnpkg.com/es6-weak-map/-/es6-weak-map-2.0.3.tgz#b6da1f16cc2cc0d9be43e6bdbfc5e7dfcdf31d53"
   integrity sha512-p5um32HOTO1kP+w7PRnB+5lQ43Z6muuMuIMffvDN8ZB4GcnjLBV6zGStpbASIMk4DCAvEaamhe2zhyCb/QXXsA==
@@ -5361,10 +5369,9 @@ graphql-relay@^0.8.0:
   resolved "https://registry.yarnpkg.com/graphql-relay/-/graphql-relay-0.8.0.tgz#35f0090f0f056192767c1acdaa402daed19ede6d"
   integrity sha512-NU7CkwNxPzkqpBgv76Cgycrc3wmWVA2K5Sxm9DHSSLLuQTpaSRAUsX1sf2gITf+XQpkccsv56/z0LojXTyQbUw==
 
-graphql-sequelize@^9.4.3:
+"graphql-sequelize@https://github.com/wednesday-solutions/graphql-sequelize#master":
   version "9.4.3"
-  resolved "https://registry.yarnpkg.com/graphql-sequelize/-/graphql-sequelize-9.4.3.tgz#5fe1f91827ffdcf2076ed7db09667709c2c18ccd"
-  integrity sha512-4Ad3FJgZz05aIIJs+MeGyDEG+VY1DtNW5q8VoP2ZPV0ZDt/q1/Cssskam9AvVaQAyqNmfmB2+BFH6ydfoTiAnQ==
+  resolved "https://github.com/wednesday-solutions/graphql-sequelize#8ac464b9cf398376376b6c234c011dc122650bb5"
   dependencies:
     bluebird "^3.4.0"
     invariant "2.2.1"
@@ -7103,7 +7110,7 @@ lodash.truncate@^4.4.2:
   resolved "https://registry.yarnpkg.com/lodash/-/lodash-4.17.20.tgz#b44a9b6297bcb698f1c51a3545a2b3b368d59c52"
   integrity sha512-PlhdFcillOINfeV7Ni6oF1TAEayyZBoZ8bcshTHqOYJYlrqzRK5hagpagky5o4HfCzzd1TRkXPMFq6cKk9rGmA==
 
-lodash@^4.17.21:
+lodash@^4.13.1, lodash@^4.17.21:
   version "4.17.21"
   resolved "https://registry.yarnpkg.com/lodash/-/lodash-4.17.21.tgz#679591c564c3bffaae8454cf0b3df370c3d6911c"
   integrity sha512-v2kDEe57lecTulaDIuNTPy3Ry4gLGJ6Z1O3vE1krgXZNrsQ+LFTGHVxVjcXPs17LhbZVGedAJv8XZ1tvj5FvSg==

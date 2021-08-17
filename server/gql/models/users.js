@@ -4,6 +4,7 @@ import { createConnection } from 'graphql-sequelize';
 import { timestamps } from './timestamps';
 import db from '@database/models';
 import { totalConnectionFields } from '@utils/index';
+import { sequelizedWhere } from '@database/dbUtils';
 
 const { nodeInterface } = getNode();
 
@@ -27,6 +28,11 @@ const UserConnection = createConnection({
   name: 'users',
   target: db.users,
   nodeType: User,
+  before: (findOptions, args, context) => {
+    findOptions.include = findOptions.include || [];
+    findOptions.where = sequelizedWhere(findOptions.where, args.where);
+    return findOptions;
+  },
   ...totalConnectionFields
 });
 
