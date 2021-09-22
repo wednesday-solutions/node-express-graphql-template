@@ -21,5 +21,9 @@ jobs:
         run: yarn lint
       - name: Build
         run: yarn build:local
-      - name: Test
-        run: yarn test
+      - name: Test and generate coverage report
+        uses: artiomtr/jest-coverage-report-action@v2.0-rc.1
+        with:
+          github-token: ${{ secrets.GITHUB_TOKEN }}
+          threshold: 80
+          package-manager: yarn
