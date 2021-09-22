@@ -1,7 +1,6 @@
 name: Node Express GraphQL Template CI
 
 on:
-  push:
   pull_request:
     branches: [develop]
 
