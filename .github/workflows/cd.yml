@@ -1,0 +1,74 @@
+name: Node Express GraphQL Template CD
+
+on:
+  push:
+    branches:
+      - develop
+
+jobs:
+  # docker-build-push-deploy:
+  # name: Docker build, push and deploy
+  # runs-on: ubuntu-latest
+  # steps:
+  #   - name: Checkout
+  #     uses: actions/checkout@v2
+  #   - name: Get branch name
+  #     id: vars
+  #     run: echo ::set-output name=stage::${GITHUB_REF#refs/*/}
+  #   - name: Configure AWS credentials
+  #     uses: aws-actions/configure-aws-credentials@v1
+  #     with:
+  #       aws-access-key-id: ${{ secrets.AWS_ACCESS_KEY_ID }}
+  #       aws-secret-access-key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
+  #       aws-region: ${{ secrets.AWS_REGION }}
+  #   - name: Login to Amazon ECR
+  #     id: login-ecr
+  #     uses: aws-actions/amazon-ecr-login@v1
+
+  #   - name: Build, tag, and push image to Amazon ECR
+  #     env:
+  #       ECR_REGISTRY: ${{ steps.login-ecr.outputs.registry }}
+  #       ECR_REPOSITORY: ${{ secrets.AWS_ECR_REPOSITORY }}-${{steps.vars.outputs.stage}}
+  #       AWS_REGION: ${{ secrets.AWS_REGION }}
+  #       IMAGE_TAG: ${{ github.sha }}
+  #     run: |
+  #       docker build -t $ECR_REGISTRY/$ECR_REPOSITORY:$IMAGE_TAG .
+  #       docker push $ECR_REGISTRY/$ECR_REPOSITORY:$IMAGE_TAG3
+  #   - name: Render Amazon ECS task definition
+  #     id: ecs-cd-starter-container
+  #     uses: aws-actions/amazon-ecs-render-task-definition@v1
+  #     with:
+  #       task-definition: task-definition/${{steps.vars.outputs.stage}}.json #1
+  #       container-name: ecs-cd-starter-${{steps.vars.outputs.stage}} #2
+  #       image: ${{ steps.login-ecr.outputs.registry }}/${{ secrets.AWS_ECR_REPOSITORY }}-${{steps.vars.outputs.stage}}:${{ github.sha }}
+  #   - name: Deploy to Amazon ECS service
+  #     uses: aws-actions/amazon-ecs-deploy-task-definition@v1
+  #     with:
+  #       task-definition: ${{ steps.pawlyclinic-api-container.outputs.task-definition }}
+  #       service: ecs-cd-starter-${{ steps.vars.outputs.stage }}
+  #       cluster: ecs-cd-starter-${{ steps.vars.outputs.stage }}
+  #   - name: Logout of Amazon ECR
+  #     if: always()
+  #     run: docker logout ${{ steps.login-ecr.outputs.registry }}
+
+  create_badges:
+    name: Create Badges
+    runs-on: ubuntu-latest
+    strategy:
+      matrix:
+        node-version: [14.x]
+    steps:
+      - name: Create badges
+        run: yarn run test:badges
+      - name: Commit badges
+        uses: EndBug/add-and-commit@v7
+        with:
+          author_name: Gitflow
+          author_email: git@wednesday.is
+          message: 'Update badges'
+          add: 'badges/'
+      - name: Push changes
+        uses: ad-m/github-push-action@master
+        with:
+          github_token: ${{ secrets.GITHUB_TOKEN }}
+          branch: ${{ github.ref }}
