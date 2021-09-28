@@ -27,7 +27,7 @@ describe('store_product graphQL-server-DB query tests', () => {
   }
   `;
 
-  it('should request for stores and products related to the storeProducts', async done => {
+  it('should request for stores and products related to the storeProducts', async () => {
     const dbClient = mockDBClient();
     resetAndMockDB(null, {}, dbClient);
 
@@ -48,7 +48,6 @@ describe('store_product graphQL-server-DB query tests', () => {
       expect(dbClient.models.products.findAll.mock.calls.length).toBe(1);
       expect(dbClient.models.products.findAll.mock.calls[0][0].include[0].where).toEqual({ productId: id });
       expect(dbClient.models.products.findAll.mock.calls[0][0].include[0].model.name).toEqual('store_products');
-      done();
     });
   });
 });

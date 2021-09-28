@@ -55,12 +55,11 @@ describe('init', () => {
   });
 });
 describe('TestApp: Server', () => {
-  it('should respond to /graphql', async done => {
+  it('should respond to /graphql', async () => {
     resetAndMockDB();
     await getResponse(query).then(response => {
       expect(response.statusCode).toBe(200);
       expect(response.body.data.__schema.queryType.fields[0].name).toBeTruthy();
-      done();
     });
   });
 });

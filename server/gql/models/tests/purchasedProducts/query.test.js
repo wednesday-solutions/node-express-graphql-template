@@ -20,7 +20,7 @@ describe('purchased_product graphQL-server-DB query tests', () => {
   }
   `;
 
-  it('should request for products related to the purchasedProducts', async done => {
+  it('should request for products related to the purchasedProducts', async () => {
     const dbClient = mockDBClient();
     resetAndMockDB(null, {}, dbClient);
 
@@ -35,7 +35,6 @@ describe('purchased_product graphQL-server-DB query tests', () => {
       expect(dbClient.models.products.findAll.mock.calls[0][0].include[0].where).toEqual({ id });
       // check if the included model has name: purchased_products
       expect(dbClient.models.products.findAll.mock.calls[0][0].include[0].model.name).toEqual('purchased_products');
-      done();
     });
   });
 });

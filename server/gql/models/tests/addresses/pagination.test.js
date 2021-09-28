@@ -38,7 +38,7 @@ describe('Address graphQL-server-DB mutation tests', () => {
   }
 `;
 
-  it('should have a query to get the addresses', async done => {
+  it('should have a query to get the addresses', async () => {
     resetAndMockDB(null, {});
     await getResponse(addressesQuery).then(response => {
       const result = get(response, 'body.data.addresses.edges[0].node');
@@ -50,9 +50,8 @@ describe('Address graphQL-server-DB mutation tests', () => {
         })
       );
     });
-    done();
   });
-  it('should have the correct pageInfo', async done => {
+  it('should have the correct pageInfo', async () => {
     await getResponse(addressesQuery).then(response => {
       const result = get(response, 'body.data.addresses.pageInfo');
       expect(result).toEqual(
@@ -61,7 +60,6 @@ describe('Address graphQL-server-DB mutation tests', () => {
           hasPreviousPage: false
         })
       );
-      done();
     });
   });
 });

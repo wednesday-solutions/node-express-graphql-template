@@ -38,7 +38,7 @@ describe('Stores graphQL-server-DB pagination tests', () => {
   }
 `;
 
-  it('should have a query to get the Stores', async done => {
+  it('should have a query to get the Stores', async () => {
     const mockDBClient = require('@database');
     const client = mockDBClient.client;
     client.$queueQueryResult([
@@ -57,11 +57,10 @@ describe('Stores graphQL-server-DB pagination tests', () => {
           addressId: storesTable[0].addressId
         })
       );
-      done();
     });
   });
 
-  it('should have the correct pageInfo', async done => {
+  it('should have the correct pageInfo', async () => {
     const mockDBClient = require('@database');
     const client = mockDBClient.client;
     client.$queueQueryResult([
@@ -81,7 +80,6 @@ describe('Stores graphQL-server-DB pagination tests', () => {
           hasPreviousPage: false
         })
       );
-      done();
     });
   });
 });

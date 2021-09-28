@@ -31,7 +31,7 @@ describe('PurchasedProducts graphQL-server-DB pagination tests', () => {
   }
 `;
 
-  it('should have a query to get the products', async done => {
+  it('should have a query to get the products', async () => {
     resetAndMockDB();
     await getResponse(purchasedProductsQuery).then(response => {
       const result = get(response, 'body.data.purchasedProducts.edges[0].node');
@@ -42,11 +42,10 @@ describe('PurchasedProducts graphQL-server-DB pagination tests', () => {
           discount: Math.floor(purchasedProductsTable[0].discount)
         })
       );
-      done();
     });
   });
 
-  it('should have the correct pageInfo', async done => {
+  it('should have the correct pageInfo', async () => {
     resetAndMockDB();
     await getResponse(purchasedProductsQuery).then(response => {
       const result = get(response, 'body.data.purchasedProducts.pageInfo');
@@ -56,7 +55,6 @@ describe('PurchasedProducts graphQL-server-DB pagination tests', () => {
           hasPreviousPage: false
         })
       );
-      done();
     });
   });
 });

@@ -38,7 +38,7 @@ describe('Supplier Products graphQL-server-DB pagination tests', () => {
   }
 `;
 
-  it('should have a query to get the storeProducts', async done => {
+  it('should have a query to get the storeProducts', async () => {
     await getResponse(supplierProductsQuery).then(response => {
       const result = get(response, 'body.data.supplierProducts.edges[0].node');
       expect(result).toEqual(
@@ -48,11 +48,10 @@ describe('Supplier Products graphQL-server-DB pagination tests', () => {
           supplierId: supplierProductsTable[0].supplierId
         })
       );
-      done();
     });
   });
 
-  it('should have the correct pageInfo', async done => {
+  it('should have the correct pageInfo', async () => {
     await getResponse(supplierProductsQuery).then(response => {
       const result = get(response, 'body.data.supplierProducts.pageInfo');
       expect(result).toEqual(
@@ -61,7 +60,6 @@ describe('Supplier Products graphQL-server-DB pagination tests', () => {
           hasPreviousPage: false
         })
       );
-      done();
     });
   });
 });
