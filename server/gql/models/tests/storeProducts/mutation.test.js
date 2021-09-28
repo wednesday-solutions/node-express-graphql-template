@@ -18,7 +18,7 @@ describe('store_products graphQL-server-DB mutation tests', () => {
     }
   `;
 
-  it('should have a mutation to create a new store product', async done => {
+  it('should have a mutation to create a new store product', async () => {
     await getResponse(createStoreProductMut).then(response => {
       const result = get(response, 'body.data.createStoreProduct');
       expect(result).toMatchObject({
@@ -26,7 +26,6 @@ describe('store_products graphQL-server-DB mutation tests', () => {
         productId: 1,
         storeId: 1
       });
-      done();
     });
   });
 
@@ -40,7 +39,7 @@ describe('store_products graphQL-server-DB mutation tests', () => {
   }
 `;
 
-  it('should have a mutation to delete a store product', async done => {
+  it('should have a mutation to delete a store product', async () => {
     await getResponse(deleteStoreProductMut).then(response => {
       const result = get(response, 'body.data.deleteStoreProduct');
       expect(result).toEqual(
@@ -48,7 +47,6 @@ describe('store_products graphQL-server-DB mutation tests', () => {
           id: 1
         })
       );
-      done();
     });
   });
 });

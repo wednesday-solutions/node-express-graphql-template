@@ -14,5 +14,13 @@
   "moduleNameMapper": {
     "server(.*)$": "<rootDir>/server/$1",
     "@(database|gql|middleware|daos|utils)(.*)$": "<rootDir>/server/$1/$2"
+  },
+  "coverageThreshold": {
+    "global": {
+      "statements": 82,
+      "branches": 82,
+      "functions": 82,
+      "lines": 82
+    }
   }
 }
