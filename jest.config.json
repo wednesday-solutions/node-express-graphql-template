@@ -10,6 +10,7 @@
     "!**/server/utils/configureEnv.js",
     "!**server/middleware/logger/index.js"
   ],
+  "coverageReporters": ["json-summary", "text", "lcov"],
   "testPathIgnorePatterns": ["<rootDir>/dist/"],
   "moduleNameMapper": {
     "server(.*)$": "<rootDir>/server/$1",
