@@ -13,8 +13,7 @@
 An enterprise Express GraphQL template application built using nodejs showcasing - Testing Strategy, DB migrations and seeding, integration with an ORM, containerization using Docker, GraphQL Interface, support for GraphQL relay, integration with graphql-sequelize, support for aggregation queries, PostgreSQL
   </p>
 
-  ___
-
+---
 
   <p>
     <h4>
@@ -31,14 +30,25 @@ An enterprise Express GraphQL template application built using nodejs showcasing
     </a>
   </div>
 
-  ___
+---
 
-  <span>We’re always looking for people who value their work, so come and join us. <a href="https://www.wednesday.is/hiring">We are hiring!</a></span>
+<span>We’re always looking for people who value their work, so come and join us. <a href="https://www.wednesday.is/hiring">We are hiring!</a></span>
+
 </div>
 
 ![Node Express GraphQL Template CI](https://github.com/wednesday-solutions/node-express-graphql-template/workflows/Node%20Express%20GraphQL%20Template%20CI/badge.svg)
 
+<div>
+<img src='./badges/badge-statements.svg' height="20"/>
+<img src='./badges/badge-branches.svg' height="20"/>
+</div>
+<div>
+<img src='./badges/badge-lines.svg'  height="20"/>
+<img src='./badges/badge-functions.svg' height="20"/>
+</div>
+
 ## A relay compliant server built using
+
 - Node
 - Express
 - Postgres
@@ -49,13 +59,13 @@ An enterprise Express GraphQL template application built using nodejs showcasing
 
 ### graphql-sequelize
 
-Please go through the [documentation](https://github.com/mickhansen/graphql-sequelize) to understand the control flow.  
+Please go through the [documentation](https://github.com/mickhansen/graphql-sequelize) to understand the control flow.
 
-Relay support has been added by following [this](https://github.com/mickhansen/graphql-sequelize/blob/master/docs/relay.md) documentation 
+Relay support has been added by following [this](https://github.com/mickhansen/graphql-sequelize/blob/master/docs/relay.md) documentation
 
 ## Setup
 
-### Setup and run locally using 
+### Setup and run locally using
 
 ```
 ./setup-local.sh
@@ -92,4 +102,3 @@ yarn prod
 ```
 yarn build
 ```
-
