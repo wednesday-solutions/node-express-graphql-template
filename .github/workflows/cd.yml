@@ -1,0 +1,29 @@
+name: Node Express GraphQL Template CD
+
+on:
+  push:
+    branches:
+      - develop
+
+jobs:
+  create_badges:
+    name: Create Badges
+    runs-on: ubuntu-latest
+    strategy:
+      matrix:
+        node-version: [14.x]
+    steps:
+      - name: Create badges
+        run: yarn run test:badges
+      - name: Commit badges
+        uses: EndBug/add-and-commit@v7
+        with:
+          author_name: Gitflow
+          author_email: git@wednesday.is
+          message: 'Update badges'
+          add: 'badges/'
+      - name: Push changes
+        uses: ad-m/github-push-action@master
+        with:
+          github_token: ${{ secrets.GITHUB_TOKEN }}
+          branch: ${{ github.ref }}

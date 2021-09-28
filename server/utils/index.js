@@ -27,7 +27,9 @@ export const totalConnectionFields = {
 export const logger = () => {
   const rTracerFormat = printf(info => {
     const rid = rTracer.id();
-    return rid ? `${info.timestamp} [request-id:${rid}]: ${info.message}` : `${info.timestamp}: ${info.message}`;
+    return rid
+      ? `${info.timestamp} [request-id:${rid}]: ${JSON.stringify(info.message)}`
+      : `${info.timestamp}: ${JSON.stringify(info.message)}`;
   });
   return createLogger({
     format: combine(timestamp(), rTracerFormat),
