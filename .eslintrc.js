@@ -22,7 +22,6 @@ module.exports = {
     curly: ['error', 'all'],
     'key-spacing': [2, { beforeColon: false, afterColon: true }],
     'arrow-parens': ['error', 'as-needed'],
-    'prettier/prettier': ['error', prettierOptions],
     'arrow-body-style': [2, 'as-needed'],
     'class-methods-use-this': 0,
     'import/imports-first': 0,
@@ -36,11 +35,12 @@ module.exports = {
     'max-len': 0,
     'newline-per-chained-call': 0,
     'no-confusing-arrow': 0,
-    'no-console': 1,
+    'max-lines': ['error', { max: 300, skipBlankLines: true, skipComments: true }],
     'no-unused-vars': 2,
     'no-use-before-define': 0,
     'prefer-template': 2,
-    'require-yield': 0
+    'require-yield': 0,
+    'prettier/prettier': ['error', prettierOptions]
   },
   settings: {
     'import/resolver': {
