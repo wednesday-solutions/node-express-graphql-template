@@ -20,7 +20,8 @@ import 'source-map-support/register';
 const totalCPUs = os.cpus().length;
 
 let app;
-const fetchFromGithub = async query => axios.get(`https://api.github.com/search/repositories?q=${query}&per_page=2`);
+export const fetchFromGithub = async query =>
+  axios.get(`https://api.github.com/search/repositories?q=${query}&per_page=2`);
 const githubBreaker = newCircuitBreaker(fetchFromGithub, 'Github API is down');
 export const init = () => {
   // configure environment variables
@@ -71,7 +72,6 @@ export const init = () => {
   createBodyParsedRoutes([
     signUpRoute,
     signInRoute,
-
     {
       path: '/github',
       method: 'get',
