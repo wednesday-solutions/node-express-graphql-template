@@ -3,12 +3,14 @@ import { graphqlHTTP } from 'express-graphql';
 import { GraphQLSchema } from 'graphql';
 import dotenv from 'dotenv';
 import multer from 'multer';
+import axios from 'axios';
+import { newCircuitBreaker } from '@services/circuitbreaker';
 import rTracer from 'cls-rtracer';
 import bodyParser from 'body-parser';
 import { connect } from '@database';
 import { QueryRoot } from '@gql/queries';
 import { MutationRoot } from '@gql/mutations';
-import { isTestEnv, logger, unless } from '@utils/index';
+import { isLocalEnv, isTestEnv, logger, unless } from '@utils/index';
 import { signUpRoute, signInRoute } from '@server/auth';
 import cluster from 'cluster';
 import os from 'os';
@@ -18,6 +20,9 @@ import 'source-map-support/register';
 const totalCPUs = os.cpus().length;
 
 let app;
+export const fetchFromGithub = async query =>
+  axios.get(`https://api.github.com/search/repositories?q=${query}&per_page=2`);
+const githubBreaker = newCircuitBreaker(fetchFromGithub, 'Github API is down');
 export const init = () => {
   // configure environment variables
   dotenv.config({ path: `.env.${process.env.ENVIRONMENT_NAME}` });
@@ -64,13 +69,29 @@ export const init = () => {
       console.error(error);
     }
   };
-  createBodyParsedRoutes([signUpRoute, signInRoute]);
+  createBodyParsedRoutes([
+    signUpRoute,
+    signInRoute,
+    {
+      path: '/github',
+      method: 'get',
+      handler: async (req, res) => {
+        const response = await githubBreaker.fire(req.query.repo);
+        if (response.data) {
+          return res.json({ data: response.data });
+        } else {
+          return res.status(424).json({ error: response });
+        }
+      }
+    }
+  ]);
 
   app.use('/', (req, res) => {
     const message = 'Service up and running!';
     logger().info(message);
     res.json(message);
   });
+
   /* istanbul ignore next */
   if (!isTestEnv()) {
     app.listen(9000);
@@ -79,7 +100,7 @@ export const init = () => {
 
 logger().info({ ENV: process.env.NODE_ENV });
 
-if (!isTestEnv() && cluster.isMaster) {
+if (!isTestEnv() && !isLocalEnv() && cluster.isMaster) {
   console.log(`Number of CPUs is ${totalCPUs}`);
   console.log(`Master ${process.pid} is running`);
 

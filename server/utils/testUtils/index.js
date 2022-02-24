@@ -26,6 +26,15 @@ const defineAndAddAttributes = (connection, name, mock, attr, total = 10) => {
   return mockTable;
 };
 
+export const restfulGetResponse = async (path, app) => {
+  if (!app) {
+    app = await require('@server/utils/testUtils/testApp').testApp;
+  }
+  return await request(app)
+    .get(path)
+    .set('Accept', 'application/json');
+};
+
 export const getResponse = async (query, app) => {
   if (!app) {
     app = await require('@server/utils/testUtils/testApp').testApp;

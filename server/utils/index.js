@@ -4,7 +4,8 @@ import { createLogger, format, transports } from 'winston';
 import rTracer from 'cls-rtracer';
 
 const { combine, timestamp, printf } = format;
-export const isTestEnv = () => process.env.ENVIRONMENT_NAME === 'test';
+export const isTestEnv = () => process.env.ENVIRONMENT_NAME === 'test' || process.env.NODE_ENV === 'test';
+export const isLocalEnv = () => process.env.ENVIRONMENT_NAME === 'local';
 
 export const addWhereClause = (where, clause) => {
   if (isEmpty(where)) {
@@ -24,12 +25,24 @@ export const totalConnectionFields = {
   }
 };
 
+export const stringifyWithCheck = message => {
+  try {
+    return JSON.stringify(message);
+  } catch (err) {
+    if (message.data) {
+      return stringifyWithCheck(message.data);
+    } else {
+      console.log(message);
+      return `unable to unfurl message: ${message}`;
+    }
+  }
+};
 export const logger = () => {
   const rTracerFormat = printf(info => {
     const rid = rTracer.id();
     return rid
-      ? `${info.timestamp} [request-id:${rid}]: ${JSON.stringify(info.message)}`
-      : `${info.timestamp}: ${JSON.stringify(info.message)}`;
+      ? `${info.timestamp} [request-id:${rid}]: ${stringifyWithCheck(info.message)}`
+      : `${info.timestamp}: ${stringifyWithCheck(info.message)}`;
   });
   return createLogger({
     format: combine(timestamp(), rTracerFormat),

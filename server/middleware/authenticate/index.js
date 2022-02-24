@@ -1,7 +1,12 @@
-const jwt = require('jsonwebtoken');
+import { isLocalEnv } from '@utils';
+import jwt from 'jsonwebtoken';
 require('dotenv').config();
 
 export default function authenticateToken(req, res, next) {
+  if (isLocalEnv()) {
+    next();
+    return;
+  }
   const authHeader = req.headers.authorization;
   const token = authHeader && authHeader.split(' ')[1];
   if (!token) {

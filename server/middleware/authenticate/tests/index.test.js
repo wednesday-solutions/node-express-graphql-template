@@ -29,4 +29,15 @@ describe('authentication tests', () => {
     authenticateToken(req, res, next);
     expect(res.json).toBeCalledWith(401, { errors: ['Token not found!'] });
   });
+
+  it('should by-pass auth when the ENVIRONMENT_NAME=local', async () => {
+    process.env.ENVIRONMENT_NAME = 'local';
+    const res = {
+      json: jest.fn()
+    };
+
+    authenticateToken(req, res, next);
+    expect(res.json).not.toBeCalled();
+    expect(next).toBeCalled();
+  });
 });

@@ -27,6 +27,7 @@ module.exports = (options = {}) => ({
   mode: options.mode,
   entry: options.entry,
   optimization: options.optimization,
+  devtool: 'source-map',
   module: {
     rules: [
       {
@@ -120,6 +121,7 @@ module.exports = (options = {}) => ({
       '@server': path.resolve(__dirname, './server'),
       '@utils': path.resolve(__dirname, './server/utils'),
       '@middleware': path.resolve(__dirname, './server/middleware'),
+      '@services': path.resolve(__dirname, './server/services'),
       '@daos': path.resolve(__dirname, './server/daos'),
       '@database': path.resolve(__dirname, './server/database'),
       '@gql': path.resolve(__dirname, './server/gql'),
