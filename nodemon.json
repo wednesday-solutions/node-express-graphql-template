@@ -6,5 +6,5 @@
     "restart": "kill-port 9000",
     "crash": "kill-port 9000 && npm run local"
   },
-  "delay": "1500"
+  "delay": "250"
 }

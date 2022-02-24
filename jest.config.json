@@ -14,7 +14,7 @@
   "testPathIgnorePatterns": ["<rootDir>/dist/"],
   "moduleNameMapper": {
     "server(.*)$": "<rootDir>/server/$1",
-    "@(database|gql|middleware|daos|utils)(.*)$": "<rootDir>/server/$1/$2"
+    "@(database|services|gql|middleware|daos|utils)(.*)$": "<rootDir>/server/$1/$2"
   },
   "coverageThreshold": {
     "global": {

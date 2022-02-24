@@ -102,3 +102,7 @@ yarn prod
 ```
 yarn build
 ```
+
+### Support for circuit-breaking
+
+- Support for circuit breaking has been added using [opossum](https://github.com/nodeshift/opossum)
