@@ -105,7 +105,6 @@ describe('fetchFromGithub', () => {
     const axiosSpy = jest.spyOn(require('axios'), 'get').mockImplementation(() => res);
     const data = await fetchFromGithub(repo);
     expect(data).toBe(res);
-    // console.log;
     expect(axiosSpy).toBeCalled();
     expect(axiosSpy).toBeCalledWith(`https://api.github.com/search/repositories?q=${repo}&per_page=2`);
   });

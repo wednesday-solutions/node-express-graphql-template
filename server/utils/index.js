@@ -40,9 +40,13 @@ export const stringifyWithCheck = message => {
 export const logger = () => {
   const rTracerFormat = printf(info => {
     const rid = rTracer.id();
+    const infoSplat = info[Symbol.for('splat')] || [];
+    const infoSplatObject = { ...infoSplat };
     return rid
-      ? `${info.timestamp} [request-id:${rid}]: ${stringifyWithCheck(info.message)}`
-      : `${info.timestamp}: ${stringifyWithCheck(info.message)}`;
+      ? `${info.timestamp} [request-id:${rid}]: ${stringifyWithCheck(info.message)} ${stringifyWithCheck(
+          infoSplatObject
+        )}`
+      : `${info.timestamp}: ${stringifyWithCheck(info.message)} ${stringifyWithCheck(infoSplatObject)}`;
   });
   return createLogger({
     format: combine(timestamp(), rTracerFormat),

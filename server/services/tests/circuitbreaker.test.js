@@ -23,4 +23,13 @@ describe('newCircuitBreaker', () => {
     const res = await breaker.fire(testme);
     expect(res).toBe(`${fallbackMessage}. ${customError}`);
   });
+  it('should return the fallback message if the API throws an error without a message.', async () => {
+    const somefunc = async () => {
+      throw new Error();
+    };
+    const testme = 'testme';
+    const breaker = newCircuitBreaker(somefunc, fallbackMessage);
+    const res = await breaker.fire(testme);
+    expect(res).toBe(`${fallbackMessage}. Error`);
+  });
 });
