@@ -12,7 +12,7 @@ export const newCircuitBreaker = (func, fallbackMsg) => {
   breaker.fallback((params, err) => {
     logger().error("inside circuitbreaker fallback", err);
     // add slack alerts
-    logger().error("fallbackMsg: ", fallbackMsg, "params: ", params, "error:", err: err.message);
+    logger().error("fallbackMsg: ", fallbackMsg, "params: ", params, "error:", err.message);
     // eslint-disable-next-line
     return `${fallbackMsg}. ${err.message || err}`;
   });
