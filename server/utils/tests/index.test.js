@@ -32,4 +32,12 @@ describe('stringifyWithCheck', () => {
     const res = stringifyWithCheck(obj);
     expect(res).toBe('unable to unfurl message: [object Object]');
   });
+
+  it('should stringify the data key if present in the message and unable to stringify the original value', () => {
+    const obj = { a: 'b' };
+    obj.obj = obj;
+    obj.data = { body: 'This is the real answer' };
+    const res = stringifyWithCheck(obj);
+    expect(res).toBe(JSON.stringify(obj.data));
+  });
 });
