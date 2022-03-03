@@ -1,0 +1,18 @@
+{
+  "compilerOptions": {
+    "baseUrl": ".",
+    "paths": {
+      "@server/*": ["server/*"],
+      "@root/*": ["*"],
+      "@utils/*": ["server/utils/*"],
+      "@middleware/*": ["server/middleware/*"],
+      "@services/*": ["server/services/*"],
+      "@daos/*": ["server/daos/*"],
+      "@database/*": ["server/database/*"],
+      "@gql/*": ["server/gql/*"],
+      "@config/*": ["config/*"]
+    },
+    "moduleResolution": "Node"
+  },
+  "exclude": ["./node_modules", "dist"]
+}
