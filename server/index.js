@@ -16,6 +16,7 @@ import cluster from 'cluster';
 import os from 'os';
 import authenticateToken from '@middleware/authenticate/index';
 import 'source-map-support/register';
+import { sendMessage } from '@services/slack';
 
 const totalCPUs = os.cpus().length;
 
@@ -88,6 +89,7 @@ export const init = () => {
 
   app.use('/', (req, res) => {
     const message = 'Service up and running!';
+    sendMessage(message);
     logger().info(message);
     res.json(message);
   });
