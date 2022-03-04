@@ -6,6 +6,7 @@ import { supplierMutations } from '@gql/models/suppliers';
 import { deletedId, deleteUsingId, updateUsingId } from '@database/dbUtils';
 import { addressMutations } from '@gql/models/addresses';
 import { storeMutations } from '@gql/models/stores';
+import { scheduleJob } from '@gql/custom/scheduleJobMutation';
 import { storeProductMutations } from '@gql/models/storeProducts';
 import { supplierProductMutations } from '@gql/models/supplierProducts';
 import { userMutations } from '@gql/models/users';
@@ -75,6 +76,7 @@ export const addMutations = () => {
       };
     }
   });
+  mutations.scheduleJob = scheduleJob;
   return mutations;
 };
 
