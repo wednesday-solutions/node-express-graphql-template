@@ -1,5 +1,6 @@
 import CircuitBreaker from 'opossum';
 import { logger } from '@utils';
+import { sendMessage } from './slack';
 
 const options = {
   timeout: 3000,
@@ -11,7 +12,7 @@ export const newCircuitBreaker = (func, fallbackMsg) => {
   const breaker = new CircuitBreaker(func, options);
   breaker.fallback((params, err) => {
     logger().error('inside circuitbreaker fallback', err);
-    // add slack alerts
+    sendMessage(err);
     logger().error('fallbackMsg: ', fallbackMsg, 'params: ', params, 'error:', err.message);
     // eslint-disable-next-line
     return `${fallbackMsg}. ${err.message || err}`;
