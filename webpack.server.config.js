@@ -28,6 +28,9 @@ module.exports = (options = {}) => ({
   entry: options.entry,
   optimization: options.optimization,
   devtool: 'source-map',
+  externals: {
+    bull: 'commonjs2 bull'
+  },
   module: {
     rules: [
       {
