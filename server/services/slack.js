@@ -3,15 +3,15 @@ import { logger } from '@utils';
 import rTracer from 'cls-rtracer';
 
 let slack;
-function getSlackInstance() {
+export function getSlackInstance() {
   if (!slack) {
     slack = slackNotify(process.env.SLACK_WEBHOOK_URL);
   }
   return slack;
 }
 export async function sendMessage(text) {
-  if (['production', 'development', 'local'].includes(process.env.ENVIRONMENT_NAME)) {
-    getSlackInstance()
+  if (['production', 'development', 'local', 'test'].includes(process.env.ENVIRONMENT_NAME)) {
+    return getSlackInstance()
       .send({
         text: JSON.stringify({ requestId: rTracer.id(), error: text, env: process.env.ENVIRONMENT_NAME }),
         username: 'node-express-alerts'
