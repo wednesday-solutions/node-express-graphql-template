@@ -3,11 +3,11 @@ import moment from 'moment';
 const queues = {};
 
 export const QUEUE_NAMES = {
-  SCHEDULE_JOB: 'scheduleJob'
+  SCHEDULED_JOB: 'scheduledJob'
 };
 
 export const QUEUE_PROCESSORS = {
-  [QUEUE_NAMES.SCHEDULE_JOB]: (job, done) => {
+  [QUEUE_NAMES.SCHEDULED_JOB]: (job, done) => {
     console.log(`${moment()}::Job with id: ${job.id} is being executed.\n`, {
       message: job.data.message
     });
