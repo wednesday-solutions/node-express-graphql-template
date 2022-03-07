@@ -25,7 +25,6 @@ jobs:
       - name: Test and generate coverage report
         uses: artiomtr/jest-coverage-report-action@v2.0-rc.4
         with:
-          github-token: ${{ secrets.GITHUB_TOKEN }}
           threshold: ${{steps.threshold.outputs.prop}}
           package-manager: yarn
           custom-title: Jest Coverage Report
