@@ -16,6 +16,7 @@ import cluster from 'cluster';
 import os from 'os';
 import authenticateToken from '@middleware/authenticate/index';
 import 'source-map-support/register';
+import { initQueues } from '@utils/queue';
 import { sendMessage } from '@services/slack';
 
 const totalCPUs = os.cpus().length;
@@ -97,6 +98,7 @@ export const init = () => {
   /* istanbul ignore next */
   if (!isTestEnv()) {
     app.listen(9000);
+    initQueues();
   }
 };
 

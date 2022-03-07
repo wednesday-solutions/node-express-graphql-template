@@ -7,6 +7,9 @@ jobs:
   coverage_report:
     name: Jest Coverage Report
     runs-on: ubuntu-latest
+    strategy:
+      matrix:
+        node-version: [14.x]
     steps:
       - uses: actions/checkout@v2
       - name: Get Threshold
@@ -15,10 +18,13 @@ jobs:
         with:
           path: 'jest.config.json'
           prop_path: 'coverageThreshold.global.statements'
+
+      - name: Install dependencies
+        run: yarn
+
       - name: Test and generate coverage report
-        uses: artiomtr/jest-coverage-report-action@v2.0-rc.1
+        uses: artiomtr/jest-coverage-report-action@v2.0-rc.4
         with:
-          github-token: ${{ secrets.GITHUB_TOKEN }}
           threshold: ${{steps.threshold.outputs.prop}}
           package-manager: yarn
           custom-title: Jest Coverage Report
