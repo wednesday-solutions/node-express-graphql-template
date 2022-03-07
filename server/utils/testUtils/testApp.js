@@ -2,10 +2,10 @@ import express from 'express';
 import { graphqlHTTP } from 'express-graphql';
 import { GraphQLSchema } from 'graphql';
 import dotenv from 'dotenv';
-
 import { QueryRoot } from '@gql/queries';
 import { MutationRoot } from '@gql/mutations';
 import { client } from '@database';
+import { SubscriptionRoot } from '@gql/subscriptions';
 
 const connect = async () => {
   await client.authenticate();
@@ -17,7 +17,7 @@ connect();
 dotenv.config({ path: `.env.${process.env.ENVIRONMENT_NAME}` });
 
 // create the graphQL schema
-const schema = new GraphQLSchema({ query: QueryRoot, mutation: MutationRoot });
+const schema = new GraphQLSchema({ query: QueryRoot, mutation: MutationRoot, subscription: SubscriptionRoot });
 
 const testApp = express();
 testApp.use(

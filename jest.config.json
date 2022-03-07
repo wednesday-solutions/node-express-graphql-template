@@ -13,7 +13,7 @@
   "coverageReporters": ["json-summary", "text", "lcov"],
   "testPathIgnorePatterns": ["<rootDir>/dist/"],
   "moduleNameMapper": {
-    "server(.*)$": "<rootDir>/server/$1",
+    "@server(.*)$": "<rootDir>/server/$1",
     "@(database|services|gql|middleware|daos|utils)(.*)$": "<rootDir>/server/$1/$2",
     "slack-notify": "<rootDir>/node_modules/slack-notify/src/cjs/index.js"
   },

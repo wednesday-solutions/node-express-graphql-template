@@ -33,7 +33,7 @@ export const QUEUE_PROCESSORS = {
 };
 
 export const initQueues = () => {
-  console.log(' init queues');
+  console.log('init queues');
   Object.keys(QUEUE_PROCESSORS).forEach(queueName => {
     queues[queueName] = getQueue(queueName);
     queues[queueName].process(QUEUE_PROCESSORS[queueName]);

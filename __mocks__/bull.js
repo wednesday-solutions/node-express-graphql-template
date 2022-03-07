@@ -10,6 +10,7 @@ export default function(msg) {
   };
   return {
     data: msg,
-    process: fn => fn(job, done)
+    process: fn => fn(job, done),
+    add: (name, repeat) => name && repeat
   };
 }
