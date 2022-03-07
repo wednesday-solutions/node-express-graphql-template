@@ -23,7 +23,7 @@ describe('Queue tests', () => {
     jest.spyOn(queue, 'getQueue').mockClear();
   });
   it('should initialize the queues', async () => {
-    jest.spyOn(QUEUE_PROCESSORS, 'scheduleJob').mockImplementation(() => ({
+    jest.spyOn(QUEUE_PROCESSORS, 'scheduledJob').mockImplementation(() => ({
       sampleQueue: job => ({
         message: job.message
       })

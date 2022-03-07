@@ -8,7 +8,6 @@ describe('Slack tests', () => {
       jest.spyOn(getSlackInstance(), 'send').mockImplementation(
         msg =>
           new Promise((resolve, reject) => {
-            console.log('in resolve');
             resolve(msg);
           })
       );
