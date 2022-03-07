@@ -1,9 +1,16 @@
 import Bull from 'bull';
 import moment from 'moment';
+import { pubsub } from '@utils/pubsub';
+import { SUBSCRIPTION_TOPICS } from '@utils/constants';
 const queues = {};
 
+const CRON_EXPRESSIONS = {
+  EVERY_MINUTE: '* * * * *'
+};
+
 export const QUEUE_NAMES = {
-  SCHEDULE_JOB: 'scheduleJob'
+  SCHEDULE_JOB: 'scheduleJob',
+  SUBSCRIPTION_JOB: 'subscriptionJob'
 };
 
 export const QUEUE_PROCESSORS = {
@@ -12,15 +19,26 @@ export const QUEUE_PROCESSORS = {
       message: job.data.message
     });
     done();
+  },
+  [QUEUE_NAMES.SUBSCRIPTION_JOB]: (job, done) => {
+    console.log(`publishing to ${SUBSCRIPTION_TOPICS.NOTIFICATIONS}`);
+    pubsub.publish(SUBSCRIPTION_TOPICS.NOTIFICATIONS, {
+      notifications: {
+        message: 'This message is from the CRON',
+        scheduleIn: 0
+      }
+    });
+    done();
   }
 };
 
 export const initQueues = () => {
-  console.log('init queues');
+  console.log(' init queues');
   Object.keys(QUEUE_PROCESSORS).forEach(queueName => {
     queues[queueName] = getQueue(queueName);
     queues[queueName].process(QUEUE_PROCESSORS[queueName]);
   });
+  queues[QUEUE_NAMES.SUBSCRIPTION_JOB].add({}, { repeat: { cron: CRON_EXPRESSIONS.EVERY_MINUTE } });
 };
 export const getQueue = queueName => {
   if (!queues[queueName]) {

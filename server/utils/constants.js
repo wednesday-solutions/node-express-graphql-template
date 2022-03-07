@@ -4,3 +4,7 @@ export const MUTATION_TYPE = {
   DELETE: 'delete',
   UPDATE: 'update'
 };
+
+export const SUBSCRIPTION_TOPICS = {
+  NOTIFICATIONS: 'notifications'
+};
