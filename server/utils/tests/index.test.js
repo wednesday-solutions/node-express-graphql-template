@@ -1,4 +1,4 @@
-import { stringifyWithCheck, addWhereClause, isTestEnv, totalConnectionFields } from '@utils/index';
+import { stringifyWithCheck, addWhereClause, isTestEnv, totalConnectionFields, transformSQLError } from '@utils/index';
 
 describe('isTestEnv', () => {
   it("should return true if the ENVIRONMENT_NAME is 'test'", () => {
@@ -39,5 +39,16 @@ describe('stringifyWithCheck', () => {
     obj.data = { body: 'This is the real answer' };
     const res = stringifyWithCheck(obj);
     expect(res).toBe(JSON.stringify(obj.data));
+  });
+  it('should join the database errors and return them', () => {
+    const error = {
+      errors: [
+        {
+          message: 'This is sample error'
+        }
+      ]
+    };
+    const res = transformSQLError(error);
+    expect(res).toBe('This is sample error');
   });
 });
