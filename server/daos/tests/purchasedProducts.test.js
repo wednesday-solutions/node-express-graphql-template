@@ -1,6 +1,5 @@
 import db from '@database/models';
 import { insertPurchasedProducts } from '../purchasedProducts';
-
 describe('purchasedProducts tests', () => {
   const price = 1122;
   const productId = 133;
@@ -17,19 +16,5 @@ describe('purchasedProducts tests', () => {
     const mock = jest.spyOn(db.purchasedProducts, 'create');
     await insertPurchasedProducts(purchasedProduct);
     expect(mock).toHaveBeenCalledWith(purchasedProduct);
-  });
-  it('should throw error if the create new record fails', async () => {
-    const error = {
-      errors: [
-        {
-          message: 'Error in SQL'
-        }
-      ]
-    };
-    jest
-      .spyOn(db.purchasedProducts, 'create')
-      .mockImplementation(() => new Promise((resolve, reject) => reject(error)));
-    const res = await insertPurchasedProducts(purchasedProduct);
-    expect(res).toEqual('Error in SQL');
   });
 });
