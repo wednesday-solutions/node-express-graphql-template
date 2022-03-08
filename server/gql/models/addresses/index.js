@@ -1,8 +1,8 @@
 import { GraphQLFloat, GraphQLID, GraphQLInt, GraphQLNonNull, GraphQLObjectType, GraphQLString } from 'graphql';
 import { getNode } from '@gql/node';
 import { createConnection } from 'graphql-sequelize';
-import { supplierQueries } from './suppliers';
-import { timestamps } from './timestamps';
+import { supplierQueries } from '../suppliers';
+import { timestamps } from '../timestamps';
 import db from '@database/models';
 import { storeQueries } from '@gql/models/stores';
 import { totalConnectionFields } from '@utils/index';

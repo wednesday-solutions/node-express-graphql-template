@@ -1,6 +1,7 @@
-import { GraphQLNonNull, GraphQLObjectType, GraphQLString, GraphQLInt } from 'graphql';
+import { GraphQLNonNull, GraphQLObjectType, GraphQLInt } from 'graphql';
 import { pubsub } from '@utils/pubsub';
 import { SUBSCRIPTION_TOPICS } from '@utils/constants';
+import { GraphQLDateTime } from 'graphql-iso-date';
 export const SubscriptionRoot = new GraphQLObjectType({
   name: 'Subscription',
   fields: {
@@ -8,10 +9,13 @@ export const SubscriptionRoot = new GraphQLObjectType({
       type: new GraphQLObjectType({
         name: 'ScheduleJobSubscription',
         fields: () => ({
-          message: {
-            type: GraphQLNonNull(GraphQLString)
+          productId: {
+            type: GraphQLNonNull(GraphQLInt)
           },
-          scheduleIn: {
+          deliveryDate: {
+            type: GraphQLNonNull(GraphQLDateTime)
+          },
+          price: {
             type: GraphQLNonNull(GraphQLInt)
           }
         })
