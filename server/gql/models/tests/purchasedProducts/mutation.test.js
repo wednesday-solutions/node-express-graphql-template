@@ -6,7 +6,8 @@ describe('purchased_products graphQL-server-DB mutation tests', () => {
     mutation {
       createPurchasedProduct (
         price: 100
-        discount: 10
+        discount: 10,
+        productId: 1
       ) {
         id
         price

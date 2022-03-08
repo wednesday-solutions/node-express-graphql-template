@@ -1,7 +1,7 @@
 import { GraphQLID, GraphQLInt, GraphQLNonNull, GraphQLObjectType } from 'graphql';
 import { createConnection } from 'graphql-sequelize';
-import { productQueries } from './products';
-import { timestamps } from './timestamps';
+import { productQueries } from '../products';
+import { timestamps } from '../timestamps';
 import { GraphQLDateTime } from 'graphql-iso-date';
 import { getNode } from '@gql/node';
 import db from '@database/models';
@@ -14,7 +14,8 @@ export const purchasedProductFields = {
   id: { type: GraphQLNonNull(GraphQLID) },
   price: { type: GraphQLInt },
   discount: { type: GraphQLInt },
-  deliveryDate: { type: GraphQLDateTime }
+  deliveryDate: { type: GraphQLDateTime },
+  productId: { type: GraphQLNonNull(GraphQLID) }
 };
 const PurchasedProduct = new GraphQLObjectType({
   name: 'PurchasedProduct',

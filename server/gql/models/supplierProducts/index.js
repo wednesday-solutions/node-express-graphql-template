@@ -1,8 +1,8 @@
 import { GraphQLID, GraphQLInt, GraphQLNonNull, GraphQLObjectType } from 'graphql';
 import { connectionArgs } from 'graphql-relay';
 import { createConnection } from 'graphql-sequelize';
-import { supplierQueries } from './suppliers';
-import { timestamps } from './timestamps';
+import { supplierQueries } from '../suppliers';
+import { timestamps } from '../timestamps';
 import { getNode } from '@gql/node';
 import db from '@database/models';
 import { productQueries } from '@gql/models/products';

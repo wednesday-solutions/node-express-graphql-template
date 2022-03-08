@@ -60,3 +60,5 @@ export const unless = function(middleware, ...paths) {
     pathCheck ? next() : middleware(req, res, next);
   };
 };
+
+export const transformSQLError = e => (e.errors || []).map(err => err.message).join('. ') || e.original;
