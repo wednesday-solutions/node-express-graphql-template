@@ -51,4 +51,11 @@ describe('stringifyWithCheck', () => {
     const res = transformSQLError(error);
     expect(res).toBe('This is sample error');
   });
+  it('should return the original error if there is single error', () => {
+    const error = {
+      original: 'This is an error'
+    };
+    const res = transformSQLError(error);
+    expect(res).toBe('This is an error');
+  });
 });
