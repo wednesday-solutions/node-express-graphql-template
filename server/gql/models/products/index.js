@@ -2,7 +2,7 @@ import { GraphQLID, GraphQLInt, GraphQLNonNull, GraphQLObjectType, GraphQLString
 import { createConnection } from 'graphql-sequelize';
 import { getNode } from '@gql/node';
 import { SupplierConnection } from '../suppliers';
-import { storeQueries } from '../../stores';
+import { storeQueries } from '../stores';
 import { timestamps } from '../timestamps';
 import db from '@database/models';
 import { sequelizedWhere } from '@database/dbUtils';
