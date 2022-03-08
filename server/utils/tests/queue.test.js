@@ -42,7 +42,7 @@ describe('Queue tests', () => {
       jest.resetModules();
       jest.spyOn(console, 'log');
       initQueues();
-      expect(console.log.mock.calls.length).toBe(5);
+      expect(console.log.mock.calls.length).toBe(3);
       expect(console.log.mock.calls[1][0]).toBe(`${moment()}::Job with id: 1 is being executed.\n`);
       expect(console.log.mock.calls[2][0]).toBe('done');
     });

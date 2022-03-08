@@ -9,8 +9,7 @@ import { storeMutations } from '@gql/models/stores';
 import { storeProductMutations } from '@gql/models/storeProducts';
 import { supplierProductMutations } from '@gql/models/supplierProducts';
 import { userMutations } from '@gql/models/users';
-import { MUTATION_TYPE, SUBSCRIPTION_TOPICS } from '@utils/constants';
-import { pubsub } from '@utils/pubsub';
+import { MUTATION_TYPE } from '@utils/constants';
 
 const shouldNotAddMutation = (type, table) => {
   if (type === MUTATION_TYPE.CREATE) {
@@ -30,17 +29,7 @@ const shouldNotAddMutation = (type, table) => {
 };
 
 export const createResolvers = model => ({
-  createResolver: async (parent, args, context, resolveInfo) => {
-    const res = await model.create(args);
-    pubsub.publish(SUBSCRIPTION_TOPICS.NOTIFICATIONS, {
-      notifications: {
-        productId: res.productId,
-        deliveryDate: res.deliveryDate,
-        price: res.price
-      }
-    });
-    return res;
-  },
+  createResolver: async (parent, args, context, resolveInfo) => model.create(args),
   updateResolver: (parent, args, context, resolveInfo) => updateUsingId(model, args),
   deleteResolver: (parent, args, context, resolveInfo) => deleteUsingId(model, args)
 });

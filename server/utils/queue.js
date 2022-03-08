@@ -3,7 +3,6 @@ import moment from 'moment';
 const queues = {};
 
 export const QUEUE_NAMES = {
-  SUBSCRIPTION_JOB: 'subscriptionJob',
   SCHEDULED_JOB: 'scheduledJob'
 };
 
