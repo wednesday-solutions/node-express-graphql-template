@@ -8,7 +8,10 @@ export const options = {
   retryStrategy: times => Math.min(times * 50, 2000)
 };
 
-export const pubsub = new RedisPubSub({
-  publisher: new Redis(options),
-  subscriber: new Redis(options)
-});
+export const createPubSub = () => {
+  const pubsub = new RedisPubSub({
+    publisher: new Redis(options),
+    subscriber: new Redis(options)
+  });
+  return pubsub;
+};

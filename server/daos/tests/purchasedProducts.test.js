@@ -19,10 +19,17 @@ describe('purchasedProducts tests', () => {
     expect(mock).toHaveBeenCalledWith(purchasedProduct);
   });
   it('should throw error if the create new record fails', async () => {
+    const error = {
+      errors: [
+        {
+          message: 'Error in SQL'
+        }
+      ]
+    };
     jest
       .spyOn(db.purchasedProducts, 'create')
-      .mockImplementation(() => new Promise((resolve, reject) => reject(new Error())));
+      .mockImplementation(() => new Promise((resolve, reject) => reject(error)));
     const res = await insertPurchasedProducts(purchasedProduct);
-    expect(res).toEqual('Error while adding purchased products');
+    expect(res).toEqual('Error in SQL');
   });
 });

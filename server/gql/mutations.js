@@ -29,7 +29,7 @@ const shouldNotAddMutation = (type, table) => {
 };
 
 export const createResolvers = model => ({
-  createResolver: async (parent, args, context, resolveInfo) => model.create(args),
+  createResolver: (parent, args, context, resolveInfo) => model.create(args),
   updateResolver: (parent, args, context, resolveInfo) => updateUsingId(model, args),
   deleteResolver: (parent, args, context, resolveInfo) => deleteUsingId(model, args)
 });
