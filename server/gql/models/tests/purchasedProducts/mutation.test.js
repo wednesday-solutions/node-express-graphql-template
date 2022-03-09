@@ -1,5 +1,6 @@
 import get from 'lodash/get';
 import { getResponse } from '@utils/testUtils';
+import * as customMutations from '../../purchasedProducts/customMutations';
 
 describe('purchased_products graphQL-server-DB mutation tests', () => {
   const createPurchasedProductMutation = `
@@ -21,14 +22,9 @@ describe('purchased_products graphQL-server-DB mutation tests', () => {
   `;
 
   it('should have a mutation to create a new purchased product', async () => {
-    await getResponse(createPurchasedProductMutation).then(response => {
-      const result = get(response, 'body.data.createPurchasedProduct');
-      expect(result).toMatchObject({
-        id: '1',
-        price: 100,
-        discount: 10
-      });
-    });
+    const spy = jest.spyOn(customMutations, 'customCreateResolver');
+    await getResponse(createPurchasedProductMutation);
+    expect(spy).toBeCalled();
   });
 
   const deletePurchasedProductMut = `
