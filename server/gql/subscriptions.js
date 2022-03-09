@@ -1,5 +1,6 @@
 import { GraphQLNonNull, GraphQLObjectType, GraphQLInt } from 'graphql';
 import { pubsub } from '@utils/pubsub';
+import { withFilter } from 'graphql-subscriptions';
 import { SUBSCRIPTION_TOPICS } from '@utils/constants';
 import { GraphQLDateTime } from 'graphql-iso-date';
 export const SubscriptionRoot = new GraphQLObjectType({
@@ -23,7 +24,18 @@ export const SubscriptionRoot = new GraphQLObjectType({
           }
         })
       }),
-      subscribe: (_, args) => pubsub.asyncIterator(SUBSCRIPTION_TOPICS.NOTIFICATIONS)
+      args: {
+        supplierId: {
+          type: GraphQLNonNull(GraphQLInt)
+        }
+      },
+      subscribe: withFilter(
+        () => pubsub.asyncIterator(SUBSCRIPTION_TOPICS.NOTIFICATIONS),
+        (payload, variables) => {
+          console.log('here');
+          return payload.notifications.supplierId === variables.supplierId;
+        }
+      )
     }
   }
 });
