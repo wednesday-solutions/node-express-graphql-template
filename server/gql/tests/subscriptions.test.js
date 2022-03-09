@@ -3,11 +3,6 @@ import * as module from 'graphql-subscriptions';
 import '@utils/pubsub';
 
 describe('Subscription tests', () => {
-  beforeAll(() => {
-    jest.unmock('graphql-redis-subscriptions');
-    jest.unmock('ioredis');
-  });
-
   it('should add a subscription', async () => {
     const subscription = `
     subscription Subscription{
