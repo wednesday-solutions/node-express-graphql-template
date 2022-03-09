@@ -31,10 +31,7 @@ export const SubscriptionRoot = new GraphQLObjectType({
       },
       subscribe: withFilter(
         () => pubsub.asyncIterator(SUBSCRIPTION_TOPICS.NOTIFICATIONS),
-        (payload, variables) => {
-          console.log('here');
-          return payload.notifications.supplierId === variables.supplierId;
-        }
+        (payload, variables) => payload.notifications.supplierId === variables.supplierId
       )
     }
   }

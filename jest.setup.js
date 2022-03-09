@@ -10,6 +10,9 @@ jest.doMock('@database/models', () => ({
   ...mockDBClient().models
 }));
 
+jest.doMock('graphql-redis-subscriptions', () => ({ RedisPubSub: () => ({}) }));
+jest.doMock('ioredis', () => jest.fn().mockImplementation(() => ({ publish: () => ({}) })));
+
 process.env.ENVIRONMENT_NAME = 'test';
 beforeEach(() => {
   process.env = { ...process.env, ...DB_ENV, ENVIRONMENT_NAME: 'test' };

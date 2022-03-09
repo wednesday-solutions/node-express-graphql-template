@@ -61,7 +61,6 @@ export const addMutations = () => {
 
     if (shouldNotAddMutation(MUTATION_TYPE.CREATE, table)) {
       if (customMutationTables[table]) {
-        console.log(table);
         mutations[`create${upperFirst(table)}`] = {
           ...DB_TABLES[table],
           args: createArgs,
