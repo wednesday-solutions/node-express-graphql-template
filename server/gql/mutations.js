@@ -10,6 +10,7 @@ import { storeProductMutations } from '@gql/models/storeProducts';
 import { supplierProductMutations } from '@gql/models/supplierProducts';
 import { userMutations } from '@gql/models/users';
 import { MUTATION_TYPE } from '@utils/constants';
+import { customCreateResolver } from './models/purchasedProducts/customMutations';
 
 const shouldNotAddMutation = (type, table) => {
   if (type === MUTATION_TYPE.CREATE) {
@@ -28,11 +29,12 @@ const shouldNotAddMutation = (type, table) => {
   }
 };
 
-export const createResolvers = model => ({
+export const createResolvers = (model, customResolver) => ({
   createResolver: (parent, args, context, resolveInfo) => model.create(args),
   updateResolver: (parent, args, context, resolveInfo) => updateUsingId(model, args),
   deleteResolver: (parent, args, context, resolveInfo) => deleteUsingId(model, args)
 });
+
 export const DB_TABLES = {
   product: productMutations,
   purchasedProduct: purchasedProductMutations,
@@ -44,6 +46,13 @@ export const DB_TABLES = {
   users: userMutations
 };
 
+const customMutationTables = {
+  purchasedProduct: {
+    table: 'purchasedProduct',
+    createResolver: customCreateResolver
+  }
+};
+
 export const addMutations = () => {
   const mutations = {};
 
@@ -51,11 +60,19 @@ export const addMutations = () => {
     const { id, ...createArgs } = DB_TABLES[table].args;
 
     if (shouldNotAddMutation(MUTATION_TYPE.CREATE, table)) {
-      mutations[`create${upperFirst(table)}`] = {
-        ...DB_TABLES[table],
-        args: createArgs,
-        resolve: createResolvers(DB_TABLES[table].model).createResolver
-      };
+      if (customMutationTables[table]) {
+        mutations[`create${upperFirst(table)}`] = {
+          ...DB_TABLES[table],
+          args: createArgs,
+          resolve: customMutationTables[table].createResolver(DB_TABLES[table].model).createResolver
+        };
+      } else {
+        mutations[`create${upperFirst(table)}`] = {
+          ...DB_TABLES[table],
+          args: createArgs,
+          resolve: createResolvers(DB_TABLES[table].model).createResolver
+        };
+      }
     }
 
     if (shouldNotAddMutation(MUTATION_TYPE.UPDATE, table)) {
