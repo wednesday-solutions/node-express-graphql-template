@@ -9,17 +9,19 @@ import { ApolloServer } from 'apollo-server-express';
 import { createServer } from 'http';
 import multer from 'multer';
 import axios from 'axios';
+import get from 'lodash/get';
 import { newCircuitBreaker } from '@services/circuitbreaker';
+import { isAuthenticated, handlePreflightRequest, corsOptionsDelegate } from '@middleware/gqlAuth';
 import rTracer from 'cls-rtracer';
 import bodyParser from 'body-parser';
 import { connect } from '@database';
 import { QueryRoot } from '@gql/queries';
 import { MutationRoot } from '@gql/mutations';
-import { isLocalEnv, isTestEnv, logger, unless } from '@utils/index';
+import { isLocalEnv, isTestEnv, logger } from '@utils/index';
 import { signUpRoute, signInRoute } from '@server/auth';
 import cluster from 'cluster';
 import os from 'os';
-import authenticateToken from '@middleware/authenticate/index';
+import authenticateToken from '@middleware/authenticate';
 import 'source-map-support/register';
 import { initQueues } from '@utils/queue';
 import { sendMessage } from '@services/slack';
@@ -46,10 +48,13 @@ export const init = async () => {
 
   app.use(express.json());
   app.use(rTracer.expressMiddleware());
-  app.use(cors());
-  app.use(unless(authenticateToken, '/', '/sign-in', '/sign-up'));
+  app.use(cors(corsOptionsDelegate));
+  app.use(bodyParser.json());
+  app.use(bodyParser.urlencoded({ extended: true }));
   app.use(
     '/graphql',
+    handlePreflightRequest, // handle pre-flight request for graphql endpoint
+    isAuthenticated,
     graphqlHTTP({
       schema: schema,
       graphiql: true,
@@ -60,16 +65,35 @@ export const init = async () => {
     })
   );
 
+  const WHITELISTED_PATHS = {
+    '/': {
+      methods: ['GET']
+    },
+    '/sign-in': {
+      methods: ['POST']
+    },
+    '/sign-up': {
+      methods: ['POST']
+    }
+  };
+
+  const addAuthMiddleware = (path, method) => {
+    if (get(WHITELISTED_PATHS, `[${path}].methods`, []).includes(method.toUpperCase())) {
+      return;
+    }
+    return authenticateToken;
+  };
   const createBodyParsedRoutes = routeConfigs => {
     if (!routeConfigs.length) {
       return;
     }
-    app.use(bodyParser.json());
-    app.use(bodyParser.urlencoded({ extended: true }));
+
     const validate = configs => configs.every(({ path, handler, method }) => !!path && !!handler && !!method);
+    const createRouteArgs = (path, handler, method) =>
+      [path, multer().array(), addAuthMiddleware(path, method), handler].filter(a => a);
     try {
       if (validate(routeConfigs)) {
-        routeConfigs.forEach(({ path, handler, method }) => app[method](path, multer().array(), handler));
+        routeConfigs.forEach(({ path, handler, method }) => app[method](...createRouteArgs(path, handler, method)));
       } else {
         throw new Error('Invalid route config');
       }
