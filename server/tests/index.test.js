@@ -46,13 +46,6 @@ describe('init', () => {
     // the database connection is being made
     expect(mocks.db.connect.mock.calls.length).toBe(1);
   });
-
-  it('should throw err if authourization is unsucessful', async () => {
-    const { app } = await require('../index');
-    await getResponse(query, app).then(response => {
-      expect(response.statusCode).toBe(401);
-    });
-  });
 });
 describe('TestApp: Server', () => {
   it('should respond to /graphql', async () => {

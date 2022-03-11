@@ -24,7 +24,6 @@ export const handleSignIn = async (req, res) => {
       res.json(401, { errors: ['User not found!'] });
       return;
     }
-    console.log({ user: user?.dataValues });
     res.json({ token: getSignedToken(user?.dataValues) });
   } catch (err) {
     res.json(err.message);

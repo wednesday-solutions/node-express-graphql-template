@@ -1,7 +1,5 @@
-/* eslint-disable eqeqeq */
-
 import gql from 'graphql-tag';
-import { isLocalEnv, isTestEnv, logger } from '@utils/index';
+import { isLocalEnv, isTestEnv, logger } from '@utils';
 import { convertToMap } from '@utils/gqlSchemaParsers';
 import jwt from 'jsonwebtoken';
 import { NO_AUTH_QUERIES, RESTRICTED, GQL_QUERY_TYPES } from './constants';
@@ -41,7 +39,7 @@ export const isPublicQuery = async req => {
 export const isAuthenticated = async (req, res, next) => {
   try {
     // For accessing graphql without authentication when debugging.
-    if (isLocalEnv() || !(isTestEnv() && (await isPublicQuery(req)))) {
+    if (isLocalEnv() || isTestEnv() || (await isPublicQuery(req))) {
       next();
     } else {
       const accessTokenFromClient = req.headers.authorization;
@@ -51,7 +49,7 @@ export const isAuthenticated = async (req, res, next) => {
         return invalidScope(res, 'Access Token missing from header');
       } else {
         const token = get(accessTokenFromClient?.split(' '), '[1]');
-        await new Promise((resolve, reject) => {
+        return new Promise((resolve, reject) => {
           jwt.verify(token, process.env.ACCESS_TOKEN_SECRET, (err, user) => {
             if (!err) {
               return resolve(user);
@@ -114,12 +112,11 @@ export const corsOptionsDelegate = function(req, callback) {
 
   if (isLocalEnv() || isTestEnv()) {
     corsOptions = { origin: true };
+  } else if (req?.header('Origin')?.includes(allowedDomain) || req?.header('Origin')?.includes('localhost')) {
+    corsOptions = { origin: true }; // reflect (enable) the requested origin in the CORS response
   } else {
-    if (req?.header('Origin')?.includes(allowedDomain) || req?.header('Origin')?.includes('localhost')) {
-      corsOptions = { origin: true }; // reflect (enable) the requested origin in the CORS response
-    } else {
-      corsOptions = { origin: false }; // disable CORS for this request
-    }
+    corsOptions = { origin: false }; // disable CORS for this request
   }
+
   callback(null, corsOptions); // callback expects two parameters: error and options
 };

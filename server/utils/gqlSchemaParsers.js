@@ -1,6 +1,6 @@
 import { Kind, print } from 'graphql/language';
 
-function parseObject(typeName, ast, variables) {
+export function parseObject(typeName, ast, variables) {
   const value = {};
   ast.fields.forEach(field => {
     value[field.name.value] = parseLiteral(field.value, field.value, variables);
@@ -9,7 +9,7 @@ function parseObject(typeName, ast, variables) {
   return value;
 }
 
-function parseLiteral(typeName, ast, variables) {
+export function parseLiteral(typeName, ast, variables) {
   switch (ast.kind) {
     case Kind.STRING:
     case Kind.BOOLEAN:
@@ -24,7 +24,7 @@ function parseLiteral(typeName, ast, variables) {
     case Kind.NULL:
       return null;
     case Kind.VARIABLE:
-      return variables ? variables[ast.name.value] : undefined;
+      return variables?.[ast.name.value] ?? undefined;
     default:
       throw new TypeError(`${typeName} cannot represent value: ${print(ast)}`);
   }
