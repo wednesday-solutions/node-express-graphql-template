@@ -4,7 +4,7 @@ import { transformSQLError } from '@utils';
 import { redis } from '@services/redis';
 import { getCategoryById } from '@utils/queries';
 
-const updateRedis = async res => {
+export const updateRedis = async res => {
   const currentDate = moment().format('YYYY-MM-DD');
   const category = await getCategoryById(res.productId);
   const redisAggregate = JSON.parse(await redis.get(`${currentDate}_total`));

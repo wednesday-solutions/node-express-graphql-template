@@ -9,7 +9,7 @@ export const SUBSCRIPTION_TOPICS = {
   NOTIFICATIONS: 'notifications'
 };
 
-const WHITELISTED_PATHS = {
+export const WHITELISTED_PATHS = {
   '/': {
     methods: ['GET']
   },
