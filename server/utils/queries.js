@@ -7,7 +7,7 @@ export const getCategoryById = async id => {
 
 export const getEarliestCreatedDate = async () => {
   const earliestPurchasedProduct = await db.purchasedProducts.findOne({
-    order: ['createdAt']
+    order: ['id']
   });
   return earliestPurchasedProduct.createdAt;
 };

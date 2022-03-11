@@ -1,7 +1,7 @@
 import { getResponse } from '@utils/testUtils';
 import { redis } from '@services/redis';
 import moment from 'moment';
-import { customCreateResolver } from '@gql/models/purchasedProducts/customMutations';
+import { customCreateResolver } from '@server/gql/models/purchasedProducts/customCreateResolver';
 
 describe('custom Mutation tests', () => {
   afterEach(() => {
@@ -31,7 +31,7 @@ describe('custom Mutation tests', () => {
     expect(mock.mock.calls[1]).toMatchObject([`${moment().format('YYYY-MM-DD')}_total`, '{"total":100,"count":1}']);
   });
   it('should create a new row in purchased Products', async () => {
-    const customMutations = require(`../../purchasedProducts/customMutations`);
+    const customMutations = require(`../customCreateResolver`);
     const spy = jest.spyOn(customMutations, 'customCreateResolver');
 
     await getResponse(createQuery);
