@@ -8,3 +8,15 @@ export const MUTATION_TYPE = {
 export const SUBSCRIPTION_TOPICS = {
   NOTIFICATIONS: 'notifications'
 };
+
+const WHITELISTED_PATHS = {
+  '/': {
+    methods: ['GET']
+  },
+  '/sign-in': {
+    methods: ['POST']
+  },
+  '/sign-up': {
+    methods: ['POST']
+  }
+};

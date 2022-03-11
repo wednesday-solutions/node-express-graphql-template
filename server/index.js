@@ -25,6 +25,7 @@ import authenticateToken from '@middleware/authenticate';
 import 'source-map-support/register';
 import { initQueues } from '@utils/queue';
 import { sendMessage } from '@services/slack';
+import { WHITELISTED_PATHS } from '@utils/constants';
 
 const totalCPUs = os.cpus().length;
 
@@ -64,18 +65,6 @@ export const init = async () => {
       }
     })
   );
-
-  const WHITELISTED_PATHS = {
-    '/': {
-      methods: ['GET']
-    },
-    '/sign-in': {
-      methods: ['POST']
-    },
-    '/sign-up': {
-      methods: ['POST']
-    }
-  };
 
   const addAuthMiddleware = (path, method) => {
     if (get(WHITELISTED_PATHS, `[${path}].methods`, []).includes(method.toUpperCase())) {
