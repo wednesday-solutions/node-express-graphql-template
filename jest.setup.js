@@ -10,7 +10,9 @@ jest.doMock('@database/models', () => ({
   ...mockDBClient().models
 }));
 
-jest.doMock('graphql-redis-subscriptions', () => ({ RedisPubSub: () => ({ publish: () => ({}) }) }));
+jest.doMock('graphql-redis-subscriptions', () => ({
+  RedisPubSub: () => ({ publish: () => ({}), asyncIterator: () => ({}) })
+}));
 jest.doMock('ioredis', () =>
   jest.fn().mockImplementation(() => ({
     publish: () => ({}),
