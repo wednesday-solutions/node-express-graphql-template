@@ -32,7 +32,6 @@ export const stringifyWithCheck = message => {
     if (message.data) {
       return stringifyWithCheck(message.data);
     } else {
-      console.log(message);
       return `unable to unfurl message: ${message}`;
     }
   }

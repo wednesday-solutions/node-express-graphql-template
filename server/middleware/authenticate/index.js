@@ -9,7 +9,6 @@ export default function authenticateToken(req, res, next) {
   }
   let authKey;
   Object.keys(req.headers).forEach(header => {
-    console.log({ header });
     if (header.toUpperCase() === 'AUTHORIZATION') {
       authKey = header;
     }

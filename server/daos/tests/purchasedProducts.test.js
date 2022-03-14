@@ -1,5 +1,6 @@
 import db from '@database/models';
-import { insertPurchasedProducts } from '../purchasedProducts';
+import { insertPurchasedProducts, getEarliestCreatedDate, getCategoryById } from '../purchasedProducts';
+
 describe('purchasedProducts tests', () => {
   const price = 1122;
   const productId = 133;
@@ -16,5 +17,17 @@ describe('purchasedProducts tests', () => {
     const mock = jest.spyOn(db.purchasedProducts, 'create');
     await insertPurchasedProducts(purchasedProduct);
     expect(mock).toHaveBeenCalledWith(purchasedProduct);
+  });
+
+  describe('Queries tests', () => {
+    it('should return the earliest created purchasedProduct ', async () => {
+      const res = await getEarliestCreatedDate();
+      expect(res.getDate()).toEqual(new Date().getDate());
+    });
+  });
+
+  it('should return the product category if Id is provided', async () => {
+    const res = await getCategoryById(productId);
+    expect(res).toEqual('Sports');
   });
 });
