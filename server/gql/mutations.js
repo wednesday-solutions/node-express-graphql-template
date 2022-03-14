@@ -10,8 +10,8 @@ import { storeProductMutations } from '@gql/models/storeProducts';
 import { supplierProductMutations } from '@gql/models/supplierProducts';
 import { userMutations } from '@gql/models/users';
 import { MUTATION_TYPE } from '@utils/constants';
-
-const shouldNotAddMutation = (type, table) => {
+import { getQueryFields, TYPE_ATTRIBUTES } from '@utils/gqlFieldUtils';
+const shouldAddMutation = (type, table) => {
   if (type === MUTATION_TYPE.CREATE) {
     const negateTablesList = ['users'];
     return !negateTablesList.includes(table);
@@ -27,12 +27,15 @@ const shouldNotAddMutation = (type, table) => {
     return !negateTablesList.includes(table);
   }
 };
-
-export const createResolvers = model => ({
-  createResolver: (parent, args, context, resolveInfo) => model.create(args),
-  updateResolver: (parent, args, context, resolveInfo) => updateUsingId(model, args),
-  deleteResolver: (parent, args, context, resolveInfo) => deleteUsingId(model, args)
+export const createResolvers = (model, customResolver) => ({
+  createResolver: (parent, args, context, resolveInfo) =>
+    customResolver ? customResolver(model, args, context) : model.create(args),
+  updateResolver: (parent, args, context, resolveInfo) =>
+    customResolver ? customResolver(model, args, context) : updateUsingId(model, args),
+  deleteResolver: (parent, args, context, resolveInfo) =>
+    customResolver ? customResolver(model, args, context) : deleteUsingId(model, args)
 });
+
 export const DB_TABLES = {
   product: productMutations,
   purchasedProduct: purchasedProductMutations,
@@ -50,28 +53,29 @@ export const addMutations = () => {
   Object.keys(DB_TABLES).forEach(table => {
     const { id, ...createArgs } = DB_TABLES[table].args;
 
-    if (shouldNotAddMutation(MUTATION_TYPE.CREATE, table)) {
+    if (shouldAddMutation(MUTATION_TYPE.CREATE, table)) {
       mutations[`create${upperFirst(table)}`] = {
         ...DB_TABLES[table],
-        args: createArgs,
-        resolve: createResolvers(DB_TABLES[table].model).createResolver
+        args: getQueryFields(createArgs, TYPE_ATTRIBUTES.isCreateRequired),
+        resolve: createResolvers(DB_TABLES[table].model, DB_TABLES[table].customCreateResolver).createResolver
       };
     }
 
-    if (shouldNotAddMutation(MUTATION_TYPE.UPDATE, table)) {
+    if (shouldAddMutation(MUTATION_TYPE.UPDATE, table)) {
       mutations[`update${upperFirst(table)}`] = {
         ...DB_TABLES[table],
-        resolve: createResolvers(DB_TABLES[table].model).updateResolver
+        args: getQueryFields(DB_TABLES[table].args, TYPE_ATTRIBUTES.isUpdateRequired),
+        resolve: createResolvers(DB_TABLES[table].model, DB_TABLES[table].customUpdateResolver).updateResolver
       };
     }
 
-    if (shouldNotAddMutation(MUTATION_TYPE.DELETE, table)) {
+    if (shouldAddMutation(MUTATION_TYPE.DELETE, table)) {
       mutations[`delete${upperFirst(table)}`] = {
         type: deletedId,
         args: {
           id: { type: GraphQLNonNull(GraphQLInt) }
         },
-        resolve: createResolvers(DB_TABLES[table].model).deleteResolver
+        resolve: createResolvers(DB_TABLES[table].model, DB_TABLES[table].customDeleteResolver).deleteResolver
       };
     }
   });

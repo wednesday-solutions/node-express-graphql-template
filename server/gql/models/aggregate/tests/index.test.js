@@ -27,7 +27,7 @@ describe('aggregations', () => {
     const res = await getResponse(`query Aggregate {
       aggregate (${input}){
         total {
-          purchasedProductsPrice  
+          purchasedProductsPrice
         }
       }
     }`);
@@ -45,7 +45,7 @@ describe('aggregations', () => {
     const res = await getResponse(`query Aggregate {
       aggregate (${input}){
         max {
-          purchasedProductsPrice  
+          purchasedProductsPrice
         }
       }
     }`);
@@ -63,7 +63,7 @@ describe('aggregations', () => {
     const res = await getResponse(`query Aggregate {
       aggregate(${input}) {
         count {
-          purchasedProducts  
+          purchasedProducts
         }
       }
     }`);
@@ -83,10 +83,10 @@ describe('aggregations', () => {
     const res = await getResponse(`query Aggregate {
       aggregate(${input}) {
         count {
-          purchasedProducts  
+          purchasedProducts
         }
         max {
-          purchasedProductsPrice  
+          purchasedProductsPrice
         }
         total {
           purchasedProductsPrice

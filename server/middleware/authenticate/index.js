@@ -7,7 +7,13 @@ export default function authenticateToken(req, res, next) {
     next();
     return;
   }
-  const authHeader = req.headers.authorization;
+  let authKey;
+  Object.keys(req.headers).forEach(header => {
+    if (header.toUpperCase() === 'AUTHORIZATION') {
+      authKey = header;
+    }
+  });
+  const authHeader = req.headers[authKey];
   const token = authHeader && authHeader.split(' ')[1];
   if (!token) {
     return res.json(401, { errors: ['Token not found!'] });

@@ -5,6 +5,7 @@ import { timestamps } from '../timestamps';
 import db from '@database/models';
 import { totalConnectionFields } from '@utils/index';
 import { sequelizedWhere } from '@database/dbUtils';
+import { getQueryFields, TYPE_ATTRIBUTES } from '@server/utils/gqlFieldUtils';
 
 const { nodeInterface } = getNode();
 
@@ -17,7 +18,7 @@ const User = new GraphQLObjectType({
   name: 'user',
   interfaces: [nodeInterface],
   fields: () => ({
-    ...userFields,
+    ...getQueryFields(userFields, TYPE_ATTRIBUTES.isNonNull),
     id: { type: GraphQLNonNull(GraphQLID) },
     email: { type: GraphQLNonNull(GraphQLString) },
     ...timestamps

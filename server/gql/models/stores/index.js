@@ -7,6 +7,7 @@ import { getNode } from '@gql/node';
 import db from '@database/models';
 import { totalConnectionFields } from '@utils/index';
 import { sequelizedWhere } from '@database/dbUtils';
+import { getQueryFields, TYPE_ATTRIBUTES } from '@server/utils/gqlFieldUtils';
 
 const { nodeInterface } = getNode();
 
@@ -20,7 +21,7 @@ export const Store = new GraphQLObjectType({
   name: 'Store',
   interfaces: [nodeInterface],
   fields: () => ({
-    ...storeFields,
+    ...getQueryFields(storeFields, TYPE_ATTRIBUTES.isNonNull),
     ...timestamps,
     addresses: {
       ...addressQueries.list,
