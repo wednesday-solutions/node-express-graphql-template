@@ -36,7 +36,7 @@ describe('custom Mutation tests', () => {
     await getResponse(createQuery);
     expect(spy).toBeCalled();
   });
-  it('should ', async () => {
+  it('should throw custom error when there is error in creatingPurchasedProducts ', async () => {
     const purchasedProducts = require('@daos/purchasedProducts');
     const utils = require('@utils');
     jest.spyOn(purchasedProducts, 'insertPurchasedProducts').mockImplementation(() => {
