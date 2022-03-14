@@ -4,6 +4,7 @@ import { addWhereClause } from '@utils';
 import { TIMESTAMP } from '@utils/constants';
 import { getEarliestCreatedDate } from '@server/daos/purchasedProducts';
 import { redis } from '@server/services/redis';
+import { sendMessage } from '@server/services/slack';
 
 export const handleAggregateQueries = (args, tableName) => {
   let where = ``;
@@ -48,11 +49,16 @@ export const queryRedis = async (type, args) => {
   }
   const key = args?.category ? `${startDate}_${args.category}` : `${startDate}_total`;
   while (startDate <= endDate) {
-    let jsonTotalForDate;
+    let aggregateData;
     const totalForDate = await redis.get(key);
     if (totalForDate) {
-      jsonTotalForDate = JSON.parse(totalForDate);
-      count += Number(jsonTotalForDate[type]);
+      try {
+        aggregateData = JSON.parse(totalForDate);
+        count += Number(aggregateData[type]);
+      } catch (err) {
+        sendMessage(err);
+        console.log(err);
+      }
     }
     startDate = moment(startDate)
       .add(1, 'day')
