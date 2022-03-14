@@ -46,30 +46,17 @@ export const queryRedis = async (type, args) => {
   } else {
     endDate = args.endDate.toISOString().split('T')[0];
   }
-  if (args?.category) {
-    do {
-      const totalForCategory = await redis.get(`${startDate}_${args.category}`);
-      if (totalForCategory) {
-        const parsedTotalForCategory = JSON.parse(totalForCategory);
-        count += Number(parsedTotalForCategory[type]);
-      }
-      startDate = moment(startDate)
-        .add(1, 'day')
-        .format('YYYY-MM-DD');
-    } while (startDate <= endDate);
-    return count;
-  } else {
-    while (startDate <= endDate) {
-      let jsonTotalForDate;
-      const totalForDate = await redis.get(`${startDate}_total`);
-      if (totalForDate) {
-        jsonTotalForDate = JSON.parse(totalForDate);
-        count += Number(jsonTotalForDate[type]);
-      }
-      startDate = moment(startDate)
-        .add(1, 'day')
-        .format('YYYY-MM-DD');
+  const key = args?.category ? `${startDate}_${args.category}` : `${startDate}_total`;
+  while (startDate <= endDate) {
+    let jsonTotalForDate;
+    const totalForDate = await redis.get(key);
+    if (totalForDate) {
+      jsonTotalForDate = JSON.parse(totalForDate);
+      count += Number(jsonTotalForDate[type]);
     }
-    return count;
+    startDate = moment(startDate)
+      .add(1, 'day')
+      .format('YYYY-MM-DD');
   }
+  return count;
 };
