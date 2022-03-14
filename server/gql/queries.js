@@ -1,4 +1,4 @@
-import { GraphQLObjectType, GraphQLInputObjectType, GraphQLNonNull, GraphQLInt } from 'graphql';
+import { GraphQLObjectType, GraphQLNonNull, GraphQLInt } from 'graphql';
 import camelCase from 'lodash/camelCase';
 import pluralize from 'pluralize';
 import { defaultListArgs, defaultArgs, resolver } from 'graphql-sequelize';
@@ -31,20 +31,10 @@ export const addQueries = () => {
     aggregate: Aggregate
   };
   Object.keys(DB_TABLES).forEach(table => {
-    const macType = new GraphQLInputObjectType({
-      name: `AggregateSum11${table}`,
-      fields: () => ({
-        id: { type: GraphQLInt },
-        bid: { type: GraphQLInt }
-      })
-    });
     query[camelCase(table)] = {
       ...DB_TABLES[table].query,
       resolve: resolver(DB_TABLES[table].model),
       args: {
-        mac: {
-          type: macType
-        },
         id: { type: GraphQLNonNull(GraphQLInt) },
         ...DB_TABLES[table].args,
         ...defaultArgs(DB_TABLES[table].model)
