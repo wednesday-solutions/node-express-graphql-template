@@ -8,6 +8,7 @@ import db from '@database/models';
 import { addressQueries } from '@gql/models/addresses';
 import { totalConnectionFields } from '@utils/index';
 import { sequelizedWhere } from '@database/dbUtils';
+import { getQueryFields, TYPE_ATTRIBUTES } from '@server/utils/gqlFieldUtils';
 
 const { nodeInterface } = getNode();
 
@@ -22,7 +23,7 @@ const Supplier = new GraphQLObjectType({
 
   sqlPaginate: true,
   fields: () => ({
-    ...supplierFields,
+    ...getQueryFields(supplierFields, TYPE_ATTRIBUTES.isNonNull),
     ...timestamps,
     addresses: {
       ...addressQueries.list,

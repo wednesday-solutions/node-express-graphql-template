@@ -9,6 +9,7 @@ export const handleSignUp = async (req, res) => {
     res.data = newUser;
     const token = getSignedToken(newUser);
     const { dataValues } = newUser;
+
     res.json({ ...dataValues, token: token });
   } catch (err) {
     res.json(err.message);
@@ -23,7 +24,7 @@ export const handleSignIn = async (req, res) => {
       res.json(401, { errors: ['User not found!'] });
       return;
     }
-    res.json({ token: getSignedToken(user) });
+    res.json({ token: getSignedToken(user?.dataValues) });
   } catch (err) {
     res.json(err.message);
   }

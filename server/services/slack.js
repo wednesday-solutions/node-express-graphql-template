@@ -10,7 +10,7 @@ export function getSlackInstance() {
   return slack;
 }
 export async function sendMessage(text) {
-  if (['production', 'development', 'local', 'test'].includes(process.env.ENVIRONMENT_NAME)) {
+  if (['production', 'development', 'test'].includes(process.env.ENVIRONMENT_NAME)) {
     return getSlackInstance()
       .send({
         text: JSON.stringify({ requestId: rTracer.id(), error: text, env: process.env.ENVIRONMENT_NAME }),

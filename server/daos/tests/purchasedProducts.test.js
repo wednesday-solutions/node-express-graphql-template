@@ -1,5 +1,5 @@
 import db from '@database/models';
-import { insertPurchasedProducts } from '../purchasedProducts';
+import { insertPurchasedProducts, getEarliestCreatedDate, getCategoryById } from '../purchasedProducts';
 
 describe('purchasedProducts tests', () => {
   const price = 1122;
@@ -18,18 +18,16 @@ describe('purchasedProducts tests', () => {
     await insertPurchasedProducts(purchasedProduct);
     expect(mock).toHaveBeenCalledWith(purchasedProduct);
   });
-  it('should throw error if the create new record fails', async () => {
-    const error = {
-      errors: [
-        {
-          message: 'Error in SQL'
-        }
-      ]
-    };
-    jest
-      .spyOn(db.purchasedProducts, 'create')
-      .mockImplementation(() => new Promise((resolve, reject) => reject(error)));
-    const res = await insertPurchasedProducts(purchasedProduct);
-    expect(res).toEqual('Error in SQL');
+
+  describe('Queries tests', () => {
+    it('should return the earliest created purchasedProduct ', async () => {
+      const res = await getEarliestCreatedDate();
+      expect(res.getDate()).toEqual(new Date().getDate());
+    });
+  });
+
+  it('should return the product category if Id is provided', async () => {
+    const res = await getCategoryById(productId);
+    expect(res).toEqual('Sports');
   });
 });

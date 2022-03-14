@@ -19,7 +19,7 @@ export class Token {
   get() {
     const token = jwt.sign(
       {
-        userId: this.user.id
+        user: this.user
       },
       process.env.ACCESS_TOKEN_SECRET,
       {

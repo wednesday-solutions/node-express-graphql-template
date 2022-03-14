@@ -7,6 +7,7 @@ import { timestamps } from '../timestamps';
 import db from '@database/models';
 import { sequelizedWhere } from '@database/dbUtils';
 import { totalConnectionFields } from '@utils/index';
+import { getQueryFields, TYPE_ATTRIBUTES } from '@server/utils/gqlFieldUtils';
 
 const { nodeInterface } = getNode();
 export const productFields = {
@@ -21,7 +22,7 @@ export const Product = new GraphQLObjectType({
   name: 'Product',
   interfaces: [nodeInterface],
   fields: () => ({
-    ...productFields,
+    ...getQueryFields(productFields, TYPE_ATTRIBUTES.isNonNull),
     ...timestamps,
     suppliers: {
       type: SupplierConnection.connectionType,

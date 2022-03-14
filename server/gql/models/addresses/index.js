@@ -6,6 +6,7 @@ import { timestamps } from '../timestamps';
 import db from '@database/models';
 import { storeQueries } from '@gql/models/stores';
 import { totalConnectionFields } from '@utils/index';
+import { getQueryFields, TYPE_ATTRIBUTES } from '@server/utils/gqlFieldUtils';
 
 const { nodeInterface } = getNode();
 export const addressFields = {
@@ -30,7 +31,7 @@ const Address = new GraphQLObjectType({
     id: 'asc'
   },
   fields: () => ({
-    ...addressFields,
+    ...getQueryFields(addressFields, TYPE_ATTRIBUTES.isNonNull),
     ...timestamps,
     suppliers: {
       ...supplierQueries.list,
