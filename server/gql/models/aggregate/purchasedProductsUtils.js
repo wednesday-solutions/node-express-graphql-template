@@ -4,6 +4,8 @@ import { addWhereClause } from '@utils';
 import { TIMESTAMP } from '@utils/constants';
 import { getEarliestCreatedDate } from '@server/daos/purchasedProducts';
 import { redis } from '@server/services/redis';
+import { sendMessage } from '@server/services/slack';
+import { logger } from '@server/utils';
 
 export const handleAggregateQueries = (args, tableName) => {
   let where = ``;
@@ -46,30 +48,22 @@ export const queryRedis = async (type, args) => {
   } else {
     endDate = args.endDate.toISOString().split('T')[0];
   }
-  if (args?.category) {
-    do {
-      const totalForCategory = await redis.get(`${startDate}_${args.category}`);
-      if (totalForCategory) {
-        const parsedTotalForCategory = JSON.parse(totalForCategory);
-        count += Number(parsedTotalForCategory[type]);
+  const key = args?.category ? `${startDate}_${args.category}` : `${startDate}_total`;
+  while (startDate <= endDate) {
+    let aggregateData;
+    const totalForDate = await redis.get(key);
+    if (totalForDate) {
+      try {
+        aggregateData = JSON.parse(totalForDate);
+        count += Number(aggregateData[type]);
+      } catch (err) {
+        sendMessage(`Error while parsing data for ${key} as got value ${totalForDate}`);
+        logger().info(`Error while parsing data for ${key} as got value ${totalForDate}`);
       }
-      startDate = moment(startDate)
-        .add(1, 'day')
-        .format('YYYY-MM-DD');
-    } while (startDate <= endDate);
-    return count;
-  } else {
-    while (startDate <= endDate) {
-      let jsonTotalForDate;
-      const totalForDate = await redis.get(`${startDate}_total`);
-      if (totalForDate) {
-        jsonTotalForDate = JSON.parse(totalForDate);
-        count += Number(jsonTotalForDate[type]);
-      }
-      startDate = moment(startDate)
-        .add(1, 'day')
-        .format('YYYY-MM-DD');
     }
-    return count;
+    startDate = moment(startDate)
+      .add(1, 'day')
+      .format('YYYY-MM-DD');
   }
+  return count;
 };
