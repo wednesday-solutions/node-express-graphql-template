@@ -1,6 +1,7 @@
 import { QueryTypes } from 'sequelize';
 import moment from 'moment';
-import { handleAggregateQueries, queryOptions } from '@gql/models/aggregate/purchasedProductsUtils';
+import { redis } from '@services/redis';
+import { handleAggregateQueries, queryOptions, queryRedis } from '@gql/models/aggregate/purchasedProductsUtils';
 import { TIMESTAMP } from '@utils/constants';
 
 describe('handleAggregateQueries', () => {
@@ -31,5 +32,42 @@ describe('queryOptions', () => {
     expect(res.replacements.endDate).toBe(moment(0).format(TIMESTAMP));
     expect(res.replacements.category).toBe(category);
     expect(res.replacements.type).toEqual(QueryTypes.SELECT);
+  });
+
+  describe('query redis tests', () => {
+    const args = {
+      category: 'Sports'
+    };
+    const type = 'total';
+    it('should calculate the total from earliest created date to todays day-1 if no start and end date is provided', async () => {
+      const spy = jest.spyOn(redis, 'get');
+      await queryRedis(type);
+      expect(spy).toBeCalledWith(`${moment().format('YYYY-MM-DD')}_total`);
+    });
+    it('should add values from the given start and end dates in args ', async () => {
+      const args = {
+        startDate: new Date(2022, 2, 1),
+        endDate: new Date(2022, 2, 4)
+      };
+      const spy = jest.spyOn(redis, 'get');
+      await queryRedis(type, args);
+      expect(spy).toBeCalledTimes(4);
+    });
+    it('should call the date with category if the ategory is provided in args', async () => {
+      await queryRedis(type, args);
+      const spy = jest.spyOn(redis, 'get');
+      await queryRedis(type, args);
+      expect(spy).toBeCalledWith(`${moment().format('YYYY-MM-DD')}_${args.category}`);
+    });
+    it('should add the value after getting from Redis and return the total', async () => {
+      jest.spyOn(redis, 'get').mockReturnValue(
+        JSON.stringify({
+          total: 15,
+          count: 2
+        })
+      );
+      const res = await queryRedis(type, args);
+      expect(res).toBe(15);
+    });
   });
 });

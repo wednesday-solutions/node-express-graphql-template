@@ -2,6 +2,9 @@ import moment from 'moment';
 import { QueryTypes } from 'sequelize';
 import { addWhereClause } from '@utils';
 import { TIMESTAMP } from '@utils/constants';
+import { getEarliestCreatedDate } from '@server/daos/purchasedProducts';
+import { redis } from '@server/services/redis';
+import { sendMessage } from '@server/services/slack';
 
 export const handleAggregateQueries = (args, tableName) => {
   let where = ``;
@@ -28,3 +31,38 @@ export const queryOptions = args => ({
   },
   type: QueryTypes.SELECT
 });
+
+export const queryRedis = async (type, args) => {
+  let startDate;
+  let endDate;
+  let count = 0;
+  if (!args?.startDate) {
+    const createdAtDates = await getEarliestCreatedDate();
+    startDate = createdAtDates.toISOString().split('T')[0];
+  } else {
+    startDate = args.startDate.toISOString().split('T')[0];
+  }
+  if (!args?.endDate) {
+    endDate = moment().format('YYYY-MM-DD');
+  } else {
+    endDate = args.endDate.toISOString().split('T')[0];
+  }
+  const key = args?.category ? `${startDate}_${args.category}` : `${startDate}_total`;
+  while (startDate <= endDate) {
+    let aggregateData;
+    const totalForDate = await redis.get(key);
+    if (totalForDate) {
+      try {
+        aggregateData = JSON.parse(totalForDate);
+        count += Number(aggregateData[type]);
+      } catch (err) {
+        sendMessage(err);
+        console.log(err);
+      }
+    }
+    startDate = moment(startDate)
+      .add(1, 'day')
+      .format('YYYY-MM-DD');
+  }
+  return count;
+};
