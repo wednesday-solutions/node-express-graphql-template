@@ -40,6 +40,7 @@ module.exports = {
     'no-use-before-define': 0,
     'prefer-template': 2,
     'require-yield': 0,
+    'node/handle-callback-err': 'error',
     'prettier/prettier': ['error', prettierOptions]
   },
   settings: {

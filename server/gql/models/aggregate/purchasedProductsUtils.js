@@ -7,6 +7,7 @@ import { redis } from '@server/services/redis';
 import { sendMessage } from '@server/services/slack';
 import { logger } from '@server/utils';
 
+
 export const handleAggregateQueries = (args, tableName) => {
   let where = ``;
   let join = ``;
@@ -59,6 +60,7 @@ export const queryRedis = async (type, args) => {
       } catch (err) {
         sendMessage(`Error while parsing data for ${key} as got value ${totalForDate}`);
         logger().info(`Error while parsing data for ${key} as got value ${totalForDate}`);
+
       }
     }
     startDate = moment(startDate)
