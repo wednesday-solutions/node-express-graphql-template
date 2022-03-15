@@ -74,7 +74,8 @@ describe('queryOptions', () => {
       jest.spyOn(redis, 'get').mockReturnValue('test');
       const spy = jest.spyOn(utils, 'logger').mockImplementation(() => {
         const obj = {
-          info: err => err
+          info: msg => msg,
+          error: err => err
         };
         return obj;
       });
