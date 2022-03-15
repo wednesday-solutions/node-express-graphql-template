@@ -14,11 +14,11 @@ describe('Purchased Products subscription utils test', () => {
     it('should return true if the supplierId in payload is equal to supplierId in variables ', () => {
       const payload = {
         notifications: {
-          supplierId: 1
+          storeId: 1
         }
       };
       const variables = {
-        supplierId: 1
+        storeId: 1
       };
       const res = getFilteredSubscription(payload, variables);
       expect(res).toBeTruthy();
