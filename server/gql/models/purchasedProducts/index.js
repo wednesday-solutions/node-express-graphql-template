@@ -1,6 +1,7 @@
 import { GraphQLID, GraphQLInt, GraphQLNonNull, GraphQLObjectType } from 'graphql';
 import { createConnection } from 'graphql-sequelize';
 import { productQueries } from '../products';
+import { storeQueries } from '../stores';
 import { timestamps } from '../timestamps';
 import { GraphQLDateTime } from 'graphql-iso-date';
 import { getNode } from '@gql/node';
@@ -16,7 +17,8 @@ export const purchasedProductFields = {
   price: { type: GraphQLInt, ...CREATE_AND_QUERY_REQUIRED_ARGS },
   discount: { type: GraphQLInt, ...CREATE_AND_QUERY_REQUIRED_ARGS },
   deliveryDate: { type: GraphQLDateTime, [TYPE_ATTRIBUTES.isUpdateRequired]: true, ...CREATE_AND_QUERY_REQUIRED_ARGS },
-  productId: { type: GraphQLID, ...CREATE_AND_QUERY_REQUIRED_ARGS }
+  productId: { type: GraphQLID, ...CREATE_AND_QUERY_REQUIRED_ARGS },
+  storeId: { type: GraphQLID, ...CREATE_AND_QUERY_REQUIRED_ARGS }
 };
 const PurchasedProduct = new GraphQLObjectType({
   name: 'PurchasedProduct',
@@ -28,6 +30,11 @@ const PurchasedProduct = new GraphQLObjectType({
       ...productQueries.list,
       resolve: (source, args, context, info) =>
         productQueries.list.resolve(source, args, { ...context, purchasedProduct: source.dataValues }, info)
+    },
+    stores: {
+      ...storeQueries.list,
+      resolve: (source, args, context, info) =>
+        storeQueries.list.resolve(source, args, { ...context, purchasedProduct: source.dataValues }, info)
     }
   })
 });

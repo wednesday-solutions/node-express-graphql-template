@@ -15,6 +15,15 @@ export function getAttributes(sequelize, DataTypes) {
         key: 'id'
       }
     },
+    storeId: {
+      field: 'store_id',
+      type: DataTypes.INTEGER,
+      allowNull: false,
+      references: {
+        model: 'stores',
+        key: 'id'
+      }
+    },
     price: {
       type: DataTypes.INTEGER,
       allowNull: false
@@ -66,6 +75,10 @@ export function model(sequelize, DataTypes) {
     purchasedProducts.hasOne(models.supplierProducts, {
       foreignKey: 'productId',
       sourceKey: 'productId'
+    });
+    purchasedProducts.hasOne(models.stores, {
+      foreignKey: 'id',
+      sourceKey: 'storeId'
     });
   };
   return purchasedProducts;
