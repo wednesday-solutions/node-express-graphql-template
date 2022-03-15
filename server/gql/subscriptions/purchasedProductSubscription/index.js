@@ -1,7 +1,8 @@
+import { SUBSCRIPTION_TOPICS } from '@server/utils/constants';
 import { GraphQLInt, GraphQLNonNull, GraphQLObjectType } from 'graphql';
 import { GraphQLDateTime } from 'graphql-iso-date';
 import { withFilter } from 'graphql-subscriptions';
-import { filter, iterator } from '../purchasedProductSubscription/purchasedProductSubsUtil';
+import { getAsyncInterator, getFilteredSubscription } from '../purchasedProductSubscription/purchasedProductSubsUtil';
 
 export const PurchasedProductSubscription = {
   type: new GraphQLObjectType({
@@ -26,5 +27,5 @@ export const PurchasedProductSubscription = {
       type: GraphQLNonNull(GraphQLInt)
     }
   },
-  subscribe: withFilter(iterator, filter)
+  subscribe: withFilter(getAsyncInterator(SUBSCRIPTION_TOPICS.NOTIFICATIONS), getFilteredSubscription)
 };

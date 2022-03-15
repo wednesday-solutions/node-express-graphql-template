@@ -3,7 +3,7 @@ import moment from 'moment';
 import { redis } from '@services/redis';
 import { handleAggregateQueries, queryOptions, queryRedis } from '@gql/models/aggregate/purchasedProductsUtils';
 import { TIMESTAMP } from '@utils/constants';
-import * as utils from '@utils';
+import utils from '@utils';
 
 describe('handleAggregateQueries', () => {
   it('should the appropriate rawSQL queries based on the args', async () => {

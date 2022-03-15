@@ -1,5 +1,5 @@
 import { sendMessage, getSlackInstance } from '../slack';
-import * as utils from '@utils';
+import utils from '@utils';
 
 describe('Slack tests', () => {
   const message = 'Some generic message';
