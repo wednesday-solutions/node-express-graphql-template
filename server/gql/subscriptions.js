@@ -3,7 +3,7 @@ import { PurchasedProductSubscription } from './subscriptions/purchasedProductSu
 export const SubscriptionRoot = new GraphQLObjectType({
   name: 'Subscription',
   fields: {
-    notifications: {
+    newPurchasedProduct: {
       ...PurchasedProductSubscription
     }
   }

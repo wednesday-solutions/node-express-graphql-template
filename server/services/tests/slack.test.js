@@ -19,7 +19,6 @@ describe('Slack tests', () => {
   });
   describe('slack error tests', () => {
     it('should send the error', async () => {
-      console.log(utils);
       const error = new Error();
       jest.spyOn(utils, 'logger').mockImplementation(() => {
         const obj = {
