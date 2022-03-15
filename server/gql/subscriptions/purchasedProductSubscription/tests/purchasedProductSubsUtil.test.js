@@ -1,15 +1,16 @@
+import { SUBSCRIPTION_TOPICS } from '@server/utils/constants';
 import { pubsub } from '@server/utils/pubsub';
-import { iterator, filter } from '../purchasedProductSubsUtil';
+import { getAsyncInterator, getFilteredSubscription } from '../purchasedProductSubsUtil';
 
 describe('Purchased Products subscription utils test', () => {
-  describe('iterator tests', () => {
+  describe('getAsyncInterator tests', () => {
     it('should call the async iterator with the given topic', () => {
       const spy = jest.spyOn(pubsub, 'asyncIterator');
-      iterator();
+      getAsyncInterator(SUBSCRIPTION_TOPICS.NOTIFICATIONS)();
       expect(spy).toBeCalled();
     });
   });
-  describe('filter tests', () => {
+  describe('getFilteredSubscription tests', () => {
     it('should return true if the supplierId in payload is equal to supplierId in variables ', () => {
       const payload = {
         notifications: {
@@ -19,7 +20,7 @@ describe('Purchased Products subscription utils test', () => {
       const variables = {
         supplierId: 1
       };
-      const res = filter(payload, variables);
+      const res = getFilteredSubscription(payload, variables);
       expect(res).toBeTruthy();
     });
   });

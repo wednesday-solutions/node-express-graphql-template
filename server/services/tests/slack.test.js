@@ -1,5 +1,5 @@
 import { sendMessage, getSlackInstance } from '../slack';
-import utils from '@utils';
+import * as utils from '@utils';
 
 describe('Slack tests', () => {
   const message = 'Some generic message';
@@ -19,6 +19,7 @@ describe('Slack tests', () => {
   });
   describe('slack error tests', () => {
     it('should send the error', async () => {
+      console.log(utils);
       const error = new Error();
       jest.spyOn(utils, 'logger').mockImplementation(() => {
         const obj = {

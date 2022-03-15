@@ -1,6 +1,5 @@
 import { getResponse } from '@utils/testUtils';
 import * as module from 'graphql-subscriptions';
-import { iterator, filter } from '../purchasedProductSubsUtil';
 import '@utils/pubsub';
 
 describe('Subscription tests', () => {
@@ -17,7 +16,6 @@ describe('Subscription tests', () => {
   `;
     const spy = jest.spyOn(module, 'withFilter');
     await getResponse(subscription);
-    expect(spy).toBeCalled();
-    expect(spy).toBeCalledWith(iterator, filter);
+    expect(spy).toBeCalledTimes(1);
   });
 });
