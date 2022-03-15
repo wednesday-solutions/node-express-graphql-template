@@ -15,15 +15,6 @@ export function getAttributes(sequelize, DataTypes) {
         key: 'id'
       }
     },
-    storeId: {
-      field: 'store_id',
-      type: DataTypes.INTEGER,
-      allowNull: false,
-      references: {
-        model: 'stores',
-        key: 'id'
-      }
-    },
     price: {
       type: DataTypes.INTEGER,
       allowNull: false
@@ -52,6 +43,15 @@ export function getAttributes(sequelize, DataTypes) {
       field: 'deleted_at',
       type: DataTypes.DATE,
       allowNull: true
+    },
+    storeId: {
+      field: 'store_id',
+      type: DataTypes.INTEGER,
+      allowNull: false,
+      references: {
+        model: 'stores',
+        key: 'id'
+      }
     }
   };
 }

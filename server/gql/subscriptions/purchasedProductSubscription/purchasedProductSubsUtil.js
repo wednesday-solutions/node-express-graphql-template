@@ -5,5 +5,5 @@ export function getAsyncInterator(topicName) {
 }
 
 export function getFilteredSubscription(payload, variables) {
-  return payload.notifications.supplierId === variables.supplierId;
+  return Number(payload.notifications.storeId) === variables.storeId;
 }

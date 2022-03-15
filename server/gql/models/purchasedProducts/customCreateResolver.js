@@ -3,7 +3,6 @@ import { getCategoryById, insertPurchasedProducts } from '@daos/purchasedProduct
 import { transformSQLError } from '@utils';
 import { redis } from '@services/redis';
 import { SUBSCRIPTION_TOPICS } from '@server/utils/constants';
-import { getSingleSupplierId } from '@daos/supplierProducts';
 import { pubsub } from '@server/utils/pubsub';
 
 export const updateRedis = async res => {
@@ -28,13 +27,12 @@ export const updateRedis = async res => {
 };
 
 export const publishMessage = async (args, res) => {
-  const supplierProduct = await getSingleSupplierId(args);
   pubsub.publish(SUBSCRIPTION_TOPICS.NOTIFICATIONS, {
     notifications: {
       productId: res.productId,
       deliveryDate: res.deliveryDate,
       price: res.price,
-      supplierId: supplierProduct.supplierId
+      storeId: res.storeId
     }
   });
 };

@@ -1,7 +1,6 @@
 import { GraphQLID, GraphQLInt, GraphQLNonNull, GraphQLObjectType } from 'graphql';
 import { createConnection } from 'graphql-sequelize';
 import { productQueries } from '../products';
-import { storeQueries } from '../stores';
 import { timestamps } from '../timestamps';
 import { GraphQLDateTime } from 'graphql-iso-date';
 import { getNode } from '@gql/node';
@@ -30,11 +29,6 @@ const PurchasedProduct = new GraphQLObjectType({
       ...productQueries.list,
       resolve: (source, args, context, info) =>
         productQueries.list.resolve(source, args, { ...context, purchasedProduct: source.dataValues }, info)
-    },
-    stores: {
-      ...storeQueries.list,
-      resolve: (source, args, context, info) =>
-        storeQueries.list.resolve(source, args, { ...context, purchasedProduct: source.dataValues }, info)
     }
   })
 });

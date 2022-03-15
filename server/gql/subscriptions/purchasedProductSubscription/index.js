@@ -17,13 +17,13 @@ export const PurchasedProductSubscription = {
       price: {
         type: GraphQLNonNull(GraphQLInt)
       },
-      supplierId: {
+      storeId: {
         type: GraphQLNonNull(GraphQLInt)
       }
     })
   }),
   args: {
-    supplierId: {
+    storeId: {
       type: GraphQLNonNull(GraphQLInt)
     }
   },
