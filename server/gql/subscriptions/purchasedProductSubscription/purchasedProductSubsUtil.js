@@ -1,3 +1,3 @@
 export function checkFilterCondition(payload, variables) {
-  return payload.notifications.storeId === variables.storeId;
+  return Number(payload.newPurchasedProduct.storeId) === variables.storeId;
 }

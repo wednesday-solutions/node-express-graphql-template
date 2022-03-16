@@ -4,7 +4,7 @@ describe('Purchased Products subscription utils test', () => {
   describe('getFilteredSubscription tests', () => {
     it('should return true if the supplierId in payload is equal to supplierId in variables ', () => {
       const payload = {
-        notifications: {
+        newPurchasedProduct: {
           storeId: 1
         }
       };

@@ -6,7 +6,7 @@ describe('Subscription tests', () => {
   it('should add a subscription', async () => {
     const subscription = `
     subscription Subscription{
-        notifications(supplierId: 1671) {
+        newPurchasedProduct(supplierId: 1671) {
           price
           supplierId
           deliveryDate

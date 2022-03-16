@@ -21,4 +21,6 @@ CREATE TABLE purchased_products
 
     CREATE INDEX suppliers_delivery_date ON purchased_products USING btree
     (delivery_date);
+    CREATE INDEX store_id ON purchased_products USING btree
+    (store_id);
 

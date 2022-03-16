@@ -7,7 +7,7 @@ import { checkFilterCondition } from '../purchasedProductSubscription/purchasedP
 
 export const PurchasedProductSubscription = {
   type: new GraphQLObjectType({
-    name: 'PurchasedProductSubscription',
+    name: SUBSCRIPTION_TOPICS.NEWPURCHASEDPRODUCT,
     fields: () => ({
       productId: {
         type: GraphQLNonNull(GraphQLInt)
