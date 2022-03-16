@@ -39,7 +39,7 @@ export const queryRedis = async (type, args) => {
   let count = 0;
   if (!args?.startDate) {
     const createdAtDates = await getEarliestCreatedDate();
-    startDate = createdAtDates.toISOString().split('T')[0];
+    startDate = createdAtDates;
   } else {
     startDate = args.startDate.toISOString().split('T')[0];
   }

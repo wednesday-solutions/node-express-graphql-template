@@ -22,7 +22,8 @@ export const QUEUE_PROCESSORS = {
 };
 
 const CRON_EXPRESSIONS = {
-  MIDNIGHT: '0 0 * * *'
+  MIDNIGHT: '0 0 * * *',
+  EVERY_MINUTE: '*/19 * * * *'
 };
 
 export const initQueues = () => {
@@ -31,7 +32,7 @@ export const initQueues = () => {
     queues[queueName] = getQueue(queueName);
     queues[queueName].process(QUEUE_PROCESSORS[queueName]);
   });
-  queues[QUEUE_NAMES.AGGREGATE_CHECK].add({}, { repeat: { cron: CRON_EXPRESSIONS.MIDNIGHT } });
+  queues[QUEUE_NAMES.AGGREGATE_CHECK].add({}, { repeat: { cron: CRON_EXPRESSIONS.EVERY_MINUTE } });
 };
 export const getQueue = queueName => {
   if (!queues[queueName]) {

@@ -3,7 +3,7 @@ import { updateRedis } from '@gql/models/purchasedProducts/customCreateResolver'
 import { redis } from '@services/redis';
 import moment from 'moment';
 
-describe('custom Mutation tests', () => {
+describe('custom resolver tests', () => {
   const createQuery = `
   mutation {
     createPurchasedProduct (

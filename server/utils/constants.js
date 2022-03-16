@@ -20,3 +20,5 @@ export const WHITELISTED_PATHS = {
     methods: ['POST']
   }
 };
+
+export const REDIS_IMPLEMENTATION_DATE = '2022-03-16';
