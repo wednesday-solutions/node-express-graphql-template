@@ -10,7 +10,8 @@ describe('custom resolver tests', () => {
       price: 123321,
       discount: 121,
       productId: 1876,
-      deliveryDate: "2016-07-20T17:30:15+05:30"
+      deliveryDate: "2016-07-20T17:30:15+05:30",
+      storeId: 1
     ) {
       id
       price
@@ -22,7 +23,8 @@ describe('custom resolver tests', () => {
     deliveryDate: '2016-07-20T12:00:15.000Z',
     productId: 1,
     id: 1,
-    price: 123
+    price: 123,
+    storeId: 1
   };
   it('should should set the values of the response in redis store', async () => {
     const spy = jest.spyOn(redis, 'set');

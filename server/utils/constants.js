@@ -6,7 +6,7 @@ export const MUTATION_TYPE = {
 };
 
 export const SUBSCRIPTION_TOPICS = {
-  NOTIFICATIONS: 'notifications'
+  NEWPURCHASEDPRODUCT: 'newPurchasedProduct'
 };
 
 export const WHITELISTED_PATHS = {

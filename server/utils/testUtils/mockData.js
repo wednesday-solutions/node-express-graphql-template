@@ -34,7 +34,8 @@ export const purchasedProductsTable = range(1, 10).map((_, index) => ({
   productId: (index + 1).toString(),
   price: 500,
   discount: faker.datatype.number(20),
-  deliveryDate: faker.date.recent(createdBefore)
+  deliveryDate: faker.date.recent(createdBefore),
+  storeId: (index + 2).toString()
 }));
 
 export const storesTable = range(1, 10).map((_, index) => ({
