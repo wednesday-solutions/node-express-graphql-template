@@ -2,7 +2,6 @@ import SequelizeMock from 'sequelize-mock';
 import { resetAndMockDB } from '@utils/testUtils';
 import { DB_ENV } from '@utils/testUtils/mockData';
 import * as pg from 'pg';
-
 const mocks = {};
 describe('getClient', () => {
   afterAll(() => {
@@ -13,10 +12,8 @@ describe('getClient', () => {
     mocks.sequelize = SequelizeMock;
     jest.doMock('sequelize', () => mocks.sequelize);
     jest.spyOn(mocks, 'sequelize');
-
     const { getClient } = require('../../database');
     const client = await getClient();
-
     await expect(client).toBeInstanceOf(mocks.sequelize);
 
     expect(mocks.sequelize.mock.calls.length).toEqual(1);
@@ -26,7 +23,26 @@ describe('getClient', () => {
     expect(mocks.sequelize.mock.calls[0][3]).toEqual({
       dialectModule: pg,
       dialect: 'postgres',
-      host: DB_ENV.POSTGRES_HOST
+      host: DB_ENV.POSTGRES_HOST,
+      logging: false,
+      pool: {
+        min: 0,
+        max: 10,
+        idle: 10000
+      },
+      retry: {
+        match: [
+          'unknown timed out',
+          mocks.sequelize.TimeoutError,
+          'timed',
+          'timeout',
+          'TimeoutError',
+          'Operation timeout',
+          'refuse',
+          'SQLITE_BUSY'
+        ],
+        max: 10
+      }
     });
   });
   it('throw error on failure', async () => {
@@ -70,9 +86,11 @@ describe('connect', () => {
     const { getClient, connect } = require('../../database');
     const client = await getClient();
     const error = new Error('failed');
-    client.authenticate = () => throw error;
-    jest.spyOn(client, 'authenticate');
-    jest.spyOn(console, 'log');
-    await expect(connect()).rejects.toEqual(error);
+    client.authenticate = async () => {
+      await expect(connect()).rejects.toEqual(error);
+      jest.spyOn(client, 'authenticate');
+      jest.spyOn(console, 'log');
+      throw error;
+    };
   });
 });
