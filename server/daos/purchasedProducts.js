@@ -25,7 +25,7 @@ export const getTotalByDateForCategory = async (date, category) => {
         model: db.products,
         as: 'product',
         where: {
-          category: category
+          category
         },
         required: true
       }
@@ -50,7 +50,7 @@ export const getCountByDateForCategory = async (date, category) => {
         model: db.products,
         as: 'product',
         where: {
-          category: category
+          category
         },
         required: true
       }
