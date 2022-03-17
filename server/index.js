@@ -25,6 +25,7 @@ import authenticateToken from '@middleware/authenticate';
 import 'source-map-support/register';
 import { initQueues } from '@utils/queue';
 import { sendMessage } from '@services/slack';
+import { SubscriptionRoot } from '@gql/subscriptions';
 import { WHITELISTED_PATHS } from '@utils/constants';
 
 const totalCPUs = os.cpus().length;
@@ -41,7 +42,7 @@ export const init = async () => {
   connect();
 
   // create the graphQL schema
-  const schema = new GraphQLSchema({ query: QueryRoot, mutation: MutationRoot });
+  const schema = new GraphQLSchema({ query: QueryRoot, mutation: MutationRoot, subscription: SubscriptionRoot });
 
   if (!app) {
     app = express();
@@ -59,10 +60,7 @@ export const init = async () => {
     graphqlHTTP({
       schema: schema,
       graphiql: true,
-      customFormatErrorFn: e => {
-        logger().info({ e });
-        return e;
-      }
+      customFormatErrorFn: e => e
     })
   );
 

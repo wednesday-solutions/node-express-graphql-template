@@ -43,6 +43,15 @@ export function getAttributes(sequelize, DataTypes) {
       field: 'deleted_at',
       type: DataTypes.DATE,
       allowNull: true
+    },
+    storeId: {
+      field: 'store_id',
+      type: DataTypes.INTEGER,
+      allowNull: false,
+      references: {
+        model: 'stores',
+        key: 'id'
+      }
     }
   };
 }
@@ -66,6 +75,10 @@ export function model(sequelize, DataTypes) {
     purchasedProducts.hasOne(models.supplierProducts, {
       foreignKey: 'productId',
       sourceKey: 'productId'
+    });
+    purchasedProducts.hasOne(models.stores, {
+      foreignKey: 'id',
+      sourceKey: 'storeId'
     });
   };
   return purchasedProducts;

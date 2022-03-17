@@ -10,6 +10,7 @@ module.exports = {
       return {
         price,
         product_id: 1 + parseInt(Math.random() * 1999),
+        store_id: 1 + parseInt(Math.random() * 1999),
         discount: parseInt(price / (Math.random() * 100)),
         delivery_date: moment(MAR_11_2022 + 86400000 * index).format('YYYY-MM-DDTHH:mm:ss.SSSZ'),
         created_at: moment(OCT_10_1994 + 86400000 * index).format('YYYY-MM-DDTHH:mm:ss.SSSZ')

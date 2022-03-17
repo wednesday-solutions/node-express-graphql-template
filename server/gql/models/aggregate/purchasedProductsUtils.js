@@ -5,6 +5,7 @@ import { TIMESTAMP } from '@utils/constants';
 import { getEarliestCreatedDate } from '@server/daos/purchasedProducts';
 import { redis } from '@server/services/redis';
 import { sendMessage } from '@server/services/slack';
+import { logger } from '@server/utils';
 
 export const handleAggregateQueries = (args, tableName) => {
   let where = ``;
@@ -56,8 +57,8 @@ export const queryRedis = async (type, args) => {
         aggregateData = JSON.parse(totalForDate);
         count += Number(aggregateData[type]);
       } catch (err) {
-        sendMessage(err);
-        console.log(err);
+        sendMessage(`Error while parsing data for ${key} as got value ${totalForDate}`);
+        logger().info(`Error while parsing data for ${key} as got value ${totalForDate}`);
       }
     }
     startDate = moment(startDate)

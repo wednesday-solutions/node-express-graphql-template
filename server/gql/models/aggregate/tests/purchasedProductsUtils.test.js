@@ -3,6 +3,7 @@ import moment from 'moment';
 import { redis } from '@services/redis';
 import { handleAggregateQueries, queryOptions, queryRedis } from '@gql/models/aggregate/purchasedProductsUtils';
 import { TIMESTAMP } from '@utils/constants';
+import * as utils from '@utils';
 
 describe('handleAggregateQueries', () => {
   it('should the appropriate rawSQL queries based on the args', async () => {
@@ -68,6 +69,18 @@ describe('queryOptions', () => {
       );
       const res = await queryRedis(type, args);
       expect(res).toBe(15);
+    });
+    it('should throw  error and also send slack message if there is problem in parsing JSON', async () => {
+      jest.spyOn(redis, 'get').mockReturnValue('test');
+      const spy = jest.spyOn(utils, 'logger').mockImplementation(() => {
+        const obj = {
+          info: msg => msg,
+          error: err => err
+        };
+        return obj;
+      });
+      await queryRedis(type, args);
+      expect(spy).toBeCalledTimes(2);
     });
   });
 });

@@ -16,7 +16,8 @@ export const purchasedProductFields = {
   price: { type: GraphQLInt, ...CREATE_AND_QUERY_REQUIRED_ARGS },
   discount: { type: GraphQLInt, ...CREATE_AND_QUERY_REQUIRED_ARGS },
   deliveryDate: { type: GraphQLDateTime, [TYPE_ATTRIBUTES.isUpdateRequired]: true, ...CREATE_AND_QUERY_REQUIRED_ARGS },
-  productId: { type: GraphQLID, ...CREATE_AND_QUERY_REQUIRED_ARGS }
+  productId: { type: GraphQLID, ...CREATE_AND_QUERY_REQUIRED_ARGS },
+  storeId: { type: GraphQLID, ...CREATE_AND_QUERY_REQUIRED_ARGS }
 };
 const PurchasedProduct = new GraphQLObjectType({
   name: 'PurchasedProduct',
