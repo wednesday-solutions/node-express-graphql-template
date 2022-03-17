@@ -28,7 +28,7 @@ export const updateRedis = async res => {
 };
 
 export const publishMessage = async (args, res) => {
-  pubsub.publish(SUBSCRIPTION_TOPICS.NEWPURCHASEDPRODUCT, {
+  pubsub.publish(SUBSCRIPTION_TOPICS.NEW_PURCHASED_PRODUCT, {
     newPurchasedProduct: {
       productId: res.productId,
       deliveryDate: res.deliveryDate,

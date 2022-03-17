@@ -7,7 +7,7 @@ import { checkFilterCondition } from '../purchasedProductSubscription/purchasedP
 
 export const PurchasedProductSubscription = {
   type: new GraphQLObjectType({
-    name: SUBSCRIPTION_TOPICS.NEWPURCHASEDPRODUCT,
+    name: SUBSCRIPTION_TOPICS.NEW_PURCHASED_PRODUCT,
     fields: () => ({
       productId: {
         type: GraphQLNonNull(GraphQLInt)
@@ -28,5 +28,5 @@ export const PurchasedProductSubscription = {
       type: GraphQLNonNull(GraphQLInt)
     }
   },
-  subscribe: withFilter(getAsyncInterator(SUBSCRIPTION_TOPICS.NEWPURCHASEDPRODUCT), checkFilterCondition)
+  subscribe: withFilter(getAsyncInterator(SUBSCRIPTION_TOPICS.NEW_PURCHASED_PRODUCT), checkFilterCondition)
 };
