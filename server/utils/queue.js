@@ -17,13 +17,13 @@ export const QUEUE_PROCESSORS = {
   },
   [QUEUE_NAMES.AGGREGATE_CHECK]: (job, done) => {
     console.log('Aggregate job is getting executed');
-    aggregateCheck(job, done);
+    aggregateCheck();
+    done();
   }
 };
 
 const CRON_EXPRESSIONS = {
-  MIDNIGHT: '0 0 * * *',
-  EVERY_MINUTE: '*/19 * * * *'
+  MIDNIGHT: '0 0 * * *'
 };
 
 export const initQueues = () => {
@@ -32,7 +32,7 @@ export const initQueues = () => {
     queues[queueName] = getQueue(queueName);
     queues[queueName].process(QUEUE_PROCESSORS[queueName]);
   });
-  queues[QUEUE_NAMES.AGGREGATE_CHECK].add({}, { repeat: { cron: CRON_EXPRESSIONS.EVERY_MINUTE } });
+  queues[QUEUE_NAMES.AGGREGATE_CHECK].add({}, { repeat: { cron: CRON_EXPRESSIONS.MIDNIGHT } });
 };
 export const getQueue = queueName => {
   if (!queues[queueName]) {

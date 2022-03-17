@@ -11,13 +11,12 @@ import { logger } from '@server/utils';
 import { REDIS_IMPLEMENTATION_DATE } from '@server/utils/constants';
 import moment from 'moment';
 
-export const aggregateCheck = async (job, done) => {
+export const aggregateCheck = async () => {
   let startDate;
   const previousDate = moment()
     .subtract(1, 'day')
     .format('YYYY-MM-DD');
   const endDate = REDIS_IMPLEMENTATION_DATE || previousDate;
-  const categories = await getAllCategories();
   const lastSyncFor = await redis.get('lastSyncFor');
   if (!lastSyncFor) {
     startDate = await getEarliestCreatedDate();
@@ -29,6 +28,7 @@ export const aggregateCheck = async (job, done) => {
       .format('YYYY-MM-DD');
     logger().info(`Redis is updated with aggregate values untill ${endDate}`);
   }
+  const categories = await getAllCategories();
   while (startDate <= endDate) {
     const totalForDate = await getTotalByDate(startDate);
     const countForDate = await getCountByDate(startDate);
