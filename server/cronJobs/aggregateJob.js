@@ -1,4 +1,5 @@
 import { getAllCategories } from '@server/daos/products';
+import moment from 'moment';
 import {
   getCountByDate,
   getCountByDateForCategory,
@@ -9,50 +10,47 @@ import {
 import { redis } from '@server/services/redis';
 import { logger } from '@server/utils';
 import { REDIS_IMPLEMENTATION_DATE } from '@server/utils/constants';
-import moment from 'moment';
 
 export const aggregateCheck = async () => {
   let startDate;
-  const previousDate = moment()
-    .subtract(1, 'day')
-    .format('YYYY-MM-DD');
-  const endDate = REDIS_IMPLEMENTATION_DATE || previousDate;
-  const lastSyncFor = await redis.get('lastSyncFor');
+  let lastSyncFor;
+  const endDate = moment(REDIS_IMPLEMENTATION_DATE);
+  const redisValueForLastSync = await redis.get('lastSyncFor');
+  if (redisValueForLastSync) {
+    lastSyncFor = moment(redisValueForLastSync);
+  }
   if (!lastSyncFor) {
-    startDate = await getEarliestCreatedDate();
-  } else if (lastSyncFor !== endDate) {
-    startDate = lastSyncFor;
+    startDate = moment(await getEarliestCreatedDate());
+  } else if (moment(lastSyncFor).isSameOrAfter(endDate)) {
+    logger().info(`Redis is updated with aggregate values until ${endDate}`);
+    return;
   } else {
-    startDate = moment(endDate)
-      .add(1, 'day')
-      .format('YYYY-MM-DD');
-    logger().info(`Redis is updated with aggregate values untill ${endDate}`);
+    startDate = lastSyncFor;
   }
   const categories = await getAllCategories();
-  while (startDate <= endDate) {
+  while (moment(startDate).isBefore(endDate)) {
     const totalForDate = await getTotalByDate(startDate);
     const countForDate = await getCountByDate(startDate);
+    const formattedDate = startDate.format('YYYY-MM-DD');
     redis.set(
-      `${startDate}_total`,
+      `${formattedDate}_total`,
       JSON.stringify({
-        total: totalForDate || 0,
-        count: countForDate || 0
+        total: totalForDate,
+        count: countForDate
       })
     );
     categories.forEach(async category => {
       const categoryTotal = await getTotalByDateForCategory(startDate, category);
       const categoryCount = await getCountByDateForCategory(startDate, category);
       redis.set(
-        `${startDate}_${category}`,
+        `${formattedDate}_${category}`,
         JSON.stringify({
-          total: categoryTotal || 0,
-          count: categoryCount || 0
+          total: categoryTotal,
+          count: categoryCount
         })
       );
+      await redis.set('lastSyncFor', formattedDate);
+      startDate = startDate.add(1, 'day');
     });
-    await redis.set('lastSyncFor', startDate);
-    startDate = moment(startDate)
-      .add(1, 'day')
-      .format('YYYY-MM-DD');
   }
 };

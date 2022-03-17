@@ -13,13 +13,13 @@ export const getEarliestCreatedDate = async () => {
 
 export const getTotalByDate = async date => {
   const total = await db.purchasedProducts.sum('price', {
-    where: { createdAt: { [Op.lt]: `${date}T23:59:59.000Z`, [Op.gt]: `${date}T00:00:00.000Z` } }
+    where: { createdAt: { [Op.lt]: date.endOf('day').toISOString(), [Op.gt]: date.startOf('day').toISOString() } }
   });
   return total || 0;
 };
 export const getTotalByDateForCategory = async (date, category) => {
   const total = await db.purchasedProducts.sum('price', {
-    where: { createdAt: { [Op.lt]: `${date}T23:59:59.000Z`, [Op.gt]: `${date}T00:00:00.000Z` } },
+    where: { createdAt: { [Op.lt]: date.endOf('day').toISOString(), [Op.gt]: date.startOf('day').toISOString() } },
     include: [
       {
         model: db.products,
@@ -37,14 +37,14 @@ export const getTotalByDateForCategory = async (date, category) => {
 
 export const getCountByDate = async date => {
   const total = await db.purchasedProducts.count({
-    where: { createdAt: { [Op.lt]: `${date}T23:59:59.000Z`, [Op.gt]: `${date}T00:00:00.000Z` } }
+    where: { createdAt: { [Op.lt]: date.endOf('day').toISOString(), [Op.gt]: date.startOf('day').toISOString() } }
   });
   return total;
 };
 
 export const getCountByDateForCategory = async (date, category) => {
   const total = await db.purchasedProducts.count({
-    where: { createdAt: { [Op.lt]: `${date}T23:59:59.000Z`, [Op.gt]: `${date}T00:00:00.000Z` } },
+    where: { createdAt: { [Op.lt]: date.endOf('day').toISOString(), [Op.gt]: date.startOf('day').toISOString() } },
     include: [
       {
         model: db.products,

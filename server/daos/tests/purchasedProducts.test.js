@@ -1,4 +1,5 @@
 import db from '@database/models';
+import moment from 'moment';
 import {
   insertPurchasedProducts,
   getEarliestCreatedDate,
@@ -10,7 +11,7 @@ import {
 
 describe('purchasedProducts tests', () => {
   const defaultTotalPrice = 500;
-  const date = '2022-03-16';
+  const date = moment('2022-03-16');
   const category = 'Sports';
   const price = 1122;
   const productId = 133;
@@ -42,7 +43,7 @@ describe('purchasedProducts tests', () => {
     });
     it('should return zero if there is no value present for the date', async () => {
       jest.spyOn(db.purchasedProducts, 'sum').mockReturnValueOnce(NaN);
-      const mockDate = '2022-01-03';
+      const mockDate = moment('2022-01-03');
       const res = await getTotalByDate(mockDate);
       expect(res).toEqual(0);
     });
@@ -55,7 +56,7 @@ describe('purchasedProducts tests', () => {
     });
     it('should return zero if there is no value present for the date', async () => {
       jest.spyOn(db.purchasedProducts, 'sum').mockReturnValueOnce(NaN);
-      const mockDate = '2022-01-03';
+      const mockDate = moment('2022-01-03');
       const res = await getTotalByDateForCategory(mockDate);
       expect(res).toEqual(0);
     });
@@ -69,7 +70,7 @@ describe('purchasedProducts tests', () => {
     });
     it('should return zero if there is no count present for the date', async () => {
       db.purchasedProducts.count = jest.fn().mockImplementationOnce(() => 0);
-      const mockDate = '2022-01-03';
+      const mockDate = moment('2022-01-03');
       const res = await getCountByDate(mockDate);
       expect(res).toEqual(0);
     });
@@ -83,7 +84,7 @@ describe('purchasedProducts tests', () => {
     });
     it('should return zero if there is no count present for the date for the category', async () => {
       db.purchasedProducts.count = jest.fn().mockImplementationOnce(() => NaN);
-      const mockDate = '2022-01-03';
+      const mockDate = moment('2022-01-03');
       const res = await getCountByDateForCategory(mockDate);
       expect(res).toEqual(0);
     });
