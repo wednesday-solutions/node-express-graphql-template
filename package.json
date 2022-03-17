@@ -46,6 +46,7 @@
     "axios": "^0.26.0",
     "babel-eslint": "^10.1.0",
     "bull": "^4.7.0",
+    "cls-hooked": "^4.2.2",
     "cls-rtracer": "^2.6.0",
     "cors": "^2.8.5",
     "crypto": "^1.0.1",
