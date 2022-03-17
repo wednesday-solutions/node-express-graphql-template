@@ -17,7 +17,6 @@ export const getTotalByDate = async date => {
   });
   return total || 0;
 };
-
 export const getTotalByDateForCategory = async (date, category) => {
   const total = await db.purchasedProducts.sum('price', {
     where: { createdAt: { [Op.lt]: `${date}T23:59:59.000Z`, [Op.gt]: `${date}T00:00:00.000Z` } },

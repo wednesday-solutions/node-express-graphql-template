@@ -10,6 +10,7 @@ export const getCategoryById = async id => {
 
 export const getAllCategories = async () => {
   const categoriesFromRedis = await redis.get('categories');
+  // add mutation to add category to redis for create product mutation
   if (!categoriesFromRedis) {
     const allCategories = await db.products.findAll({
       attributes: [[Sequelize.fn('DISTINCT', Sequelize.col('category')), 'category']]
