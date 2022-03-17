@@ -106,3 +106,27 @@ yarn build
 ### Support for circuit-breaking
 
 - Support for circuit breaking has been added using [opossum](https://github.com/nodeshift/opossum)
+
+### Slack Integration
+
+- Support for sending slack alerts on desired errors has been added using [slack-notify](https://www.npmjs.com/package/slack-notify)
+
+### Out of the box Redis support
+
+- Support for caching added with [redis](https://redis.io/)
+
+### Custom Mutations
+
+- Support for custom mutations has been added along with support for updating only specific fields
+
+### Scheduling a Job
+
+- Support for adding a job and queuing it has been added using [bull](https://github.com/OptimalBits/bull)
+
+### Subscriptions
+
+- GraphQl subscriptions have been added using [apollo-server](https://www.npmjs.com/package/apollo-server-express) & [graphql-redis-subscriptions](https://www.npmjs.com/package/graphql-redis-subscriptions)
+
+### Aggregate Caching
+
+- Support for caching of aggregate data added using Redis
