@@ -67,6 +67,7 @@
     "jsonwebtoken": "^8.5.1",
     "loadash": "^1.0.0",
     "lodash": "^4.17.21",
+    "map-keys-deep": "^0.0.2",
     "md5": "^2.3.0",
     "moment": "^2.29.1",
     "multer": "^1.4.2",
