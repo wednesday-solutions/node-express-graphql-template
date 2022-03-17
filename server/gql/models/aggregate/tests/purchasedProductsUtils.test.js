@@ -54,7 +54,7 @@ describe('queryOptions', () => {
       await queryRedis(type, args);
       expect(spy).toBeCalledTimes(4);
     });
-    it('should call the date with category if the category is provided in args', async () => {
+    it('should call the date with category if the ategory is provided in args', async () => {
       await queryRedis(type, args);
       const spy = jest.spyOn(redis, 'get');
       await queryRedis(type, args);

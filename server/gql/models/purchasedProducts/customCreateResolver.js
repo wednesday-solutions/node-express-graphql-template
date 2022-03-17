@@ -1,10 +1,9 @@
 import moment from 'moment';
-import { insertPurchasedProducts } from '@daos/purchasedProducts';
+import { getCategoryById, insertPurchasedProducts } from '@daos/purchasedProducts';
 import { transformSQLError } from '@utils';
 import { redis } from '@services/redis';
 import { SUBSCRIPTION_TOPICS } from '@server/utils/constants';
 import { pubsub } from '@server/utils/pubsub';
-import { getCategoryById } from '@server/daos/products';
 
 export const updateRedis = async res => {
   const currentDate = moment().format('YYYY-MM-DD');
