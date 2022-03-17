@@ -88,12 +88,6 @@ export function mockDBClient(config = { total: 10 }) {
     }
     return config?.purchasedProducts;
   });
-
-  purchasedProductsMock.$queueResult([
-    {
-      count: () => 1
-    }
-  ]);
   const storesMock = defineAndAddAttributes(
     dbConnectionMock,
     'stores',
@@ -119,7 +113,7 @@ export function mockDBClient(config = { total: 10 }) {
     dbConnectionMock,
     'suppliers',
     suppliersTable[0],
-    require('@database/models/suppliers').getAttributes(sequelize, sequelize.DataTypes),
+    require('@database/models/purchased_products').getAttributes(sequelize, sequelize.DataTypes),
     config.total
   );
   return {

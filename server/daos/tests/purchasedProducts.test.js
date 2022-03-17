@@ -31,23 +31,18 @@ describe('purchasedProducts tests', () => {
 
   describe('earliestCreatedDate tests', () => {
     it('should return the earliest created purchasedProduct ', async () => {
-      db.purchasedProducts.findOne = jest.fn().mockImplementationOnce(() => ({
-        createdAt: new Date()
-      }));
       const res = await getEarliestCreatedDate();
       expect(res).toEqual(new Date().toISOString().split('T')[0]);
     });
   });
   describe('getTotalByDate tests', () => {
     it('should return the total of price for a particular provided date', async () => {
-      db.purchasedProducts.sum = jest.fn().mockReturnValueOnce(defaultTotalPrice);
       const res = await getTotalByDate(date);
       expect(res).toEqual(defaultTotalPrice);
     });
   });
   describe('getTotalByDateForCategory tests', () => {
     it('should return the total for a particular category on a provided date', async () => {
-      db.purchasedProducts.sum = jest.fn().mockReturnValueOnce(defaultTotalPrice);
       const res = await getTotalByDateForCategory(date, category);
       expect(res).toEqual(defaultTotalPrice);
     });
