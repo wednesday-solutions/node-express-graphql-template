@@ -28,6 +28,7 @@ export const aggregateCheck = async () => {
     startDate = lastSyncFor;
   }
   const categories = await getAllCategories();
+
   while (moment(startDate).isBefore(endDate)) {
     const totalForDate = await getTotalByDate(startDate);
     const countForDate = await getCountByDate(startDate);
