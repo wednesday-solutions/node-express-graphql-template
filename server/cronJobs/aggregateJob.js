@@ -50,7 +50,7 @@ export const aggregateCheck = async () => {
         })
       );
       await redis.set('lastSyncFor', formattedDate);
-      startDate = startDate.add(1, 'day');
     });
+    startDate = startDate.add(1, 'day');
   }
 };
