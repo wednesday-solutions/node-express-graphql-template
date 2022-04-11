@@ -28,6 +28,7 @@ export const aggregateCheck = async () => {
     startDate = lastSyncFor;
   }
   const categories = await getAllCategories();
+
   while (moment(startDate).isBefore(endDate)) {
     const totalForDate = await getTotalByDate(startDate);
     const countForDate = await getCountByDate(startDate);
@@ -50,7 +51,7 @@ export const aggregateCheck = async () => {
         })
       );
       await redis.set('lastSyncFor', formattedDate);
-      startDate = startDate.add(1, 'day');
     });
+    startDate = startDate.add(1, 'day');
   }
 };

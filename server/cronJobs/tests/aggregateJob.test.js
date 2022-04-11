@@ -24,13 +24,13 @@ describe('Aggregate job tests', () => {
     jest
       .spyOn(redis, 'get')
       .mockReturnValueOnce(
-        moment()
+        moment('16-03-2022', 'DD-MM-YYYY')
           .subtract(2, 'day')
           .format('YYYY-MM-DD')
       )
       .mockReturnValueOnce(JSON.stringify(['Shoes', 'Health']));
     const spy = jest.spyOn(redis, 'set');
     await aggregateCheck();
-    expect(spy).toBeCalledTimes(11);
+    expect(spy).toBeCalledTimes(6);
   });
 });
