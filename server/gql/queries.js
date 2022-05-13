@@ -1,7 +1,7 @@
-import { GraphQLObjectType, GraphQLNonNull, GraphQLInt } from 'graphql';
+import { GraphQLObjectType, GraphQLNonNull, GraphQLInt, GraphQLString } from 'graphql';
 import camelCase from 'lodash/camelCase';
 import pluralize from 'pluralize';
-import { defaultListArgs, defaultArgs, resolver } from 'graphql-sequelize';
+import { defaultListArgs, defaultArgs, resolver, JSONType } from 'graphql-sequelize';
 import { Aggregate } from '@gql/models/aggregate';
 import { getNode } from '@gql/node';
 import { Product, productQueries } from '@gql/models/products';
@@ -46,7 +46,9 @@ export const addQueries = () => {
         ...DB_TABLES[table].list?.args,
         ...defaultListArgs(DB_TABLES[table].model),
         limit: { type: GraphQLNonNull(GraphQLInt) },
-        offset: { type: GraphQLNonNull(GraphQLInt) }
+        offset: { type: GraphQLNonNull(GraphQLInt) },
+        order: { type: GraphQLNonNull(GraphQLString) },
+        where: { type: GraphQLNonNull(JSONType.default) }
       }
     };
   });
