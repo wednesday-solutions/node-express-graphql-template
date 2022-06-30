@@ -65,6 +65,16 @@ Relay support has been added by following [this](https://github.com/mickhansen/g
 
 ## Setup
 
+### Setting up database (postgres)
+
+- Requirement [postgresql](https://www.postgresql.org/)
+
+Steps to set up database with `username` and `role` using terminal
+
+- Enter postgres terminal `psql postgres`
+- Create new database `CREATE DATABASE reporting_dashboard_dev;`
+- Create a new role with password `CREATE ROLE reporting_dashboard_role WITH LOGIN PASSWORD 'reportingdashboard123';`
+
 ### Setup and run locally using
 
 ```
