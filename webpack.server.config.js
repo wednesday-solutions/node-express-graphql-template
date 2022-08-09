@@ -8,8 +8,6 @@ const dotenv = require('dotenv');
 const dotEnvFile =
   process.env.ENVIRONMENT_NAME === 'production' ? `.env` : `.env.${process.env.ENVIRONMENT_NAME || 'local'}`;
 
-console.log({ dotEnvFile });
-
 const env = dotenv.config({ path: dotEnvFile }).parsed;
 
 const envKeys = {
@@ -26,11 +24,9 @@ const envKeys = {
 module.exports = (options = {}) => ({
   mode: options.mode,
   entry: options.entry,
+  node: { __dirname: true },
   optimization: options.optimization,
   devtool: 'source-map',
-  externals: {
-    bull: 'commonjs2 bull'
-  },
   module: {
     rules: [
       {

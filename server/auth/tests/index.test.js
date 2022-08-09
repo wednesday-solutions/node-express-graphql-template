@@ -4,7 +4,7 @@ import * as AuthDoas from '@daos/auth';
 describe('handleSignUp tests', () => {
   const email = 'rohansaroha2@wednesday.is';
   const password = 1234;
-  const user = { email: email, password: password };
+  const user = { email, password };
 
   it('should ensure that it signup the user', async () => {
     const mockResponse = () => {

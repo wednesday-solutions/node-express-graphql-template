@@ -78,7 +78,7 @@ Steps to set up database with `username` and `role` using terminal
 ### Setup and run locally using
 
 ```
-./setup-local.sh
+./scripts/setup-local.sh
 ```
 
 ### Build and run docker container locally

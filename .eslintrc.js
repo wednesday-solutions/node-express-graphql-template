@@ -23,6 +23,7 @@ module.exports = {
     'key-spacing': [2, { beforeColon: false, afterColon: true }],
     'arrow-parens': ['error', 'as-needed'],
     'arrow-body-style': [2, 'as-needed'],
+
     'class-methods-use-this': 0,
     'import/imports-first': 0,
     'import/newline-after-import': 0,
@@ -40,8 +41,8 @@ module.exports = {
     'no-use-before-define': 0,
     'prefer-template': 2,
     'require-yield': 0,
-    'node/handle-callback-err': 'error',
-    'prettier/prettier': ['error', prettierOptions]
+    'prettier/prettier': ['error', prettierOptions],
+    'node/handle-callback-err': ['off']
   },
   settings: {
     'import/resolver': {

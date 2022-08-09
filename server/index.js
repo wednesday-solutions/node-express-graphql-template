@@ -58,7 +58,7 @@ export const init = async () => {
     handlePreflightRequest, // handle pre-flight request for graphql endpoint
     isAuthenticated,
     graphqlHTTP({
-      schema: schema,
+      schema,
       graphiql: true,
       customFormatErrorFn: e => e
     })
