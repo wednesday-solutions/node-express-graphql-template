@@ -126,7 +126,7 @@ module.exports = (options = {}) => ({
       '@gql': path.resolve(__dirname, './server/gql'),
       '@config': path.resolve(__dirname, 'config')
     },
-    extensions: ['.js', '.jsx', '.react.js'],
+    extensions: ['.js'],
     mainFields: ['browser', 'jsnext:main', 'main']
   },
   target: 'node'
