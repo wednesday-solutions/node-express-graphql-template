@@ -128,7 +128,7 @@
     "prettier-config-standard": "^1.0.1",
     "sequelize-cli": "^6.2.0",
     "sequelize-mock": "^0.10.2",
-    "shelljs": "^0.8.3"
+    "shelljs": "^0.8.5"
   },
   "precommit": "lint:staged",
   "lint-staged": {
