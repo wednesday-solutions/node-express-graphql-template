@@ -18,10 +18,10 @@ describe('purchasedProducts tests', () => {
   const discount = 111;
   const deliveryDate = '"2022-07-20T17:30:15+05:30"';
   const purchasedProduct = {
-    price: price,
-    productId: productId,
-    discount: discount,
-    deliveryDate: deliveryDate
+    price,
+    productId,
+    discount,
+    deliveryDate
   };
 
   it('should insert a purchased product and call with correct params', async () => {

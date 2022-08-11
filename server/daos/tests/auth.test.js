@@ -6,7 +6,7 @@ describe('getUserBySign tests', () => {
   const email = 'rohansaroha2@wednesday.is';
   const password = 1234;
   const md5Password = md5(password);
-  const user = { email: email, password: md5Password };
+  const user = { email, password: md5Password };
   let mock;
 
   beforeEach(() => {

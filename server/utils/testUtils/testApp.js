@@ -23,7 +23,7 @@ const testApp = express();
 testApp.use(
   '/graphql',
   graphqlHTTP({
-    schema: schema,
+    schema,
     graphiql: false,
     customFormatErrorFn: e => {
       if (process.env.ENVIRONMENT_NAME !== 'local') {
