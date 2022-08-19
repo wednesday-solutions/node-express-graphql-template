@@ -1,19 +1,12 @@
 import { GraphQLInt, GraphQLNonNull, GraphQLObjectType } from 'graphql';
 import upperFirst from 'lodash/upperFirst';
-import { productMutations } from '@gql/models/products';
-import { purchasedProductMutations } from '@gql/models/purchasedProducts';
-import { supplierMutations } from '@gql/models/suppliers';
 import { deletedId, deleteUsingId, updateUsingId } from '@database/dbUtils';
-import { addressMutations } from '@gql/models/addresses';
-import { storeMutations } from '@gql/models/stores';
-import { storeProductMutations } from '@gql/models/storeProducts';
-import { supplierProductMutations } from '@gql/models/supplierProducts';
-import { userMutations } from '@gql/models/users';
 import { MUTATION_TYPE } from '@utils/constants';
 import { getQueryFields, TYPE_ATTRIBUTES } from '@utils/gqlFieldUtils';
+import { getGqlModels } from '@server/utils/autogenHelper';
 const shouldAddMutation = (type, table) => {
   if (type === MUTATION_TYPE.CREATE) {
-    const negateTablesList = ['users'];
+    const negateTablesList = ['user'];
     return !negateTablesList.includes(table);
   }
 
@@ -23,7 +16,7 @@ const shouldAddMutation = (type, table) => {
   }
 
   if (type === MUTATION_TYPE.DELETE) {
-    const negateTablesList = ['users'];
+    const negateTablesList = ['user'];
     return !negateTablesList.includes(table);
   }
 };
@@ -36,16 +29,7 @@ export const createResolvers = (model, customResolver) => ({
     customResolver ? customResolver(model, args, context) : deleteUsingId(model, args)
 });
 
-export const DB_TABLES = {
-  product: productMutations,
-  purchasedProduct: purchasedProductMutations,
-  address: addressMutations,
-  store: storeMutations,
-  storeProduct: storeProductMutations,
-  supplier: supplierMutations,
-  supplierProduct: supplierProductMutations,
-  users: userMutations
-};
+export const DB_TABLES = getGqlModels({ type: 'Mutations', blacklist: ['aggregate', 'timestamps'] });
 
 export const addMutations = () => {
   const mutations = {};

@@ -4,28 +4,10 @@ import pluralize from 'pluralize';
 import { defaultListArgs, defaultArgs, resolver } from 'graphql-sequelize';
 import { Aggregate } from '@gql/models/aggregate';
 import { getNode } from '@gql/node';
-import { Product, productQueries } from '@gql/models/products';
-import { addressQueries } from '@gql/models/addresses';
-import { purchasedProductQueries } from '@gql/models/purchasedProducts';
-import { storeProductQueries } from '@gql/models/storeProducts';
-import { storeQueries } from '@gql/models/stores';
-import { supplierQueries } from '@gql/models/suppliers';
-import { supplierProductQueries } from '@gql/models/supplierProducts';
-import { userQueries } from '@gql/models/users';
+import { getGqlModels } from '@server/utils/autogenHelper';
 
-const { nodeField, nodeTypeMapper } = getNode();
-
-const DB_TABLES = {
-  product: productQueries,
-  address: addressQueries,
-  purchasedProduct: purchasedProductQueries,
-  storeProduct: storeProductQueries,
-  store: storeQueries,
-  supplier: supplierQueries,
-  supplierProduct: supplierProductQueries,
-  user: userQueries
-};
-
+const { nodeField } = getNode();
+const DB_TABLES = getGqlModels({ type: 'Queries', blacklist: ['aggregate', 'timestamps'] });
 export const addQueries = () => {
   const query = {
     aggregate: Aggregate
@@ -56,10 +38,6 @@ export const addQueries = () => {
   });
   return query;
 };
-
-nodeTypeMapper.mapTypes({
-  products: Product
-});
 export const QueryRoot = new GraphQLObjectType({
   name: 'Query',
   node: nodeField,
