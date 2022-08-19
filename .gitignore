@@ -94,3 +94,5 @@ typings/
 
 # DS_Store
 .DS_Store
+report.json
+reports/test-report.xml

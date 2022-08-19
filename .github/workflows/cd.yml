@@ -44,7 +44,7 @@ jobs:
   #   - name: Deploy to Amazon ECS service
   #     uses: aws-actions/amazon-ecs-deploy-task-definition@v1
   #     with:
-  #       task-definition: ${{ steps.pawlyclinic-api-container.outputs.task-definition }}
+  #       task-definition: ${{ steps.ecs-cd-starter-container.outputs.task-definition }}
   #       service: ecs-cd-starter-${{ steps.vars.outputs.stage }}
   #       cluster: ecs-cd-starter-${{ steps.vars.outputs.stage }}
   #   - name: Logout of Amazon ECR

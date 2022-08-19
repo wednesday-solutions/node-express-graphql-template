@@ -31,7 +31,7 @@
     "lint:staged": "lint-staged",
     "prettify": "prettier --write",
     "precommit": "lint:staged",
-    "test": "jest --coverage --forceExit --detectOpenHandles",
+    "test": "export ENVIRONMENT_NAME=test && npx jest --silent --forceExit --detectOpenHandles --ci --coverage --testLocationInResults --json --outputFile=\"report.json\"",
     "test:badges": "npm run test  && jest-coverage-badges --output './badges'"
   },
   "dependencies": {
@@ -119,6 +119,7 @@
     "jest": "^27.5.1",
     "jest-coverage-badges": "^1.1.2",
     "jest-environment-node": "^26.3.0",
+    "jest-sonar": "^0.2.12",
     "kill-port": "^1.6.0",
     "lint-staged": "^11.0.1",
     "nodemon": "^2.0.4",
