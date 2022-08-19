@@ -12,17 +12,24 @@ jobs:
       matrix:
         node-version: [14.x]
     steps:
-      - uses: actions/checkout@v2
-      - name: Setup environment
-        uses: actions/setup-node@v2
+      - name: Checkout code
+        uses: actions/checkout@master
+      # - name: Setup environment
+      #   uses: actions/setup-node@v2
+      #   with:
+      #     cache: 'yarn'
+      #     node-version: ${{ matrix.node-version }}
+      # - name: Install dependencies
+      #   run: yarn install
+      # - name: Lint
+      #   run: yarn lint
+      # - name: Test
+      #   run: yarn test
+      # - name: Build
+      #   run: yarn build:local
+      - name: Update diagram
+        uses: githubocto/repo-visualizer@0.7.1
         with:
-          cache: 'yarn'
-          node-version: ${{ matrix.node-version }}
-      - name: Install dependencies
-        run: yarn install
-      - name: Lint
-        run: yarn lint
-      - name: Test
-        run: yarn test
-      - name: Build
-        run: yarn build:local
+          should_push: true
+          branch: ${{ github.event.pull_request.head.ref }}
+          output_file: "images/diagram.svg"
