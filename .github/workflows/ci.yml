@@ -18,6 +18,14 @@ jobs:
     steps:
       - name: Checkout code
         uses: actions/checkout@v3
+      - name: Update diagram
+        uses: wednesday-solutions/repo-visualizer@0.0.5
+        with:
+          should_push: true
+          branch: "${{ github.event.pull_request.head.ref }}"
+          output_file: "repo-visualizer.svg"
+          excluded_paths: node_modules,dist,.yarn,.vscode,yarn.lock,coverage,report.json,reports,.github
+          commit_message: "Updating diagram [skip ci]"
       - name: Setup environment
         uses: actions/setup-node@v2
         with:
@@ -31,13 +39,6 @@ jobs:
         run: yarn test
       - name: Build
         run: yarn build:local
-      - name: Update diagram
-        uses: wednesday-solutions/repo-visualizer@0.0.4
-        with:
-          should_push: true
-          branch: "${{ github.event.pull_request.head.ref }}"
-          output_file: "repo-visualizer.svg"
-          excluded_paths: node_modules,dist,.yarn,.vscode,yarn.lock,coverage
       - name: SonarCloud Scan
         uses: sonarsource/sonarcloud-github-action@master
         env:
