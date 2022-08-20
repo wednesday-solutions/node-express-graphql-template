@@ -1,6 +1,18 @@
 {
   "testEnvironment": "node",
   "setupFilesAfterEnv": ["./jest.setup.js"],
+  "reporters": [
+    "default",
+    [
+      "jest-sonar",
+      {
+        "outputDirectory": "reports",
+        "outputName": "test-report.xml",
+        "relativeRootDir": "./",
+        "reportedFilePath": "relative"
+      }
+    ]
+  ],
   "collectCoverageFrom": [
     "**/server/**",
     "!**/node_modules/**",

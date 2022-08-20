@@ -105,7 +105,6 @@ export const handlePreflightRequest = function(req, res, next) {
   }
 };
 
-// Custom logic for allowing backend api to be accessed by specific origin, pawlyclinic domain only for now!
 export const corsOptionsDelegate = function(req, callback) {
   const allowedDomain = 'wednesday.is';
   let corsOptions;

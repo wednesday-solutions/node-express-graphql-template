@@ -4727,6 +4727,11 @@ entities@^2.0.0:
   resolved "https://registry.yarnpkg.com/entities/-/entities-2.1.0.tgz#992d3129cf7df6870b96c57858c249a120f8b8b5"
   integrity sha512-hCx1oky9PFrJ611mf0ifBLBRW8lUUVRlFolb5gWRfIELabBlbp9xZvrqZLZAs+NxFnbfQoeGd8wDkygjg7U85w==
 
+entities@^2.1.0:
+  version "2.2.0"
+  resolved "https://registry.yarnpkg.com/entities/-/entities-2.2.0.tgz#098dc90ebb83d8dffa089d55256b351d34c4da55"
+  integrity sha512-p92if5Nz619I0w+akJrLZH0MX0Pb5DX39XOwQTtXSdQQOaYH03S1uIQp4mhOZtAXrxq4ViO67YTiLBo2638o9A==
+
 envinfo@^7.7.3:
   version "7.8.1"
   resolved "https://registry.yarnpkg.com/envinfo/-/envinfo-7.8.1.tgz#06377e3e5f4d379fea7ac592d5ad8927e0c4d475"
@@ -7108,6 +7113,14 @@ jest-snapshot@^27.5.1:
     natural-compare "^1.4.0"
     pretty-format "^27.5.1"
     semver "^7.3.2"
+
+jest-sonar@^0.2.12:
+  version "0.2.12"
+  resolved "https://registry.yarnpkg.com/jest-sonar/-/jest-sonar-0.2.12.tgz#9843cac11f65c997b03a6c94a57571f50decc02b"
+  integrity sha512-8hZO3rhxVobJkMhyuEgsZxfj0QQucCa+dkXVJ3ckz+Gi180F2ET12GwEGP/j4z1owc08Z2JgIt2Qlgl06+3asQ==
+  dependencies:
+    entities "^2.1.0"
+    strip-ansi "^6.0.0"
 
 jest-util@^26.6.1:
   version "26.6.1"
