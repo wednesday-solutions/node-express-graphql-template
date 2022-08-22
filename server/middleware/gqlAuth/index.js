@@ -2,16 +2,13 @@ import gql from 'graphql-tag';
 import { isLocalEnv, isTestEnv, logger } from '@utils';
 import { convertToMap } from '@utils/gqlSchemaParsers';
 import jwt from 'jsonwebtoken';
-import { NO_AUTH_QUERIES, RESTRICTED, GQL_QUERY_TYPES } from './constants';
+import { RESTRICTED, GQL_QUERY_TYPES } from './constants';
 
 import { connect } from '@database';
 import { sendMessage } from '@services/slack';
 import get from 'lodash/get';
 
 const { parse } = require('graphql');
-const firstOperationDefinition = ast => ast.definitions[0];
-const firstFieldValueNameFromOperation = operationDefinition =>
-  operationDefinition.selectionSet.selections[0].name.value;
 
 export const invalidScope = (
   res,
@@ -21,19 +18,17 @@ export const invalidScope = (
     errors
   });
 
-export const getQueryName = async req => {
+export const getQueryNames = async req => {
   const parsedQuery = parse(req.body.query);
-  const operationType = firstOperationDefinition(parsedQuery).operation;
-  const queryName = firstFieldValueNameFromOperation(firstOperationDefinition(parsedQuery));
-
-  return { operationType, queryName };
+  return parsedQuery.definitions.map(def => ({
+    operationType: def.operation,
+    queryName: def.selectionSet.selections[0].name.value
+  }));
 };
 
 export const isPublicQuery = async req => {
-  const { queryName, operationType } = await getQueryName(req);
-  const isQuery = operationType === GQL_QUERY_TYPES.QUERY;
-  const isNoAuthQuery = NO_AUTH_QUERIES.includes(queryName);
-  return isQuery && isNoAuthQuery;
+  const queries = await getQueryNames(req);
+  return queries.every(({ queryName, operationType }) => GQL_QUERY_TYPES[operationType].whitelist.includes(queryName));
 };
 
 export const isAuthenticated = async (req, res, next) => {

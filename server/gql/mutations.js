@@ -1,9 +1,11 @@
-import { GraphQLInt, GraphQLNonNull, GraphQLObjectType } from 'graphql';
+import { GraphQLID, GraphQLInt, GraphQLNonNull, GraphQLObjectType, GraphQLString } from 'graphql';
 import upperFirst from 'lodash/upperFirst';
 import { deletedId, deleteUsingId, updateUsingId } from '@database/dbUtils';
 import { MUTATION_TYPE } from '@utils/constants';
 import { getQueryFields, TYPE_ATTRIBUTES } from '@utils/gqlFieldUtils';
 import { getGqlModels } from '@server/utils/autogenHelper';
+import { handleSignIn, handleSignUp } from '@server/gql/auth';
+import { GraphQLDateTime } from 'graphql-iso-date';
 const shouldAddMutation = (type, table) => {
   if (type === MUTATION_TYPE.CREATE) {
     const negateTablesList = ['user'];
@@ -69,6 +71,41 @@ export const addMutations = () => {
 export const MutationRoot = new GraphQLObjectType({
   name: 'Mutation',
   fields: () => ({
-    ...addMutations()
+    ...addMutations(),
+    signUp: {
+      type: new GraphQLObjectType({
+        name: 'SignUpResponse',
+        fields: () => ({
+          id: { type: GraphQLNonNull(GraphQLID) },
+          email: { type: GraphQLNonNull(GraphQLString) },
+          firstName: { type: GraphQLNonNull(GraphQLString) },
+          lastName: { type: GraphQLNonNull(GraphQLString) },
+          token: { type: GraphQLNonNull(GraphQLString) },
+          createdAt: { type: GraphQLNonNull(GraphQLDateTime) },
+          updatedAt: { type: GraphQLNonNull(GraphQLDateTime) },
+          deletedAt: { type: GraphQLDateTime }
+        })
+      }),
+      args: {
+        email: { type: GraphQLNonNull(GraphQLString) },
+        password: { type: GraphQLNonNull(GraphQLString) },
+        firstName: { type: GraphQLNonNull(GraphQLString) },
+        lastName: { type: GraphQLNonNull(GraphQLString) }
+      },
+      resolve: handleSignUp
+    },
+    signIn: {
+      type: new GraphQLObjectType({
+        name: 'SignInResponse',
+        fields: () => ({
+          token: { type: GraphQLNonNull(GraphQLString) }
+        })
+      }),
+      args: {
+        email: { type: GraphQLNonNull(GraphQLString) },
+        password: { type: GraphQLNonNull(GraphQLString) }
+      },
+      resolve: handleSignIn
+    }
   })
 });

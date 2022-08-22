@@ -22,7 +22,7 @@ describe('init', () => {
     await require('../index').init();
 
     // check if the environments are being configured correctly
-    expect(mocks.dotenv.config.mock.calls.length).toBe(3);
+    expect(mocks.dotenv.config.mock.calls.length).toBe(2);
   });
 
   it('should ensure the no of call to app.use', async () => {
@@ -32,7 +32,7 @@ describe('init', () => {
     await init();
 
     // check if the server has been started
-    expect(mocks.app.use.mock.calls.length).toBe(7);
+    expect(mocks.app.use.mock.calls.length).toBe(6);
     expect(mocks.app.use.mock.calls[0][0]).toEqual(expect.any(Function));
   });
 

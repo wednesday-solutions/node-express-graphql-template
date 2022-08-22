@@ -114,10 +114,10 @@ describe('gqlAuth tests', () => {
       }
     };
     it('successfully get queryName', async () => {
-      const { getQueryName } = require('../index');
-      const response = await getQueryName(request);
+      const { getQueryNames } = require('../index');
+      const response = await getQueryNames(request);
       expect(response).toBeTruthy();
-      expect(response.queryName).toEqual('address');
+      expect(response[0].queryName).toEqual('address');
     });
   });
   describe('isPublicQuery tests', () => {
