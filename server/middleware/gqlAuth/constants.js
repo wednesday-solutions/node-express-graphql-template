@@ -13,9 +13,12 @@ export const RESTRICTED = {
     }
   }
 };
-export const NO_AUTH_QUERIES = ['purchasedProduct'];
 export const GQL_QUERY_TYPES = {
-  QUERY: 'query',
-  MUTATION: 'mutation',
-  SUBSCRIPTION: 'subscription'
+  query: {
+    whitelist: ['purchasedProduct']
+  },
+  mutation: {
+    whitelist: ['signUp', 'signIn']
+  },
+  subscription: { whitelist: [] }
 };
