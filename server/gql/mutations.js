@@ -11,7 +11,7 @@ const shouldAddMutation = (type, table) => {
   }
 
   if (type === MUTATION_TYPE.UPDATE) {
-    const negateTablesList = [];
+    const negateTablesList = ['purchasedProduct'];
     return !negateTablesList.includes(table);
   }
 
