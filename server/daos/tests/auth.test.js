@@ -1,5 +1,5 @@
 import md5 from 'md5';
-import { getUserBySignIn, createUserBySignup } from '../auth';
+import { getUserByEmailPassword, createUserBySignup } from '../auth';
 import db from '@database/models';
 
 describe('getUserBySign tests', () => {
@@ -15,7 +15,7 @@ describe('getUserBySign tests', () => {
   });
 
   it('should ensure that it return user when password is correct', async () => {
-    const res = await getUserBySignIn(email, password);
+    const res = await getUserByEmailPassword(email, password);
     expect(res).toEqual(user);
   });
 });

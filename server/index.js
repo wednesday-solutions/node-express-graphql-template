@@ -7,9 +7,7 @@ import 'whatwg-fetch';
 import dotenv from 'dotenv';
 import { ApolloServer } from 'apollo-server-express';
 import { createServer } from 'http';
-import multer from 'multer';
 import axios from 'axios';
-import get from 'lodash/get';
 import { newCircuitBreaker } from '@services/circuitbreaker';
 import { isAuthenticated, handlePreflightRequest, corsOptionsDelegate } from '@middleware/gqlAuth';
 import rTracer from 'cls-rtracer';
@@ -18,15 +16,12 @@ import { connect } from '@database';
 import { QueryRoot } from '@gql/queries';
 import { MutationRoot } from '@gql/mutations';
 import { isLocalEnv, isTestEnv, logger } from '@utils/index';
-import { signUpRoute, signInRoute } from '@server/auth';
 import cluster from 'cluster';
 import os from 'os';
-import authenticateToken from '@middleware/authenticate';
 import 'source-map-support/register';
 import { initQueues } from '@utils/queue';
 import { sendMessage } from '@services/slack';
 import { SubscriptionRoot } from '@gql/subscriptions';
-import { WHITELISTED_PATHS } from '@utils/constants';
 
 const totalCPUs = os.cpus().length;
 
@@ -64,48 +59,16 @@ export const init = async () => {
     })
   );
 
-  const addAuthMiddleware = (path, method) => {
-    if (get(WHITELISTED_PATHS, `[${path}].methods`, []).includes(method.toUpperCase())) {
-      return;
+  app.get('/github', async (req, res) => {
+    const response = await githubBreaker.fire(req.query.repo);
+    if (response.data) {
+      return res.json({ data: response.data });
+    } else {
+      return res.status(424).json({ error: response });
     }
-    return authenticateToken;
-  };
-  const createBodyParsedRoutes = routeConfigs => {
-    if (!routeConfigs.length) {
-      return;
-    }
+  });
 
-    const validate = configs => configs.every(({ path, handler, method }) => !!path && !!handler && !!method);
-    const createRouteArgs = (path, handler, method) =>
-      [path, multer().array(), addAuthMiddleware(path, method), handler].filter(a => a);
-    try {
-      if (validate(routeConfigs)) {
-        routeConfigs.forEach(({ path, handler, method }) => app[method](...createRouteArgs(path, handler, method)));
-      } else {
-        throw new Error('Invalid route config');
-      }
-    } catch (error) {
-      console.error(error);
-    }
-  };
-  createBodyParsedRoutes([
-    signUpRoute,
-    signInRoute,
-    {
-      path: '/github',
-      method: 'get',
-      handler: async (req, res) => {
-        const response = await githubBreaker.fire(req.query.repo);
-        if (response.data) {
-          return res.json({ data: response.data });
-        } else {
-          return res.status(424).json({ error: response });
-        }
-      }
-    }
-  ]);
-
-  app.use('/', (req, res) => {
+  app.get('/', (req, res) => {
     const message = 'Service up and running!';
     sendMessage(message);
     logger().info(message);
