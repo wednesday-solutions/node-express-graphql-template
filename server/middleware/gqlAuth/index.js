@@ -7,6 +7,7 @@ import { RESTRICTED, GQL_QUERY_TYPES } from './constants';
 import { connect } from '@database';
 import { sendMessage } from '@services/slack';
 import get from 'lodash/get';
+import { flatMap } from 'lodash';
 
 const { parse } = require('graphql');
 
@@ -18,16 +19,15 @@ export const invalidScope = (
     errors
   });
 
-export const getQueryNames = async req => {
+export const getQueryNames = req => {
   const parsedQuery = parse(req.body.query);
-  return parsedQuery.definitions.map(def => ({
-    operationType: def.operation,
-    queryName: def.selectionSet.selections[0].name.value
-  }));
+  return flatMap(parsedQuery.definitions, def =>
+    def.selectionSet.selections.map(selection => ({ operationType: def.operation, queryName: selection.name.value }))
+  );
 };
 
 export const isPublicQuery = async req => {
-  const queries = await getQueryNames(req);
+  const queries = getQueryNames(req);
   return queries.every(({ queryName, operationType }) => GQL_QUERY_TYPES[operationType].whitelist.includes(queryName));
 };
 
