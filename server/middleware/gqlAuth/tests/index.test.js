@@ -120,16 +120,16 @@ describe('gqlAuth tests', () => {
                       }
                     }`;
     const request = {
-      body: {}
+      body: { query: `query { ${storeQuery} }` }
     };
     it('successfully get queryName', async () => {
       const { getQueryNames } = require('../index');
       const response = await getQueryNames(request);
       expect(response).toBeTruthy();
-      expect(response[0].queryName).toEqual('address');
+      expect(response[0].queryName).toEqual('stores');
     });
     it('successfully gets queryNames when operationName is provided', async () => {
-      request.body.query = ` query Stores { ${storeQuery} } query Suppliers { ${supplierQuery} } }`;
+      request.body.query = ` query Stores { ${storeQuery} } query Suppliers { ${supplierQuery} } `;
       request.body.operationName = 'Stores';
       const { getQueryNames } = require('../index');
       const response = await getQueryNames(request);
