@@ -20,6 +20,11 @@ export const invalidScope = (
   });
 
 export const getQueryNames = req => {
+  const getQueryNamesFromSelectionSet = def =>
+    def.selectionSet.selections.map(selection => ({
+      operationType: def.operation,
+      queryName: selection.name.value
+    }));
   const operationName = req.body.operationName;
   const parsedQuery = parse(req.body.query);
   // find the correct defination based on the operation name
@@ -27,19 +32,11 @@ export const getQueryNames = req => {
   let queries = [];
   // def will only have a value if operationName is specifically provided. It is optional
   if (def) {
-    queries = def.selectionSet.selections.map(selection => ({
-      operationType: def.operation,
-      queryName: selection.name.value
-    }));
+    queries = getQueryNamesFromSelectionSet(def);
   } else {
     // iterate over all definitions. Since multiple operations cannot be sent without an operation name
     // most likely parsedQuery.definitions will have length as 1.
-    queries = flatMap(parsedQuery.definitions, def =>
-      def.selectionSet.selections.map(selection => ({
-        operationType: def.operation,
-        queryName: selection.name.value
-      }))
-    );
+    queries = flatMap(parsedQuery.definitions, getQueryNamesFromSelectionSet);
   }
   return queries.filter(({ operationType, queryName }) => !!operationType && !!queryName);
 };
