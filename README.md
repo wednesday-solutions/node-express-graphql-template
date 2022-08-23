@@ -55,6 +55,26 @@ An enterprise Express GraphQL template application built using nodejs showcasing
 - GraphQL
 - Docker
 
+## Out of the box support for 
+- Containerization using Docker
+- Multi layered docker image support
+- CI pipeline that runs on every pull request
+- Simply add in the github secrets and uncomment the [cd.yml](.github/workflows/cd.yml) to deploy to ECS
+- GraphQL relay compliant server
+- RBAC auth middleware
+- Out of the box support to run database migrations and seeders using sequelize
+- Multi environment support using the dotenv library
+- precommit hooks to run tests
+- docker-compose to run the application without installing additional db, and cache infrastructure
+- Autogenerate queries and mutations based on GQL models 
+- Support for circuit breaking has been added using [opossum](https://github.com/nodeshift/opossum)
+- Support for sending slack alerts on desired errors has been added using [slack-notify](https://www.npmjs.com/package/slack-notify)
+- Support for caching added with [redis](https://redis.io/)
+- Support for custom mutations has been added along with support for updating only specific fields
+- Support for adding a job and queuing it has been added using [bull](https://github.com/OptimalBits/bull)
+- GraphQl subscriptions have been added using [apollo-server](https://www.npmjs.com/package/apollo-server-express) & [graphql-redis-subscriptions](https://www.npmjs.com/package/graphql-redis-subscriptions)
+- Support for caching of aggregate data added using Redis
+
 ## Dependencies
 
 ### graphql-sequelize
@@ -112,31 +132,3 @@ yarn prod
 ```
 yarn build
 ```
-
-### Support for circuit-breaking
-
-- Support for circuit breaking has been added using [opossum](https://github.com/nodeshift/opossum)
-
-### Slack Integration
-
-- Support for sending slack alerts on desired errors has been added using [slack-notify](https://www.npmjs.com/package/slack-notify)
-
-### Out of the box Redis support
-
-- Support for caching added with [redis](https://redis.io/)
-
-### Custom Mutations
-
-- Support for custom mutations has been added along with support for updating only specific fields
-
-### Scheduling a Job
-
-- Support for adding a job and queuing it has been added using [bull](https://github.com/OptimalBits/bull)
-
-### Subscriptions
-
-- GraphQl subscriptions have been added using [apollo-server](https://www.npmjs.com/package/apollo-server-express) & [graphql-redis-subscriptions](https://www.npmjs.com/package/graphql-redis-subscriptions)
-
-### Aggregate Caching
-
-- Support for caching of aggregate data added using Redis
