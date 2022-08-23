@@ -80,3 +80,18 @@ jobs:
         with:
           github_token: ${{ secrets.GITHUB_TOKEN }}
           branch: ${{ github.ref }}
+
+  update_diagram:
+    name: Update diagram
+    runs-on: ubuntu-latest
+    strategy:
+      matrix:
+        node-version: [14.x]
+      steps:
+          uses: wednesday-solutions/repo-visualizer@0.0.5
+          with:
+            should_push: true
+            branch: "${{ github.event.pull_request.head.ref }}"
+            output_file: "repo-visualizer.svg"
+            excluded_paths: node_modules,dist,.yarn,.vscode,yarn.lock,coverage,report.json,reports,.github
+            commit_message: "Updating diagram [skip ci]"

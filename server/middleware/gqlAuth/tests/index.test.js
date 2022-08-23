@@ -104,20 +104,56 @@ describe('gqlAuth tests', () => {
     });
   });
   describe('getQuery middleware Tests', () => {
+    const storeQuery = `stores(limit: 2) {
+                      edges {
+                        node {
+                          id
+                        }
+                      }
+                    }`;
+    const supplierQuery = `suppliers(limit: 2) {
+                      edges {
+                        node {
+                          id
+                          name
+                        }
+                      }
+                    }`;
     const request = {
-      body: {
-        query: `query Address{
-          address(id:1){
-            id
-          }
-        }`
-      }
+      body: { query: `query { ${storeQuery} }` }
     };
     it('successfully get queryName', async () => {
       const { getQueryNames } = require('../index');
       const response = await getQueryNames(request);
       expect(response).toBeTruthy();
-      expect(response[0].queryName).toEqual('address');
+      expect(response[0].queryName).toEqual('stores');
+    });
+    it('successfully gets queryNames when operationName is provided', async () => {
+      request.body.query = ` query Stores { ${storeQuery} } query Suppliers { ${supplierQuery} } `;
+      request.body.operationName = 'Stores';
+      const { getQueryNames } = require('../index');
+      const response = await getQueryNames(request);
+      expect(response.length).toEqual(1);
+      expect(response[0]).toEqual({ operationType: 'query', queryName: 'stores' });
+    });
+
+    it('successfully gets queryNames when operationName is provided and there are multiple queries inside one operation', async () => {
+      request.body.query = `query StoresAndSuppliers { ${storeQuery} ${supplierQuery} }`;
+      request.body.operationName = 'StoresAndSuppliers';
+      const { getQueryNames } = require('../index');
+      const response = await getQueryNames(request);
+      expect(response.length).toEqual(2);
+      expect(response[0]).toEqual({ operationType: 'query', queryName: 'stores' });
+      expect(response[1]).toEqual({ operationType: 'query', queryName: 'suppliers' });
+    });
+
+    it('successfully gets queryNames when operationName is not provided and there are multiple queries inside one operation', async () => {
+      request.body.query = `query { ${storeQuery} ${supplierQuery} }`;
+      const { getQueryNames } = require('../index');
+      const response = await getQueryNames(request);
+      expect(response.length).toEqual(2);
+      expect(response[0]).toEqual({ operationType: 'query', queryName: 'stores' });
+      expect(response[1]).toEqual({ operationType: 'query', queryName: 'suppliers' });
     });
   });
   describe('isPublicQuery tests', () => {
