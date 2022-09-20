@@ -13,7 +13,7 @@ export const updateAuthor = async args => {
 
   console.log('authors response', authorResponse);
 
-  const returnValue = await db.authors.findOne({ where: { id: args.id } });
+  const author = await db.authors.findOne({ where: { id: args.id } });
 
-  return returnValue;
+  return author;
 };

@@ -18,15 +18,6 @@ export function getAttributes(sequelize, DataTypes) {
       type: DataTypes.INTEGER,
       allowNull: false
     },
-    bookId: {
-      field: 'book_id',
-      type: DataTypes.INTEGER,
-      allowNull: false,
-      references: {
-        model: 'books',
-        key: 'id'
-      }
-    },
     createdAt: {
       field: 'created_at',
       type: DataTypes.DATE,
@@ -54,10 +45,6 @@ export function model(sequelize, DataTypes) {
   });
 
   authors.associate = function(models) {
-    // authors.books = authors.hasMany(models.books, {
-    //   foreignKey: 'id',
-    //   sourceKey: 'bookId'
-    // });
     authors.authorsBooks = authors.hasOne(models.authorsBooks, {
       sourceKey: 'id',
       foreignKey: 'author_id'

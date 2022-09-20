@@ -1,15 +1,16 @@
 import { GraphQLID, GraphQLInt, GraphQLNonNull, GraphQLObjectType, GraphQLString } from 'graphql';
 import { getNode } from '@gql/node';
+import { createConnection } from 'graphql-sequelize';
+
 import { getQueryFields, TYPE_ATTRIBUTES } from '@server/utils/gqlFieldUtils';
 import { timestamps } from '../timestamps';
-import { createConnection } from 'graphql-sequelize';
 import db from '@database/models';
 import { totalConnectionFields, transformSQLError } from '@server/utils';
-// import { bookQueries } from '../books';
 import { sequelizedWhere } from '@server/database/dbUtils';
 import { BookConnection } from '../books';
 import { updateAuthor } from '@server/daos/authors';
-import { updateAuthorsBooks } from '@server/daos/authorsBooks';
+import { updateAuthorsBooksForAuthors } from '@server/daos/authorsBooks';
+import { authorsBookFieldsMutation } from '../authorsBooks';
 
 const { nodeInterface } = getNode();
 
@@ -79,32 +80,33 @@ export const authorQueries = {
 
 export const customUpdateResolver = async (model, args, context) => {
   try {
-    const bookArgs = {
+    const authorArgs = {
       id: args.id,
       name: args.name,
-      genres: args.genres,
-      pages: args.pages,
-      publishedBy: args.publishedBy
+      country: args.country,
+      age: args.age
     };
 
-    console.log('arguments in custom update resolver of books model', args);
+    const authorsBooksArgs = { authorsBooks: args.booksId };
+    const authorRes = await updateAuthor(authorArgs);
+    const authorId = authorRes.id;
 
-    const authorsBooksArgs = { authorsBooks: args.authorsBooks };
-    const bookRes = await updateAuthor(bookArgs);
-    const bookId = bookRes.id;
+    await updateAuthorsBooksForAuthors({ ...authorsBooksArgs, authorId });
 
-    await updateAuthorsBooks({ ...authorsBooksArgs, bookId });
-
-    console.log('\x1b[42m%s\x1b[0m', 'books res', bookRes);
-
-    return bookRes;
+    return authorRes;
   } catch (err) {
     throw transformSQLError(err);
   }
 };
 
+export const authorFieldsMutation = {
+  ...authorsFields,
+  booksId: authorsBookFieldsMutation.booksIdArray
+};
+
 export const authorMutations = {
-  args: authorsFields,
+  args: authorFieldsMutation,
   type: Author,
-  model: db.authors
+  model: db.authors,
+  customUpdateResolver
 };

@@ -10,11 +10,9 @@ export const updateBook = async args => {
     publishedBy: args.publishedBy
   };
 
-  const bookResponse = await db.books.update(mapBookUpdateArgs, { where: { id: args.id } });
+  await db.books.update(mapBookUpdateArgs, { where: { id: args.id } });
 
-  console.log('books response', bookResponse);
+  const book = await db.books.findOne({ where: { id: args.id } });
 
-  const returnValue = await db.books.findOne({ where: { id: args.id } });
-
-  return returnValue;
+  return book;
 };
