@@ -34,9 +34,12 @@ export const initQueues = () => {
   });
   queues[QUEUE_NAMES.AGGREGATE_CHECK].add({}, { repeat: { cron: CRON_EXPRESSIONS.MIDNIGHT } });
 };
+
 export const getQueue = queueName => {
   if (!queues[queueName]) {
-    queues[queueName] = new Bull(queueName, `redis://${process.env.REDIS_DOMAIN}:${process.env.REDIS_PORT}`);
+    queues[queueName] = new Bull(queueName, `redis://${process.env.REDIS_DOMAIN}:${process.env.REDIS_PORT}`, {
+      redis: { maxRetriesPerRequest: null }
+    });
     console.log('created queue: ', queueName, `redis://${process.env.REDIS_DOMAIN}:${process.env.REDIS_PORT}`);
   }
   return queues[queueName];
