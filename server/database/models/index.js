@@ -18,6 +18,10 @@ db.purchasedProducts = require('@database/models/purchased_products').model(sequ
 db.storeProducts = require('@database/models/store_products').model(sequelize, Sequelize.DataTypes);
 db.supplierProducts = require('@database/models/supplier_products').model(sequelize, Sequelize.DataTypes);
 
+db.books = require('@database/models/books').model(sequelize, Sequelize.DataTypes);
+db.authors = require('@database/models/authors').model(sequelize, Sequelize.DataTypes);
+db.authorsBooks = require('@database/models/authors_books').model(sequelize, Sequelize.DataTypes);
+
 Object.keys(db).forEach(modelName => {
   if (db[modelName].associate) {
     db[modelName].associate(db);
