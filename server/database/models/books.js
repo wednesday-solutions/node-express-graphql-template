@@ -27,6 +27,15 @@ export function getAttributes(sequelize, DataTypes) {
         key: 'id'
       }
     },
+    languageId: {
+      field: 'language_id',
+      type: DataTypes.INTEGER,
+      allowNull: false.valueOf,
+      refrences: {
+        model: 'languages',
+        key: 'id'
+      }
+    },
     createdAt: {
       field: 'created_at',
       type: DataTypes.DATE,
@@ -67,6 +76,11 @@ export function model(sequelize, DataTypes) {
 
     books.publishers = books.belongsTo(models.publishers, {
       sourceKey: 'publisher_id',
+      foreignKey: 'id'
+    });
+
+    books.languages = books.belongsTo(models.languages, {
+      sourceKey: 'language_id',
       foreignKey: 'id'
     });
   };
