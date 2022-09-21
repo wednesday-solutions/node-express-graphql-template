@@ -47,3 +47,16 @@ export const deletedId = new GraphQLObjectType({
   name: 'Id',
   fields: () => ({ id: { type: GraphQLNonNull(GraphQLInt) } })
 });
+
+export const queryUsingLanguage = async (model, args) => {
+  let affectedRows;
+  try {
+    affectedRows = await model.findAll({ where: { language: args.language } });
+  } catch (e) {
+    throw new Error(`Failed to find the books written in ${args.language}`);
+  }
+  if (!affectedRows) {
+    throw new Error('Data not found');
+  }
+  return affectedRows;
+};

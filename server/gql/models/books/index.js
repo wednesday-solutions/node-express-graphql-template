@@ -10,6 +10,8 @@ import { sequelizedWhere } from '@server/database/dbUtils';
 import { insertBook, updateBook } from '@server/daos/books';
 import { insertAuthorsBooks, updateAuthorsBooksForBooks } from '@server/daos/authorsBooks';
 import { authorsBookFieldsMutation } from '../authorsBooks';
+import { LanguageConnection } from '../languages';
+import { PublisherConnection } from '../publishers';
 
 const { nodeInterface } = getNode();
 
@@ -17,8 +19,7 @@ export const booksFields = {
   id: { type: GraphQLNonNull(GraphQLID) },
   name: { type: GraphQLString },
   genres: { type: GraphQLString },
-  pages: { type: GraphQLString },
-  publishedBy: { type: GraphQLString }
+  pages: { type: GraphQLString }
 };
 
 const Book = new GraphQLObjectType({
@@ -32,6 +33,18 @@ const Book = new GraphQLObjectType({
       args: AuthorConnection.connectionArgs,
       resolve: (source, args, context, info) =>
         AuthorConnection.resolve(source, args, { ...context, book: source.dataValues }, info)
+    },
+    languages: {
+      type: LanguageConnection.connectionType,
+      args: LanguageConnection.connectionArgs,
+      resolve: (source, args, context, info) =>
+        LanguageConnection.resolve(source, args, { ...context, book: source.dataValues }, info)
+    },
+    publishers: {
+      type: PublisherConnection.connectionType,
+      args: PublisherConnection.connectionArgs,
+      resolve: (source, args, context, info) =>
+        PublisherConnection.resolve(source, args, { ...context, book: source.dataValues }, info)
     }
   })
 });

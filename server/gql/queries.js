@@ -8,12 +8,18 @@ import { getGqlModels } from '@server/utils/autogenHelper';
 const { nodeField, nodeTypeMapper } = getNode();
 const DB_TABLES = getGqlModels({ type: 'Queries', blacklist: ['aggregate', 'timestamps'] });
 
+export const createResolvers = (table, model, customResolver) => ({
+  customResolver: (parent, args, context, resolveInfo) =>
+    customResolver ? customResolver(model, args, context) : resolver(DB_TABLES[table].model)
+});
+
 export const addQueries = () => {
   const query = {};
   Object.keys(DB_TABLES).forEach(table => {
     query[camelCase(table)] = {
       ...DB_TABLES[table].query,
-      resolve: resolver(DB_TABLES[table].model),
+      // resolve: resolver(DB_TABLES[table].model),
+      resolve: createResolvers(table, DB_TABLES[table].model, DB_TABLES[table].customQueryResolver).customResolver,
       args: {
         id: { type: GraphQLNonNull(GraphQLInt) },
         ...DB_TABLES[table].args,
