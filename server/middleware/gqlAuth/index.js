@@ -1,4 +1,3 @@
-import gql from 'graphql-tag';
 import { isLocalEnv, isTestEnv, logger } from '@utils';
 import { convertToMap } from '@utils/gqlSchemaParsers';
 import jwt from 'jsonwebtoken';
@@ -68,14 +67,17 @@ export const isAuthenticated = async (req, res, next) => {
           });
         })
           .then(async response => {
-            const graphQLBody = gql`
-              ${req.body.query}
-            `;
             let isUnauthorized = false;
-            if (graphQLBody.definitions?.length && graphQLBody.definitions[0].selectionSet?.selections?.length) {
-              args = convertToMap(graphQLBody.definitions[0].selectionSet.selections[0].arguments, req.body.variables);
-              const name = graphQLBody.definitions[0].selectionSet.selections[0].name.value;
-              const operation = graphQLBody.definitions[0].operation;
+            const operationName = req.body.operationName;
+            const parsedQuery = parse(req.body.query);
+            let def = parsedQuery.definitions.find(definition => definition.name?.value === operationName);
+            if (!def) {
+              def = parsedQuery.definitions[0];
+            }
+            if (def?.selectionSet?.selections?.length) {
+              args = convertToMap(def.selectionSet.selections[0].arguments, req.body.variables);
+              const name = def.selectionSet.selections[0].name.value;
+              const operation = def.operation;
               if (get(RESTRICTED, `[${operation}][${name}]`)) {
                 const item = get(RESTRICTED, `[${operation}][${name}]`);
                 logger().info({ operation, name });

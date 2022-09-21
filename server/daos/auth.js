@@ -6,10 +6,13 @@ export const getUserByEmailPassword = async (email, password) => {
     where: { email }
   });
 
+  if (!user) {
+    throw Error('Invalid username/password');
+  }
   if (await checkPassword(password, user.password)) {
     return user;
   } else {
-    throw Error('Invalid Password');
+    throw Error('Invalid username/password');
   }
 };
 
