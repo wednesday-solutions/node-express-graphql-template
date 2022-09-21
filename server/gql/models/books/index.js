@@ -8,7 +8,7 @@ import { totalConnectionFields, transformSQLError } from '@server/utils';
 import { AuthorConnection } from '../authors';
 import { sequelizedWhere } from '@server/database/dbUtils';
 import { insertBook, updateBook } from '@server/daos/books';
-import { insertAuthorsBooks, updateAuthorsBooks } from '@server/daos/authorsBooks';
+import { insertAuthorsBooks, updateAuthorsBooksForBooks } from '@server/daos/authorsBooks';
 import { authorsBookFieldsMutation } from '../authorsBooks';
 
 const { nodeInterface } = getNode();
@@ -86,8 +86,6 @@ export const customCreateResolver = async (model, args, context) => {
       publishedBy: args.publishedBy
     };
 
-    console.log('arguments in custom create resolver of books model', args);
-
     const authorsBooksArgs = { authorsBooks: args.authorsBooks };
     const bookRes = await insertBook(bookArgs);
     const bookId = bookRes.id;
@@ -109,15 +107,11 @@ export const customUpdateResolver = async (model, args, context) => {
       publishedBy: args.publishedBy
     };
 
-    console.log('arguments in custom update resolver of books model', args);
-
-    const authorsBooksArgs = { authorsBooks: args.authorsBooks };
+    const authorsBooksArgs = { authorsBooks: args.authorsId };
     const bookRes = await updateBook(bookArgs);
     const bookId = bookRes.id;
 
-    await updateAuthorsBooks({ ...authorsBooksArgs, bookId });
-
-    console.log('\x1b[42m%s\x1b[0m', 'books res', bookRes);
+    await updateAuthorsBooksForBooks({ ...authorsBooksArgs, bookId });
 
     return bookRes;
   } catch (err) {
@@ -127,7 +121,7 @@ export const customUpdateResolver = async (model, args, context) => {
 
 export const bookFieldsMutation = {
   ...booksFields,
-  authorsBooks: authorsBookFieldsMutation.authorsBookArray
+  authorsId: authorsBookFieldsMutation.authorsIdArray
 };
 
 export const bookMutations = {

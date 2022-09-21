@@ -1,0 +1,1 @@
+ALTER TABLE authors DROP COLUMN book_id

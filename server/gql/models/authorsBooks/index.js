@@ -16,10 +16,17 @@ export const authorsBookFields = {
   authorId: { type: GraphQLNonNull(GraphQLID) }
 };
 
-const authorsBookInput = new GraphQLInputObjectType({
-  name: 'AuthorsBookInput',
+const authorsIdInput = new GraphQLInputObjectType({
+  name: 'AuthorsIdInput',
   fields: {
     authorId: { type: GraphQLNonNull(GraphQLID) }
+  }
+});
+
+const booksIdInput = new GraphQLInputObjectType({
+  name: 'BooksIdInput',
+  fields: {
+    bookId: { type: GraphQLNonNull(GraphQLID) }
   }
 });
 
@@ -38,7 +45,8 @@ const AuthorsBook = new GraphQLObjectType({
 });
 
 export const authorsBookFieldsMutation = {
-  authorsBookArray: { type: GraphQLList(authorsBookInput) }
+  authorsIdArray: { type: GraphQLList(authorsIdInput) },
+  booksIdArray: { type: GraphQLList(booksIdInput) }
 };
 
 const AuthorsBookConnection = createConnection({
