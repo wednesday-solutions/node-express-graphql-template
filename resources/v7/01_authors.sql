@@ -1,0 +1,1 @@
+ALTER TABLE authors DROP CONSTRAINT authors_book_id
