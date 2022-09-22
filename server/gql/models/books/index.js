@@ -12,6 +12,8 @@ import { insertAuthorsBooks, updateAuthorsBooksForBooks } from '@server/daos/aut
 import { authorsBookFieldsMutation } from '@gql/models/authorsBooks';
 import { LanguageConnection } from '@gql/models/languages';
 import { PublisherConnection } from '@gql/models/publishers';
+import { insertBooksLanguages, updateBooksLanguagesForBooks } from '@server/daos/booksLanguages';
+import { booksLanguageFieldsMutation } from '@gql/models/booksLanguages';
 
 const { nodeInterface } = getNode();
 
@@ -72,6 +74,15 @@ const BookConnection = createConnection({
         }
       });
     }
+
+    if (context?.publisher?.id) {
+      findOptions.include.push({
+        model: db.publishers,
+        where: {
+          id: context.publisher.id
+        }
+      });
+    }
     findOptions.where = sequelizedWhere(findOptions.where, args.where);
 
     return findOptions;
@@ -105,13 +116,19 @@ export const customCreateResolver = async (model, args, context) => {
       name: args.name,
       genres: args.genres,
       pages: args.pages,
-      publishedBy: args.publishedBy
+      publisherId: args.publisherId
     };
 
-    const authorsBooksArgs = { authorsBooks: args.authorsBooks };
+    const authorsBooksArgs = { authorsBooks: args.authorsId };
+    const booksLanguagesArgs = { booksLanguages: args.languagesId };
+
     const bookRes = await insertBook(bookArgs);
     const bookId = bookRes.id;
+
     await insertAuthorsBooks({ ...authorsBooksArgs, bookId });
+    await insertBooksLanguages({ ...booksLanguagesArgs, bookId });
+
+    console.log('response1', bookRes);
 
     return bookRes;
   } catch (err) {
@@ -125,15 +142,18 @@ export const customUpdateResolver = async (model, args, context) => {
       id: args.id,
       name: args.name,
       genres: args.genres,
-      pages: args.pages,
-      publishedBy: args.publishedBy
+      pages: args.pages
     };
 
     const authorsBooksArgs = { authorsBooks: args.authorsId };
+    const booksLanguagesArgs = { booksLanguages: args.languagesId };
+
     const bookRes = await updateBook(bookArgs);
     const bookId = bookRes.id;
 
     await updateAuthorsBooksForBooks({ ...authorsBooksArgs, bookId });
+
+    await updateBooksLanguagesForBooks({ ...booksLanguagesArgs, bookId });
 
     return bookRes;
   } catch (err) {
@@ -143,7 +163,9 @@ export const customUpdateResolver = async (model, args, context) => {
 
 export const bookFieldsMutation = {
   ...booksFields,
-  authorsId: authorsBookFieldsMutation.authorsIdArray
+  publisherId: { type: GraphQLNonNull(GraphQLID) },
+  authorsId: authorsBookFieldsMutation.authorsIdArray,
+  languagesId: booksLanguageFieldsMutation.languagesIdArray
 };
 
 export const bookMutations = {

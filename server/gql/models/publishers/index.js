@@ -7,6 +7,7 @@ import { timestamps } from '../timestamps';
 import db from '@database/models';
 import { totalConnectionFields } from '@server/utils';
 import { sequelizedWhere } from '@server/database/dbUtils';
+import { BookConnection } from '../books';
 
 const { nodeInterface } = getNode();
 
@@ -21,7 +22,13 @@ const Publisher = new GraphQLObjectType({
   interfaces: [nodeInterface],
   fields: () => ({
     ...getQueryFields(publisherFields, TYPE_ATTRIBUTES.isNonNull),
-    ...timestamps
+    ...timestamps,
+    books: {
+      type: BookConnection.connectionType,
+      args: BookConnection.connectionArgs,
+      resolve: (source, args, context, info) =>
+        BookConnection.resolve(source, args, { ...context, publisher: source.dataValues }, info)
+    }
   })
 });
 
@@ -35,7 +42,7 @@ const PublisherConnection = createConnection({
       findOptions.include.push({
         model: db.books,
         where: {
-          publisherId: context.book.id
+          id: context.book.id
         }
       });
     }

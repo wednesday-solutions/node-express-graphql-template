@@ -5,9 +5,12 @@ import { createConnection } from 'graphql-sequelize';
 import { getQueryFields, TYPE_ATTRIBUTES } from '@server/utils/gqlFieldUtils';
 import { timestamps } from '../timestamps';
 import db from '@database/models';
-import { totalConnectionFields } from '@server/utils';
+import { totalConnectionFields, transformSQLError } from '@server/utils';
 import { sequelizedWhere } from '@server/database/dbUtils';
 import { BookConnection } from '@gql/models/books';
+import { updateLanguage } from '@server/daos/languages';
+import { updateBooksLanguagesForLanguages } from '@server/daos/booksLanguages';
+import { booksLanguageFieldsMutation } from '@gql/models/booksLanguages';
 
 const { nodeInterface } = getNode();
 
@@ -41,7 +44,7 @@ const LanguageConnection = createConnection({
       findOptions.include.push({
         model: db.booksLanguages,
         where: {
-          languageId: context.book.id
+          bookId: context.book.id
         }
       });
     }
@@ -73,8 +76,34 @@ export const languageQueries = {
   model: db.languages
 };
 
+export const customUpdateResolver = async (model, args, context) => {
+  try {
+    const languageArgs = {
+      id: args.id,
+      name: args.name,
+      country: args.country
+    };
+
+    const booksLanguagesArgs = { booksLanguages: args.booksId };
+    const languageRes = await updateLanguage(languageArgs);
+    const languageId = languageRes.id;
+
+    await updateBooksLanguagesForLanguages({ ...booksLanguagesArgs, languageId });
+
+    return languageRes;
+  } catch (err) {
+    throw transformSQLError(err);
+  }
+};
+
+export const languageFieldsMutation = {
+  ...languageFields,
+  booksId: booksLanguageFieldsMutation.booksIdArray
+};
+
 export const languageMutations = {
-  args: languageFields,
+  args: languageFieldsMutation,
   type: Language,
-  model: db.languages
+  model: db.languages,
+  customUpdateResolver
 };

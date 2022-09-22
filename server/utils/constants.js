@@ -5,6 +5,10 @@ export const MUTATION_TYPE = {
   UPDATE: 'update'
 };
 
+export const QUERY_TYPE = {
+  CUSTOM: 'custom'
+};
+
 export const SUBSCRIPTION_TOPICS = {
   NEW_PURCHASED_PRODUCT: 'newPurchasedProduct'
 };

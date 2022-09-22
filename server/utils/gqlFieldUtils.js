@@ -11,6 +11,7 @@ export const CREATE_AND_QUERY_REQUIRED_ARGS = {
   [TYPE_ATTRIBUTES.isNonNull]: true,
   [TYPE_ATTRIBUTES.isCreateRequired]: true
 };
+
 export const getQueryFields = (fields, keyToCheck) => {
   const fieldsClone = cloneDeep(fields);
   Object.keys(fieldsClone).forEach(key => {

@@ -24,7 +24,7 @@ const languagesIdInput = new GraphQLInputObjectType({
 });
 
 const booksIdInput = new GraphQLInputObjectType({
-  name: 'BooksIdInput',
+  name: 'BookIdInput',
   fields: {
     bookId: { type: GraphQLNonNull(GraphQLID) }
   }
