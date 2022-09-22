@@ -7,6 +7,7 @@ import { timestamps } from '../timestamps';
 import db from '@database/models';
 import { totalConnectionFields } from '@server/utils';
 import { sequelizedWhere } from '@server/database/dbUtils';
+import { BookConnection } from '../books';
 
 const { nodeInterface } = getNode();
 
@@ -20,7 +21,13 @@ const Language = new GraphQLObjectType({
   interfaces: [nodeInterface],
   fields: () => ({
     ...getQueryFields(languageFields, TYPE_ATTRIBUTES.isNonNull),
-    ...timestamps
+    ...timestamps,
+    books: {
+      type: BookConnection.connectionType,
+      args: BookConnection.connectionArgs,
+      resolve: (source, args, context, info) =>
+        BookConnection.resolve(source, args, { ...context, language: source.dataValues }, info)
+    }
   })
 });
 
@@ -32,7 +39,7 @@ const LanguageConnection = createConnection({
     findOptions.include = findOptions.include || [];
     if (context?.book?.id) {
       findOptions.include.push({
-        model: db.books,
+        model: db.booksLanguages,
         where: {
           languageId: context.book.id
         }

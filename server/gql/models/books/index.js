@@ -63,6 +63,15 @@ const BookConnection = createConnection({
         }
       });
     }
+
+    if (context?.language?.id) {
+      findOptions.include.push({
+        model: db.booksLanguages,
+        where: {
+          languageId: context.language.id
+        }
+      });
+    }
     findOptions.where = sequelizedWhere(findOptions.where, args.where);
 
     return findOptions;

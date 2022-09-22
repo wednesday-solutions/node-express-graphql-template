@@ -6,8 +6,7 @@ export const updateBook = async args => {
   const mapBookUpdateArgs = {
     name: args.name,
     genres: args.genres,
-    pages: args.pages,
-    publishedBy: args.publishedBy
+    pages: args.pages
   };
 
   await db.books.update(mapBookUpdateArgs, { where: { id: args.id } });
