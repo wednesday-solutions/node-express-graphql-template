@@ -78,6 +78,8 @@ export const authorQueries = {
   model: db.authors
 };
 
+console.log('author queries', authorQueries.list);
+
 export const customUpdateResolver = async (model, args, context) => {
   try {
     const authorArgs = {

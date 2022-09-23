@@ -4,19 +4,24 @@ import pluralize from 'pluralize';
 import { defaultListArgs, defaultArgs, resolver } from 'graphql-sequelize';
 import { getNode } from '@gql/node';
 import { getGqlModels } from '@server/utils/autogenHelper';
-import { QUERY_TYPE } from '@server/utils/constants';
+// import { QUERY_TYPE } from '@server/utils/constants';
+// import { customBooksQuery } from './models/books';
+// import { GraphQLDateTime } from 'graphql-iso-date';
 
-const shouldAddQuery = (type, table) => {
-  if (type === QUERY_TYPE.CUSTOM) {
-    const negateTablesList = ['books'];
-    return !negateTablesList.includes(table);
-  }
-};
+// const shouldAddQuery = (type, table) => {
+//   if (type === QUERY_TYPE.CUSTOM) {
+//     const negateTablesList = ['books'];
+//     return !negateTablesList.includes(table);
+//   }
+// };
 
 const { nodeField, nodeTypeMapper } = getNode();
 const DB_TABLES = getGqlModels({ type: 'Queries', blacklist: ['aggregate', 'timestamps'] });
 
-console.log('db tables', DB_TABLES);
+export const createResolvers = (model, customResolver) => ({
+  customQueryResolver: (parent, args, context, resolveInfo) =>
+    customResolver ? customResolver(model, args, context) : model.create(args)
+});
 
 export const addQueries = () => {
   const query = {};
@@ -31,30 +36,55 @@ export const addQueries = () => {
       }
     };
 
-    if (shouldAddQuery(QUERY_TYPE.CUSTOM, table)) {
-      query[pluralize(camelCase(table))] = {
-        ...DB_TABLES[table].list,
-        args: {
-          ...DB_TABLES[table].list?.args,
-          ...defaultListArgs(DB_TABLES[table].model),
-          limit: { type: GraphQLInt, description: 'Use with offset to get paginated results with total' },
-          offset: { type: GraphQLInt, description: 'Use with limit to get paginated results with total' },
-          before: { type: GraphQLInt, description: 'Use with grapql-relay compliant queries' },
-          after: { type: GraphQLInt, description: 'Use with grapql-relay compliant queries' },
-          first: { type: GraphQLInt, description: 'Use with grapql-relay compliant queries' },
-          last: { type: GraphQLInt, description: 'Use with grapql-relay compliant queries' }
-        }
-      };
-    }
+    // if (shouldAddQuery(QUERY_TYPE.CUSTOM, table)) {
+    query[pluralize(camelCase(table))] = {
+      ...DB_TABLES[table].list,
+      args: {
+        ...DB_TABLES[table].list?.args,
+        ...defaultListArgs(DB_TABLES[table].model),
+        limit: { type: GraphQLInt, description: 'Use with offset to get paginated results with total' },
+        offset: { type: GraphQLInt, description: 'Use with limit to get paginated results with total' },
+        before: { type: GraphQLInt, description: 'Use with grapql-relay compliant queries' },
+        after: { type: GraphQLInt, description: 'Use with grapql-relay compliant queries' },
+        first: { type: GraphQLInt, description: 'Use with grapql-relay compliant queries' },
+        last: { type: GraphQLInt, description: 'Use with grapql-relay compliant queries' }
+      }
+      // };
+    };
   });
   return query;
 };
 
 nodeTypeMapper.mapTypes({});
+
 export const QueryRoot = new GraphQLObjectType({
   name: 'Query',
   node: nodeField,
   fields: () => ({
     ...addQueries()
+    // customBookQuery: {
+    //   type: new GraphQLObjectType({
+    //     name: 'books',
+    //     fields: () => [
+    //       {
+    //         id: { type: GraphQLNonNull(GraphQLID) },
+    //         genres: { type: GraphQLNonNull(GraphQLString) },
+    //         name: { type: GraphQLNonNull(GraphQLString) },
+    //         // publishers: { type: GraphQLNonNull(GraphQLObjectType) },
+    //         // languages: { type: GraphQLNonNull(GraphQLObjectType) },
+    //         // authors: { type: GraphQLNonNull(GraphQLObjectType) },
+    //         createdAt: { type: GraphQLNonNull(GraphQLDateTime) },
+    //         updatedAt: { type: GraphQLNonNull(GraphQLDateTime) },
+    //         deletedAt: { type: GraphQLDateTime }
+    //       }
+    //     ]
+    //   }),
+    //   args: {
+    //     genres: { type: GraphQLString },
+    //     language: { type: GraphQLString },
+    //     publishers: { type: GraphQLString }
+    //   },
+    //   resolve: customBooksQuery
+    // }
   })
 });

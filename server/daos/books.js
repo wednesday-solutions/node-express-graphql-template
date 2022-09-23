@@ -16,20 +16,20 @@ export const updateBook = async args => {
   return book;
 };
 
-export const queryUsingLanguage = async args => {
-  let affectedRows;
+export const queryUsingLanguage = async (affectedRows, language) => {
+  //   let affectedRows;
   try {
     affectedRows = await db.books.findAll({
       include: [
         {
           model: db.languages,
-          through: { where: { language: args.language } }
+          through: { where: { language } }
         }
       ]
     });
     console.log('affected rows', affectedRows);
   } catch (e) {
-    throw new Error(`Failed to find the books written in ${args.language}`);
+    throw new Error(`Failed to find the books written in ${language}`);
   }
   if (!affectedRows) {
     throw new Error('Data not found');
@@ -37,29 +37,31 @@ export const queryUsingLanguage = async args => {
   return affectedRows;
 };
 
-export const queryUsingGenres = async args => {
-  let affectedRows;
+export const queryUsingGenres = async (affectedRows, genres) => {
+  //   let affectedRows;
+  console.log('result', affectedRows);
   try {
-    affectedRows = await db.books.findAll({ where: { genres: args.genres } });
+    affectedRows = await db.books.findAll({ where: { genres } });
   } catch (e) {
-    throw new Error(`Failed to find the books written in ${args.genres}`);
+    throw new Error(`Failed to find the books written in ${genres}`);
   }
   if (!affectedRows) {
     throw new Error('Data not found');
   }
+  console.log('genres result', affectedRows);
   return affectedRows;
 };
 
-export const queryUsingPublishers = async args => {
-  let affectedRows;
+export const queryUsingPublishers = async (affectedRows, publisher) => {
+  //   let affectedRows;
   try {
-    const getPublisherId = await db.publishers.findOne({ where: { name: args.publisher } });
+    const getPublisherId = await db.publishers.findOne({ where: { name: publisher } });
 
-    console.log('publihser id', getPublisherId);
+    console.log('publisher id', getPublisherId);
 
     affectedRows = await db.books.findAll({ where: { publisherId: getPublisherId } });
   } catch (e) {
-    throw new Error(`Failed to find the books written in ${args.genres}`);
+    throw new Error(`Failed to find the books published by ${publisher}`);
   }
   if (!affectedRows) {
     throw new Error('Data not found');
