@@ -1,19 +1,14 @@
-import { GraphQLObjectType, GraphQLNonNull, GraphQLInt } from 'graphql';
+import { GraphQLObjectType, GraphQLNonNull, GraphQLInt, GraphQLString, GraphQLList, GraphQLID } from 'graphql';
 import camelCase from 'lodash/camelCase';
 import pluralize from 'pluralize';
 import { defaultListArgs, defaultArgs, resolver } from 'graphql-sequelize';
 import { getNode } from '@gql/node';
 import { getGqlModels } from '@server/utils/autogenHelper';
-// import { QUERY_TYPE } from '@server/utils/constants';
-// import { customBooksQuery } from './models/books';
-// import { GraphQLDateTime } from 'graphql-iso-date';
-
-// const shouldAddQuery = (type, table) => {
-//   if (type === QUERY_TYPE.CUSTOM) {
-//     const negateTablesList = ['books'];
-//     return !negateTablesList.includes(table);
-//   }
-// };
+import { GraphQLDateTime } from 'graphql-iso-date';
+import { customBooksQuery } from './models/books';
+import { AuthorConnection } from './models/authors';
+import { LanguageConnection } from './models/languages';
+import { PublisherConnection } from './models/publishers';
 
 const { nodeField, nodeTypeMapper } = getNode();
 const DB_TABLES = getGqlModels({ type: 'Queries', blacklist: ['aggregate', 'timestamps'] });
@@ -36,7 +31,6 @@ export const addQueries = () => {
       }
     };
 
-    // if (shouldAddQuery(QUERY_TYPE.CUSTOM, table)) {
     query[pluralize(camelCase(table))] = {
       ...DB_TABLES[table].list,
       args: {
@@ -49,7 +43,6 @@ export const addQueries = () => {
         first: { type: GraphQLInt, description: 'Use with grapql-relay compliant queries' },
         last: { type: GraphQLInt, description: 'Use with grapql-relay compliant queries' }
       }
-      // };
     };
   });
   return query;
@@ -57,34 +50,50 @@ export const addQueries = () => {
 
 nodeTypeMapper.mapTypes({});
 
+const booksFieldsForCustomResolver = new GraphQLObjectType({
+  name: 'books',
+  fields: {
+    id: { type: GraphQLNonNull(GraphQLID) },
+    genres: { type: GraphQLNonNull(GraphQLString) },
+    name: { type: GraphQLNonNull(GraphQLString) },
+    pages: { type: GraphQLNonNull(GraphQLString) },
+    createdAt: { type: GraphQLNonNull(GraphQLDateTime) },
+    updatedAt: { type: GraphQLNonNull(GraphQLDateTime) },
+    deletedAt: { type: GraphQLNonNull(GraphQLDateTime) },
+    authors: {
+      type: AuthorConnection.connectionType,
+      args: AuthorConnection.connectionArgs,
+      resolve: (source, args, context, info) =>
+        AuthorConnection.resolve(source, args, { ...context, book: source.dataValues }, info)
+    },
+    languages: {
+      type: LanguageConnection.connectionType,
+      args: LanguageConnection.connectionArgs,
+      resolve: (source, args, context, info) =>
+        LanguageConnection.resolve(source, args, { ...context, book: source.dataValues }, info)
+    },
+    publishers: {
+      type: PublisherConnection.connectionType,
+      args: PublisherConnection.connectionArgs,
+      resolve: (source, args, context, info) =>
+        PublisherConnection.resolve(source, args, { ...context, book: source.dataValues }, info)
+    }
+  }
+});
+
 export const QueryRoot = new GraphQLObjectType({
   name: 'Query',
   node: nodeField,
   fields: () => ({
-    ...addQueries()
-    // customBookQuery: {
-    //   type: new GraphQLObjectType({
-    //     name: 'books',
-    //     fields: () => [
-    //       {
-    //         id: { type: GraphQLNonNull(GraphQLID) },
-    //         genres: { type: GraphQLNonNull(GraphQLString) },
-    //         name: { type: GraphQLNonNull(GraphQLString) },
-    //         // publishers: { type: GraphQLNonNull(GraphQLObjectType) },
-    //         // languages: { type: GraphQLNonNull(GraphQLObjectType) },
-    //         // authors: { type: GraphQLNonNull(GraphQLObjectType) },
-    //         createdAt: { type: GraphQLNonNull(GraphQLDateTime) },
-    //         updatedAt: { type: GraphQLNonNull(GraphQLDateTime) },
-    //         deletedAt: { type: GraphQLDateTime }
-    //       }
-    //     ]
-    //   }),
-    //   args: {
-    //     genres: { type: GraphQLString },
-    //     language: { type: GraphQLString },
-    //     publishers: { type: GraphQLString }
-    //   },
-    //   resolve: customBooksQuery
-    // }
+    ...addQueries(),
+    customBookQuery: {
+      type: GraphQLList(booksFieldsForCustomResolver),
+      args: {
+        genres: { type: GraphQLString },
+        language: { type: GraphQLString },
+        publisher: { type: GraphQLString }
+      },
+      resolve: customBooksQuery
+    }
   })
 });

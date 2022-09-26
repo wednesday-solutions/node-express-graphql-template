@@ -1,5 +1,6 @@
 import { GraphQLID, GraphQLInt, GraphQLNonNull, GraphQLObjectType, GraphQLString } from 'graphql';
 import { createConnection } from 'graphql-sequelize';
+
 import { getNode } from '@gql/node';
 import { getQueryFields, TYPE_ATTRIBUTES } from '@server/utils/gqlFieldUtils';
 import { timestamps } from '../timestamps';
@@ -7,7 +8,7 @@ import db from '@database/models';
 import { totalConnectionFields, transformSQLError } from '@server/utils';
 import { AuthorConnection } from '@gql/models/authors';
 import { sequelizedWhere } from '@server/database/dbUtils';
-import { insertBook, queryUsingGenres, queryUsingLanguage, updateBook } from '@server/daos/books';
+import { insertBook, queryUsingGenres, updateBook } from '@server/daos/books';
 import { insertAuthorsBooks, updateAuthorsBooksForBooks } from '@server/daos/authorsBooks';
 import { authorsBookFieldsMutation } from '@gql/models/authorsBooks';
 import { LanguageConnection } from '@gql/models/languages';
@@ -83,16 +84,12 @@ const BookConnection = createConnection({
         }
       });
     }
-    findOptions.where = sequelizedWhere(findOptions.where, args.where);
 
-    // console.log('findoptions where', findOptions.where);
+    findOptions.where = sequelizedWhere(findOptions.where, args.where);
 
     return findOptions;
   },
 
-  // after: (source, args, where, edges) => {
-  //   console.log('find after', edges);
-  // },
   ...totalConnectionFields
 });
 
@@ -133,8 +130,6 @@ export const customCreateResolver = async (model, args, context) => {
 
     await insertAuthorsBooks({ ...authorsBooksArgs, bookId });
     await insertBooksLanguages({ ...booksLanguagesArgs, bookId });
-
-    console.log('response1', bookRes);
 
     return bookRes;
   } catch (err) {
@@ -184,26 +179,16 @@ export const bookMutations = {
 
 export const customBooksQuery = async (parent, args, context, resolveInfo) => {
   try {
-    let affectedRows;
-    const { genres, publisher, language } = args;
+    let queriedRows;
+    const { genres } = args;
 
-    affectedRows = await db.books.findAll();
+    queriedRows = await db.books.findAll();
 
     if (genres) {
-      affectedRows = await queryUsingGenres(affectedRows, genres);
+      queriedRows = await queryUsingGenres(genres);
     }
 
-    if (language) {
-      affectedRows = await queryUsingLanguage(affectedRows, language);
-    }
-
-    if (publisher) {
-      affectedRows = await queryUsingGenres(affectedRows, publisher);
-    }
-
-    console.log('affected rows main', affectedRows);
-
-    return affectedRows;
+    return queriedRows;
   } catch (err) {
     throw transformSQLError(err);
   }

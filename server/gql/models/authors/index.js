@@ -1,7 +1,7 @@
 import { GraphQLID, GraphQLInt, GraphQLNonNull, GraphQLObjectType, GraphQLString } from 'graphql';
-import { getNode } from '@gql/node';
 import { createConnection } from 'graphql-sequelize';
 
+import { getNode } from '@gql/node';
 import { getQueryFields, TYPE_ATTRIBUTES } from '@server/utils/gqlFieldUtils';
 import { timestamps } from '../timestamps';
 import db from '@database/models';
@@ -77,8 +77,6 @@ export const authorQueries = {
   },
   model: db.authors
 };
-
-console.log('author queries', authorQueries.list);
 
 export const customUpdateResolver = async (model, args, context) => {
   try {
