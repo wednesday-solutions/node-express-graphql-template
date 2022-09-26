@@ -18,10 +18,14 @@ export function getAttributes(sequelize, DataTypes) {
       type: DataTypes.INTEGER,
       allowNull: false
     },
-    publishedBy: {
-      field: 'published_by',
-      type: DataTypes.TEXT,
-      allowNull: false
+    publisherId: {
+      field: 'publisher_id',
+      type: DataTypes.INTEGER,
+      allowNull: false.valueOf,
+      refrences: {
+        model: 'publishers',
+        key: 'id'
+      }
     },
     createdAt: {
       field: 'created_at',
@@ -59,6 +63,11 @@ export function model(sequelize, DataTypes) {
     books.authorsBooks = books.hasOne(models.authorsBooks, {
       sourceKey: 'id',
       foreignKey: 'book_id'
+    });
+
+    books.publishers = books.belongsTo(models.publishers, {
+      sourceKey: 'publisher_id',
+      foreignKey: 'id'
     });
   };
 

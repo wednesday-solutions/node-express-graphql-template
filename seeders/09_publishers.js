@@ -5,11 +5,9 @@ module.exports = {
 
     const arr = range(1, 20).map((value, index) => ({
       name: faker.commerce.productName(),
-      country: faker.address.country(),
-      age: 20 + index,
-      book_id: index + 1
+      country: faker.address.country()
     }));
-    return queryInterface.bulkInsert('authors', arr, {});
+    return queryInterface.bulkInsert('publishers', arr, {});
   },
-  down: queryInterface => queryInterface.bulkDelete('authors', null, {})
+  down: queryInterface => queryInterface.bulkDelete('publishers', null, {})
 };

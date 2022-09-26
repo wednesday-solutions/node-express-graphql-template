@@ -11,6 +11,7 @@ export const sequelizedWhere = (currentWhere = {}, where = {}) => {
   });
   return { ...currentWhere, ...where };
 };
+
 export const updateUsingId = async (model, args) => {
   let affectedRows;
   try {

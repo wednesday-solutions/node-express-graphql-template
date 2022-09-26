@@ -7,7 +7,7 @@ module.exports = {
       name: faker.commerce.productName(),
       genres: faker.commerce.department(),
       pages: parseFloat(faker.commerce.price()),
-      published_by: faker.name.firstName()
+      publisher_id: index + 1
     }));
     return queryInterface.bulkInsert('books', arr, {});
   },
