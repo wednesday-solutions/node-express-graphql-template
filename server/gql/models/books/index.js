@@ -8,7 +8,7 @@ import db from '@database/models';
 import { totalConnectionFields, transformSQLError } from '@server/utils';
 import { AuthorConnection } from '@gql/models/authors';
 import { sequelizedWhere } from '@server/database/dbUtils';
-import { insertBook, queryUsingGenres, updateBook } from '@server/daos/books';
+import { insertBook, queryUsingGenres, queryUsingLanguage, queryUsingPublishers, updateBook } from '@server/daos/books';
 import { insertAuthorsBooks, updateAuthorsBooksForBooks } from '@server/daos/authorsBooks';
 import { authorsBookFieldsMutation } from '@gql/models/authorsBooks';
 import { LanguageConnection } from '@gql/models/languages';
@@ -180,12 +180,20 @@ export const bookMutations = {
 export const customBooksQuery = async (parent, args, context, resolveInfo) => {
   try {
     let queriedRows;
-    const { genres } = args;
+    const { genres, publisher, language } = args;
 
     queriedRows = await db.books.findAll();
 
     if (genres) {
       queriedRows = await queryUsingGenres(genres);
+    }
+
+    if (language) {
+      queriedRows = await queryUsingLanguage(language);
+    }
+
+    if (publisher) {
+      queriedRows = await queryUsingPublishers(publisher);
     }
 
     return queriedRows;

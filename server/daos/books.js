@@ -15,6 +15,25 @@ export const updateBook = async args => {
   return book;
 };
 
+export const queryUsingLanguage = async language => {
+  let queriedRows;
+
+  try {
+    const getLanguage = await db.languages.findOne({ where: { language } });
+    const getLanguageId = getLanguage.id;
+    const getBooksLanguages = await db.booksLanguages.findOne({ where: { language_id: getLanguageId } });
+    const getBooksId = getBooksLanguages.id;
+
+    queriedRows = await db.books.findAll({ where: { id: getBooksId } });
+  } catch (e) {
+    throw new Error(`Failed to find the books written in ${language}`);
+  }
+  if (!queriedRows) {
+    throw new Error('Data not found');
+  }
+  return queriedRows;
+};
+
 export const queryUsingGenres = async genres => {
   let queriedRows;
 
@@ -27,5 +46,22 @@ export const queryUsingGenres = async genres => {
     throw new Error('Data not found');
   }
 
+  return queriedRows;
+};
+
+export const queryUsingPublishers = async publisher => {
+  let queriedRows;
+
+  try {
+    const getPublisher = await db.publishers.findOne({ where: { name: publisher } });
+    const getPublisherId = getPublisher.id;
+
+    queriedRows = await db.books.findAll({ where: { publisherId: getPublisherId } });
+  } catch (e) {
+    throw new Error(`Failed to find the books published by ${publisher}`);
+  }
+  if (!queriedRows) {
+    throw new Error('Data not found');
+  }
   return queriedRows;
 };
