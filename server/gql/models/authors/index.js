@@ -7,10 +7,10 @@ import { timestamps } from '../timestamps';
 import db from '@database/models';
 import { totalConnectionFields, transformSQLError } from '@server/utils';
 import { sequelizedWhere } from '@server/database/dbUtils';
-import { BookConnection } from '../books';
+import { bookQueries } from '@gql/models/books';
 import { updateAuthor } from '@server/daos/authors';
 import { updateAuthorsBooksForAuthors } from '@server/daos/authorsBooks';
-import { authorsBookFieldsMutation } from '../authorsBooks';
+import { authorsBookFieldsMutation } from '@gql/models/authorsBooks';
 
 const { nodeInterface } = getNode();
 
@@ -28,10 +28,9 @@ const Author = new GraphQLObjectType({
     ...getQueryFields(authorsFields, TYPE_ATTRIBUTES.isNonNull),
     ...timestamps,
     books: {
-      type: BookConnection.connectionType,
-      args: BookConnection.connectionArgs,
+      ...bookQueries.list,
       resolve: (source, args, context, info) =>
-        BookConnection.resolve(source, args, { ...context, author: source.dataValues }, info)
+        bookQueries.list.resolve(source, args, { ...context, author: source.dataValues }, info)
     }
   })
 });
