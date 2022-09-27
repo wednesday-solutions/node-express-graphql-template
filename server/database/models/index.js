@@ -22,6 +22,7 @@ db.books = require('@database/models/books').model(sequelize, Sequelize.DataType
 db.authors = require('@database/models/authors').model(sequelize, Sequelize.DataTypes);
 db.authorsBooks = require('@database/models/authors_books').model(sequelize, Sequelize.DataTypes);
 db.publishers = require('@database/models/publishers').model(sequelize, Sequelize.DataTypes);
+db.languages = require('@database/models/languages').model(sequelize, Sequelize.DataTypes);
 
 Object.keys(db).forEach(modelName => {
   if (db[modelName].associate) {
