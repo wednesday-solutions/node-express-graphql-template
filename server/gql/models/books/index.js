@@ -5,13 +5,13 @@ import { getQueryFields, TYPE_ATTRIBUTES } from '@server/utils/gqlFieldUtils';
 import { timestamps } from '../timestamps';
 import db from '@database/models';
 import { totalConnectionFields, transformSQLError } from '@server/utils';
-import { AuthorConnection } from '../authors';
+import { AuthorConnection } from '@gql/models/authors';
 import { sequelizedWhere } from '@server/database/dbUtils';
 import { insertBook, updateBook } from '@server/daos/books';
 import { insertAuthorsBooks, updateAuthorsBooksForBooks } from '@server/daos/authorsBooks';
-import { authorsBookFieldsMutation } from '../authorsBooks';
-import { LanguageConnection } from '../languages';
-import { PublisherConnection } from '../publishers';
+import { authorsBookFieldsMutation } from '@gql/models/authorsBooks';
+import { LanguageConnection } from '@gql/models/languages';
+import { PublisherConnection } from '@gql/models/publishers';
 
 const { nodeInterface } = getNode();
 

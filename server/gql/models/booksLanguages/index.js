@@ -6,7 +6,7 @@ import { timestamps } from '../timestamps';
 import db from '@database/models';
 import { totalConnectionFields } from '@server/utils';
 import { sequelizedWhere } from '@server/database/dbUtils';
-import { languageQueries } from '../languages';
+import { languageQueries } from '@gql/models/languages';
 
 const { nodeInterface } = getNode();
 

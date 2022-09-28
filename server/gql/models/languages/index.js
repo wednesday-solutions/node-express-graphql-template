@@ -7,7 +7,7 @@ import { timestamps } from '../timestamps';
 import db from '@database/models';
 import { totalConnectionFields } from '@server/utils';
 import { sequelizedWhere } from '@server/database/dbUtils';
-import { BookConnection } from '../books';
+import { BookConnection } from '@gql/models/books';
 
 const { nodeInterface } = getNode();
 

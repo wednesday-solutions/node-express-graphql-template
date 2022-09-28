@@ -5,7 +5,7 @@ import { getQueryFields, TYPE_ATTRIBUTES } from '@server/utils/gqlFieldUtils';
 import { timestamps } from '../timestamps';
 import db from '@database/models';
 import { totalConnectionFields } from '@server/utils';
-import { authorQueries } from '../authors';
+import { authorQueries } from '@gql/models/authors';
 import { sequelizedWhere } from '@server/database/dbUtils';
 
 const { nodeInterface } = getNode();
