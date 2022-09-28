@@ -48,7 +48,7 @@ export const isPublicQuery = async req => {
 export const isAuthenticated = async (req, res, next) => {
   try {
     // For accessing graphql without authentication when debugging.
-    if (isLocalEnv() || isTestEnv() || (await isPublicQuery(req))) {
+    if (isTestEnv() || (await isPublicQuery(req))) {
       next();
     } else {
       const accessTokenFromClient = req.headers.authorization;
@@ -76,6 +76,7 @@ export const isAuthenticated = async (req, res, next) => {
             }
             if (def?.selectionSet?.selections?.length) {
               args = convertToMap(def.selectionSet.selections[0].arguments, req.body.variables);
+              req.parentArgs = args;
               const name = def.selectionSet.selections[0].name.value;
               const operation = def.operation;
               if (get(RESTRICTED, `[${operation}][${name}]`)) {

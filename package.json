@@ -16,7 +16,7 @@
   "scripts": {
     "start:local": "nodemon",
     "local": "kill-port 9000 && export ENVIRONMENT_NAME=local && yarn build:local && yarn start",
-    "build:local": "export ENVIRONMENT_NAME=local && rm -rf dist && webpack --mode development --config  webpack.dev.config.js",
+    "build:local": "export ENVIRONMENT_NAME=local && dist && webpack --mode development --config  webpack.dev.config.js",
     "build:development": "export ENVIRONMENT_NAME=development && rm -rf dist && webpack --mode development --config  webpack.dev.config.js",
     "build:qa": "export ENVIRONMENT_NAME=qa && rm -rf dist && webpack --mode development --config  webpack.dev.config.js",
     "build:production": "export ENVIRONMENT_NAME=production && rm -rf dist && webpack --mode production --config webpack.prod.config.js",

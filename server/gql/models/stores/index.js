@@ -1,5 +1,6 @@
 import { GraphQLID, GraphQLInt, GraphQLNonNull, GraphQLObjectType, GraphQLString } from 'graphql';
 import { createConnection } from 'graphql-sequelize';
+import { Op } from 'sequelize';
 import { productQueries } from '../products';
 import { addressQueries } from '../addresses';
 import { timestamps } from '../timestamps';
@@ -42,6 +43,8 @@ export const StoreConnection = createConnection({
   target: db.stores,
   before: (findOptions, args, context) => {
     findOptions.include = findOptions.include || [];
+    findOptions.where = findOptions.where || {};
+    findOptions = addBeforeWhere(findOptions, args, context);
     if (context?.product?.id) {
       findOptions.include.push({
         model: db.storeProducts,
@@ -73,20 +76,46 @@ export const StoreConnection = createConnection({
   ...totalConnectionFields
 });
 
+const addBeforeWhere = (findOptions, args, context) => {
+  args = { ...args, ...context.parentArgs }
+  findOptions.where = findOptions.where || {};
+  if (args.name) {
+    findOptions.where = {
+      ...findOptions.where,
+      name: {
+        [Op.iLike]: `%${args.name}%`
+      }
+    };
+  }
+  return findOptions;
+};
 // queries on the suppliers table
 export const storeQueries = {
   args: {
     id: {
       type: GraphQLNonNull(GraphQLID)
+    },
+    name: {
+      type: GraphQLString
     }
   },
   query: {
-    type: Store
+    type: Store,
+    extras: {
+      before: (findOptions, args, context) => {
+        return addBeforeWhere(findOptions, args, context);
+      }
+    }
   },
   list: {
     ...StoreConnection,
     type: StoreConnection.connectionType,
-    args: StoreConnection.connectionArgs
+    args: {
+      ...StoreConnection.connectionArgs,
+      name: {
+        type: GraphQLString
+      }
+    }
   },
   model: db.stores
 };

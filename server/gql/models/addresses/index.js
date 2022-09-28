@@ -1,12 +1,13 @@
-import { GraphQLFloat, GraphQLID, GraphQLInt, GraphQLNonNull, GraphQLObjectType, GraphQLString } from 'graphql';
+import { GraphQLFloat, GraphQLID, GraphQLInt, GraphQLNonNull, GraphQLObjectType, GraphQLString, parse } from 'graphql';
 import { getNode } from '@gql/node';
 import { createConnection } from 'graphql-sequelize';
 import { supplierQueries } from '../suppliers';
 import { timestamps } from '../timestamps';
 import db from '@database/models';
 import { storeQueries } from '@gql/models/stores';
-import { totalConnectionFields } from '@utils/index';
+import { logger, totalConnectionFields } from '@utils/index';
 import { getQueryFields, TYPE_ATTRIBUTES } from '@server/utils/gqlFieldUtils';
+import { convertToMap } from '@server/utils/gqlSchemaParsers';
 
 const { nodeInterface } = getNode();
 export const addressFields = {
@@ -40,8 +41,12 @@ const Address = new GraphQLObjectType({
     },
     stores: {
       ...storeQueries.list,
-      resolve: (source, args, context, info) =>
-        storeQueries.list.resolve(source, args, { ...context, address: source.dataValues }, info)
+      resolve: (source, args, context, info, e, f) => {
+        if (context.parentArgs.storeName) {
+          args.name = context.parentArgs.storeName;
+        }
+        return storeQueries.list.resolve(source, args, { ...context, address: source.dataValues }, info)
+      }
     }
   })
 });
@@ -81,6 +86,9 @@ export const addressQueries = {
   args: {
     id: {
       type: GraphQLNonNull(GraphQLInt)
+    },
+    storeName: {
+      type: GraphQLString
     }
   },
   query: {

@@ -5,6 +5,7 @@ import { defaultListArgs, defaultArgs, resolver } from 'graphql-sequelize';
 import { Aggregate } from '@gql/models/aggregate';
 import { getNode } from '@gql/node';
 import { getGqlModels } from '@server/utils/autogenHelper';
+import { logger } from '@server/utils';
 
 const { nodeField } = getNode();
 const DB_TABLES = getGqlModels({ type: 'Queries', blacklist: ['aggregate', 'timestamps'] });
@@ -15,7 +16,7 @@ export const addQueries = () => {
   Object.keys(DB_TABLES).forEach(table => {
     query[camelCase(table)] = {
       ...DB_TABLES[table].query,
-      resolve: resolver(DB_TABLES[table].model),
+      resolve: resolver(DB_TABLES[table].model, {...DB_TABLES[table].query?.extras || {}}),
       args: {
         id: { type: GraphQLNonNull(GraphQLInt) },
         ...DB_TABLES[table].args,
@@ -28,11 +29,7 @@ export const addQueries = () => {
         ...DB_TABLES[table].list?.args,
         ...defaultListArgs(DB_TABLES[table].model),
         limit: { type: GraphQLInt, description: 'Use with offset to get paginated results with total' },
-        offset: { type: GraphQLInt, description: 'Use with limit to get paginated results with total' },
-        before: { type: GraphQLInt, description: 'Use with grapql-relay compliant queries' },
-        after: { type: GraphQLInt, description: 'Use with grapql-relay compliant queries' },
-        first: { type: GraphQLInt, description: 'Use with grapql-relay compliant queries' },
-        last: { type: GraphQLInt, description: 'Use with grapql-relay compliant queries' }
+        offset: { type: GraphQLInt, description: 'Use with limit to get paginated results with total' }
       }
     };
   });
