@@ -12,10 +12,11 @@ import { sequelizedWhere } from '@server/database/dbUtils';
 import { insertBook, updateBook } from '@server/daos/books';
 import { insertAuthorsBooks, updateAuthorsBooksForBooks } from '@server/daos/authorsBooks';
 import { authorsBookFieldsMutation } from '@gql/models/authorsBooks';
-import { languageQueries } from '@gql/models/languages';
-import { publisherQueries } from '@gql/models/publishers';
 import { insertBooksLanguages, updateBooksLanguagesForBooks } from '@server/daos/booksLanguages';
 import { booksLanguageFieldsMutation } from '@gql/models/booksLanguages';
+import { languageQueries } from '@gql/models/languages';
+import { publisherQueries } from '@gql/models/publishers';
+
 
 const { nodeInterface } = getNode();
 
