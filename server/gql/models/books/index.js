@@ -10,10 +10,11 @@ import { sequelizedWhere } from '@server/database/dbUtils';
 import { insertBook, updateBook } from '@server/daos/books';
 import { insertAuthorsBooks, updateAuthorsBooksForBooks } from '@server/daos/authorsBooks';
 import { authorsBookFieldsMutation } from '@gql/models/authorsBooks';
-import { LanguageConnection } from '@gql/models/languages';
-import { PublisherConnection } from '@gql/models/publishers';
 import { insertBooksLanguages, updateBooksLanguagesForBooks } from '@server/daos/booksLanguages';
 import { booksLanguageFieldsMutation } from '@gql/models/booksLanguages';
+import { languageQueries } from '@gql/models/languages';
+import { publisherQueries } from '@gql/models/publishers';
+
 
 const { nodeInterface } = getNode();
 
@@ -37,16 +38,14 @@ const Book = new GraphQLObjectType({
         AuthorConnection.resolve(source, args, { ...context, book: source.dataValues }, info)
     },
     languages: {
-      type: LanguageConnection.connectionType,
-      args: LanguageConnection.connectionArgs,
+      ...languageQueries.list,
       resolve: (source, args, context, info) =>
-        LanguageConnection.resolve(source, args, { ...context, book: source.dataValues }, info)
+        languageQueries.list.resolve(source, args, { ...context, book: source.dataValues }, info)
     },
     publishers: {
-      type: PublisherConnection.connectionType,
-      args: PublisherConnection.connectionArgs,
+      ...publisherQueries.list,
       resolve: (source, args, context, info) =>
-        PublisherConnection.resolve(source, args, { ...context, book: source.dataValues }, info)
+        publisherQueries.list.resolve(source, args, { ...context, book: source.dataValues }, info)
     }
   })
 });
