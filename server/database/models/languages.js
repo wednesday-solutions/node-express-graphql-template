@@ -37,11 +37,6 @@ export function model(sequelize, DataTypes) {
   });
 
   languages.associate = function(models) {
-    // languages.hasMany(models.books, {
-    //   sourceKey: 'id',
-    //   foreignKey: 'language_id'
-    // });
-
     languages.booksLanguages = languages.hasOne(models.booksLanguages, {
       sourceKey: 'id',
       foreignKey: 'language_id'
