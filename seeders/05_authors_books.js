@@ -2,7 +2,7 @@ const range = require('lodash/range');
 
 module.exports = {
   up: queryInterface => {
-    const arr = range(1, 5).map((value, index) => ({
+    const arr = range(1, 20).map((value, index) => ({
       author_id: index + 1,
       book_id: index + 1
     }));
