@@ -1,10 +1,9 @@
 {
-  "exec": "export ENVIRONMENT_NAME=local && npm run local",
+  "exec": "export ENVIRONMENT_NAME=local && babel-node server/index.js ",
   "watch": ["server/*", "./public/*"],
   "ignore": ["**/__tests__/**", "*.test.js", "*.spec.js"],
   "events": {
     "restart": "kill-port 9000",
-    "crash": "kill-port 9000 && npm run local"
-  },
-  "delay": "250"
+    "crash": "kill-port 9000 export ENVIRONMENT_NAME=local && babel-node server/index.js "
+  }
 }

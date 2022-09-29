@@ -1,13 +1,14 @@
 import { GraphQLID, GraphQLInt, GraphQLNonNull, GraphQLObjectType, GraphQLString } from 'graphql';
-import { getNode } from '@gql/node';
+import { Op } from 'sequelize';
 import { createConnection } from 'graphql-sequelize';
 
+import { getNode } from '@gql/node';
 import { getQueryFields, TYPE_ATTRIBUTES } from '@server/utils/gqlFieldUtils';
 import { timestamps } from '../timestamps';
 import db from '@database/models';
 import { totalConnectionFields } from '@server/utils';
 import { sequelizedWhere } from '@server/database/dbUtils';
-import { BookConnection } from '../books';
+import { bookQueries } from '../books';
 
 const { nodeInterface } = getNode();
 
@@ -24,10 +25,9 @@ const Publisher = new GraphQLObjectType({
     ...getQueryFields(publisherFields, TYPE_ATTRIBUTES.isNonNull),
     ...timestamps,
     books: {
-      type: BookConnection.connectionType,
-      args: BookConnection.connectionArgs,
+      ...bookQueries.list,
       resolve: (source, args, context, info) =>
-        BookConnection.resolve(source, args, { ...context, publisher: source.dataValues }, info)
+        bookQueries.list.resolve(source, args, { ...context, publisher: source.dataValues }, info)
     }
   })
 });
@@ -38,6 +38,9 @@ const PublisherConnection = createConnection({
   target: db.publishers,
   before: (findOptions, args, context) => {
     findOptions.include = findOptions.include || [];
+    findOptions.where = findOptions.where || {};
+    findOptions = addBeforeWhere(findOptions, args, context);
+
     if (context?.book?.id) {
       findOptions.include.push({
         model: db.books,
@@ -54,6 +57,31 @@ const PublisherConnection = createConnection({
   ...totalConnectionFields
 });
 
+const addBeforeWhere = (findOptions, args, context) => {
+  args = { ...args, ...context.parentArgs };
+  findOptions.where = findOptions.where || {};
+  if (args.publishers) {
+    findOptions.where = {
+      ...findOptions.where,
+      name: {
+        [Op.iLike]: `%${args.publishers}%`
+      }
+    };
+  }
+  if (args.name) {
+    findOptions.where = {
+      ...findOptions.where,
+      name: {
+        [Op.iLike]: `%${args.name}%`
+      }
+    };
+  }
+
+  findOptions.where = sequelizedWhere(findOptions.where, args.where);
+
+  return findOptions;
+};
+
 export { PublisherConnection, Publisher };
 
 // queries on the books table
@@ -64,12 +92,20 @@ export const publisherQueries = {
     }
   },
   query: {
-    type: Publisher
+    type: Publisher,
+    extras: {
+      before: (findOptions, args, context) => addBeforeWhere(findOptions, args, context)
+    }
   },
   list: {
     ...PublisherConnection,
     type: PublisherConnection.connectionType,
-    args: PublisherConnection.connectionArgs
+    args: {
+      ...PublisherConnection.connectionArgs,
+      name: {
+        type: GraphQLString
+      }
+    }
   },
   model: db.publishers
 };

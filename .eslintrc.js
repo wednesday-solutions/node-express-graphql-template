@@ -37,7 +37,7 @@ module.exports = {
     'newline-per-chained-call': 0,
     'no-confusing-arrow': 0,
     'max-lines': ['error', { max: 300, skipBlankLines: true, skipComments: true }],
-    'no-unused-vars': 2,
+    'no-unused-vars': 1,
     'no-use-before-define': 0,
     'prefer-template': 2,
     'require-yield': 0,

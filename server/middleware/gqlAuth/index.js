@@ -1,13 +1,10 @@
 import gql from 'graphql-tag';
+import { flatMap } from 'lodash';
 import { isLocalEnv, isTestEnv, logger } from '@utils';
 import { convertToMap } from '@utils/gqlSchemaParsers';
-import jwt from 'jsonwebtoken';
-import { RESTRICTED, GQL_QUERY_TYPES } from './constants';
-
+import { GQL_QUERY_TYPES } from './constants';
 import { connect } from '@database';
 import { sendMessage } from '@services/slack';
-import get from 'lodash/get';
-import { flatMap } from 'lodash';
 
 const { parse } = require('graphql');
 
@@ -49,52 +46,23 @@ export const isPublicQuery = async req => {
 export const isAuthenticated = async (req, res, next) => {
   try {
     // For accessing graphql without authentication when debugging.
-    if (isLocalEnv() || isTestEnv() || (await isPublicQuery(req))) {
+    if (req.method.toLowerCase() === 'get') {
+      next();
+      return;
+    }
+    if (isTestEnv() || (await isPublicQuery(req))) {
       next();
     } else {
-      const accessTokenFromClient = req.headers.authorization;
       let args;
-      if (!accessTokenFromClient) {
-        logger().info('missing access token');
-        return invalidScope(res, 'Access Token missing from header');
-      } else {
-        const token = get(accessTokenFromClient?.split(' '), '[1]');
-        return new Promise((resolve, reject) => {
-          jwt.verify(token, process.env.ACCESS_TOKEN_SECRET, (err, user) => {
-            if (!err) {
-              return resolve(user);
-            }
-            reject(err);
-          });
-        })
-          .then(async response => {
-            const graphQLBody = gql`
-              ${req.body.query}
-            `;
-            let isUnauthorized = false;
-            if (graphQLBody.definitions?.length && graphQLBody.definitions[0].selectionSet?.selections?.length) {
-              args = convertToMap(graphQLBody.definitions[0].selectionSet.selections[0].arguments, req.body.variables);
-              const name = graphQLBody.definitions[0].selectionSet.selections[0].name.value;
-              const operation = graphQLBody.definitions[0].operation;
-              if (get(RESTRICTED, `[${operation}][${name}]`)) {
-                const item = get(RESTRICTED, `[${operation}][${name}]`);
-                logger().info({ operation, name });
-                isUnauthorized = item.isUnauthorized ? await item.isUnauthorized(response, args) : false;
-              }
-            }
-            if (isUnauthorized) {
-              return invalidScope(res);
-            }
-
-            logger().info(JSON.stringify(response));
-            next();
-          })
-          .catch(err => {
-            logger().info(err);
-            logger().info('caught');
-            return invalidScope(res, [err.message || 'Internal server error']);
-          });
+      const graphQLBody = gql`
+        ${req.body.query}
+      `;
+      if (graphQLBody.definitions?.length && graphQLBody.definitions[0].selectionSet?.selections?.length) {
+        args = convertToMap(graphQLBody.definitions[0].selectionSet.selections[0].arguments, req.body.variables);
+        req.parentArgs = args;
       }
+
+      next();
     }
   } catch (err) {
     logger().info('Error in the gqlAuth middleware', err);

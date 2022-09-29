@@ -1,5 +1,6 @@
 import { GraphQLID, GraphQLInt, GraphQLNonNull, GraphQLObjectType, GraphQLString } from 'graphql';
 import { createConnection } from 'graphql-sequelize';
+import { Op } from 'sequelize';
 
 import { getNode } from '@gql/node';
 import { getQueryFields, TYPE_ATTRIBUTES } from '@server/utils/gqlFieldUtils';
@@ -8,11 +9,11 @@ import db from '@database/models';
 import { totalConnectionFields, transformSQLError } from '@server/utils';
 import { AuthorConnection } from '@gql/models/authors';
 import { sequelizedWhere } from '@server/database/dbUtils';
-import { insertBook, queryUsingGenres, queryUsingLanguage, queryUsingPublishers, updateBook } from '@server/daos/books';
+import { insertBook, updateBook } from '@server/daos/books';
 import { insertAuthorsBooks, updateAuthorsBooksForBooks } from '@server/daos/authorsBooks';
 import { authorsBookFieldsMutation } from '@gql/models/authorsBooks';
-import { LanguageConnection } from '@gql/models/languages';
-import { PublisherConnection } from '@gql/models/publishers';
+import { languageQueries } from '@gql/models/languages';
+import { publisherQueries } from '@gql/models/publishers';
 import { insertBooksLanguages, updateBooksLanguagesForBooks } from '@server/daos/booksLanguages';
 import { booksLanguageFieldsMutation } from '@gql/models/booksLanguages';
 
@@ -38,16 +39,22 @@ const Book = new GraphQLObjectType({
         AuthorConnection.resolve(source, args, { ...context, book: source.dataValues }, info)
     },
     languages: {
-      type: LanguageConnection.connectionType,
-      args: LanguageConnection.connectionArgs,
-      resolve: (source, args, context, info) =>
-        LanguageConnection.resolve(source, args, { ...context, book: source.dataValues }, info)
+      ...languageQueries.list,
+      resolve: (source, args, context, info) => {
+        if (context.parentArgs.languages) {
+          args.languages = context.parentArgs.languages;
+        }
+        return languageQueries.list.resolve(source, args, { ...context, book: source.dataValues }, info);
+      }
     },
     publishers: {
-      type: PublisherConnection.connectionType,
-      args: PublisherConnection.connectionArgs,
-      resolve: (source, args, context, info) =>
-        PublisherConnection.resolve(source, args, { ...context, book: source.dataValues }, info)
+      ...publisherQueries.list,
+      resolve: (source, args, context, info) => {
+        if (context.parentArgs.publishers) {
+          args.name = context.parentArgs.publishers;
+        }
+        return publisherQueries.list.resolve(source, args, { ...context, book: source.dataValues }, info);
+      }
     }
   })
 });
@@ -58,6 +65,9 @@ const BookConnection = createConnection({
   target: db.books,
   before: (findOptions, args, context) => {
     findOptions.include = findOptions.include || [];
+    findOptions.where = findOptions.where || {};
+    findOptions = addBeforeWhere(findOptions, args, context);
+
     if (context?.author?.id) {
       findOptions.include.push({
         model: db.authorsBooks,
@@ -93,6 +103,44 @@ const BookConnection = createConnection({
   ...totalConnectionFields
 });
 
+const addBeforeWhere = (findOptions, args, context) => {
+  args = { ...args, ...context.parentArgs };
+  findOptions.where = findOptions.where || {};
+
+  if (args.publishers) {
+    findOptions.include.push({
+      model: db.publishers,
+      where: {
+        name: {
+          [Op.iLike]: `%${args.publishers}%`
+        }
+      }
+    });
+  }
+
+  if (args.languages) {
+    findOptions.include.push({
+      model: db.languages,
+      where: {
+        language: {
+          [Op.iLike]: `%${args.languages}%`
+        }
+      }
+    });
+  }
+
+  if (args.genres) {
+    findOptions.where = {
+      ...findOptions.where,
+      genres: {
+        [Op.iLike]: `%${args.genres}%`
+      }
+    };
+  }
+
+  return findOptions;
+};
+
 export { BookConnection, Book };
 
 // queries on the books table
@@ -100,15 +148,33 @@ export const bookQueries = {
   args: {
     id: {
       type: GraphQLNonNull(GraphQLInt)
+    },
+    publishers: {
+      type: GraphQLString
     }
   },
   query: {
-    type: Book
+    type: Book,
+    extras: {
+      before: (findOptions, args, context) => addBeforeWhere(findOptions, args, context)
+    }
   },
   list: {
     ...BookConnection,
+    resolve: BookConnection.resolve,
     type: BookConnection.connectionType,
-    args: BookConnection.connectionArgs
+    args: {
+      ...BookConnection.connectionArgs,
+      publishers: {
+        type: GraphQLString
+      },
+      languages: {
+        type: GraphQLString
+      },
+      genres: {
+        type: GraphQLString
+      }
+    }
   },
   model: db.books
 };
@@ -175,29 +241,4 @@ export const bookMutations = {
   model: db.books,
   customCreateResolver,
   customUpdateResolver
-};
-
-export const customBooksQuery = async (parent, args, context, resolveInfo) => {
-  try {
-    let queriedRows;
-    const { genres, publisher, language } = args;
-
-    queriedRows = await db.books.findAll();
-
-    if (genres) {
-      queriedRows = await queryUsingGenres(genres);
-    }
-
-    if (language) {
-      queriedRows = await queryUsingLanguage(language);
-    }
-
-    if (publisher) {
-      queriedRows = await queryUsingPublishers(publisher);
-    }
-
-    return queriedRows;
-  } catch (err) {
-    throw transformSQLError(err);
-  }
 };
