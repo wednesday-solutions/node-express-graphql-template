@@ -38,11 +38,7 @@ export const addQueries = () => {
           ...DB_TABLES[table].list?.args,
           ...defaultListArgs(DB_TABLES[table].model),
           limit: { type: GraphQLInt, description: 'Use with offset to get paginated results with total' },
-          offset: { type: GraphQLInt, description: 'Use with limit to get paginated results with total' },
-          before: { type: GraphQLInt, description: 'Use with grapql-relay compliant queries' },
-          after: { type: GraphQLInt, description: 'Use with grapql-relay compliant queries' },
-          first: { type: GraphQLInt, description: 'Use with grapql-relay compliant queries' },
-          last: { type: GraphQLInt, description: 'Use with grapql-relay compliant queries' }
+          offset: { type: GraphQLInt, description: 'Use with limit to get paginated results with total' }
         }
       };
     }
