@@ -27,15 +27,6 @@ export function getAttributes(sequelize, DataTypes) {
         key: 'id'
       }
     },
-    languageId: {
-      field: 'language_id',
-      type: DataTypes.INTEGER,
-      allowNull: false.valueOf,
-      refrences: {
-        model: 'languages',
-        key: 'id'
-      }
-    },
     createdAt: {
       field: 'created_at',
       type: DataTypes.DATE,
@@ -79,9 +70,15 @@ export function model(sequelize, DataTypes) {
       foreignKey: 'id'
     });
 
-    books.languages = books.belongsTo(models.languages, {
-      sourceKey: 'language_id',
-      foreignKey: 'id'
+    books.languages = books.belongsToMany(models.languages, {
+      through: models.booksLanguages,
+      sourceKey: 'id',
+      otherKey: 'language_id'
+    });
+
+    books.booksLanguages = books.hasOne(models.booksLanguages, {
+      sourceKey: 'id',
+      foreignKey: 'book_id'
     });
   };
 
