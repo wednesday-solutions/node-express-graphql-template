@@ -128,8 +128,6 @@ export const customCreateResolver = async (model, args, context) => {
     await insertAuthorsBooks({ ...authorsBooksArgs, bookId });
     await insertBooksLanguages({ ...booksLanguagesArgs, bookId });
 
-    console.log('response1', bookRes);
-
     return bookRes;
   } catch (err) {
     throw transformSQLError(err);
