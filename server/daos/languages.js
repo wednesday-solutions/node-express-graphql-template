@@ -5,8 +5,7 @@ export const insertLanguage = args => db.books.create(args);
 
 export const updateLanguage = async args => {
   const mapLanguageUpdateArgs = {
-    name: args.name,
-    country: args.country
+    language: args.language
   };
 
   const languageResponse = await db.languages.update(mapLanguageUpdateArgs, { where: { id: args.id } });

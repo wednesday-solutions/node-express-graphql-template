@@ -10,7 +10,7 @@ import { sequelizedWhere } from '@server/database/dbUtils';
 import { BookConnection } from '@gql/models/books';
 import { updateLanguage } from '@server/daos/languages';
 import { updateBooksLanguagesForLanguages } from '@server/daos/booksLanguages';
-import { booksLanguageFieldsMutation } from '@gql/models/booksLanguages';
+import { authorsBookFieldsMutation } from '../authorsBooks';
 
 const { nodeInterface } = getNode();
 
@@ -80,12 +80,12 @@ export const customUpdateResolver = async (model, args, context) => {
   try {
     const languageArgs = {
       id: args.id,
-      name: args.name,
-      country: args.country
+      language: args.language
     };
-
     const booksLanguagesArgs = { booksLanguages: args.booksId };
+
     const languageRes = await updateLanguage(languageArgs);
+
     const languageId = languageRes.id;
 
     await updateBooksLanguagesForLanguages({ ...booksLanguagesArgs, languageId });
@@ -98,7 +98,7 @@ export const customUpdateResolver = async (model, args, context) => {
 
 export const languageFieldsMutation = {
   ...languageFields,
-  booksId: booksLanguageFieldsMutation.booksIdArray
+  booksId: authorsBookFieldsMutation.booksIdArray
 };
 
 export const languageMutations = {

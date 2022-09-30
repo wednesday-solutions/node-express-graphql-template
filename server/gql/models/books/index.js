@@ -15,7 +15,6 @@ import { booksLanguageFieldsMutation } from '@gql/models/booksLanguages';
 import { languageQueries } from '@gql/models/languages';
 import { publisherQueries } from '@gql/models/publishers';
 
-
 const { nodeInterface } = getNode();
 
 export const booksFields = {
@@ -139,7 +138,8 @@ export const customUpdateResolver = async (model, args, context) => {
       id: args.id,
       name: args.name,
       genres: args.genres,
-      pages: args.pages
+      pages: args.pages,
+      publisherId: args.publisherId
     };
 
     const authorsBooksArgs = { authorsBooks: args.authorsId };

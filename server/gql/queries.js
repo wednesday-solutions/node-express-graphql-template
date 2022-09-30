@@ -16,8 +16,6 @@ const shouldAddQuery = (type, table) => {
 const { nodeField, nodeTypeMapper } = getNode();
 const DB_TABLES = getGqlModels({ type: 'Queries', blacklist: ['aggregate', 'timestamps'] });
 
-console.log('db tables', DB_TABLES);
-
 export const addQueries = () => {
   const query = {};
   Object.keys(DB_TABLES).forEach(table => {
