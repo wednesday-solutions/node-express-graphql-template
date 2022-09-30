@@ -12,7 +12,5 @@ export const updateLanguage = async args => {
 
   logger().info(languageResponse);
 
-  const language = await db.languages.findOne({ where: { id: args.id } });
-
-  return language;
+  return db.languages.findOne({ where: { id: args.id } });
 };

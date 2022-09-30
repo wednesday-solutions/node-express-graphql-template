@@ -17,7 +17,6 @@ import { booksLanguageFieldsMutation } from '@gql/models/booksLanguages';
 import { languageQueries } from '@gql/models/languages';
 import { publisherQueries } from '@gql/models/publishers';
 
-
 const { nodeInterface } = getNode();
 
 export const booksFields = {
