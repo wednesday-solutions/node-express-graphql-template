@@ -37,7 +37,7 @@ export function model(sequelize, DataTypes) {
   });
 
   languages.associate = function(models) {
-    languages.hasOne(models.booksLanguages, {
+    languages.booksLanguages = languages.hasOne(models.booksLanguages, {
       sourceKey: 'id',
       foreignKey: 'language_id'
     });
