@@ -8,9 +8,7 @@ export const updateLanguage = async args => {
     country: args.country
   };
 
-  const languageResponse = await db.languages.update(mapLanguageUpdateArgs, { where: { id: args.id } });
-
-  console.log('languages response', languageResponse);
+  await db.languages.update(mapLanguageUpdateArgs, { where: { id: args.id } });
 
   const language = await db.languages.findOne({ where: { id: args.id } });
 
