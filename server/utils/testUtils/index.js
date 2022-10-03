@@ -1,6 +1,29 @@
 import isNil from 'lodash/isNil';
+import set from 'lodash/set';
+import {
+  authorsBooksTable,
+  authorsTable,
+  booksLanguagesTable,
+  booksTable,
+  languagesTable,
+  publishersTable
+} from '@server/utils/testUtils/mockData';
+import sequelize from 'sequelize';
 import request from 'supertest';
 import logger from '@middleware/logger/index';
+
+const defineAndAddAttributes = (connection, name, mock, attr, total = 10) => {
+  const mockTable = connection.define(name, mock, {
+    instanceMethods: {
+      findAll: () => [mock],
+      findOne: () => mock
+    }
+  });
+  mockTable.rawAttributes = attr;
+  mockTable.manyFromSource = { count: () => new Promise(resolve => resolve(total)) };
+  set(mockTable, 'sequelize.dialect', 'postgres');
+  return mockTable;
+};
 
 export const restfulGetResponse = async (path, app) => {
   if (!app) {
@@ -28,9 +51,63 @@ export function mockDBClient(config = { total: 10 }) {
   const dbConnectionMock = new SequelizeMock();
   dbConnectionMock.options = { dialect: 'mock' };
 
+  const publishersMock = defineAndAddAttributes(
+    dbConnectionMock,
+    'publishers',
+    publishersTable[0],
+    require('@database/models/publishers').getAttributes(sequelize, sequelize.DataTypes),
+    config.total
+  );
+  const languagesMock = defineAndAddAttributes(
+    dbConnectionMock,
+    'languages',
+    languagesTable[0],
+    require('@database/models/languages').getAttributes(sequelize, sequelize.DataTypes),
+    config.total
+  );
+
+  const booksMock = defineAndAddAttributes(
+    dbConnectionMock,
+    'books',
+    booksTable[0],
+    require('@database/models/books').getAttributes(sequelize, sequelize.DataTypes),
+    config.total
+  );
+
+  const authorsMock = defineAndAddAttributes(
+    dbConnectionMock,
+    'authors',
+    authorsTable[0],
+    require('@database/models/authors').getAttributes(sequelize, sequelize.DataTypes),
+    config.total
+  );
+
+  const authorsBooksMock = defineAndAddAttributes(
+    dbConnectionMock,
+    'authors_books',
+    authorsBooksTable[0],
+    require('@database/models/authors_books').getAttributes(sequelize, sequelize.DataTypes),
+    config.total
+  );
+
+  const booksLanguagesMock = defineAndAddAttributes(
+    dbConnectionMock,
+    'books_languages',
+    booksLanguagesTable[0],
+    require('@database/models/books_languages').getAttributes(sequelize, sequelize.DataTypes),
+    config.total
+  );
+
   return {
     client: dbConnectionMock,
-    models: {}
+    models: {
+      publishers: publishersMock,
+      languages: languagesMock,
+      books: booksMock,
+      authors: authorsMock,
+      authorsBooks: authorsBooksMock,
+      booksLanguages: booksLanguagesMock
+    }
   };
 }
 

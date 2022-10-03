@@ -62,6 +62,44 @@ export const supplierProductsTable = range(1, 10).map((_, index) => ({
   supplierId: index + 1
 }));
 
+export const publishersTable = range(1, 10).map((_, index) => ({
+  id: (index + 1).toString(),
+  name: faker.commerce.productName(),
+  country: faker.address.country()
+}));
+
+export const languagesTable = range(1, 10).map((_, index) => ({
+  id: (index + 1).toString(),
+  language: faker.address.country()
+}));
+
+export const booksTable = range(1, 10).map((_, index) => ({
+  id: (index + 1).toString(),
+  name: faker.commerce.productName(),
+  genres: faker.commerce.department(),
+  pages: parseFloat(faker.commerce.price()),
+  publisher_id: index + 1
+}));
+
+export const authorsTable = range(1, 10).map((_, index) => ({
+  id: (index + 1).toString(),
+  name: faker.commerce.productName(),
+  country: faker.address.country(),
+  age: 20 + index
+}));
+
+export const authorsBooksTable = range(1, 10).map((_, index) => ({
+  id: (index + 1).toString(),
+  author_id: index + 1,
+  book_id: index + 1
+}));
+
+export const booksLanguagesTable = range(1, 10).map((_, index) => ({
+  id: (index + 1).toString(),
+  language_id: index + 1,
+  book_id: index + 1
+}));
+
 export const DB_ENV = {
   POSTGRES_HOST: 'host',
   POSTGRES_USER: 'user',
