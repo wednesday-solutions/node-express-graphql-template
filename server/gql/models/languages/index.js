@@ -12,6 +12,7 @@ import { updateLanguage } from '@server/daos/languages';
 import { updateBooksLanguagesForLanguages } from '@server/daos/booksLanguages';
 import { authorsBookFieldsMutation } from '@gql/models/authorsBooks';
 
+
 const { nodeInterface } = getNode();
 
 export const languageFields = {
@@ -80,15 +81,20 @@ export const customUpdateResolver = async (model, args, context) => {
   try {
     const languageArgs = {
       id: args.id,
-      name: args.name,
-      country: args.country
+      language: args.language
     };
+    const booksLanguagesArgs = args.booksId;
 
-    const booksLanguagesArgs = { booksLanguages: args.booksId };
-    const languageRes = await updateLanguage(languageArgs);
+    const languageRes = await updateLanguage({ ...languageArgs });
+
     const languageId = languageRes.id;
 
-    await updateBooksLanguagesForLanguages({ ...booksLanguagesArgs, languageId });
+    const mapBooksLanguagesArgs = booksLanguagesArgs.map((item, index) => ({
+      languageId,
+      bookId: item.bookId
+    }));
+
+    await updateBooksLanguagesForLanguages(mapBooksLanguagesArgs);
 
     return languageRes;
   } catch (err) {

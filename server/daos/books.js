@@ -2,15 +2,8 @@ import db from '@database/models';
 
 export const insertBook = args => db.books.create(args);
 
-export const updateBook = async args => {
-  const mapBookUpdateArgs = {
-    name: args.name,
-    genres: args.genres,
-    pages: args.pages
-  };
+export const updateBook = async ({ id, name, genres, pages, publisherId }) => {
+  await db.books.update({ name, genres, pages, publisherId }, { where: { id } });
 
-  await db.books.update(mapBookUpdateArgs, { where: { id: args.id } });
-  const book = await db.books.findOne({ where: { id: args.id } });
-
-  return book;
+  return db.books.findOne({ where: { id } });
 };
