@@ -116,15 +116,23 @@ export const customCreateResolver = async (model, args, context) => {
       pages: args.pages,
       publisherId: args.publisherId
     };
-
-    const authorsBooksArgs = { authorsBooks: args.authorsId };
-    const booksLanguagesArgs = { booksLanguages: args.languagesId };
+    const authorsBooksArgs = args.authorsId;
+    const booksLanguagesArgs = args.languagesId;
 
     const bookRes = await insertBook(bookArgs);
-    const bookId = bookRes.id;
 
-    await insertAuthorsBooks({ ...authorsBooksArgs, bookId });
-    await insertBooksLanguages({ ...booksLanguagesArgs, bookId });
+    const bookId = bookRes.id;
+    const mapAuthorBooksArgs = authorsBooksArgs.map((item, index) => ({
+      bookId,
+      authorId: item.authorId
+    }));
+    const mapBooksLanguagesArgs = booksLanguagesArgs.map((item, index) => ({
+      bookId,
+      languageId: item.languageId
+    }));
+
+    await insertAuthorsBooks(mapAuthorBooksArgs);
+    await insertBooksLanguages(mapBooksLanguagesArgs);
 
     return bookRes;
   } catch (err) {
@@ -141,16 +149,23 @@ export const customUpdateResolver = async (model, args, context) => {
       pages: args.pages,
       publisherId: args.publisherId
     };
+    const authorsBooksArgs = args.authorsId;
+    const booksLanguagesArgs = args.languagesId;
 
-    const authorsBooksArgs = { authorsBooks: args.authorsId };
-    const booksLanguagesArgs = { booksLanguages: args.languagesId };
-
-    const bookRes = await updateBook(bookArgs);
+    const bookRes = await updateBook({ ...bookArgs });
     const bookId = bookRes.id;
+    const mapAuthorBooksArgs = authorsBooksArgs.map((item, index) => ({
+      bookId,
+      authorId: item.authorId
+    }));
+    const mapBooksLanguagesArgs = booksLanguagesArgs.map((item, index) => ({
+      bookId,
+      languageId: item.languageId
+    }));
 
-    await updateAuthorsBooksForBooks({ ...authorsBooksArgs, bookId });
+    await updateAuthorsBooksForBooks(mapAuthorBooksArgs);
 
-    await updateBooksLanguagesForBooks({ ...booksLanguagesArgs, bookId });
+    await updateBooksLanguagesForBooks(mapBooksLanguagesArgs);
 
     return bookRes;
   } catch (err) {

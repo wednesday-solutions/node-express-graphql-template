@@ -3,16 +3,10 @@ import { logger } from '@utils/index';
 
 export const insertLanguage = args => db.books.create(args);
 
-export const updateLanguage = async args => {
-  const mapLanguageUpdateArgs = {
-    language: args.language
-  };
-
-  const languageResponse = await db.languages.update(mapLanguageUpdateArgs, { where: { id: args.id } });
+export const updateLanguage = async ({ id, language }) => {
+  const languageResponse = await db.languages.update({ language }, { where: { id } });
 
   logger().info(languageResponse);
 
-  const language = await db.languages.findOne({ where: { id: args.id } });
-
-  return language;
+  return db.languages.findOne({ where: { id } });
 };
