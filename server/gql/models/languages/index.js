@@ -12,7 +12,6 @@ import { updateLanguage } from '@server/daos/languages';
 import { updateBooksLanguagesForLanguages } from '@server/daos/booksLanguages';
 import { authorsBookFieldsMutation } from '@gql/models/authorsBooks';
 
-
 const { nodeInterface } = getNode();
 
 export const languageFields = {
