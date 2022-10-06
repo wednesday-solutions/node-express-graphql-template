@@ -1,0 +1,16 @@
+{
+  "version": "0.2.0",
+
+  "configurations": [
+    {
+      "type": "node",
+      "request": "launch",
+      "name": "Run locally",
+      "runtimeExecutable": "yarn",
+      "runtimeArgs": ["start:local"],
+      "envFile": "${workspaceFolder}/.env.local",
+      "env": { "ENVIONMENT_NAME": "local" },
+      "outputCapture": "std"
+    }
+  ]
+}
