@@ -10,8 +10,8 @@ import { getQueryFields, TYPE_ATTRIBUTES } from '@server/utils/gqlFieldUtils';
 const { nodeInterface } = getNode();
 
 export const userFields = {
-  firstName: { type: GraphQLNonNull(GraphQLString) },
-  lastName: { type: GraphQLNonNull(GraphQLString) }
+  firstName: { type: new GraphQLNonNull(GraphQLString) },
+  lastName: { type: new GraphQLNonNull(GraphQLString) }
 };
 
 const User = new GraphQLObjectType({
@@ -19,8 +19,8 @@ const User = new GraphQLObjectType({
   interfaces: [nodeInterface],
   fields: () => ({
     ...getQueryFields(userFields, TYPE_ATTRIBUTES.isNonNull),
-    id: { type: GraphQLNonNull(GraphQLID) },
-    email: { type: GraphQLNonNull(GraphQLString) },
+    id: { type: new GraphQLNonNull(GraphQLID) },
+    email: { type: new GraphQLNonNull(GraphQLString) },
     ...timestamps
   })
 });
@@ -42,7 +42,7 @@ export { User };
 export const userQueries = {
   args: {
     id: {
-      type: GraphQLNonNull(GraphQLInt)
+      type: new GraphQLNonNull(GraphQLInt)
     }
   },
   query: {

@@ -59,7 +59,7 @@ export const addMutations = () => {
       mutations[`delete${upperFirst(table)}`] = {
         type: deletedId,
         args: {
-          id: { type: GraphQLNonNull(GraphQLInt) }
+          id: { type: new GraphQLNonNull(GraphQLInt) }
         },
         resolve: createResolvers(DB_TABLES[table].model, DB_TABLES[table].customDeleteResolver).deleteResolver
       };
@@ -76,21 +76,21 @@ export const MutationRoot = new GraphQLObjectType({
       type: new GraphQLObjectType({
         name: 'SignUpResponse',
         fields: () => ({
-          id: { type: GraphQLNonNull(GraphQLID) },
-          email: { type: GraphQLNonNull(GraphQLString) },
-          firstName: { type: GraphQLNonNull(GraphQLString) },
-          lastName: { type: GraphQLNonNull(GraphQLString) },
-          token: { type: GraphQLNonNull(GraphQLString) },
-          createdAt: { type: GraphQLNonNull(GraphQLDateTime) },
-          updatedAt: { type: GraphQLNonNull(GraphQLDateTime) },
+          id: { type: new GraphQLNonNull(GraphQLID) },
+          email: { type: new GraphQLNonNull(GraphQLString) },
+          firstName: { type: new GraphQLNonNull(GraphQLString) },
+          lastName: { type: new GraphQLNonNull(GraphQLString) },
+          token: { type: new GraphQLNonNull(GraphQLString) },
+          createdAt: { type: new GraphQLNonNull(GraphQLDateTime) },
+          updatedAt: { type: new GraphQLNonNull(GraphQLDateTime) },
           deletedAt: { type: GraphQLDateTime }
         })
       }),
       args: {
-        email: { type: GraphQLNonNull(GraphQLString) },
-        password: { type: GraphQLNonNull(GraphQLString) },
-        firstName: { type: GraphQLNonNull(GraphQLString) },
-        lastName: { type: GraphQLNonNull(GraphQLString) }
+        email: { type: new GraphQLNonNull(GraphQLString) },
+        password: { type: new GraphQLNonNull(GraphQLString) },
+        firstName: { type: new GraphQLNonNull(GraphQLString) },
+        lastName: { type: new GraphQLNonNull(GraphQLString) }
       },
       resolve: handleSignUp
     },
@@ -98,12 +98,12 @@ export const MutationRoot = new GraphQLObjectType({
       type: new GraphQLObjectType({
         name: 'SignInResponse',
         fields: () => ({
-          token: { type: GraphQLNonNull(GraphQLString) }
+          token: { type: new GraphQLNonNull(GraphQLString) }
         })
       }),
       args: {
-        email: { type: GraphQLNonNull(GraphQLString) },
-        password: { type: GraphQLNonNull(GraphQLString) }
+        email: { type: new GraphQLNonNull(GraphQLString) },
+        password: { type: new GraphQLNonNull(GraphQLString) }
       },
       resolve: handleSignIn
     }

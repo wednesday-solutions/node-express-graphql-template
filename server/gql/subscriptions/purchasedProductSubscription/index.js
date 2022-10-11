@@ -10,22 +10,22 @@ export const PurchasedProductSubscription = {
     name: SUBSCRIPTION_TOPICS.NEW_PURCHASED_PRODUCT,
     fields: () => ({
       productId: {
-        type: GraphQLNonNull(GraphQLInt)
+        type: new GraphQLNonNull(GraphQLInt)
       },
       deliveryDate: {
-        type: GraphQLNonNull(GraphQLDateTime)
+        type: new GraphQLNonNull(GraphQLDateTime)
       },
       price: {
-        type: GraphQLNonNull(GraphQLInt)
+        type: new GraphQLNonNull(GraphQLInt)
       },
       storeId: {
-        type: GraphQLNonNull(GraphQLInt)
+        type: new GraphQLNonNull(GraphQLInt)
       }
     })
   }),
   args: {
     storeId: {
-      type: GraphQLNonNull(GraphQLInt)
+      type: new GraphQLNonNull(GraphQLInt)
     }
   },
   subscribe: withFilter(getAsyncInterator(SUBSCRIPTION_TOPICS.NEW_PURCHASED_PRODUCT), checkFilterCondition)
