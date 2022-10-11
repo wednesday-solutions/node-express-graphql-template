@@ -1,6 +1,6 @@
 import Sequelize from 'sequelize';
 import * as pg from 'pg';
-import { isTestEnv, logger } from '@server/utils';
+import { getLogger, isTestEnv, logger } from '@server/utils';
 
 let client;
 let namespace;
@@ -18,7 +18,7 @@ export const getClient = force => {
         host: process.env.POSTGRES_HOST,
         dialectModule: pg,
         port: process.env.POSTGRES_PORT,
-        logging: isTestEnv() ? false : console.log,
+        logging: isTestEnv() ? false : getLogger(),
         dialect: 'postgres',
         pool: {
           min: 0,
