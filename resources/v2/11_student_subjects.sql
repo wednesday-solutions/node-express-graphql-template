@@ -11,3 +11,11 @@ CREATE TABLE student_subjects
      CONSTRAINT student_subjects_subject_id FOREIGN KEY
      (subject_id) REFERENCES subjects (id)
 );
+
+CREATE INDEX student_subjects_student_id ON student_subjects USING btree 
+(student_id);
+CREATE INDEX student_subjects_subject_id ON student_subjects USING btree 
+(subject_id);
+
+ALTER TABLE student_subjects ADD CONSTRAINT student_subjects_unique_fkeys 
+UNIQUE (student_id, subject_id);

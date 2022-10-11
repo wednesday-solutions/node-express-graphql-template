@@ -6,3 +6,5 @@ CREATE TABLE subjects
      updated_at TIMESTAMP WITH TIME ZONE,
      deleted_at TIMESTAMP WITH TIME ZONE
 );
+
+CREATE INDEX subject_name ON subjects(name);
