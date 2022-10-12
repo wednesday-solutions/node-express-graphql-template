@@ -22,6 +22,7 @@ import os from 'os';
 import 'source-map-support/register';
 import { sendMessage } from '@services/slack';
 import { SubscriptionRoot } from '@gql/subscriptions';
+import logReqRes from './middleware/logger';
 
 const totalCPUs = os.cpus().length;
 
@@ -52,6 +53,7 @@ export const init = async () => {
   app.use(express.json());
   app.use(rTracer.expressMiddleware());
   app.use(cors(corsOptionsDelegate));
+  app.use(logReqRes);
   app.use(bodyParser.json());
   app.use(bodyParser.urlencoded({ extended: true }));
   app.use(

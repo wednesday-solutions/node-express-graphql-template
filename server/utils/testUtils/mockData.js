@@ -62,6 +62,11 @@ export const supplierProductsTable = range(1, 10).map((_, index) => ({
   supplierId: index + 1
 }));
 
+export const studentsTable = range(1, 10).map((_, index) => ({
+  id: (index + 1).toString(),
+  name: faker.internet.userName()
+}));
+
 export const DB_ENV = {
   POSTGRES_HOST: 'host',
   POSTGRES_USER: 'user',

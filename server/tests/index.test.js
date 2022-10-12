@@ -32,7 +32,7 @@ describe('init', () => {
     await init();
 
     // check if the server has been started
-    expect(mocks.app.use.mock.calls.length).toBe(6);
+    expect(mocks.app.use.mock.calls.length).toBe(7);
     expect(mocks.app.use.mock.calls[0][0]).toEqual(expect.any(Function));
   });
 
@@ -62,7 +62,7 @@ describe('health check API', () => {
     const app = require('../index').app;
     const res = await restfulGetResponse('/', app);
     expect(res.statusCode).toBe(200);
-    expect(res.body).toBe('Service up and running!');
+    expect(res.body).toStrictEqual({ data: 'Service up and running!' });
   });
 });
 

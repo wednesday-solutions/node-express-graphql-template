@@ -10,16 +10,8 @@ import { getQueryFields, TYPE_ATTRIBUTES } from '@server/utils/gqlFieldUtils';
 
 const { nodeInterface } = getNode();
 export const addressFields = {
-  id: {
-    type: GraphQLID,
-    [TYPE_ATTRIBUTES.isNonNull]: true
-  },
-  address1: {
-    type: GraphQLString,
-
-    [TYPE_ATTRIBUTES.isCreateRequired]: true,
-    [TYPE_ATTRIBUTES.isUpdateRequired]: true
-  },
+  id: { type: GraphQLNonNull(GraphQLID) },
+  address1: { type: GraphQLString },
   address2: { type: GraphQLString },
   city: { type: GraphQLString },
   country: { type: GraphQLString },
@@ -48,7 +40,8 @@ const Address = new GraphQLObjectType({
     },
     stores: {
       ...storeQueries.list,
-      resolve: (source, args, context, info) => null // storeQueries.list.resolve(source, args, { ...context, address: source.dataValues }, info)
+      resolve: (source, args, context, info) =>
+        storeQueries.list.resolve(source, args, { ...context, address: source.dataValues }, info)
     }
   })
 });
