@@ -11,3 +11,4 @@ CREATE TABLE students
     WITH time zone
 );
 
+CREATE INDEX student_name ON students(name);

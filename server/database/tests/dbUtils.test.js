@@ -40,7 +40,9 @@ describe('updateUsingId', () => {
   });
 
   it('should throw an error there is an error while updating the model', async () => {
-    mocks.model.update.mockImplementation(() => throw new Error('failed'));
+    mocks.model.update.mockImplementation(() => {
+      throw new Error('failed');
+    });
     jest.spyOn(mocks.model, 'findOne');
     jest.spyOn(mocks.model, 'update');
     const args = { id: 1 };
@@ -85,7 +87,9 @@ describe('deleteUsingId', () => {
   });
 
   it('should throw an error there is an error while updating the model', async () => {
-    mocks.model.destroy.mockImplementation(() => throw new Error('failed'));
+    mocks.model.destroy.mockImplementation(() => {
+      throw new Error('failed');
+    });
     jest.spyOn(mocks.model, 'destroy');
     const args = { id: 1 };
     await expect(deleteUsingId(mocks.model, args)).rejects.toEqual(new Error(`Failed to delete ${mocks.model.name}`));
