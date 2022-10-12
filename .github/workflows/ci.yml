@@ -42,7 +42,7 @@ jobs:
           package-manager: yarn
           threshold: ${{steps.threshold.outputs.prop}}
           skip-step: all
-          annotations: failed-tests
+          annotations: coverage
       - uses: codecov/codecov-action@v2
         with:
           token: ${{ secrets.CODECOV_TOKEN }}
