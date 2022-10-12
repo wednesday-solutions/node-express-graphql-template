@@ -7,7 +7,8 @@ import {
   storeProductsTable,
   storesTable,
   supplierProductsTable,
-  suppliersTable
+  suppliersTable,
+  studentsTable
 } from '@server/utils/testUtils/mockData';
 import sequelize from 'sequelize';
 import request from 'supertest';
@@ -116,6 +117,13 @@ export function mockDBClient(config = { total: 10 }) {
     require('@database/models/purchased_products').getAttributes(sequelize, sequelize.DataTypes),
     config.total
   );
+  const studentsMock = defineAndAddAttributes(
+    dbConnectionMock,
+    'students',
+    studentsTable[0],
+    require('@database/models/students').getAttributes(sequelize, sequelize.DataTypes),
+    config.total
+  );
   return {
     client: dbConnectionMock,
     models: {
@@ -126,7 +134,8 @@ export function mockDBClient(config = { total: 10 }) {
       storeProducts: storeProductsMock,
       suppliers: suppliersMock,
       supplierProducts: supplierProductsMock,
-      users: usersMock
+      users: usersMock,
+      students: studentsMock
     }
   };
 }

@@ -2,6 +2,7 @@ import express from 'express';
 import cors from 'cors';
 import { SubscriptionServer } from 'subscriptions-transport-ws/dist/server';
 import { graphqlHTTP } from 'express-graphql';
+import graphqlDepthLimit from 'graphql-depth-limit';
 import { GraphQLSchema, execute, subscribe } from 'graphql';
 import 'whatwg-fetch';
 import dotenv from 'dotenv';
@@ -19,9 +20,9 @@ import { isLocalEnv, isTestEnv, logger } from '@utils/index';
 import cluster from 'cluster';
 import os from 'os';
 import 'source-map-support/register';
-import { initQueues } from '@utils/queue';
 import { sendMessage } from '@services/slack';
 import { SubscriptionRoot } from '@gql/subscriptions';
+import logReqRes from './middleware/logger';
 
 const totalCPUs = os.cpus().length;
 
@@ -31,13 +32,19 @@ export const fetchFromGithub = async query =>
 const githubBreaker = newCircuitBreaker(fetchFromGithub, 'Github API is down');
 export const init = async () => {
   // configure environment variables
-  dotenv.config({ path: `.env.${process.env.ENVIRONMENT_NAME}` });
+  dotenv.config({
+    path: `.env.${process.env.ENVIRONMENT_NAME}`
+  });
 
   // connect to database
   connect();
 
   // create the graphQL schema
-  const schema = new GraphQLSchema({ query: QueryRoot, mutation: MutationRoot, subscription: SubscriptionRoot });
+  const schema = new GraphQLSchema({
+    query: QueryRoot,
+    mutation: MutationRoot,
+    subscription: SubscriptionRoot
+  });
 
   if (!app) {
     app = express();
@@ -46,6 +53,7 @@ export const init = async () => {
   app.use(express.json());
   app.use(rTracer.expressMiddleware());
   app.use(cors(corsOptionsDelegate));
+  app.use(logReqRes);
   app.use(bodyParser.json());
   app.use(bodyParser.urlencoded({ extended: true }));
   app.use(
@@ -55,7 +63,11 @@ export const init = async () => {
     graphqlHTTP({
       schema,
       graphiql: true,
-      customFormatErrorFn: e => e
+      validationRules: [graphqlDepthLimit(6)],
+      customFormatErrorFn: e => {
+        logger().info({ e });
+        return e;
+      }
     })
   );
 
@@ -72,7 +84,7 @@ export const init = async () => {
     const message = 'Service up and running!';
     sendMessage(message);
     logger().info(message);
-    res.json(message);
+    res.json({ data: message });
   });
 
   /* istanbul ignore next */
@@ -93,7 +105,7 @@ export const init = async () => {
     httpServer.listen(9000, () => {
       console.log(`Server is now running on http://localhost:9000/graphql`);
     });
-    initQueues();
+    // initQueues();
   }
 };
 
