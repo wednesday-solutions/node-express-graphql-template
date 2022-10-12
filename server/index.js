@@ -20,7 +20,6 @@ import { isLocalEnv, isTestEnv, logger } from '@utils/index';
 import cluster from 'cluster';
 import os from 'os';
 import 'source-map-support/register';
-import { initQueues } from '@utils/queue';
 import { sendMessage } from '@services/slack';
 import { SubscriptionRoot } from '@gql/subscriptions';
 
@@ -83,7 +82,7 @@ export const init = async () => {
     const message = 'Service up and running!';
     sendMessage(message);
     logger().info(message);
-    res.json({data: message});
+    res.json({ data: message });
   });
 
   /* istanbul ignore next */

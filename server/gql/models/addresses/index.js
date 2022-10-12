@@ -10,26 +10,26 @@ import { getQueryFields, TYPE_ATTRIBUTES } from '@server/utils/gqlFieldUtils';
 
 const { nodeInterface } = getNode();
 export const addressFields = {
-         id: {
-           type: GraphQLID,
-           [TYPE_ATTRIBUTES.isNonNull]: true
-         },
-         address1: {
-           type: GraphQLString,
+  id: {
+    type: GraphQLID,
+    [TYPE_ATTRIBUTES.isNonNull]: true
+  },
+  address1: {
+    type: GraphQLString,
 
-           [TYPE_ATTRIBUTES.isCreateRequired]: true,
-           [TYPE_ATTRIBUTES.isUpdateRequired]: true
-         },
-         address2: { type: GraphQLString },
-         city: { type: GraphQLString },
-         country: { type: GraphQLString },
-         lat: {
-           type: GraphQLNonNull(GraphQLFloat)
-         },
-         long: {
-           type: GraphQLNonNull(GraphQLFloat)
-         }
-       };
+    [TYPE_ATTRIBUTES.isCreateRequired]: true,
+    [TYPE_ATTRIBUTES.isUpdateRequired]: true
+  },
+  address2: { type: GraphQLString },
+  city: { type: GraphQLString },
+  country: { type: GraphQLString },
+  lat: {
+    type: GraphQLNonNull(GraphQLFloat)
+  },
+  long: {
+    type: GraphQLNonNull(GraphQLFloat)
+  }
+};
 const Address = new GraphQLObjectType({
   name: 'Address',
   interfaces: [nodeInterface],
@@ -44,16 +44,11 @@ const Address = new GraphQLObjectType({
     suppliers: {
       ...supplierQueries.list,
       resolve: (source, args, context, info) =>
-      {
-        return  supplierQueries.list.resolve(source, args, { ...context, address: source.dataValues }, info)
-      }
+        supplierQueries.list.resolve(source, args, { ...context, address: source.dataValues }, info)
     },
     stores: {
       ...storeQueries.list,
-      resolve: (source, args, context, info) =>
-      {
-        return null // storeQueries.list.resolve(source, args, { ...context, address: source.dataValues }, info)
-      }
+      resolve: (source, args, context, info) => null // storeQueries.list.resolve(source, args, { ...context, address: source.dataValues }, info)
     }
   })
 });

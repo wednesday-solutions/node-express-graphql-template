@@ -61,11 +61,9 @@ export function model(sequelize, DataTypes) {
     addresses.hasMany(models.suppliers, {
       sourceKey: 'id'
     });
-
     addresses.hasMany(models.stores, {
       sourceKey: 'id'
     });
   };
-
   return addresses;
 }

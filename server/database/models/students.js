@@ -10,7 +10,6 @@ export function getAttributes(sequelize, DataTypes) {
       type: DataTypes.TEXT,
       allowNull: false
     },
-    
     createdAt: {
       field: 'created_at',
       type: DataTypes.DATE,
@@ -36,15 +35,5 @@ export function model(sequelize, DataTypes) {
     paranoid: true,
     timestamps: true
   });
-  // students.associate = function(models) {
-  //   students.hasMany(models.suppliers, {
-  //     sourceKey: 'id'
-  //   });
-
-  //   students.hasMany(models.stores, {
-  //     sourceKey: 'id'
-  //   });
-  // };
-
   return students;
 }

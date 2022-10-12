@@ -1,30 +1,28 @@
-import { GraphQLFloat, GraphQLID, GraphQLInt, GraphQLNonNull, GraphQLObjectType, GraphQLString } from 'graphql';
+import { GraphQLID, GraphQLInt, GraphQLNonNull, GraphQLObjectType, GraphQLString } from 'graphql';
 import { getNode } from '@gql/node';
 import { createConnection } from 'graphql-sequelize';
-import { supplierQueries } from '../suppliers';
 import { timestamps } from '../timestamps';
 import db from '@database/models';
-import { storeQueries } from '@gql/models/stores';
 import { totalConnectionFields } from '@utils/index';
 import { getQueryFields, TYPE_ATTRIBUTES } from '@server/utils/gqlFieldUtils';
 
 const { nodeInterface } = getNode();
 export const studentFields = {
-         id: {
-           type: GraphQLID,
-           [TYPE_ATTRIBUTES.isNonNull]: true
-         },
-         name: {
-           type: GraphQLString,
-           [TYPE_ATTRIBUTES.isNonNull]: true
-         }
-       };
+  id: {
+    type: GraphQLID,
+    [TYPE_ATTRIBUTES.isNonNull]: true
+  },
+  name: {
+    type: GraphQLString,
+    [TYPE_ATTRIBUTES.isNonNull]: true
+  }
+};
 const Student = new GraphQLObjectType({
   name: 'Student',
   interfaces: [nodeInterface],
   fields: () => ({
     ...getQueryFields(studentFields, TYPE_ATTRIBUTES.isNonNull),
-    ...timestamps,
+    ...timestamps
   })
 });
 
@@ -34,7 +32,7 @@ const StudentConnection = createConnection({
   nodeType: Student,
   before: (findOptions, args, context) => {
     findOptions.include = findOptions.include || [];
-    
+
     return findOptions;
   },
   ...totalConnectionFields
