@@ -67,6 +67,17 @@ export const studentsTable = range(1, 10).map((_, index) => ({
   name: faker.internet.userName()
 }));
 
+export const subjectsTable = range(1, 10).map((_, index) => ({
+  id: (index + 1).toString(),
+  name: faker.name.jobArea()
+}));
+
+export const studentSubjectsTable = range(1, 5).map((_, index) => ({
+  id: (index + 1).toString(),
+  studentId: 1 + parseInt(Math.random() * 9),
+  subjectId: 1 + parseInt(Math.random() * 9)
+}));
+
 export const DB_ENV = {
   POSTGRES_HOST: 'host',
   POSTGRES_USER: 'user',

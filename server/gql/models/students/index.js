@@ -40,7 +40,7 @@ const StudentConnection = createConnection({
 
 export { StudentConnection, Student };
 
-// queries on the address table
+// queries on the student table
 export const studentQueries = {
   args: {
     id: {

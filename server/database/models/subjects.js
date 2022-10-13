@@ -1,9 +1,7 @@
-import sequelize from 'sequelize';
-
-export function getAttributes(sequelizer, DataTypes) {
+export function getAttributes(sequelize, DataTypes) {
   return {
     id: {
-      type: DataTypes.INTERGER,
+      type: DataTypes.INTEGER,
       allowNull: false,
       primaryKey: true,
       autoIncrement: true
