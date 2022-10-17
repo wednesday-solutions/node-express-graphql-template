@@ -18,7 +18,7 @@ export function getAttributes(sequelize, DataTypes) {
     subjectId: {
       field: 'subject_id',
       type: DataTypes.INTEGER,
-      allowNul: false,
+      allowNull: false,
       references: {
         model: 'subjects',
         key: 'id'
@@ -49,13 +49,14 @@ export function model(sequelize, DataTypes) {
     paranoid: true,
     timestamps: true
   });
-
   studentSubjects.associate = function(models) {
-    studentSubjects.students = studentSubjects.hasOne(models.students, {
-      foreignKey: 'id'
+    studentSubjects.students = studentSubjects.hasMany(models.students, {
+      foreignKey: 'id',
+      sourceKey: 'studentId'
     });
-    studentSubjects.subjects = studentSubjects.hasOne(models.subjects, {
-      foreignKey: 'id'
+    studentSubjects.subjects = studentSubjects.hasMany(models.subjects, {
+      foreignKey: 'id',
+      sourceKey: 'subjectId'
     });
   };
   return studentSubjects;
