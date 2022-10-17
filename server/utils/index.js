@@ -20,7 +20,7 @@ export const totalConnectionFields = {
   connectionFields: {
     total: {
       resolve: meta => meta.fullCount,
-      type: GraphQLNonNull(GraphQLInt)
+      type: new GraphQLNonNull(GraphQLInt)
     }
   }
 };

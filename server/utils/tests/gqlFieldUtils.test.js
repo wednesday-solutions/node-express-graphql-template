@@ -13,7 +13,7 @@ describe('getQueryFields', () => {
       }
     };
     const fields = getQueryFields(baseFields, TYPE_ATTRIBUTES.isCreateRequired);
-    expect(fields.id.type).toEqual(GraphQLNonNull(baseFields.id.type));
+    expect(fields.id.type).toEqual(new GraphQLNonNull(baseFields.id.type));
     expect(fields.prop.type).toEqual(baseFields.prop.type);
   });
 });
