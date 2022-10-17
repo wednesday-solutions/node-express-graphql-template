@@ -23,8 +23,8 @@ describe('student_subjects graphQL-server-DB mutation tests', () => {
       const result = get(response, 'body.data.createStudentSubject');
       expect(result).toMatchObject({
         id: '1',
-        studentId: 1,
-        subjectId: 1
+        studentId: '1',
+        subjectId: '1'
       });
     });
   });
@@ -71,11 +71,10 @@ describe('student_subjects graphQL-server-DB mutation tests', () => {
     const result = get(response, 'body.data.updateStudentSubject');
     expect(result).toBeTruthy();
     expect(dbClient.models.studentSubjects.update.mock.calls.length).toBe(1);
-    console.log(dbClient.models.studentSubjects.update.mock.calls[0][0]);
     expect(dbClient.models.studentSubjects.update.mock.calls[0][0]).toEqual({
       id: studentSubjectsTable[0].id.toString(),
-      studentId: studentSubjectsTable[0].studentId,
-      subjectId: studentSubjectsTable[0].subjectId
+      studentId: studentSubjectsTable[0].studentId.toString(),
+      subjectId: studentSubjectsTable[0].subjectId.toString()
     });
     expect(dbClient.models.studentSubjects.update.mock.calls[0][1]).toEqual({
       where: {

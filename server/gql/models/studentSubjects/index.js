@@ -11,8 +11,8 @@ const { nodeInterface } = getNode();
 
 export const studentSubjectFields = {
   id: { type: GraphQLNonNull(GraphQLID) },
-  studentId: { type: GraphQLInt },
-  subjectId: { type: GraphQLInt }
+  studentId: { type: GraphQLNonNull(GraphQLID) },
+  subjectId: { type: GraphQLNonNull(GraphQLID) }
 };
 export const StudentSubject = new GraphQLObjectType({
   name: 'StudentSubject',
@@ -23,30 +23,12 @@ export const StudentSubject = new GraphQLObjectType({
   })
 });
 
-console.log('StudentSubject:', StudentSubject);
-
 export const StudentSubjectConnection = createConnection({
   nodeType: StudentSubject,
   name: 'studentSubjects',
   target: db.studentSubjects,
   before: (findOptions, args, context) => {
     findOptions.include = findOptions.include || [];
-    if (context?.student?.id) {
-      findOptions.include.push({
-        model: db.students,
-        where: {
-          id: context.student.id
-        }
-      });
-    }
-    if (context?.subject?.id) {
-      findOptions.include.push({
-        model: db.subjects,
-        where: {
-          id: context.subject.id
-        }
-      });
-    }
     findOptions.where = sequelizedWhere(findOptions.where, args.where);
     return findOptions;
   },
@@ -65,6 +47,7 @@ export const studentSubjectQueries = {
   },
   list: {
     ...StudentSubjectConnection,
+    resolve: StudentSubjectConnection.resolve,
     type: StudentSubjectConnection.connectionType,
     args: StudentSubjectConnection.connectionArgs
   },
