@@ -3,11 +3,10 @@ import { getNode } from '@gql/node';
 import { createConnection } from 'graphql-sequelize';
 import { timestamps } from '../timestamps';
 import db from '@database/models';
-import { totalConnectionFields, transformSQLError } from '@utils/index';
+import { totalConnectionFields } from '@utils/index';
 import { getQueryFields, TYPE_ATTRIBUTES } from '@server/utils/gqlFieldUtils';
 import { sequelizedWhere } from '@server/database/dbUtils';
 import { subjectQueries } from '../subjects';
-import { insertStudentSubjects } from '@server/daos/studentSubjects';
 
 const { nodeInterface } = getNode();
 
@@ -73,19 +72,8 @@ export const studentQueries = {
   model: db.students
 };
 
-async function createStudentSubject(model, args, context) {
-  try {
-    console.log('ARGS => ', args);
-    const res = await insertStudentSubjects(args);
-    return res;
-  } catch (err) {
-    throw transformSQLError(err);
-  }
-}
-
 export const studentMutations = {
   args: studentsFields,
   type: Student,
-  model: db.students,
-  createStudentSubject
+  model: db.students
 };
