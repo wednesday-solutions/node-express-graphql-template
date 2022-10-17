@@ -35,5 +35,11 @@ export function model(sequelize, DataTypes) {
     paranoid: true,
     timestamps: true
   });
+  subjects.associate = function(models) {
+    subjects.studentSubjects = subjects.hasOne(models.studentSubjects, {
+      sourceKey: 'id',
+      foreignKey: 'subject_id'
+    });
+  };
   return subjects;
 }

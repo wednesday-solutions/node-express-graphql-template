@@ -3,26 +3,31 @@ import { getNode } from '@gql/node';
 import { createConnection } from 'graphql-sequelize';
 import { timestamps } from '../timestamps';
 import db from '@database/models';
-import { totalConnectionFields } from '@utils/index';
+import { totalConnectionFields, transformSQLError } from '@utils/index';
 import { getQueryFields, TYPE_ATTRIBUTES } from '@server/utils/gqlFieldUtils';
+import { sequelizedWhere } from '@server/database/dbUtils';
+import { subjectQueries } from '../subjects';
+import { insertStudentSubjects } from '@server/daos/studentSubjects';
 
 const { nodeInterface } = getNode();
-export const studentFields = {
-  id: {
-    type: GraphQLID,
-    [TYPE_ATTRIBUTES.isNonNull]: true
-  },
-  name: {
-    type: GraphQLString,
-    [TYPE_ATTRIBUTES.isNonNull]: true
-  }
+
+export const studentsFields = {
+  id: { type: GraphQLNonNull(GraphQLID) },
+  name: { type: GraphQLString },
+  subjectId: { type: GraphQLID }
 };
+
 const Student = new GraphQLObjectType({
   name: 'Student',
   interfaces: [nodeInterface],
   fields: () => ({
-    ...getQueryFields(studentFields, TYPE_ATTRIBUTES.isNonNull),
-    ...timestamps
+    ...getQueryFields(studentsFields, TYPE_ATTRIBUTES.isNonNull),
+    ...timestamps,
+    subjects: {
+      ...subjectQueries.list,
+      resolve: (source, args, context, info) =>
+        subjectQueries.list.resolve(source, args, { ...context, student: source.dataValues }, info)
+    }
   })
 });
 
@@ -32,7 +37,16 @@ const StudentConnection = createConnection({
   nodeType: Student,
   before: (findOptions, args, context) => {
     findOptions.include = findOptions.include || [];
-    // if (context?.)
+    if (context?.subject?.id) {
+      console.log('running or not');
+      findOptions.include.push({
+        model: db.studentSubjects,
+        where: {
+          subjectId: context.subject.id
+        }
+      });
+    }
+    findOptions.where = sequelizedWhere(findOptions.where, args.where);
     return findOptions;
   },
   ...totalConnectionFields
@@ -59,8 +73,19 @@ export const studentQueries = {
   model: db.students
 };
 
+async function createStudentSubject(model, args, context) {
+  try {
+    console.log('ARGS => ', args);
+    const res = await insertStudentSubjects(args);
+    return res;
+  } catch (err) {
+    throw transformSQLError(err);
+  }
+}
+
 export const studentMutations = {
-  args: studentFields,
+  args: studentsFields,
   type: Student,
-  model: db.students
+  model: db.students,
+  createStudentSubject
 };
