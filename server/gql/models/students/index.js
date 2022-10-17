@@ -37,6 +37,7 @@ const StudentConnection = createConnection({
   nodeType: Student,
   before: (findOptions, args, context) => {
     findOptions.include = findOptions.include || [];
+
     if (context?.subject?.id) {
       console.log('running or not');
       findOptions.include.push({
