@@ -32,7 +32,6 @@ const StudentConnection = createConnection({
   nodeType: Student,
   before: (findOptions, args, context) => {
     findOptions.include = findOptions.include || [];
-    // if (context?.)
     return findOptions;
   },
   ...totalConnectionFields
