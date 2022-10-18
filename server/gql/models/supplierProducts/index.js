@@ -13,7 +13,7 @@ import { getQueryFields, TYPE_ATTRIBUTES } from '@server/utils/gqlFieldUtils';
 const { nodeInterface } = getNode();
 
 export const supplierProductFields = {
-  id: { type: GraphQLNonNull(GraphQLID) },
+  id: { type: new GraphQLNonNull(GraphQLID) },
   supplierId: { type: GraphQLInt },
   productId: { type: GraphQLInt }
 };
@@ -53,7 +53,7 @@ export const SupplierProductConnection = createConnection({
 export const supplierProductQueries = {
   args: {
     id: {
-      type: GraphQLNonNull(GraphQLInt)
+      type: new GraphQLNonNull(GraphQLInt)
     }
   },
   query: {

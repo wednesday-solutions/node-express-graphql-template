@@ -31,7 +31,7 @@ const defineAndAddAttributes = (connection, name, mock, attr, total = 10) => {
 
 export const restfulGetResponse = async (path, app) => {
   if (!app) {
-    app = await require('@server/utils/testUtils/testApp').testApp;
+    app = await require('@server/utils/testUtils/testApp').getTestApp();
   }
   return await request(app)
     .get(path)
@@ -40,11 +40,11 @@ export const restfulGetResponse = async (path, app) => {
 
 export const getResponse = async (query, app) => {
   if (!app) {
-    app = await require('@server/utils/testUtils/testApp').testApp;
+    app = await require('@server/utils/testUtils/testApp').getTestApp();
   }
   return await request(app)
     .post('/graphql')
-    .type('form')
+    .type('application/json')
     .send({ query })
     .set('Accept', 'application/json');
 };

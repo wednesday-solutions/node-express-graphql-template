@@ -1,4 +1,4 @@
-import { Kind, print } from 'graphql/language';
+import { Kind } from 'graphql/language';
 const { convertToMap, parseObject, parseLiteral } = require('../gqlSchemaParsers');
 const argName = 'bid';
 const argValue = 1;
@@ -76,7 +76,9 @@ describe('parseLiteral', () => {
   it('should throw error kind is invalid', async () => {
     const typeName = 'asd';
     const ast = { kind: 'asd' };
-    expect(() => parseLiteral(typeName, ast)).toThrowError(`${typeName} cannot represent value: ${print(ast)}`);
+    expect(() => parseLiteral(typeName, ast)).toThrowError(
+      `${typeName} cannot represent value: ${JSON.stringify(ast)}`
+    );
   });
 });
 

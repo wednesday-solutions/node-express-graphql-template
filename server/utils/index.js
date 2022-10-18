@@ -20,12 +20,15 @@ export const totalConnectionFields = {
   connectionFields: {
     total: {
       resolve: meta => meta.fullCount,
-      type: GraphQLNonNull(GraphQLInt)
+      type: new GraphQLNonNull(GraphQLInt)
     }
   }
 };
 
 export const stringifyWithCheck = message => {
+  if (!message) {
+    return '';
+  }
   try {
     return JSON.stringify(message);
   } catch (err) {
@@ -40,13 +43,14 @@ export const stringifyWithCheck = message => {
 export const logger = () => {
   const rTracerFormat = printf(info => {
     const rid = rTracer.id();
+    // @ts-ignore
     const infoSplat = info[Symbol.for('splat')] || [];
-    const infoSplatObject = { ...infoSplat };
-    return rid
-      ? `${info.timestamp} [request-id:${rid}]: ${stringifyWithCheck(info.message)} ${stringifyWithCheck(
-          infoSplatObject
-        )}`
-      : `${info.timestamp}: ${stringifyWithCheck(info.message)} ${stringifyWithCheck(infoSplatObject)}`;
+
+    let message = `${info.timestamp}: ${stringifyWithCheck(info.message)} ${stringifyWithCheck(...infoSplat)}`;
+    if (rid) {
+      message = `[request-id:${rid}]: ${message}`;
+    }
+    return message;
   });
   return createLogger({
     format: combine(timestamp(), rTracerFormat),
@@ -55,3 +59,10 @@ export const logger = () => {
 };
 
 export const transformSQLError = e => (e.errors || []).map(err => err.message).join('. ') || e.original;
+
+export const getLogger = () => {
+  if (process.env.NODE_ENV === 'test') {
+    return false;
+  }
+  return args => logger().info(args);
+};

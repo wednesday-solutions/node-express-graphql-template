@@ -10,16 +10,20 @@ import { getQueryFields, TYPE_ATTRIBUTES } from '@server/utils/gqlFieldUtils';
 
 const { nodeInterface } = getNode();
 export const addressFields = {
-  id: { type: GraphQLNonNull(GraphQLID) },
-  address1: { type: GraphQLString },
+  id: { type: new GraphQLNonNull(GraphQLID) },
+  address1: {
+    type: GraphQLString,
+    extensions: ['@uppercase', 'uppercase'],
+    resolve: (source, args, context, info) => source.address1
+  },
   address2: { type: GraphQLString },
   city: { type: GraphQLString },
   country: { type: GraphQLString },
   lat: {
-    type: GraphQLNonNull(GraphQLFloat)
+    type: new GraphQLNonNull(GraphQLFloat)
   },
   long: {
-    type: GraphQLNonNull(GraphQLFloat)
+    type: new GraphQLNonNull(GraphQLFloat)
   }
 };
 const Address = new GraphQLObjectType({
@@ -80,7 +84,7 @@ export { AddressConnection, Address };
 export const addressQueries = {
   args: {
     id: {
-      type: GraphQLNonNull(GraphQLInt)
+      type: new GraphQLNonNull(GraphQLInt)
     }
   },
   query: {

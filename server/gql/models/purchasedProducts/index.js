@@ -49,7 +49,7 @@ const PurchasedProductConnection = createConnection({
 export const purchasedProductQueries = {
   args: {
     id: {
-      type: GraphQLNonNull(GraphQLInt)
+      type: new GraphQLNonNull(GraphQLInt)
     }
   },
   query: {

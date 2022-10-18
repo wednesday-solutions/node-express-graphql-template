@@ -17,7 +17,7 @@ export const addQueries = () => {
       ...DB_TABLES[table].query,
       resolve: resolver(DB_TABLES[table].model),
       args: {
-        id: { type: GraphQLNonNull(GraphQLInt) },
+        id: { type: new GraphQLNonNull(GraphQLInt) },
         ...DB_TABLES[table].args,
         ...defaultArgs(DB_TABLES[table].model)
       }

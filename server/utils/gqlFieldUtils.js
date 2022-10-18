@@ -15,7 +15,7 @@ export const getQueryFields = (fields, keyToCheck) => {
   const fieldsClone = cloneDeep(fields);
   Object.keys(fieldsClone).forEach(key => {
     if (get(fieldsClone, `${key}.${keyToCheck}`)) {
-      fieldsClone[key].type = GraphQLNonNull(fieldsClone[key].type);
+      fieldsClone[key].type = new GraphQLNonNull(fieldsClone[key].type);
     }
   });
   return fieldsClone;

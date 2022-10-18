@@ -1,4 +1,4 @@
-import { Kind, print } from 'graphql/language';
+import { Kind } from 'graphql/language';
 
 export function parseObject(typeName, ast, variables) {
   const value = {};
@@ -26,7 +26,7 @@ export function parseLiteral(typeName, ast, variables) {
     case Kind.VARIABLE:
       return variables?.[ast.name.value] ?? undefined;
     default:
-      throw new TypeError(`${typeName} cannot represent value: ${print(ast)}`);
+      throw new TypeError(`${typeName} cannot represent value: ${JSON.stringify(ast)}`);
   }
 }
 

@@ -1,8 +1,6 @@
 import express from 'express';
 import cors from 'cors';
 import { SubscriptionServer } from 'subscriptions-transport-ws/dist/server';
-import { graphqlHTTP } from 'express-graphql';
-import graphqlDepthLimit from 'graphql-depth-limit';
 import { GraphQLSchema, execute, subscribe } from 'graphql';
 import 'whatwg-fetch';
 import dotenv from 'dotenv';
@@ -10,7 +8,7 @@ import { ApolloServer } from 'apollo-server-express';
 import { createServer } from 'http';
 import axios from 'axios';
 import { newCircuitBreaker } from '@services/circuitbreaker';
-import { isAuthenticated, handlePreflightRequest, corsOptionsDelegate } from '@middleware/gqlAuth';
+import { corsOptionsDelegate, apolloServerContextResolver } from '@middleware/gqlAuth';
 import rTracer from 'cls-rtracer';
 import bodyParser from 'body-parser';
 import { connect } from '@database';
@@ -22,6 +20,7 @@ import os from 'os';
 import 'source-map-support/register';
 import { sendMessage } from '@services/slack';
 import { SubscriptionRoot } from '@gql/subscriptions';
+import depthLimit from 'graphql-depth-limit';
 import logReqRes from './middleware/logger';
 
 const totalCPUs = os.cpus().length;
@@ -30,6 +29,7 @@ let app;
 export const fetchFromGithub = async query =>
   axios.get(`https://api.github.com/search/repositories?q=${query}&per_page=2`);
 const githubBreaker = newCircuitBreaker(fetchFromGithub, 'Github API is down');
+
 export const init = async () => {
   // configure environment variables
   dotenv.config({
@@ -56,20 +56,6 @@ export const init = async () => {
   app.use(logReqRes);
   app.use(bodyParser.json());
   app.use(bodyParser.urlencoded({ extended: true }));
-  app.use(
-    '/graphql',
-    handlePreflightRequest, // handle pre-flight request for graphql endpoint
-    isAuthenticated,
-    graphqlHTTP({
-      schema,
-      graphiql: true,
-      validationRules: [graphqlDepthLimit(6)],
-      customFormatErrorFn: e => {
-        logger().info({ e });
-        return e;
-      }
-    })
-  );
 
   app.get('/github', async (req, res) => {
     const response = await githubBreaker.fire(req.query.repo);
@@ -91,7 +77,14 @@ export const init = async () => {
   if (!isTestEnv()) {
     const httpServer = createServer(app);
     const server = new ApolloServer({
-      schema
+      schema,
+      introspection: isLocalEnv(),
+      validationRules: [depthLimit(6)],
+      context: apolloServerContextResolver,
+      formatError: e => {
+        logger().info({ e });
+        return e.message;
+      }
     });
     await server.start();
     server.applyMiddleware({ app });
