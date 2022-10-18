@@ -10,7 +10,7 @@ import { studentQueries } from '../students';
 
 const { nodeInterface } = getNode();
 export const subjectFields = {
-  id: { type: GraphQLNonNull(GraphQLID) },
+  id: { type: new GraphQLNonNull(GraphQLID) },
   name: { type: GraphQLString }
 };
 const Subject = new GraphQLObjectType({
@@ -21,8 +21,13 @@ const Subject = new GraphQLObjectType({
     ...timestamps,
     students: {
       ...studentQueries.list,
-      resolve: (source, args, context, info) =>
-        studentQueries.list.resolve(source, args, { ...context, subject: source.dataValues }, info)
+      resolve: (source, args, context, info) => { 
+        if (context.userId === 1) { 
+          return studentQueries.list.resolve(source, args, { ...context, subject: source.dataValues }, info);
+        }
+        return null
+      }
+        
     }
   })
 });
@@ -54,7 +59,7 @@ export { SubjectConnection, Subject };
 export const subjectQueries = {
   args: {
     id: {
-      type: GraphQLNonNull(GraphQLInt)
+      type: new GraphQLNonNull(GraphQLInt)
     }
   },
   query: {

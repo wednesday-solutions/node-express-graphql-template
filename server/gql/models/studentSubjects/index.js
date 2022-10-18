@@ -10,9 +10,9 @@ import { sequelizedWhere } from '@server/database/dbUtils';
 const { nodeInterface } = getNode();
 
 export const studentSubjectFields = {
-  id: { type: GraphQLNonNull(GraphQLID) },
-  studentId: { type: GraphQLNonNull(GraphQLID) },
-  subjectId: { type: GraphQLNonNull(GraphQLID) }
+  id: { type: new GraphQLNonNull(GraphQLID) },
+  studentId: { type: new GraphQLNonNull(GraphQLID) },
+  subjectId: { type: new GraphQLNonNull(GraphQLID) }
 };
 export const StudentSubject = new GraphQLObjectType({
   name: 'StudentSubject',
@@ -39,7 +39,7 @@ export const StudentSubjectConnection = createConnection({
 export const studentSubjectQueries = {
   args: {
     id: {
-      type: GraphQLNonNull(GraphQLInt)
+      type: new GraphQLNonNull(GraphQLInt)
     }
   },
   query: {
