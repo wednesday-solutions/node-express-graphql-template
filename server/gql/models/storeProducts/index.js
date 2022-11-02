@@ -1,8 +1,8 @@
 import { GraphQLID, GraphQLInt, GraphQLNonNull, GraphQLObjectType } from 'graphql';
 import { createConnection } from 'graphql-sequelize';
-import { productQueries } from '../products';
-import { storeQueries } from '../stores';
-import { timestamps } from '../timestamps';
+import { productLists } from '../products';
+import { storeLists } from '../stores';
+import { timestamps } from '@gql/fields/timestamps';
 import { getNode } from '@gql/node';
 import db from '@database/models';
 import { totalConnectionFields } from '@utils/index';
@@ -16,27 +16,27 @@ export const storeProductFields = {
   productId: { type: GraphQLInt },
   storeId: { type: GraphQLInt }
 };
-export const StoreProduct = new GraphQLObjectType({
+export const GraphQLStoreProduct = new GraphQLObjectType({
   name: 'StoreProduct',
   interfaces: [nodeInterface],
   fields: () => ({
     ...getQueryFields(storeProductFields, TYPE_ATTRIBUTES.isNonNull),
     ...timestamps,
     products: {
-      ...productQueries.list,
+      ...productLists.list,
       resolve: (source, args, context, info) =>
-        productQueries.list.resolve(source, args, { ...context, storeProduct: source.dataValues }, info)
+        productLists.list.resolve(source, args, { ...context, storeProduct: source.dataValues }, info)
     },
     stores: {
-      ...storeQueries.list,
+      ...storeLists.list,
       resolve: (source, args, context, info) =>
-        storeQueries.list.resolve(source, args, { ...context, storeProduct: source.dataValues }, info)
+        storeLists.list.resolve(source, args, { ...context, storeProduct: source.dataValues }, info)
     }
   })
 });
 
 export const StoreProductConnection = createConnection({
-  nodeType: StoreProduct,
+  nodeType: GraphQLStoreProduct,
   name: 'storeProducts',
   target: db.storeProducts,
   before: (findOptions, args, context) => {
@@ -55,8 +55,13 @@ export const storeProductQueries = {
     }
   },
   query: {
-    type: StoreProduct
+    type: GraphQLStoreProduct
   },
+  model: db.storeProducts
+};
+
+// lists on the storeProducts table
+export const storeProductLists = {
   list: {
     ...StoreProductConnection,
     type: StoreProductConnection.connectionType,
@@ -67,6 +72,6 @@ export const storeProductQueries = {
 
 export const storeProductMutations = {
   args: storeProductFields,
-  type: StoreProduct,
+  type: GraphQLStoreProduct,
   model: db.storeProducts
 };

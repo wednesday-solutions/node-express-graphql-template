@@ -1,11 +1,11 @@
 import { GraphQLID, GraphQLInt, GraphQLNonNull, GraphQLObjectType } from 'graphql';
 import { connectionArgs } from 'graphql-relay';
 import { createConnection } from 'graphql-sequelize';
-import { supplierQueries } from '../suppliers';
-import { timestamps } from '../timestamps';
+import { supplierLists } from '../suppliers';
+import { timestamps } from '@gql/fields/timestamps';
 import { getNode } from '@gql/node';
 import db from '@database/models';
-import { productQueries } from '@gql/models/products';
+import { productLists } from '@gql/models/products';
 import { totalConnectionFields } from '@utils/index';
 import { sequelizedWhere } from '@database/dbUtils';
 import { getQueryFields, TYPE_ATTRIBUTES } from '@server/utils/gqlFieldUtils';
@@ -17,7 +17,7 @@ export const supplierProductFields = {
   supplierId: { type: GraphQLInt },
   productId: { type: GraphQLInt }
 };
-export const SupplierProduct = new GraphQLObjectType({
+export const GraphQLSupplierProduct = new GraphQLObjectType({
   name: 'SupplierProduct',
   interfaces: [nodeInterface],
   args: connectionArgs,
@@ -25,20 +25,20 @@ export const SupplierProduct = new GraphQLObjectType({
     ...getQueryFields(supplierProductFields, TYPE_ATTRIBUTES.isNonNull),
     ...timestamps,
     products: {
-      ...productQueries.list,
+      ...productLists.list,
       resolve: (source, args, context, info) =>
-        productQueries.list.resolve(source, args, { ...context, supplierProduct: source.dataValues }, info)
+        productLists.list.resolve(source, args, { ...context, supplierProduct: source.dataValues }, info)
     },
     suppliers: {
-      ...supplierQueries.list,
+      ...supplierLists.list,
       resolve: (source, args, context, info) =>
-        supplierQueries.list.resolve(source, args, { ...context, supplierProduct: source.dataValues }, info)
+        supplierLists.list.resolve(source, args, { ...context, supplierProduct: source.dataValues }, info)
     }
   })
 });
 
 export const SupplierProductConnection = createConnection({
-  nodeType: SupplierProduct,
+  nodeType: GraphQLSupplierProduct,
   name: 'supplierProducts',
   target: db.supplierProducts,
   before: (findOptions, args, context) => {
@@ -57,8 +57,13 @@ export const supplierProductQueries = {
     }
   },
   query: {
-    type: SupplierProduct
+    type: GraphQLSupplierProduct
   },
+  model: db.supplierProducts
+};
+
+// lists on the product table
+export const supplierProductLists = {
   list: {
     ...SupplierProductConnection,
     type: SupplierProductConnection.connectionType,
@@ -69,6 +74,6 @@ export const supplierProductQueries = {
 
 export const supplierProductMutations = {
   args: supplierProductFields,
-  type: SupplierProduct,
+  type: GraphQLSupplierProduct,
   model: db.supplierProducts
 };

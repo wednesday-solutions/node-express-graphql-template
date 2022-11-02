@@ -1,7 +1,7 @@
 import { GraphQLID, GraphQLInt, GraphQLNonNull, GraphQLObjectType } from 'graphql';
 import { createConnection } from 'graphql-sequelize';
-import { productQueries } from '../products';
-import { timestamps } from '../timestamps';
+import { productLists } from '../products';
+import { timestamps } from '@gql/fields/timestamps';
 import { GraphQLDateTime } from 'graphql-iso-date';
 import { getNode } from '@gql/node';
 import db from '@database/models';
@@ -19,16 +19,16 @@ export const purchasedProductFields = {
   productId: { type: GraphQLID, ...CREATE_AND_QUERY_REQUIRED_ARGS },
   storeId: { type: GraphQLID, ...CREATE_AND_QUERY_REQUIRED_ARGS }
 };
-const PurchasedProduct = new GraphQLObjectType({
+const GraphQLPurchasedProduct = new GraphQLObjectType({
   name: 'PurchasedProduct',
   interfaces: [nodeInterface],
   fields: () => ({
     ...getQueryFields(purchasedProductFields, TYPE_ATTRIBUTES.isNonNull),
     ...timestamps,
     products: {
-      ...productQueries.list,
+      ...productLists.list,
       resolve: (source, args, context, info) =>
-        productQueries.list.resolve(source, args, { ...context, purchasedProduct: source.dataValues }, info)
+        productLists.list.resolve(source, args, { ...context, purchasedProduct: source.dataValues }, info)
     }
   })
 });
@@ -41,7 +41,7 @@ const PurchasedProductConnection = createConnection({
     findOptions.where = sequelizedWhere(findOptions.where, args.where);
     return findOptions;
   },
-  nodeType: PurchasedProduct,
+  nodeType: GraphQLPurchasedProduct,
   ...totalConnectionFields
 });
 
@@ -53,8 +53,13 @@ export const purchasedProductQueries = {
     }
   },
   query: {
-    type: PurchasedProduct
+    type: GraphQLPurchasedProduct
   },
+  model: db.purchasedProducts
+};
+
+// lists on the purchasedProducts table
+export const purchasedProductLists = {
   list: {
     ...PurchasedProductConnection,
     type: PurchasedProductConnection.connectionType,
@@ -65,7 +70,7 @@ export const purchasedProductQueries = {
 
 export const purchasedProductMutations = {
   args: purchasedProductFields,
-  type: PurchasedProduct,
+  type: GraphQLPurchasedProduct,
   model: db.purchasedProducts,
   customCreateResolver
 };
