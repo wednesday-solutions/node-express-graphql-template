@@ -1,7 +1,7 @@
 import { GraphQLID, GraphQLInt, GraphQLNonNull, GraphQLObjectType, GraphQLString } from 'graphql';
 import { getNode } from '@gql/node';
 import { createConnection } from 'graphql-sequelize';
-import { timestamps } from '../timestamps';
+import { timestamps } from '@gql/fields/timestamps';
 import db from '@database/models';
 import { totalConnectionFields } from '@utils/index';
 import { sequelizedWhere } from '@database/dbUtils';
@@ -14,7 +14,7 @@ export const userFields = {
   lastName: { type: new GraphQLNonNull(GraphQLString) }
 };
 
-const User = new GraphQLObjectType({
+const GraphQLUser = new GraphQLObjectType({
   name: 'user',
   interfaces: [nodeInterface],
   fields: () => ({
@@ -28,7 +28,7 @@ const User = new GraphQLObjectType({
 const UserConnection = createConnection({
   name: 'users',
   target: db.users,
-  nodeType: User,
+  nodeType: GraphQLUser,
   before: (findOptions, args, context) => {
     findOptions.include = findOptions.include || [];
     findOptions.where = sequelizedWhere(findOptions.where, args.where);
@@ -37,8 +37,9 @@ const UserConnection = createConnection({
   ...totalConnectionFields
 });
 
-export { User };
+export { GraphQLUser };
 
+// queries on the users table.
 export const userQueries = {
   args: {
     id: {
@@ -46,8 +47,13 @@ export const userQueries = {
     }
   },
   query: {
-    type: User
+    type: GraphQLUser
   },
+  model: db.users
+};
+
+// lists on the users table.
+export const userLists = {
   list: {
     ...UserConnection,
     resolve: UserConnection.resolve,
@@ -59,6 +65,6 @@ export const userQueries = {
 
 export const userMutations = {
   args: userFields,
-  type: User,
+  type: GraphQLUser,
   model: db.users
 };

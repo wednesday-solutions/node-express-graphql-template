@@ -1,11 +1,10 @@
 import { GraphQLID, GraphQLInt, GraphQLNonNull, GraphQLObjectType, GraphQLString } from 'graphql';
 import { createConnection } from 'graphql-sequelize';
-// import { Address } from './addresses';
-import { productQueries } from '../products';
-import { timestamps } from '../timestamps';
+import { productLists } from '../products';
+import { timestamps } from '@gql/fields/timestamps';
 import { getNode } from '@gql/node';
 import db from '@database/models';
-import { addressQueries } from '@gql/models/addresses';
+import { addressLists } from '@gql/models/addresses';
 import { totalConnectionFields } from '@utils/index';
 import { sequelizedWhere } from '@database/dbUtils';
 import { getQueryFields, TYPE_ATTRIBUTES } from '@server/utils/gqlFieldUtils';
@@ -17,7 +16,7 @@ export const supplierFields = {
   name: { type: GraphQLString },
   addressId: { type: GraphQLInt }
 };
-const Supplier = new GraphQLObjectType({
+const GraphQLSupplier = new GraphQLObjectType({
   name: 'Supplier',
   interfaces: [nodeInterface],
 
@@ -26,20 +25,20 @@ const Supplier = new GraphQLObjectType({
     ...getQueryFields(supplierFields, TYPE_ATTRIBUTES.isNonNull),
     ...timestamps,
     addresses: {
-      ...addressQueries.list,
+      ...addressLists.list,
       resolve: (source, args, context, info) =>
-        addressQueries.list.resolve(source, args, { ...context, supplier: source.dataValues }, info)
+        addressLists.list.resolve(source, args, { ...context, supplier: source.dataValues }, info)
     },
     products: {
-      ...productQueries.list,
+      ...productLists.list,
       resolve: (source, args, context, info) =>
-        productQueries.list.resolve(source, args, { ...context, supplier: source.dataValues }, info)
+        productLists.list.resolve(source, args, { ...context, supplier: source.dataValues }, info)
     }
   })
 });
 
 export const SupplierConnection = createConnection({
-  nodeType: Supplier,
+  nodeType: GraphQLSupplier,
   name: 'suppliers',
   target: db.suppliers,
   before: (findOptions, args, context) => {
@@ -84,8 +83,13 @@ export const supplierQueries = {
     }
   },
   query: {
-    type: Supplier
+    type: GraphQLSupplier
   },
+  model: db.suppliers
+};
+
+// lists on the suppliers table
+export const supplierLists = {
   list: {
     ...SupplierConnection,
     type: SupplierConnection.connectionType,
@@ -96,6 +100,6 @@ export const supplierQueries = {
 
 export const supplierMutations = {
   args: supplierFields,
-  type: Supplier,
+  type: GraphQLSupplier,
   model: db.suppliers
 };

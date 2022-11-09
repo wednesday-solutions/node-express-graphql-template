@@ -2,8 +2,8 @@ import { GraphQLID, GraphQLInt, GraphQLNonNull, GraphQLObjectType, GraphQLString
 import { createConnection } from 'graphql-sequelize';
 import { getNode } from '@gql/node';
 import { SupplierConnection } from '../suppliers';
-import { storeQueries } from '../stores';
-import { timestamps } from '../timestamps';
+import { storeLists } from '../stores';
+import { timestamps } from '@gql/fields/timestamps';
 import db from '@database/models';
 import { sequelizedWhere } from '@database/dbUtils';
 import { totalConnectionFields } from '@utils/index';
@@ -18,7 +18,7 @@ export const productFields = {
 };
 
 // Product
-export const Product = new GraphQLObjectType({
+export const GraphQLProduct = new GraphQLObjectType({
   name: 'Product',
   interfaces: [nodeInterface],
   fields: () => ({
@@ -31,16 +31,16 @@ export const Product = new GraphQLObjectType({
         SupplierConnection.resolve(source, args, { ...context, product: source.dataValues }, info)
     },
     stores: {
-      ...storeQueries.list,
+      ...storeLists.list,
       resolve: (source, args, context, info) =>
-        storeQueries.list.resolve(source, args, { ...context, product: source.dataValues }, info)
+        storeLists.list.resolve(source, args, { ...context, product: source.dataValues }, info)
     }
   })
 });
 
 // relay compliant list
 export const ProductConnection = createConnection({
-  nodeType: Product,
+  nodeType: GraphQLProduct,
   name: 'products',
   target: db.products,
   before: (findOptions, args, context) => {
@@ -103,8 +103,13 @@ export const productQueries = {
     }
   },
   query: {
-    type: Product
+    type: GraphQLProduct
   },
+  model: db.products
+};
+
+// lists on the product table.
+export const productLists = {
   list: {
     ...ProductConnection,
     type: ProductConnection.connectionType,
@@ -115,6 +120,6 @@ export const productQueries = {
 
 export const productMutations = {
   args: productFields,
-  type: Product,
+  type: GraphQLProduct,
   model: db.products
 };

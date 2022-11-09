@@ -1,8 +1,8 @@
 import { GraphQLID, GraphQLInt, GraphQLNonNull, GraphQLObjectType, GraphQLString } from 'graphql';
 import { createConnection } from 'graphql-sequelize';
-import { productQueries } from '../products';
-import { addressQueries } from '../addresses';
-import { timestamps } from '../timestamps';
+import { productLists } from '../products';
+import { addressLists } from '../addresses';
+import { timestamps } from '@gql/fields/timestamps';
 import { getNode } from '@gql/node';
 import db from '@database/models';
 import { totalConnectionFields } from '@utils/index';
@@ -17,27 +17,27 @@ export const storeFields = {
   addressId: { type: new GraphQLNonNull(GraphQLInt) }
 };
 
-export const Store = new GraphQLObjectType({
+export const GraphQLStore = new GraphQLObjectType({
   name: 'Store',
   interfaces: [nodeInterface],
   fields: () => ({
     ...getQueryFields(storeFields, TYPE_ATTRIBUTES.isNonNull),
     ...timestamps,
     addresses: {
-      ...addressQueries.list,
+      ...addressLists.list,
       resolve: (source, args, context, info) =>
-        addressQueries.list.resolve(source, args, { ...context, store: source.dataValues }, info)
+        addressLists.list.resolve(source, args, { ...context, store: source.dataValues }, info)
     },
     products: {
-      ...productQueries.list,
+      ...productLists.list,
       resolve: (source, args, context, info) =>
-        productQueries.list.resolve(source, args, { ...context, store: source.dataValues }, info)
+        productLists.list.resolve(source, args, { ...context, store: source.dataValues }, info)
     }
   })
 });
 
 export const StoreConnection = createConnection({
-  nodeType: Store,
+  nodeType: GraphQLStore,
   name: 'store',
   target: db.stores,
   before: (findOptions, args, context) => {
@@ -81,8 +81,13 @@ export const storeQueries = {
     }
   },
   query: {
-    type: Store
+    type: GraphQLStore
   },
+  model: db.stores
+};
+
+// queries on the suppliers table
+export const storeLists = {
   list: {
     ...StoreConnection,
     type: StoreConnection.connectionType,
@@ -93,6 +98,6 @@ export const storeQueries = {
 
 export const storeMutations = {
   args: storeFields,
-  type: Store,
+  type: GraphQLStore,
   model: db.stores
 };

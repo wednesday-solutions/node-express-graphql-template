@@ -1,10 +1,10 @@
 import { GraphQLFloat, GraphQLID, GraphQLInt, GraphQLNonNull, GraphQLObjectType, GraphQLString } from 'graphql';
 import { getNode } from '@gql/node';
 import { createConnection } from 'graphql-sequelize';
-import { supplierQueries } from '../suppliers';
-import { timestamps } from '../timestamps';
+import { supplierLists } from '../suppliers';
+import { timestamps } from '@gql/fields/timestamps';
 import db from '@database/models';
-import { storeQueries } from '@gql/models/stores';
+import { storeLists } from '@gql/models/stores';
 import { totalConnectionFields } from '@utils/index';
 import { getQueryFields, TYPE_ATTRIBUTES } from '@server/utils/gqlFieldUtils';
 
@@ -26,7 +26,7 @@ export const addressFields = {
     type: new GraphQLNonNull(GraphQLFloat)
   }
 };
-const Address = new GraphQLObjectType({
+const GraphQLAddress = new GraphQLObjectType({
   name: 'Address',
   interfaces: [nodeInterface],
   sqlPaginate: true,
@@ -38,14 +38,14 @@ const Address = new GraphQLObjectType({
     ...getQueryFields(addressFields, TYPE_ATTRIBUTES.isNonNull),
     ...timestamps,
     suppliers: {
-      ...supplierQueries.list,
+      ...supplierLists.list,
       resolve: (source, args, context, info) =>
-        supplierQueries.list.resolve(source, args, { ...context, address: source.dataValues }, info)
+        supplierLists.list.resolve(source, args, { ...context, address: source.dataValues }, info)
     },
     stores: {
-      ...storeQueries.list,
+      ...storeLists.list,
       resolve: (source, args, context, info) =>
-        storeQueries.list.resolve(source, args, { ...context, address: source.dataValues }, info)
+        storeLists.list.resolve(source, args, { ...context, address: source.dataValues }, info)
     }
   })
 });
@@ -53,7 +53,7 @@ const Address = new GraphQLObjectType({
 const AddressConnection = createConnection({
   name: 'addresses',
   target: db.addresses,
-  nodeType: Address,
+  nodeType: GraphQLAddress,
   before: (findOptions, args, context) => {
     findOptions.include = findOptions.include || [];
     if (context?.supplier?.id) {
@@ -78,7 +78,7 @@ const AddressConnection = createConnection({
   ...totalConnectionFields
 });
 
-export { AddressConnection, Address };
+export { AddressConnection, GraphQLAddress };
 
 // queries on the address table
 export const addressQueries = {
@@ -88,8 +88,13 @@ export const addressQueries = {
     }
   },
   query: {
-    type: Address
+    type: GraphQLAddress
   },
+  model: db.addresses
+};
+
+// lists on the address table.
+export const addressLists = {
   list: {
     ...AddressConnection,
     resolve: AddressConnection.resolve,
@@ -101,6 +106,6 @@ export const addressQueries = {
 
 export const addressMutations = {
   args: addressFields,
-  type: Address,
+  type: GraphQLAddress,
   model: db.addresses
 };
