@@ -68,7 +68,7 @@
     "html-webpack-plugin": "^4.5.0",
     "http": "^0.0.1-security",
     "ioredis": "^5.2.2",
-    "jsonwebtoken": "^8.5.1",
+    "jsonwebtoken": "^9.0.0",
     "loadash": "^1.0.0",
     "lodash": "^4.17.21",
     "map-keys-deep": "^0.0.2",
