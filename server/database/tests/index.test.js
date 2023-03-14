@@ -1,7 +1,8 @@
 import SequelizeMock from 'sequelize-mock';
 import { resetAndMockDB } from '@utils/testUtils';
 import { DB_ENV } from '@utils/testUtils/mockData';
-import * as pg from 'pg';
+const pg = require('pg');
+
 const mocks = {};
 describe('getClient', () => {
   afterAll(() => {
@@ -17,18 +18,21 @@ describe('getClient', () => {
     await expect(client).toBeInstanceOf(mocks.sequelize);
 
     expect(mocks.sequelize.mock.calls.length).toEqual(1);
-    expect(mocks.sequelize.mock.calls[0][0]).toEqual(DB_ENV.POSTGRES_DB);
-    expect(mocks.sequelize.mock.calls[0][1]).toEqual(DB_ENV.POSTGRES_USER);
-    expect(mocks.sequelize.mock.calls[0][2]).toEqual(DB_ENV.POSTGRES_PASSWORD);
-    expect(mocks.sequelize.mock.calls[0][3]).toEqual({
+    expect(mocks.sequelize.mock.calls[0][0]).toEqual(DB_ENV.DB_URI);
+    expect(mocks.sequelize.mock.calls[0][1]).toEqual({
+      url: DB_ENV.DB_URI,
+      host: DB_ENV.POSTGRES_HOST,
       dialectModule: pg,
       dialect: 'postgres',
-      host: DB_ENV.POSTGRES_HOST,
       logging: false,
       pool: {
         min: 0,
         max: 10,
         idle: 10000
+      },
+      define: {
+        userscored: true,
+        timestamps: false
       },
       retry: {
         match: [
@@ -72,9 +76,7 @@ describe('connect', () => {
     expect(console.log.mock.calls.length).toBe(1);
     expect(console.log.mock.calls[0][0]).toBe('Connection has been established successfully.\n');
     expect(console.log.mock.calls[0][1]).toEqual({
-      db: process.env.POSTGRES_DB,
-      user: process.env.POSTGRES_USER,
-      host: process.env.POSTGRES_HOST
+      db_uri: process.env.DB_URI
     });
   });
 
