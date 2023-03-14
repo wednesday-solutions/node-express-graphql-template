@@ -50,7 +50,7 @@ An enterprise Express GraphQL template application built using nodejs showcasing
 ##
 
   <p>
-    <h3 align="left">Built using <a href="https://github.com/wednesday-solutions/negt-cli/blob/develop/README.md" target="_blank">NEGT CLI</a>
+    <h3 align="left">Built using <a href="https://github.com/wednesday-solutions/negt-cli/blob/develop/README.md" target="_blank">Negt CLI</a>
     </h3>
   </p>
 
