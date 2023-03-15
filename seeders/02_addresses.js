@@ -7,8 +7,8 @@ module.exports = {
       address_2: faker.address.streetAddress(),
       city: faker.address.city(),
       country: faker.address.country(),
-      lat: faker.address.latitude(),
-      long: faker.address.longitude()
+      latitude: faker.address.latitude(),
+      longitude: faker.address.longitude()
     }));
     return queryInterface.bulkInsert('addresses', arr, {});
   },

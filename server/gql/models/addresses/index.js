@@ -19,10 +19,10 @@ export const addressFields = {
   address2: { type: GraphQLString },
   city: { type: GraphQLString },
   country: { type: GraphQLString },
-  lat: {
+  latitude: {
     type: new GraphQLNonNull(GraphQLFloat)
   },
-  long: {
+  longitude: {
     type: new GraphQLNonNull(GraphQLFloat)
   }
 };

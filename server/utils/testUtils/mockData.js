@@ -9,8 +9,8 @@ export const addressesTable = range(1, 10).map((_, index) => ({
   address2: faker.address.streetAddress(),
   city: faker.address.city(),
   country: faker.address.country(),
-  lat: faker.address.latitude(),
-  long: faker.address.longitude()
+  latitude: faker.address.latitude(),
+  longitude: faker.address.longitude()
 }));
 
 export const usersTable = range(1, 10).map((_, index) => ({
