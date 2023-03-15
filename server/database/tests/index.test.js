@@ -1,7 +1,7 @@
 import SequelizeMock from 'sequelize-mock';
+import pg from 'pg';
 import { resetAndMockDB } from '@utils/testUtils';
 import { DB_ENV } from '@utils/testUtils/mockData';
-const pg = require('pg');
 
 const mocks = {};
 describe('getClient', () => {
