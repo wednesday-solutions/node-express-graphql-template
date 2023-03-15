@@ -16,7 +16,7 @@ export const getClient = force => {
         Sequelize.useCLS(namespace);
       }
       client = new Sequelize(dbConfig.url, {
-        logging: getLogger(),
+        logging: isTestEnv() ? false : getLogger(),
         ...dbConfig
       });
     } catch (err) {
