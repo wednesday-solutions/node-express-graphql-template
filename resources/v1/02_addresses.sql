@@ -11,7 +11,7 @@ CREATE TABLE addresses (
     deleted_at timestamp WITH time zone
 );
 
-CREATE INDEX addresses_lat ON addresses USING btree (latitude);
+CREATE INDEX addresses_latitude ON addresses USING btree (latitude);
 
-CREATE INDEX addresses_long ON addresses USING btree (longitude);
+CREATE INDEX addresses_longitude ON addresses USING btree (longitude);
 
