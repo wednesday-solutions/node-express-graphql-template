@@ -15,16 +15,16 @@ describe('Address graphQL-server-DB mutation tests', () => {
       address2: "${addressesTable[0].address2}"
       city: "${addressesTable[0].city}"
       country: "${addressesTable[0].country}"
-      lat: ${addressesTable[0].lat}
-      long: ${addressesTable[0].long}
+      latitude: ${addressesTable[0].latitude}
+      longitude: ${addressesTable[0].longitude}
     ) {
       id
       address1
       address2
       city
       country
-      lat
-      long
+      latitude
+      longitude
       createdAt
       updatedAt
       deletedAt
@@ -52,8 +52,8 @@ describe('Address graphQL-server-DB mutation tests', () => {
       id: ${addressesTable[0].id}
       address1: "${addressesTable[0].address1}"
       address2: "${addressesTable[0].address2}",
-      lat: ${addressesTable[0].lat}
-      long: ${addressesTable[0].long}
+      latitude: ${addressesTable[0].latitude}
+      longitude: ${addressesTable[0].longitude}
     ) {
       id
     }
@@ -75,8 +75,8 @@ describe('Address graphQL-server-DB mutation tests', () => {
     expect(dbClient.models.addresses.create.mock.calls.length).toBe(1);
     expect(dbClient.models.addresses.create.mock.calls[0][0]).toEqual({
       ...address,
-      lat: parseFloat(address.lat),
-      long: parseFloat(address.long)
+      latitude: parseFloat(address.latitude),
+      longitude: parseFloat(address.longitude)
     });
   });
 
@@ -105,8 +105,8 @@ describe('Address graphQL-server-DB mutation tests', () => {
       id: addressesTable[0].id.toString(),
       address1: addressesTable[0].address1,
       address2: addressesTable[0].address2,
-      lat: parseFloat(addressesTable[0].lat),
-      long: parseFloat(addressesTable[0].long)
+      latitude: parseFloat(addressesTable[0].latitude),
+      longitude: parseFloat(addressesTable[0].longitude)
     });
     expect(dbClient.models.addresses.update.mock.calls[0][1]).toEqual({
       where: {

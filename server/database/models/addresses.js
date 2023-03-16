@@ -24,11 +24,11 @@ export function getAttributes(sequelize, DataTypes) {
       type: DataTypes.TEXT,
       allowNull: false
     },
-    lat: {
+    latitude: {
       type: DataTypes.DOUBLE,
       allowNull: false
     },
-    long: {
+    longitude: {
       type: DataTypes.DOUBLE,
       allowNull: false
     },
