@@ -15,7 +15,7 @@ module.exports = {
     idle: 10000
   },
   define: {
-    userscored: true,
+    underscored: true,
     timestamps: false
   },
   retry: {

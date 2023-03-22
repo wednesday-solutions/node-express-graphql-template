@@ -11,12 +11,12 @@ services:
     image: 'redis:alpine'
     ports:
       - '6379:6379'
-    command: ['redis-server', '--bind', 'redis', '--port', '$REDIS_PORT']
+    command: ['redis-server', '--bind', 'redis', '--port', '6379']
   app:
     build:
       context: .
       args:
-        ENVIRONMENT_NAME: ${ENVIRONMENT_NAME}
+        ENVIRONMENT_NAME: docker
     restart: always
     depends_on:
       - db_postgres
