@@ -11,7 +11,7 @@ services:
     image: 'redis:alpine'
     ports:
       - '6379:6379'
-    command: ['redis-server', '--bind', 'redis', '--port', '6379']
+    command: ['redis-server', '--bind', 'redis', '--port', '$REDIS_PORT']
   app:
     build:
       context: .
