@@ -185,3 +185,12 @@ export const expectSameTypeNameOrKind = (result, expected) =>
     }
     return false;
   }).length === 0;
+
+export const getMockDBEnv = () => ({
+  DB_URI: 'postgres://test_mock:test123@localhost:54320/test_mock?sslmode=disable',
+  DB_PORT: 54320,
+  DB_HOST: 'localhost',
+  DB_NAME: 'test_mock',
+  DB_USER: 'test_mock',
+  DB_PASSWORD: 'test123'
+});

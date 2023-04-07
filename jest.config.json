@@ -36,5 +36,7 @@
       "functions": 82,
       "lines": 82
     }
-  }
+  },
+  "globalSetup": "./test_setup/global-setup.js",
+  "globalTeardown": "./test_setup/global-teardown.js"
 }
