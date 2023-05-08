@@ -14,25 +14,32 @@ jobs:
     runs-on: ubuntu-latest
     strategy:
       matrix:
-        node-version: [14.x]
+        node-version: [16.x]
+
     steps:
       - name: Checkout code
         uses: actions/checkout@v3
         with:
           fetch-depth: 0
+
       - name: Setup environment
         uses: actions/setup-node@v2
         with:
           cache: 'yarn'
           node-version: ${{ matrix.node-version }}
+
       - name: Install dependencies
         run: yarn install
+
       - name: Lint
         run: yarn lint
+
       - name: Test
         run: yarn test
+
       - name: Build
-        run: yarn build:local
+        run: yarn build:dev
+        
       - name: SonarQube Scan
         uses: sonarsource/sonarqube-scan-action@master
         with:

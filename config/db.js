@@ -5,7 +5,11 @@ const dotenv = require('dotenv');
 dotenv.config({ path: `.env.${process.env.ENVIRONMENT_NAME}` });
 
 module.exports = {
-  url: process.env.DB_URI,
+  url:
+    process.env.DB_URI ||
+    `postgres://${process.env.POSTGRES_USER}:${process.env.POSTGRES_PASSWORD}@${process.env.POSTGRES_HOST}/${
+      process.env.POSTGRES_DB
+    }`,
   host: process.env.POSTGRES_HOST,
   dialectModule: pg,
   dialect: 'postgres',
