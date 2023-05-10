@@ -12,15 +12,27 @@ jobs:
   # steps:
   #   - name: Checkout
   #     uses: actions/checkout@v2
+
   #   - name: Get branch name
   #     id: vars
   #     run: echo ::set-output name=stage::${GITHUB_REF#refs/*/}
+
+  #   - name: Set env.ENV_NAME and env.BUILD_NAME
+  #     run: |
+  #       if [[ ${{steps.vars.outputs.stage}} == 'main' ]]; then
+  #           echo "BUILD_NAME=prod" >> "$GITHUB_ENV"
+  #       else
+  #           echo "ENV_NAME=.development" >> "$GITHUB_ENV"
+  #           echo "BUILD_NAME=dev" >> "$GITHUB_ENV"
+  #       fi    
+
   #   - name: Configure AWS credentials
   #     uses: aws-actions/configure-aws-credentials@v1
   #     with:
   #       aws-access-key-id: ${{ secrets.AWS_ACCESS_KEY_ID }}
   #       aws-secret-access-key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
   #       aws-region: ${{ secrets.AWS_REGION }}
+
   #   - name: Login to Amazon ECR
   #     id: login-ecr
   #     uses: aws-actions/amazon-ecr-login@v1
@@ -32,8 +44,9 @@ jobs:
   #       AWS_REGION: ${{ secrets.AWS_REGION }}
   #       IMAGE_TAG: ${{ github.sha }}
   #     run: |
-  #       docker build -t $ECR_REGISTRY/$ECR_REPOSITORY:$IMAGE_TAG .
-  #       docker push $ECR_REGISTRY/$ECR_REPOSITORY:$IMAGE_TAG3
+  #       docker build -t $ECR_REGISTRY/$ECR_REPOSITORY:$IMAGE_TAG . --build-arg ENVIRONMENT_NAME=${{ env.ENV_NAME }} --build-arg BUILD_NAME=${{ env.BUILD_NAME }}
+  #       docker push $ECR_REGISTRY/$ECR_REPOSITORY:$IMAGE_TAG
+
   #   - name: Render Amazon ECS task definition
   #     id: ecs-cd-starter-container
   #     uses: aws-actions/amazon-ecs-render-task-definition@v1
@@ -41,12 +54,14 @@ jobs:
   #       task-definition: task-definition/${{steps.vars.outputs.stage}}.json #1
   #       container-name: ecs-cd-starter-${{steps.vars.outputs.stage}} #2
   #       image: ${{ steps.login-ecr.outputs.registry }}/${{ secrets.AWS_ECR_REPOSITORY }}-${{steps.vars.outputs.stage}}:${{ github.sha }}
+
   #   - name: Deploy to Amazon ECS service
   #     uses: aws-actions/amazon-ecs-deploy-task-definition@v1
   #     with:
   #       task-definition: ${{ steps.ecs-cd-starter-container.outputs.task-definition }}
   #       service: ecs-cd-starter-${{ steps.vars.outputs.stage }}
   #       cluster: ecs-cd-starter-${{ steps.vars.outputs.stage }}
+
   #   - name: Logout of Amazon ECR
   #     if: always()
   #     run: docker logout ${{ steps.login-ecr.outputs.registry }}
