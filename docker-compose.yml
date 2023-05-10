@@ -16,8 +16,9 @@ services:
     build:
       context: .
       args:
-        ENVIRONMENT_NAME: .docker
+        ENVIRONMENT_NAME: docker
         BUILD_NAME: docker
+        BUILD_ENV: .docker
     restart: always
     depends_on:
       - db_postgres

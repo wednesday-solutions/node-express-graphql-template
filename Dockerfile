@@ -1,5 +1,5 @@
 FROM node:14
-ARG ENVIRONMENT_NAME
+ARG BUILD_ENV
 ARG BUILD_NAME
 RUN mkdir -p /app-build
 ADD . /app-build
@@ -10,7 +10,7 @@ RUN yarn build:$BUILD_NAME
 
 
 FROM node:14-alpine
-ARG ENVIRONMENT_NAME
+ARG BUILD_ENV
 ARG BUILD_NAME
 RUN mkdir -p /dist
 RUN apk add yarn

@@ -1,5 +1,5 @@
 #!/bin/sh
-set -a . ".env$ENVIRONMENT_NAME" set +a
+set -a . ".env$BUILD_ENV" set +a
 sleep 10
 echo $BUILD_NAME
 if [ "$BUILD_NAME" == "local" ]
