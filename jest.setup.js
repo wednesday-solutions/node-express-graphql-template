@@ -1,5 +1,5 @@
 import { mockDBClient } from '@server/utils/testUtils';
-import { DB_ENV } from '@utils/testUtils/mockData';
+import { DB_ENV } from '@server/utils/testUtils/dbConfig';
 
 jest.doMock('@database', () => ({
   getClient: () => mockDBClient().client,
