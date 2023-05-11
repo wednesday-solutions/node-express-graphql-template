@@ -47,6 +47,13 @@ An enterprise Express GraphQL template application built using nodejs showcasing
 <img src='./badges/badge-functions.svg' height="20"/>
 </div>
 
+##
+
+  <p>
+    <h3 align="left">Built using <a href="https://github.com/wednesday-solutions/negt-cli/blob/develop/README.md" target="_blank">Negt CLI</a>
+    </h3>
+  </p>
+
 ## A relay compliant server built using
 
 - Node
