@@ -1,0 +1,22 @@
+version: '3'
+
+services:
+  postgres: #1
+    image: postgres:12-alpine #1.1
+    command: postgres -c fsync=off -c synchronous_commit=off -c full_page_writes=off -c random_page_cost=1.0 #1.2
+    environment: #1.3
+      POSTGRES_DB: ${POSTGRES_DB}
+      POSTGRES_USER: ${POSTGRES_USER}
+      POSTGRES_PASSWORD: ${POSTGRES_PASSWORD}
+    ports:
+      - '${POSTGRES_PORT}:5432' #1.4
+    tmpfs: /var/lib/postgresql/data #.15
+
+  redis: #2
+    image: redis:6.2-alpine
+    ports:
+      - '${REDIS_PORT}:6379'
+
+networks: #3
+  default:
+    name: 'test-server-network'

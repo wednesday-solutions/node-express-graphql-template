@@ -10,7 +10,8 @@
       "@daos/*": ["server/daos/*"],
       "@database/*": ["server/database/*"],
       "@gql/*": ["server/gql/*"],
-      "@config/*": ["config/*"]
+      "@config/*": ["config/*"],
+      "@test_setup/*": ["test_setup/*"]
     },
     "moduleResolution": "Node"
   },

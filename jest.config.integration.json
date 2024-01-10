@@ -1,6 +1,7 @@
 {
   "testEnvironment": "node",
-  "setupFilesAfterEnv": ["./jest.setup.js"],
+  "setupFilesAfterEnv": ["./jest.setup.integration.js"],
+  "roots": ["__tests__"],
   "reporters": [
     "default",
     [
@@ -23,7 +24,7 @@
     "!**server/middleware/logger/index.js"
   ],
   "coverageReporters": ["json-summary", "text", "lcov"],
-  "testPathIgnorePatterns": ["<rootDir>/dist/", "<rootDir>/__tests__/"],
+  "testPathIgnorePatterns": ["<rootDir>/dist/"],
   "moduleNameMapper": {
     "@server(.*)$": "<rootDir>/server/$1",
     "@(database|services|gql|middleware|daos|utils)(.*)$": "<rootDir>/server/$1/$2",
@@ -37,5 +38,7 @@
       "functions": 82,
       "lines": 82
     }
-  }
+  },
+  "globalSetup": "./test_setup/global-setup.js",
+  "globalTeardown": "./test_setup/global-teardown.js"
 }
