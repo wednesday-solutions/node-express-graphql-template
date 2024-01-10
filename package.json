@@ -32,6 +32,7 @@
     "prettify": "prettier --write",
     "precommit": "lint:staged",
     "test": "export ENVIRONMENT_NAME=test && npx jest --silent --forceExit --detectOpenHandles --ci --coverage --testLocationInResults --json --outputFile=\"report.json\"",
+    "test:integration": "export ENVIRONMENT_NAME=test && npx jest --silent --forceExit --ci --coverage --testLocationInResults --json --outputFile=\"report.json\" --config ./jest.config.integration.json",
     "test:badges": "npm run test  && jest-coverage-badges --output './badges'",
     "postinstall": "link-module-alias",
     "preinstall": "command -v link-module-alias && link-module-alias clean || true"
@@ -54,6 +55,7 @@
     "cors": "^2.8.5",
     "crypto": "^1.0.1",
     "deep-map-keys": "^2.0.1",
+    "docker-compose": "^0.24.3",
     "dotenv": "^10.0.0",
     "eslint-loader": "^4.0.2",
     "express": "^4.17.1",
@@ -68,6 +70,7 @@
     "html-webpack-plugin": "^4.5.0",
     "http": "^0.0.1-security",
     "ioredis": "^5.2.2",
+    "is-port-reachable": "3.0.0",
     "jsonwebtoken": "^8.5.1",
     "loadash": "^1.0.0",
     "lodash": "^4.17.21",
