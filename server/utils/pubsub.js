@@ -12,9 +12,3 @@ export const pubsub = new RedisPubSub({
   publisher: new Redis(options),
   subscriber: new Redis(options)
 });
-
-// export const closePubSubConnection = async () => {
-//   await pubsub.getPublisher().quit();
-//   await pubsub.getSubscriber().quit();
-//   await pubsub.close();
-// };
