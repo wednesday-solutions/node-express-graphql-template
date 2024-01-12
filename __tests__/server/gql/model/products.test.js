@@ -30,8 +30,6 @@ describe('Integration test for products', () => {
   afterAll(async () => {
     process.env = OLD_ENV; // Restore old environment
     await closeRedisConnection(); // avoid jest open handle error
-    const actualRedis = jest.requireActual('@server/services/redis').redis;
-    await actualRedis.quit();
   });
 
   it('should check and get products', async () => {

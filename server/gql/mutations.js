@@ -50,7 +50,15 @@ export const addMutations = () => {
     if (shouldAddMutation(MUTATION_TYPE.UPDATE, table)) {
       mutations[`update${upperFirst(table)}`] = {
         ...DB_TABLES[table],
-        args: getQueryFields(DB_TABLES[table].args, TYPE_ATTRIBUTES.isUpdateRequired),
+        args: getQueryFields(
+          {
+            id: {
+              type: new GraphQLNonNull(GraphQLInt)
+            },
+            ...DB_TABLES[table].args
+          },
+          TYPE_ATTRIBUTES.isUpdateRequired
+        ),
         resolve: createResolvers(DB_TABLES[table].model, DB_TABLES[table].customUpdateResolver).updateResolver
       };
     }

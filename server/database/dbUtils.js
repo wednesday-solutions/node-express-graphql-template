@@ -21,7 +21,7 @@ export const updateUsingId = async (model, args) => {
       }
     });
   } catch (e) {
-    throw new Error(`Failed to update ${model.name}`);
+    throw new Error(`Failed to update ${model.name}, ${e}`);
   }
   if (!affectedRows) {
     throw new Error('Data not found');
