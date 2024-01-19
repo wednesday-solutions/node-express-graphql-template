@@ -24,14 +24,12 @@ describe('Integration test for products', () => {
     jest.unmock('@database/models');
     jest.unmock('ioredis');
     process.env = { ...OLD_ENV };
-    process.env = { ...process.env, ...getMockDBEnv(), REDIS_PORT: 6380 };
+    process.env = { ...process.env, ...getMockDBEnv() };
   });
 
   afterAll(async () => {
     process.env = OLD_ENV; // Restore old environment
     await closeRedisConnection(); // avoid jest open handle error
-    const actualRedis = jest.requireActual('@server/services/redis').redis;
-    await actualRedis.quit();
   });
 
   it('should check and get products', async () => {
