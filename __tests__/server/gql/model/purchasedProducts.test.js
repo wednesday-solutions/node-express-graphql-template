@@ -42,7 +42,7 @@ describe('Integration test for purchasedProduct query', () => {
     jest.unmock('@database/models');
     jest.unmock('ioredis');
     process.env = { ...OLD_ENV };
-    process.env = { ...process.env, ...getMockDBEnv(), REDIS_PORT: 6380 };
+    process.env = { ...process.env, ...getMockDBEnv() };
   });
 
   afterAll(async () => {
@@ -126,7 +126,7 @@ describe('Integration test for purchasedProduct query', () => {
     expect(firstProductDetails).toHaveProperty('amount');
   });
 
-  it('Should fetch users with only firstName and lastName field', async () => {
+  it('Should fetch purchased products', async () => {
     const limit = 5;
     const offset = 10;
     const response = await getResponse(getPurchasedProductsQueryWithParams(limit, offset, ['id', 'price']));

@@ -137,7 +137,8 @@ export const getMockDBEnv = () => ({
   DB_HOST: 'localhost',
   DB_NAME: 'test_mock',
   DB_USER: 'test_mock',
-  DB_PASSWORD: 'test123'
+  DB_PASSWORD: 'test123',
+  REDIS_PORT: 6380
 });
 
 export async function connectToMockDB() {

@@ -69,7 +69,7 @@ describe('Integration test for getUsers query', () => {
     jest.unmock('@database/models');
     jest.unmock('ioredis');
     process.env = { ...OLD_ENV };
-    process.env = { ...process.env, ...getMockDBEnv(), REDIS_PORT: 6380 };
+    process.env = { ...process.env, ...getMockDBEnv() };
   });
 
   afterAll(async () => {
@@ -121,27 +121,6 @@ describe('Integration test for getUsers query', () => {
     expect(firstUser).toHaveProperty('updatedAt');
     expect(firstUser).toHaveProperty('deletedAt');
     expect(firstUser.id).toBe(`${offset + 1}`);
-  });
-
-  it('Should fetch users with only firstName and lastName field', async () => {
-    const limit = 5;
-    const offset = 10;
-    const response = await getResponse(getUsersQueryWithParams(limit, offset, ['firstName', 'lastName']));
-
-    const users = get(response, 'body.data.users.edges');
-    // Perform assertions based on the response
-    expect(users).toBeTruthy();
-    expect(users.length).toBeGreaterThan(0);
-    expect(users.length).toBe(limit);
-
-    const firstUser = users[0].node;
-    expect(firstUser).not.toHaveProperty('id');
-    expect(firstUser).toHaveProperty('firstName');
-    expect(firstUser).toHaveProperty('lastName');
-    expect(firstUser).not.toHaveProperty('email');
-    expect(firstUser).toHaveProperty('createdAt');
-    expect(firstUser).toHaveProperty('updatedAt');
-    expect(firstUser).toHaveProperty('deletedAt');
   });
 
   it('Should fetch users with only firstName and lastName field', async () => {

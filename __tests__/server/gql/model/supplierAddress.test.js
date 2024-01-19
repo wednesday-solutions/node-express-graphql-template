@@ -103,7 +103,7 @@ describe('Integration test to get address and suppliers for the address query', 
     jest.unmock('@database/models');
     jest.unmock('ioredis');
     process.env = { ...OLD_ENV };
-    process.env = { ...process.env, ...getMockDBEnv(), REDIS_PORT: 6380 };
+    process.env = { ...process.env, ...getMockDBEnv() };
   });
 
   afterAll(async () => {
@@ -143,7 +143,6 @@ describe('Integration test to get address and suppliers for the address query', 
     expect(firstAddress.longitude).toBe(-10.0744);
 
     // First supplier details
-    console.log(firstAddress);
     const supplierDetails = get(firstAddress, 'suppliers.edges');
     const firstSupplierDetails = supplierDetails[0].node;
     expect(firstSupplierDetails).toHaveProperty('id');

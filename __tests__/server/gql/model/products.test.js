@@ -24,7 +24,7 @@ describe('Integration test for products', () => {
     jest.unmock('@database/models');
     jest.unmock('ioredis');
     process.env = { ...OLD_ENV };
-    process.env = { ...process.env, ...getMockDBEnv(), REDIS_PORT: 6380 };
+    process.env = { ...process.env, ...getMockDBEnv() };
   });
 
   afterAll(async () => {
