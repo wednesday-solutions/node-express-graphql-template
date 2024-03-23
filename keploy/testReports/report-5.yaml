@@ -1,0 +1,67 @@
+version: api.keploy.io/v1beta1
+name: report-5
+status: PASSED
+success: 1
+failure: 0
+total: 1
+tests:
+    - kind: Http
+      name: report-5
+      status: PASSED
+      started: 1705664499
+      completed: 1705664499
+      test_case_path: /files/keploy/test-set-1
+      mock_path: ""
+      test_case_id: test-1
+      req:
+        method: POST
+        proto_major: 1
+        proto_minor: 1
+        url: http://172.18.0.3:9000/graphql
+        header:
+            Accept: '*/*'
+            Content-Length: "135"
+            Content-Type: application/json
+            Host: localhost:9000
+            User-Agent: curl/8.1.2
+        body: '{"query":"query User {\n  user {\n    firstName\n    lastName\n    id\n    email\n    createdAt\n    updatedAt\n    deletedAt\n  }\n}"}'
+        body_type: ""
+        timestamp: 0001-01-01T00:00:00Z
+        host: ""
+      resp:
+        status_code: 200
+        header:
+            Access-Control-Allow-Origin: '*'
+            Connection: keep-alive
+            Content-Length: "165"
+            Content-Type: application/json; charset=utf-8
+            Date: Fri, 19 Jan 2024 11:38:07 GMT
+            Etag: W/"a5-uy+aCp1+9uH29INzqQ8fipQpKqI"
+            Keep-Alive: timeout=5
+            Vary: Origin
+            X-Powered-By: Express
+        body: |
+            {"data":{"user":{"firstName":"John","lastName":"Doe","id":"1","email":"john@example.com","createdAt":"2023-07-10T18:53:29.997Z","updatedAt":null,"deletedAt":null}}}
+        body_type: ""
+        status_message: ""
+        proto_major: 0
+        proto_minor: 0
+        timestamp: 0001-01-01T00:00:00Z
+      noise:
+        body.data.user.createdAt: []
+        header.Date: []
+      result:
+        status_code:
+            normal: false
+            expected: 200
+            actual: 200
+        headers_result: []
+        body_result:
+            - normal: false
+              type: JSON
+              expected: |
+                {"data":{"user":{"firstName":"John","lastName":"Doe","id":"1","email":"john@example.com","createdAt":"2023-07-10T18:53:29.997Z","updatedAt":null,"deletedAt":null}}}
+              actual: |
+                {"data":{"user":{"firstName":"John","lastName":"Doe","id":"1","email":"john@example.com","createdAt":"2023-07-10T18:53:29.997Z","updatedAt":null,"deletedAt":null}}}
+        dep_result: []
+test_set: test-set-1

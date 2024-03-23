@@ -1,0 +1,487 @@
+version: api.keploy.io/v1beta1
+name: report-3
+status: PASSED
+success: 8
+failure: 0
+total: 8
+tests:
+    - kind: Http
+      name: report-3
+      status: PASSED
+      started: 1705662637
+      completed: 1705662637
+      test_case_path: /files/keploy/test-set-0
+      mock_path: ""
+      test_case_id: test-1
+      req:
+        method: POST
+        proto_major: 1
+        proto_minor: 1
+        url: http://172.18.0.3:9000/graphql
+        header:
+            Accept: '*/*'
+            Content-Length: "326"
+            Content-Type: application/json
+            Host: localhost:9000
+            User-Agent: curl/8.1.2
+        body: '{"query":"query Product {\n  product {\n    id\n    name\n    category\n    amount\n    createdAt\n    updatedAt\n    deletedAt\n    suppliers {\n      edges {\n        node {\n          id\n          name\n          addressId\n          createdAt\n          updatedAt\n          deletedAt\n        }\n      }\n    }\n  }\n}"}'
+        body_type: ""
+        timestamp: 0001-01-01T00:00:00Z
+        host: ""
+      resp:
+        status_code: 200
+        header:
+            Access-Control-Allow-Origin: '*'
+            Connection: keep-alive
+            Content-Length: "329"
+            Content-Type: application/json; charset=utf-8
+            Date: Fri, 19 Jan 2024 10:59:28 GMT
+            Etag: W/"149-O76D8d1e4xgvRF3Y7c5a3Zio4s0"
+            Keep-Alive: timeout=5
+            Vary: Origin
+            X-Powered-By: Express
+        body: |
+            {"data":{"product":{"id":"1","name":"test1","category":"category1","amount":10,"createdAt":"2024-01-19T10:40:37.020Z","updatedAt":null,"deletedAt":null,"suppliers":{"edges":[{"node":{"id":"736","name":"Runolfsson, Thiel and Abshire","addressId":120,"createdAt":"2024-01-19T10:40:42.544Z","updatedAt":null,"deletedAt":null}}]}}}}
+        body_type: ""
+        status_message: ""
+        proto_major: 0
+        proto_minor: 0
+        timestamp: 0001-01-01T00:00:00Z
+      noise:
+        body.data.product.createdAt: []
+        body.data.product.suppliers.edges.node.addressId: []
+        body.data.product.suppliers.edges.node.createdAt: []
+        header.Date: []
+      result:
+        status_code:
+            normal: false
+            expected: 200
+            actual: 200
+        headers_result: []
+        body_result:
+            - normal: false
+              type: JSON
+              expected: |
+                {"data":{"product":{"id":"1","name":"test1","category":"category1","amount":10,"createdAt":"2024-01-19T10:40:37.020Z","updatedAt":null,"deletedAt":null,"suppliers":{"edges":[{"node":{"id":"736","name":"Runolfsson, Thiel and Abshire","addressId":120,"createdAt":"2024-01-19T10:40:42.544Z","updatedAt":null,"deletedAt":null}}]}}}}
+              actual: |
+                {"data":{"product":{"id":"1","name":"test1","category":"category1","amount":10,"createdAt":"2024-01-19T10:40:37.020Z","updatedAt":null,"deletedAt":null,"suppliers":{"edges":[{"node":{"id":"736","name":"Runolfsson, Thiel and Abshire","addressId":120,"createdAt":"2024-01-19T10:40:42.544Z","updatedAt":null,"deletedAt":null}}]}}}}
+        dep_result: []
+    - kind: Http
+      name: report-3
+      status: PASSED
+      started: 1705662638
+      completed: 1705662638
+      test_case_path: /files/keploy/test-set-0
+      mock_path: ""
+      test_case_id: test-2
+      req:
+        method: POST
+        proto_major: 1
+        proto_minor: 1
+        url: http://172.18.0.3:9000/graphql
+        header:
+            Accept: '*/*'
+            Content-Length: "137"
+            Content-Type: application/json
+            Host: localhost:9000
+            User-Agent: curl/8.1.2
+        body: '{"query":"query Product {\n  product {\n    id\n    name\n    category\n    amount\n    createdAt\n    updatedAt\n    deletedAt\n  }\n}"}'
+        body_type: ""
+        timestamp: 0001-01-01T00:00:00Z
+        host: ""
+      resp:
+        status_code: 200
+        header:
+            Access-Control-Allow-Origin: '*'
+            Connection: keep-alive
+            Content-Length: "155"
+            Content-Type: application/json; charset=utf-8
+            Date: Fri, 19 Jan 2024 10:59:32 GMT
+            Etag: W/"9b-WiGumbnEIRLYg6pAhNW5uhshFko"
+            Keep-Alive: timeout=5
+            Vary: Origin
+            X-Powered-By: Express
+        body: |
+            {"data":{"product":{"id":"1","name":"test1","category":"category1","amount":10,"createdAt":"2024-01-19T10:40:37.020Z","updatedAt":null,"deletedAt":null}}}
+        body_type: ""
+        status_message: ""
+        proto_major: 0
+        proto_minor: 0
+        timestamp: 0001-01-01T00:00:00Z
+      noise:
+        body.data.product.createdAt: []
+        header.Date: []
+      result:
+        status_code:
+            normal: false
+            expected: 200
+            actual: 200
+        headers_result: []
+        body_result:
+            - normal: false
+              type: JSON
+              expected: |
+                {"data":{"product":{"id":"1","name":"test1","category":"category1","amount":10,"createdAt":"2024-01-19T10:40:37.020Z","updatedAt":null,"deletedAt":null}}}
+              actual: |
+                {"data":{"product":{"id":"1","name":"test1","category":"category1","amount":10,"createdAt":"2024-01-19T10:40:37.020Z","updatedAt":null,"deletedAt":null}}}
+        dep_result: []
+    - kind: Http
+      name: report-3
+      status: PASSED
+      started: 1705662640
+      completed: 1705662640
+      test_case_path: /files/keploy/test-set-0
+      mock_path: ""
+      test_case_id: test-3
+      req:
+        method: POST
+        proto_major: 1
+        proto_minor: 1
+        url: http://172.18.0.3:9000/graphql
+        header:
+            Accept: '*/*'
+            Content-Length: "367"
+            Content-Type: application/json
+            Host: localhost:9000
+            User-Agent: curl/8.1.2
+        body: '{"query":"query Product {\n  address {\n    id\n    address1\n    address2\n    city\n    country\n    latitude\n    longitude\n    createdAt\n    updatedAt\n    deletedAt\n    stores {\n      edges {\n        node {\n          id\n          name\n          addressId\n          createdAt\n          updatedAt\n          deletedAt\n        }\n      }\n    }\n  }\n}"}'
+        body_type: ""
+        timestamp: 0001-01-01T00:00:00Z
+        host: ""
+      resp:
+        status_code: 200
+        header:
+            Access-Control-Allow-Origin: '*'
+            Connection: keep-alive
+            Content-Length: "392"
+            Content-Type: application/json; charset=utf-8
+            Date: Fri, 19 Jan 2024 10:59:41 GMT
+            Etag: W/"188-cqMf81ipHvE8vdSReD0zAyomtl8"
+            Keep-Alive: timeout=5
+            Vary: Origin
+            X-Powered-By: Express
+        body: |
+            {"data":{"address":{"id":"1","address1":"Pacocha Corner","address2":"5165 Molly Isle","city":"East Annefort","country":"Monaco","latitude":-52.7322,"longitude":-10.0744,"createdAt":"2024-01-19T10:40:38.823Z","updatedAt":null,"deletedAt":null,"stores":{"edges":[{"node":{"id":"1","name":"testStore","addressId":1,"createdAt":"2024-01-19T10:40:40.643Z","updatedAt":null,"deletedAt":null}}]}}}}
+        body_type: ""
+        status_message: ""
+        proto_major: 0
+        proto_minor: 0
+        timestamp: 0001-01-01T00:00:00Z
+      noise:
+        body.data.address.createdAt: []
+        body.data.address.stores.edges.node.createdAt: []
+        header.Date: []
+      result:
+        status_code:
+            normal: false
+            expected: 200
+            actual: 200
+        headers_result: []
+        body_result:
+            - normal: false
+              type: JSON
+              expected: |
+                {"data":{"address":{"id":"1","address1":"Pacocha Corner","address2":"5165 Molly Isle","city":"East Annefort","country":"Monaco","latitude":-52.7322,"longitude":-10.0744,"createdAt":"2024-01-19T10:40:38.823Z","updatedAt":null,"deletedAt":null,"stores":{"edges":[{"node":{"id":"1","name":"testStore","addressId":1,"createdAt":"2024-01-19T10:40:40.643Z","updatedAt":null,"deletedAt":null}}]}}}}
+              actual: |
+                {"data":{"address":{"id":"1","address1":"Pacocha Corner","address2":"5165 Molly Isle","city":"East Annefort","country":"Monaco","latitude":-52.7322,"longitude":-10.0744,"createdAt":"2024-01-19T10:40:38.823Z","updatedAt":null,"deletedAt":null,"stores":{"edges":[{"node":{"id":"1","name":"testStore","addressId":1,"createdAt":"2024-01-19T10:40:40.643Z","updatedAt":null,"deletedAt":null}}]}}}}
+        dep_result: []
+    - kind: Http
+      name: report-3
+      status: PASSED
+      started: 1705662641
+      completed: 1705662642
+      test_case_path: /files/keploy/test-set-0
+      mock_path: ""
+      test_case_id: test-4
+      req:
+        method: POST
+        proto_major: 1
+        proto_minor: 1
+        url: http://172.18.0.3:9000/graphql
+        header:
+            Accept: '*/*'
+            Content-Length: "370"
+            Content-Type: application/json
+            Host: localhost:9000
+            User-Agent: curl/8.1.2
+        body: '{"query":"query Product {\n  address {\n    id\n    address1\n    address2\n    city\n    country\n    latitude\n    longitude\n    createdAt\n    updatedAt\n    deletedAt\n    suppliers {\n      edges {\n        node {\n          id\n          name\n          addressId\n          createdAt\n          updatedAt\n          deletedAt\n        }\n      }\n    }\n  }\n}"}'
+        body_type: ""
+        timestamp: 0001-01-01T00:00:00Z
+        host: ""
+      resp:
+        status_code: 200
+        header:
+            Access-Control-Allow-Origin: '*'
+            Connection: keep-alive
+            Content-Length: "545"
+            Content-Type: application/json; charset=utf-8
+            Date: Fri, 19 Jan 2024 10:59:46 GMT
+            Etag: W/"221-rYUJmJgOBJs+57nBFgG4feDIiM4"
+            Keep-Alive: timeout=5
+            Vary: Origin
+            X-Powered-By: Express
+        body: |
+            {"data":{"address":{"id":"1","address1":"Pacocha Corner","address2":"5165 Molly Isle","city":"East Annefort","country":"Monaco","latitude":-52.7322,"longitude":-10.0744,"createdAt":"2024-01-19T10:40:38.823Z","updatedAt":null,"deletedAt":null,"suppliers":{"edges":[{"node":{"id":"1","name":"testSupplier","addressId":1,"createdAt":"2024-01-19T10:40:42.544Z","updatedAt":null,"deletedAt":null}},{"node":{"id":"926","name":"Watsica, Dooley and Leuschke","addressId":1,"createdAt":"2024-01-19T10:40:42.544Z","updatedAt":null,"deletedAt":null}}]}}}}
+        body_type: ""
+        status_message: ""
+        proto_major: 0
+        proto_minor: 0
+        timestamp: 0001-01-01T00:00:00Z
+      noise:
+        body.data.address.createdAt: []
+        body.data.address.suppliers.edges.node.createdAt: []
+        header.Date: []
+      result:
+        status_code:
+            normal: false
+            expected: 200
+            actual: 200
+        headers_result: []
+        body_result:
+            - normal: false
+              type: JSON
+              expected: |
+                {"data":{"address":{"id":"1","address1":"Pacocha Corner","address2":"5165 Molly Isle","city":"East Annefort","country":"Monaco","latitude":-52.7322,"longitude":-10.0744,"createdAt":"2024-01-19T10:40:38.823Z","updatedAt":null,"deletedAt":null,"suppliers":{"edges":[{"node":{"id":"1","name":"testSupplier","addressId":1,"createdAt":"2024-01-19T10:40:42.544Z","updatedAt":null,"deletedAt":null}},{"node":{"id":"926","name":"Watsica, Dooley and Leuschke","addressId":1,"createdAt":"2024-01-19T10:40:42.544Z","updatedAt":null,"deletedAt":null}}]}}}}
+              actual: |
+                {"data":{"address":{"id":"1","address1":"Pacocha Corner","address2":"5165 Molly Isle","city":"East Annefort","country":"Monaco","latitude":-52.7322,"longitude":-10.0744,"createdAt":"2024-01-19T10:40:38.823Z","updatedAt":null,"deletedAt":null,"suppliers":{"edges":[{"node":{"id":"1","name":"testSupplier","addressId":1,"createdAt":"2024-01-19T10:40:42.544Z","updatedAt":null,"deletedAt":null}},{"node":{"id":"926","name":"Watsica, Dooley and Leuschke","addressId":1,"createdAt":"2024-01-19T10:40:42.544Z","updatedAt":null,"deletedAt":null}}]}}}}
+        dep_result: []
+    - kind: Http
+      name: report-3
+      status: PASSED
+      started: 1705662643
+      completed: 1705662643
+      test_case_path: /files/keploy/test-set-0
+      mock_path: ""
+      test_case_id: test-5
+      req:
+        method: POST
+        proto_major: 1
+        proto_minor: 1
+        url: http://172.18.0.3:9000/graphql
+        header:
+            Accept: '*/*'
+            Content-Length: "392"
+            Content-Type: application/json
+            Host: localhost:9000
+            User-Agent: curl/8.1.2
+        body: '{"query":"query Product {\n  store {\n    id\n    name\n    addressId\n    createdAt\n    updatedAt\n    deletedAt\n    addresses {\n      edges {\n        node {\n          id\n          address1\n          address2\n          city\n          country\n          latitude\n          longitude\n          createdAt\n          updatedAt\n          deletedAt\n        }\n      }\n    }\n  }\n}"}'
+        body_type: ""
+        timestamp: 0001-01-01T00:00:00Z
+        host: ""
+      resp:
+        status_code: 200
+        header:
+            Access-Control-Allow-Origin: '*'
+            Connection: keep-alive
+            Content-Length: "393"
+            Content-Type: application/json; charset=utf-8
+            Date: Fri, 19 Jan 2024 10:59:51 GMT
+            Etag: W/"189-tG1V53nDJCm47DDG+t5NOzqNI8U"
+            Keep-Alive: timeout=5
+            Vary: Origin
+            X-Powered-By: Express
+        body: |
+            {"data":{"store":{"id":"1","name":"testStore","addressId":1,"createdAt":"2024-01-19T10:40:40.643Z","updatedAt":null,"deletedAt":null,"addresses":{"edges":[{"node":{"id":"1","address1":"Pacocha Corner","address2":"5165 Molly Isle","city":"East Annefort","country":"Monaco","latitude":-52.7322,"longitude":-10.0744,"createdAt":"2024-01-19T10:40:38.823Z","updatedAt":null,"deletedAt":null}}]}}}}
+        body_type: ""
+        status_message: ""
+        proto_major: 0
+        proto_minor: 0
+        timestamp: 0001-01-01T00:00:00Z
+      noise:
+        body.data.store.addresses.edges.node.createdAt: []
+        body.data.store.createdAt: []
+        header.Date: []
+      result:
+        status_code:
+            normal: false
+            expected: 200
+            actual: 200
+        headers_result: []
+        body_result:
+            - normal: false
+              type: JSON
+              expected: |
+                {"data":{"store":{"id":"1","name":"testStore","addressId":1,"createdAt":"2024-01-19T10:40:40.643Z","updatedAt":null,"deletedAt":null,"addresses":{"edges":[{"node":{"id":"1","address1":"Pacocha Corner","address2":"5165 Molly Isle","city":"East Annefort","country":"Monaco","latitude":-52.7322,"longitude":-10.0744,"createdAt":"2024-01-19T10:40:38.823Z","updatedAt":null,"deletedAt":null}}]}}}}
+              actual: |
+                {"data":{"store":{"id":"1","name":"testStore","addressId":1,"createdAt":"2024-01-19T10:40:40.643Z","updatedAt":null,"deletedAt":null,"addresses":{"edges":[{"node":{"id":"1","address1":"Pacocha Corner","address2":"5165 Molly Isle","city":"East Annefort","country":"Monaco","latitude":-52.7322,"longitude":-10.0744,"createdAt":"2024-01-19T10:40:38.823Z","updatedAt":null,"deletedAt":null}}]}}}}
+        dep_result: []
+    - kind: Http
+      name: report-3
+      status: PASSED
+      started: 1705662644
+      completed: 1705662644
+      test_case_path: /files/keploy/test-set-0
+      mock_path: ""
+      test_case_id: test-6
+      req:
+        method: POST
+        proto_major: 1
+        proto_minor: 1
+        url: http://172.18.0.3:9000/graphql
+        header:
+            Accept: '*/*'
+            Content-Length: "329"
+            Content-Type: application/json
+            Host: localhost:9000
+            User-Agent: curl/8.1.2
+        body: '{"query":"query Product {\n  store {\n    id\n    name\n    addressId\n    createdAt\n    updatedAt\n    deletedAt\n    products {\n      edges {\n        node {\n          id\n          name\n          category\n          amount\n          createdAt\n          updatedAt\n          deletedAt\n        }\n      }\n    }\n  }\n}"}'
+        body_type: ""
+        timestamp: 0001-01-01T00:00:00Z
+        host: ""
+      resp:
+        status_code: 200
+        header:
+            Access-Control-Allow-Origin: '*'
+            Connection: keep-alive
+            Content-Length: "324"
+            Content-Type: application/json; charset=utf-8
+            Date: Fri, 19 Jan 2024 10:59:54 GMT
+            Etag: W/"144-X3rY3KJCjMMti9pMUYIyZY+1hrg"
+            Keep-Alive: timeout=5
+            Vary: Origin
+            X-Powered-By: Express
+        body: |
+            {"data":{"store":{"id":"1","name":"testStore","addressId":1,"createdAt":"2024-01-19T10:40:40.643Z","updatedAt":null,"deletedAt":null,"products":{"edges":[{"node":{"id":"139","name":"Ergonomic Cotton Table","category":"Computers","amount":86300,"createdAt":"2024-01-19T10:40:37.020Z","updatedAt":null,"deletedAt":null}}]}}}}
+        body_type: ""
+        status_message: ""
+        proto_major: 0
+        proto_minor: 0
+        timestamp: 0001-01-01T00:00:00Z
+      noise:
+        body.data.store.createdAt: []
+        body.data.store.products.edges.node.amount: []
+        body.data.store.products.edges.node.createdAt: []
+        header.Date: []
+      result:
+        status_code:
+            normal: false
+            expected: 200
+            actual: 200
+        headers_result: []
+        body_result:
+            - normal: false
+              type: JSON
+              expected: |
+                {"data":{"store":{"id":"1","name":"testStore","addressId":1,"createdAt":"2024-01-19T10:40:40.643Z","updatedAt":null,"deletedAt":null,"products":{"edges":[{"node":{"id":"139","name":"Ergonomic Cotton Table","category":"Computers","amount":86300,"createdAt":"2024-01-19T10:40:37.020Z","updatedAt":null,"deletedAt":null}}]}}}}
+              actual: |
+                {"data":{"store":{"id":"1","name":"testStore","addressId":1,"createdAt":"2024-01-19T10:40:40.643Z","updatedAt":null,"deletedAt":null,"products":{"edges":[{"node":{"id":"139","name":"Ergonomic Cotton Table","category":"Computers","amount":86300,"createdAt":"2024-01-19T10:40:37.020Z","updatedAt":null,"deletedAt":null}}]}}}}
+        dep_result: []
+    - kind: Http
+      name: report-3
+      status: PASSED
+      started: 1705662646
+      completed: 1705662646
+      test_case_path: /files/keploy/test-set-0
+      mock_path: ""
+      test_case_id: test-7
+      req:
+        method: POST
+        proto_major: 1
+        proto_minor: 1
+        url: http://172.18.0.3:9000/graphql
+        header:
+            Accept: '*/*'
+            Content-Length: "332"
+            Content-Type: application/json
+            Host: localhost:9000
+            User-Agent: curl/8.1.2
+        body: '{"query":"query Product {\n  supplier {\n    id\n    name\n    addressId\n    createdAt\n    updatedAt\n    deletedAt\n    products {\n      edges {\n        node {\n          id\n          name\n          category\n          amount\n          createdAt\n          updatedAt\n          deletedAt\n        }\n      }\n    }\n  }\n}"}'
+        body_type: ""
+        timestamp: 0001-01-01T00:00:00Z
+        host: ""
+      resp:
+        status_code: 200
+        header:
+            Access-Control-Allow-Origin: '*'
+            Connection: keep-alive
+            Content-Length: "166"
+            Content-Type: application/json; charset=utf-8
+            Date: Fri, 19 Jan 2024 10:59:58 GMT
+            Etag: W/"a6-B4pajT4UaRZgzQsB13zBYtk2sco"
+            Keep-Alive: timeout=5
+            Vary: Origin
+            X-Powered-By: Express
+        body: |
+            {"data":{"supplier":{"id":"1","name":"testSupplier","addressId":1,"createdAt":"2024-01-19T10:40:42.544Z","updatedAt":null,"deletedAt":null,"products":{"edges":[]}}}}
+        body_type: ""
+        status_message: ""
+        proto_major: 0
+        proto_minor: 0
+        timestamp: 0001-01-01T00:00:00Z
+      noise:
+        body.data.supplier.createdAt: []
+        header.Date: []
+      result:
+        status_code:
+            normal: false
+            expected: 200
+            actual: 200
+        headers_result: []
+        body_result:
+            - normal: false
+              type: JSON
+              expected: |
+                {"data":{"supplier":{"id":"1","name":"testSupplier","addressId":1,"createdAt":"2024-01-19T10:40:42.544Z","updatedAt":null,"deletedAt":null,"products":{"edges":[]}}}}
+              actual: |
+                {"data":{"supplier":{"id":"1","name":"testSupplier","addressId":1,"createdAt":"2024-01-19T10:40:42.544Z","updatedAt":null,"deletedAt":null,"products":{"edges":[]}}}}
+        dep_result: []
+    - kind: Http
+      name: report-3
+      status: PASSED
+      started: 1705662647
+      completed: 1705662647
+      test_case_path: /files/keploy/test-set-0
+      mock_path: ""
+      test_case_id: test-8
+      req:
+        method: POST
+        proto_major: 1
+        proto_minor: 1
+        url: http://172.18.0.3:9000/graphql
+        header:
+            Accept: '*/*'
+            Content-Length: "135"
+            Content-Type: application/json
+            Host: localhost:9000
+            User-Agent: curl/8.1.2
+        body: '{"query":"query User {\n  user {\n    firstName\n    lastName\n    id\n    email\n    createdAt\n    updatedAt\n    deletedAt\n  }\n}"}'
+        body_type: ""
+        timestamp: 0001-01-01T00:00:00Z
+        host: ""
+      resp:
+        status_code: 200
+        header:
+            Access-Control-Allow-Origin: '*'
+            Connection: keep-alive
+            Content-Length: "165"
+            Content-Type: application/json; charset=utf-8
+            Date: Fri, 19 Jan 2024 11:00:02 GMT
+            Etag: W/"a5-uy+aCp1+9uH29INzqQ8fipQpKqI"
+            Keep-Alive: timeout=5
+            Vary: Origin
+            X-Powered-By: Express
+        body: |
+            {"data":{"user":{"firstName":"John","lastName":"Doe","id":"1","email":"john@example.com","createdAt":"2023-07-10T18:53:29.997Z","updatedAt":null,"deletedAt":null}}}
+        body_type: ""
+        status_message: ""
+        proto_major: 0
+        proto_minor: 0
+        timestamp: 0001-01-01T00:00:00Z
+      noise:
+        body.data.user.createdAt: []
+        header.Date: []
+      result:
+        status_code:
+            normal: false
+            expected: 200
+            actual: 200
+        headers_result: []
+        body_result:
+            - normal: false
+              type: JSON
+              expected: |
+                {"data":{"user":{"firstName":"John","lastName":"Doe","id":"1","email":"john@example.com","createdAt":"2023-07-10T18:53:29.997Z","updatedAt":null,"deletedAt":null}}}
+              actual: |
+                {"data":{"user":{"firstName":"John","lastName":"Doe","id":"1","email":"john@example.com","createdAt":"2023-07-10T18:53:29.997Z","updatedAt":null,"deletedAt":null}}}
+        dep_result: []
+test_set: test-set-0

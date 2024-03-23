@@ -1,0 +1,53 @@
+version: api.keploy.io/v1beta1
+kind: Http
+name: test-7
+spec:
+    metadata: {}
+    req:
+        method: POST
+        proto_major: 1
+        proto_minor: 1
+        url: http://localhost:9000/graphql
+        header:
+            Accept: '*/*'
+            Content-Length: "332"
+            Content-Type: application/json
+            Host: localhost:9000
+            User-Agent: curl/8.1.2
+        body: '{"query":"query Product {\n  supplier {\n    id\n    name\n    addressId\n    createdAt\n    updatedAt\n    deletedAt\n    products {\n      edges {\n        node {\n          id\n          name\n          category\n          amount\n          createdAt\n          updatedAt\n          deletedAt\n        }\n      }\n    }\n  }\n}"}'
+        body_type: ""
+        timestamp: 2024-01-19T10:59:58.590625416Z
+        host: ""
+    resp:
+        status_code: 200
+        header:
+            Access-Control-Allow-Origin: '*'
+            Connection: keep-alive
+            Content-Length: "166"
+            Content-Type: application/json; charset=utf-8
+            Date: Fri, 19 Jan 2024 10:59:58 GMT
+            Etag: W/"a6-B4pajT4UaRZgzQsB13zBYtk2sco"
+            Keep-Alive: timeout=5
+            Vary: Origin
+            X-Powered-By: Express
+        body: |
+            {"data":{"supplier":{"id":"1","name":"testSupplier","addressId":1,"createdAt":"2024-01-19T10:40:42.544Z","updatedAt":null,"deletedAt":null,"products":{"edges":[]}}}}
+        body_type: ""
+        status_message: ""
+        proto_major: 0
+        proto_minor: 0
+        timestamp: 2024-01-19T10:59:58.653386707Z
+    objects: []
+    assertions:
+        noise:
+            body.data.supplier.createdAt: []
+            header.Date: []
+    created: 1705662000
+curl: |-
+    curl --request POST \
+      --url http://localhost:9000/graphql \
+      --header 'Content-Type: application/json' \
+      --header 'Host: localhost:9000' \
+      --header 'User-Agent: curl/8.1.2' \
+      --header 'Accept: */*' \
+      --data '{"query":"query Product {\n  supplier {\n    id\n    name\n    addressId\n    createdAt\n    updatedAt\n    deletedAt\n    products {\n      edges {\n        node {\n          id\n          name\n          category\n          amount\n          createdAt\n          updatedAt\n          deletedAt\n        }\n      }\n    }\n  }\n}"}'
