@@ -1,3 +1,4 @@
+/* eslint-disable camelcase */
 module.exports = {
   up: queryInterface => {
     const range = require('lodash/range');

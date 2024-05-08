@@ -1,3 +1,4 @@
+/* eslint-disable camelcase */
 import range from 'lodash/range';
 import faker from 'faker';
 import md5 from 'md5';

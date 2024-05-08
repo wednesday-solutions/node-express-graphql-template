@@ -1,3 +1,4 @@
+/* eslint-disable camelcase */
 import { GraphQLFloat, GraphQLID, GraphQLInt, GraphQLNonNull, GraphQLObjectType, GraphQLString } from 'graphql';
 import { getNode } from '@gql/node';
 import { createConnection } from 'graphql-sequelize';

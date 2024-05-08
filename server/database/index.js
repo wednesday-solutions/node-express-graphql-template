@@ -31,7 +31,7 @@ export const connect = async () => {
   try {
     await client.authenticate();
     console.log('Connection has been established successfully.\n', {
-      db_uri: dbConfig.url
+      dbUri: dbConfig.url
     });
   } catch (error) {
     console.error('Unable to connect to the database:', error);

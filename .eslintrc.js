@@ -23,7 +23,7 @@ module.exports = {
     'key-spacing': [2, { beforeColon: false, afterColon: true }],
     'arrow-parens': ['error', 'as-needed'],
     'arrow-body-style': [2, 'as-needed'],
-
+    camelcase: ['error', { properties: 'always', ignoreImports: false }],
     'class-methods-use-this': 0,
     'import/imports-first': 0,
     'import/newline-after-import': 0,
@@ -33,6 +33,8 @@ module.exports = {
     'import/no-unresolved': 0,
     'import/prefer-default-export': 0,
     'no-param-reassign': 0,
+    'max-params': ['error', 5],
+    complexity: ['error', 10],
     'max-len': 0,
     'newline-per-chained-call': 0,
     'no-confusing-arrow': 0,

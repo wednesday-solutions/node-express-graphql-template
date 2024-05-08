@@ -76,7 +76,7 @@ describe('connect', () => {
     expect(console.log.mock.calls.length).toBe(1);
     expect(console.log.mock.calls[0][0]).toBe('Connection has been established successfully.\n');
     expect(console.log.mock.calls[0][1]).toEqual({
-      db_uri: process.env.DB_URI
+      dbUri: process.env.DB_URI
     });
   });
 
