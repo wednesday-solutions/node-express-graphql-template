@@ -80,7 +80,7 @@
     "path": "^0.12.7",
     "pg": "^8.6.0",
     "pg-hstore": "^2.3.4",
-    "pg-native": "^3.0.0",
+    "pg-native": "^3.0.1",
     "pluralize": "^8.0.0",
     "postgres": "^1.0.2",
     "sequelize": "^6.6.5",
