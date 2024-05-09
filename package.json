@@ -86,7 +86,7 @@
     "sequelize": "^6.6.5",
     "slack-notify": "^2.0.2",
     "source-map-support": "^0.5.19",
-    "sqlite3": "^5.0.2",
+    "sqlite3": "^5.0.3",
     "stream": "^0.0.2",
     "string-replace-loader": "^3.1.0",
     "subscriptions-transport-ws": "0.9.17",
