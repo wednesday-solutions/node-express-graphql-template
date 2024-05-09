@@ -12,10 +12,14 @@ export const handleAggregateQueries = (args, tableName) => {
   let join = ``;
   const addQuery = suffix => (tableName ? `${tableName}.` : '') + suffix;
   if (args?.startDate) {
-    where = addWhereClause(where, `${addQuery(`created_at`)} > :startDate`);
+    const createdAtQuery = addQuery('created_at');
+    const whereClause = `${createdAtQuery} > :startDate`;
+    where = addWhereClause(where, whereClause);
   }
   if (args?.endDate) {
-    where = addWhereClause(where, `${addQuery(`created_at`)} < :endDate`);
+    const createdAtQuery = addQuery('created_at');
+    const whereClause = `${createdAtQuery} < :endDate`;
+    where = addWhereClause(where, whereClause);
   }
   if (args?.category) {
     join = `LEFT JOIN products on products.id=purchased_products.product_id`;

@@ -7,8 +7,7 @@ export const getEarliestCreatedDate = async () => {
   const earliestPurchasedProduct = await db.purchasedProducts.findOne({
     order: ['id']
   });
-  const date = earliestPurchasedProduct.createdAt.toISOString().split('T')[0];
-  return date;
+  return earliestPurchasedProduct.createdAt.toISOString().split('T')[0];
 };
 
 export const getTotalByDate = async date => {
@@ -35,12 +34,10 @@ export const getTotalByDateForCategory = async (date, category) => {
   return total || 0;
 };
 
-export const getCountByDate = async date => {
-  const total = await db.purchasedProducts.count({
+export const getCountByDate = async date =>
+  await db.purchasedProducts.count({
     where: { createdAt: { [Op.lt]: date.endOf('day').toISOString(), [Op.gt]: date.startOf('day').toISOString() } }
   });
-  return total;
-};
 
 export const getCountByDateForCategory = async (date, category) => {
   const total = await db.purchasedProducts.count({

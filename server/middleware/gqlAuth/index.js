@@ -1,3 +1,4 @@
+/* eslint-disable sonarjs/cognitive-complexity */
 import { isLocalEnv, isTestEnv, logger } from '@utils';
 import { convertToMap } from '@utils/gqlSchemaParsers';
 import jwt from 'jsonwebtoken';
@@ -45,16 +46,14 @@ export const isPublicQuery = async req => {
   return queries.every(({ queryName, operationType }) => GQL_QUERY_TYPES[operationType].whitelist.includes(queryName));
 };
 
-export const apolloServerContextResolver = async ({ req, res }) => {
-  const response = await new Promise((resolve, reject) => {
+export const apolloServerContextResolver = async ({ req, res }) =>
+  await new Promise((resolve, reject) => {
     isAuthenticated(req, res, () => {
       resolve();
     }).catch(err => {
       reject(err);
     });
   });
-  return response;
-};
 export const isAuthenticated = async (req, res, next) => {
   try {
     // For accessing graphql without authentication when debugging.

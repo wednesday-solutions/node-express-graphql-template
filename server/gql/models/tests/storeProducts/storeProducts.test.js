@@ -27,17 +27,18 @@ const query = `
       }    
   }
 `;
+const fieldType = 'data.__type.fields';
 describe('Store Product introspection tests', () => {
   it('should have the correct fields and types', async () => {
     const result = await graphqlSync({ schema, source: query });
-    const storeProductFieldTypes = get(result, 'data.__type.fields');
+    const storeProductFieldTypes = get(result, fieldType);
     const hasCorrectFieldTypes = expectSameTypeNameOrKind(storeProductFieldTypes, fields);
     expect(hasCorrectFieldTypes).toBeTruthy();
   });
 
   it('should have a product field of type Product', async () => {
     const result = await graphqlSync({ schema, source: query });
-    const purchasedProductFieldTypes = get(result, 'data.__type.fields');
+    const purchasedProductFieldTypes = get(result, fieldType);
     const productField = purchasedProductFieldTypes.find(field => field.name === 'products');
     expect(productField.type.name).toBe('productsConnection');
     expect(productField.type.kind).toBe('OBJECT');
@@ -45,7 +46,7 @@ describe('Store Product introspection tests', () => {
 
   it('should have a store field of type Store', async () => {
     const result = await graphqlSync({ schema, source: query });
-    const purchasedProductFieldTypes = get(result, 'data.__type.fields');
+    const purchasedProductFieldTypes = get(result, fieldType);
     const productField = purchasedProductFieldTypes.find(field => field.name === 'stores');
     expect(productField.type.name).toBe('storeConnection');
     expect(productField.type.kind).toBe('OBJECT');

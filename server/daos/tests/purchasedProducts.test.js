@@ -17,6 +17,7 @@ describe('purchasedProducts tests', () => {
   const productId = 133;
   const discount = 111;
   const deliveryDate = '"2022-07-20T17:30:15+05:30"';
+  const mockDate = moment('2022-01-03');
   const purchasedProduct = {
     price,
     productId,
@@ -43,7 +44,6 @@ describe('purchasedProducts tests', () => {
     });
     it('should return zero if there is no value present for the date', async () => {
       jest.spyOn(db.purchasedProducts, 'sum').mockReturnValueOnce(NaN);
-      const mockDate = moment('2022-01-03');
       const res = await getTotalByDate(mockDate);
       expect(res).toEqual(0);
     });
@@ -56,7 +56,6 @@ describe('purchasedProducts tests', () => {
     });
     it('should return zero if there is no value present for the date', async () => {
       jest.spyOn(db.purchasedProducts, 'sum').mockReturnValueOnce(NaN);
-      const mockDate = moment('2022-01-03');
       const res = await getTotalByDateForCategory(mockDate);
       expect(res).toEqual(0);
     });
@@ -70,7 +69,6 @@ describe('purchasedProducts tests', () => {
     });
     it('should return zero if there is no count present for the date', async () => {
       db.purchasedProducts.count = jest.fn().mockImplementationOnce(() => 0);
-      const mockDate = moment('2022-01-03');
       const res = await getCountByDate(mockDate);
       expect(res).toEqual(0);
     });
@@ -84,7 +82,6 @@ describe('purchasedProducts tests', () => {
     });
     it('should return zero if there is no count present for the date for the category', async () => {
       db.purchasedProducts.count = jest.fn().mockImplementationOnce(() => NaN);
-      const mockDate = moment('2022-01-03');
       const res = await getCountByDateForCategory(mockDate);
       expect(res).toEqual(0);
     });

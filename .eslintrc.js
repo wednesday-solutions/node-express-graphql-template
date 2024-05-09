@@ -5,8 +5,13 @@ const prettierOptions = JSON.parse(fs.readFileSync(path.resolve(__dirname, '.pre
 
 module.exports = {
   parser: 'babel-eslint',
-  extends: ['prettier-standard'],
-  plugins: ['prettier'],
+  extends: [
+    'prettier-standard',
+    'plugin:prettier/recommended',
+    'plugin:sonarjs/recommended',
+    'plugin:security/recommended-legacy'
+  ],
+  plugins: ['prettier', 'sonarjs', 'github', 'sonarjs'],
   env: {
     jest: true,
     browser: true,
@@ -42,7 +47,8 @@ module.exports = {
     'prefer-template': 2,
     'require-yield': 0,
     'prettier/prettier': ['error', prettierOptions],
-    'node/handle-callback-err': ['off']
+    'node/handle-callback-err': ['off'],
+    'max-lines-per-function': ['error', 300]
   },
   settings: {
     'import/resolver': {

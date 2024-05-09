@@ -45,10 +45,9 @@ export function getAttributes(sequelize, DataTypes) {
 }
 
 export function model(sequelize, DataTypes) {
-  const users = sequelize.define('users', getAttributes(sequelize, DataTypes), {
+  return sequelize.define('users', getAttributes(sequelize, DataTypes), {
     tableName: 'users',
     paranoid: true,
     timestamps: true
   });
-  return users;
 }

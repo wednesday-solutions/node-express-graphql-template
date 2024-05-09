@@ -72,13 +72,10 @@ describe('queryOptions', () => {
     });
     it('should throw  error and also send slack message if there is problem in parsing JSON', async () => {
       jest.spyOn(redis, 'get').mockReturnValue('test');
-      const spy = jest.spyOn(utils, 'logger').mockImplementation(() => {
-        const obj = {
-          info: msg => msg,
-          error: err => err
-        };
-        return obj;
-      });
+      const spy = jest.spyOn(utils, 'logger').mockImplementation(() => ({
+        info: msg => msg,
+        error: err => err
+      }));
       await queryRedis(type, args);
       expect(spy).toBeCalledTimes(2);
     });

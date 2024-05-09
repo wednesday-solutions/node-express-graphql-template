@@ -32,7 +32,6 @@ describe('gqlAuth tests', () => {
       expect(res.header.mock.calls.length).toBe(1);
       expect(res.sendStatus.mock.calls.length).toBe(1);
     });
-
     it('should be able to call next handler if valid request', async () => {
       const { handlePreflightRequest } = require('../index');
       const req = {
@@ -47,7 +46,6 @@ describe('gqlAuth tests', () => {
       expect(next.mock.calls.length).toBe(1);
     });
   });
-
   describe('corsOptionsDelegate options', () => {
     beforeEach(() => {
       process.env.ENVIRONMENT_NAME = 'dev';
@@ -65,7 +63,6 @@ describe('gqlAuth tests', () => {
       expect(callback.mock.calls.length).toBe(1);
       expect(callback.mock.calls[0][1]).toEqual({ origin: true });
     });
-
     it('should be able to return origin:true when domain matches the req headers', async () => {
       const { corsOptionsDelegate } = require('../index');
       const req = {
@@ -77,7 +74,6 @@ describe('gqlAuth tests', () => {
       expect(callback.mock.calls.length).toBe(1);
       expect(callback.mock.calls[0][1]).toEqual({ origin: true });
     });
-
     it('should be able to return origin:true when domain requesting from localhost', async () => {
       const { corsOptionsDelegate } = require('../index');
       const req = {
@@ -89,10 +85,8 @@ describe('gqlAuth tests', () => {
       expect(callback.mock.calls.length).toBe(1);
       expect(callback.mock.calls[0][1]).toEqual({ origin: true });
     });
-
     it('should be able to return origin:false when req headers is not any of allowed domain!', async () => {
       const { corsOptionsDelegate } = require('../index');
-
       const req = {
         header: () => 'www.ws.is',
         method: 'GET'
@@ -136,7 +130,6 @@ describe('gqlAuth tests', () => {
       expect(response.length).toEqual(1);
       expect(response[0]).toEqual({ operationType: 'query', queryName: 'stores' });
     });
-
     it('successfully gets queryNames when operationName is provided and there are multiple queries inside one operation', async () => {
       request.body.query = `query StoresAndSuppliers { ${storeQuery} ${supplierQuery} }`;
       request.body.operationName = 'StoresAndSuppliers';
@@ -146,7 +139,6 @@ describe('gqlAuth tests', () => {
       expect(response[0]).toEqual({ operationType: 'query', queryName: 'stores' });
       expect(response[1]).toEqual({ operationType: 'query', queryName: 'suppliers' });
     });
-
     it('successfully gets queryNames when operationName is not provided and there are multiple queries inside one operation', async () => {
       request.body.query = `query { ${storeQuery} ${supplierQuery} }`;
       const { getQueryNames } = require('../index');
@@ -171,7 +163,6 @@ describe('gqlAuth tests', () => {
       };
       let response = await isPublicQuery(req);
       expect(response).toBe(false);
-
       req = {
         body: {
           query: `query PurchasedProduct{
@@ -188,6 +179,7 @@ describe('gqlAuth tests', () => {
   });
   describe('isAuthenticated tests', () => {
     let mocks;
+    const bearerPlpl = 'bearer PLPL';
     beforeEach(() => {
       const spy = jest.fn();
       mocks = {
@@ -207,7 +199,6 @@ describe('gqlAuth tests', () => {
       },
       headers: {}
     };
-
     it('should call next if the environment is test or local ', async () => {
       process.env.ENVIRONMENT_NAME = 'local';
       const { isAuthenticated } = require('../index');
@@ -219,9 +210,8 @@ describe('gqlAuth tests', () => {
       const response = await isAuthenticated(req, res, mocks.next);
       expect(response.errors).toEqual('Access Token missing from header');
     });
-
     it('should return an error if the token is invalid', async () => {
-      req.headers.authorization = 'bearer PLPL';
+      req.headers.authorization = bearerPlpl;
       const error = 'this is an error';
       jest.spyOn(require('jsonwebtoken'), 'verify').mockImplementation((_, b, cb) => {
         cb(new Error(error));
@@ -230,9 +220,8 @@ describe('gqlAuth tests', () => {
       const response = await isAuthenticated(req, res, mocks.next);
       expect(response.errors).toEqual([error]);
     });
-
     it('should call the next middleware without any errors', async () => {
-      req.headers.authorization = 'bearer PLPL';
+      req.headers.authorization = bearerPlpl;
       const jwtVerifySpy = jest.fn();
       jest.spyOn(require('jsonwebtoken'), 'verify').mockImplementation((_, b, cb) => {
         jwtVerifySpy();
@@ -243,9 +232,8 @@ describe('gqlAuth tests', () => {
       expect(mocks.next).toBeCalled();
       expect(jwtVerifySpy).toBeCalled();
     });
-
     it('should return an error if the user is unauthorized', async () => {
-      req.headers.authorization = 'bearer PLPL';
+      req.headers.authorization = bearerPlpl;
       const jwtVerifySpy = jest.fn();
       jest.spyOn(require('jsonwebtoken'), 'verify').mockImplementation((_, b, cb) => {
         jwtVerifySpy();

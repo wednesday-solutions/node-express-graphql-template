@@ -27,23 +27,24 @@ const query = `
       }    
   }
 `;
+const fieldType = 'data.__type.fields';
 describe('Address introspection tests', () => {
   it('should have the correct fields and types', async () => {
     const result = await graphqlSync({ schema, source: query });
-    const addressFieldTypes = get(result, 'data.__type.fields');
+    const addressFieldTypes = get(result, fieldType);
     const hasCorrectFieldTypes = expectSameTypeNameOrKind(addressFieldTypes, fields);
     expect(hasCorrectFieldTypes).toBeTruthy();
   });
   it('should have a supplier connection', async () => {
     const result = await graphqlSync({ schema, source: query });
-    const addressFieldTypes = get(result, 'data.__type.fields');
+    const addressFieldTypes = get(result, fieldType);
     const supplierField = addressFieldTypes.find(field => field.name === 'suppliers');
     expect(supplierField.type.kind).toBe('OBJECT');
     expect(supplierField.type.name).toBe('suppliersConnection');
   });
   it('should have a store connection', async () => {
     const result = await graphqlSync({ schema, source: query });
-    const addressFieldTypes = get(result, 'data.__type.fields');
+    const addressFieldTypes = get(result, fieldType);
     const storeField = addressFieldTypes.find(field => field.name === 'stores');
     expect(storeField.type.kind).toBe('OBJECT');
     expect(storeField.type.name).toBe('storeConnection');
