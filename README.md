@@ -1,11 +1,11 @@
-<img align="left" src="https://github.com/wednesday-solutions/node-express-graphql-template/blob/develop/node_express_graphql_template_github.svg" width="480" height="620" />
+<img style="align:left;" src="https://github.com/wednesday-solutions/node-express-graphql-template/blob/develop/node_express_graphql_template_github.svg" width="480" height="620" />
 
 <div>
-  <a href="https://www.wednesday.is?utm_source=gthb&utm_medium=repo&utm_campaign=serverless" align="left" style="margin-left: 0;">
+  <a href="https://www.wednesday.is?utm_source=gthb&utm_medium=repo&utm_campaign=serverless" style="margin-left: 0; align:left;">
     <img src="https://uploads-ssl.webflow.com/5ee36ce1473112550f1e1739/5f5879492fafecdb3e5b0e75_wednesday_logo.svg">
   </a>
   <p>
-    <h1 align="left">Node Express GraphQL Template
+    <h1 style="text-align:left;">Node Express GraphQL Template
     </h1>
   </p>
 
