@@ -3,6 +3,9 @@
   "version": "1.0.0",
   "description": "",
   "main": "server/index.js",
+  "engines": {
+    "node": ">=20.12.1"
+  },
   "repository": {
     "type": "git",
     "url": "git+https://github.com/wednesday-solutions/reporting-dashboard.git"
