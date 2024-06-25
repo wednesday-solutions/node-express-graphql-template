@@ -9457,10 +9457,10 @@ opener@^1.5.2:
   resolved "https://registry.yarnpkg.com/opener/-/opener-1.5.2.tgz#5d37e1f35077b9dcac4301372271afdeb2a13598"
   integrity sha512-ur5UIdyw5Y7yEj9wLzhqXiy6GZ3Mwx0yGI+5sMn2r0N0v3cKJvUmFH5yPP+WXh9e0xfyzyJX95D8l088DNFj7A==
 
-opossum@^6.3.0:
-  version "6.3.0"
-  resolved "https://registry.yarnpkg.com/opossum/-/opossum-6.3.0.tgz#c4d21a8f5ec4acced62ecaab1c07652c202b1a22"
-  integrity sha512-youR7pMTpgnbPJEPruM8Ku1WKUXnjmsK99GC5fkGFrOK8jduY1hvMiooUa3QZg6Xdso03skr37q6Evpt9PZ2cA==
+opossum@^8.1.4:
+  version "8.1.4"
+  resolved "https://registry.yarnpkg.com/opossum/-/opossum-8.1.4.tgz#2fa05e252bff7b936218b7f56909cb705e51d370"
+  integrity sha512-ktDDCD2MKX7yx8ZLtt57JrUE0IyYJthmTyXtaF4dEdPYHvX0kkWRiKkQkhEjtZnTNN5y1ErMriKNqOLqgpYXtQ==
 
 optionator@^0.8.1:
   version "0.8.3"

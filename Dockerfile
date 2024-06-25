@@ -1,6 +1,10 @@
-FROM node:14
+FROM node:20
 ARG ENVIRONMENT_NAME
 ARG BUILD_NAME
+RUN apt-get update && \
+    apt-get install -y build-essential python3 libpq-dev sqlite3 && \
+    rm -rf /var/lib/apt/lists/*
+
 RUN mkdir -p /app-build
 ADD . /app-build
 WORKDIR /app-build
@@ -9,7 +13,7 @@ RUN yarn
 RUN yarn build:$BUILD_NAME
 
 
-FROM node:14-alpine
+FROM node:20-alpine
 ARG ENVIRONMENT_NAME
 ARG BUILD_NAME
 RUN mkdir -p /dist
