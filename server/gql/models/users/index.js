@@ -3,7 +3,7 @@ import { getNode } from '@gql/node';
 import { createConnection } from 'graphql-sequelize';
 import { timestamps } from '@gql/fields/timestamps';
 import db from '@database/models';
-import { totalConnectionFields } from '@utils/index';
+import { totalConnectionFields, baseListResolver } from '@utils/index';
 import { sequelizedWhere } from '@database/dbUtils';
 import { getQueryFields, TYPE_ATTRIBUTES } from '@server/utils/gqlFieldUtils';
 
@@ -56,7 +56,7 @@ export const userQueries = {
 export const userLists = {
   list: {
     ...UserConnection,
-    resolve: UserConnection.resolve,
+    resolve: (...args) => baseListResolver(UserConnection, ...args),
     type: UserConnection.connectionType,
     args: UserConnection.connectionArgs
   },
