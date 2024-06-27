@@ -1,7 +1,7 @@
 import { GraphQLID, GraphQLInt, GraphQLNonNull, GraphQLObjectType, GraphQLString } from 'graphql';
 import { createConnection } from 'graphql-sequelize';
 import { getNode } from '@gql/node';
-import { SupplierConnection } from '../suppliers';
+import { supplierLists } from '../suppliers';
 import { storeLists } from '../stores';
 import { timestamps } from '@gql/fields/timestamps';
 import db from '@database/models';
@@ -25,10 +25,9 @@ export const GraphQLProduct = new GraphQLObjectType({
     ...getQueryFields(productFields, TYPE_ATTRIBUTES.isNonNull),
     ...timestamps,
     suppliers: {
-      type: SupplierConnection.connectionType,
-      args: SupplierConnection.connectionArgs,
+      ...supplierLists.list,
       resolve: (source, args, context, info) =>
-        SupplierConnection.resolve(source, args, { ...context, product: source.dataValues }, info)
+        listResolver(storeLists, source, args, { ...context, product: source.dataValues }, info)
     },
     stores: {
       ...storeLists.list,

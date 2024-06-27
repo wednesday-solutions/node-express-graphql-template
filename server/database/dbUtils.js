@@ -1,6 +1,7 @@
 import { GraphQLNonNull, GraphQLInt, GraphQLObjectType } from 'graphql';
 import { Op } from 'sequelize';
 import deepMapKeys from 'deep-map-keys';
+import { logger } from '@server/utils';
 
 export const sequelizedWhere = (currentWhere = {}, where = {}) => {
   where = deepMapKeys(where, k => {
@@ -21,6 +22,7 @@ export const updateUsingId = async (model, args) => {
       }
     });
   } catch (e) {
+    logger().info('e', e);
     throw new Error(`Failed to update ${model.name}`);
   }
   if (!affectedRows) {
