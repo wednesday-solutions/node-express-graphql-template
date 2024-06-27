@@ -1,10 +1,13 @@
 import express from 'express';
 import cors from 'cors';
-import { SubscriptionServer } from 'subscriptions-transport-ws/dist/server';
-import { GraphQLSchema, execute, subscribe } from 'graphql';
+import { WebSocketServer } from 'ws';
+import { useServer } from 'graphql-ws/lib/use/ws';
+import { ApolloServer } from '@apollo/server';
+import { expressMiddleware } from '@apollo/server/express4';
+import { ApolloServerPluginDrainHttpServer } from '@apollo/server/plugin/drainHttpServer';
+import { GraphQLSchema } from 'graphql';
 import 'whatwg-fetch';
 import dotenv from 'dotenv';
-import { ApolloServer } from 'apollo-server-express';
 import { createServer } from 'http';
 import axios from 'axios';
 import { newCircuitBreaker } from '@services/circuitbreaker';
@@ -51,6 +54,10 @@ export const init = async () => {
     app = express();
   }
 
+  if (process.env.ENABLE_DEDUP) {
+    const kMiddleware = require('@keploy/sdk/dist/v2/dedup/middleware.js');
+    app.use(kMiddleware());
+  }
   app.use(express.json());
   app.use(rTracer.expressMiddleware());
   app.use(cors(corsOptionsDelegate));
@@ -77,6 +84,13 @@ export const init = async () => {
   /* istanbul ignore next */
   if (!isTestEnv()) {
     const httpServer = createServer(app);
+    const wsServer = new WebSocketServer({
+      server: httpServer,
+      path: '/graphql'
+    });
+
+    const serverCleanup = useServer({ schema }, wsServer);
+
     const server = new ApolloServer({
       schema,
       introspection: isLocalEnv(),
@@ -85,17 +99,25 @@ export const init = async () => {
       formatError: e => {
         logger().info({ e });
         return e.message;
-      }
+      },
+      plugins: [
+        ApolloServerPluginDrainHttpServer({ httpServer }),
+        {
+          async serverWillStart() {
+            return {
+              async drainServer() {
+                await serverCleanup.dispose();
+              }
+            };
+          }
+        }
+      ]
     });
     await server.start();
-    server.applyMiddleware({ app });
-    const subscriptionServer = SubscriptionServer.create(
-      { schema, execute, subscribe },
-      { server: httpServer, path: server.graphqlPath }
-    );
-    ['SIGINT', 'SIGTERM'].forEach(signal => {
-      process.on(signal, () => subscriptionServer.close());
-    });
+
+    const graphqlPath = '/graphql';
+    app.use(graphqlPath, express.json(), expressMiddleware(server));
+
     httpServer.listen(9000, () => {
       console.log(`Server is now running on http://localhost:9000/graphql`);
     });

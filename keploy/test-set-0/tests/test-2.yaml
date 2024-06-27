@@ -1,0 +1,56 @@
+version: api.keploy.io/v1beta1
+kind: Http
+name: test-2
+spec:
+    metadata: {}
+    req:
+        method: POST
+        proto_major: 1
+        proto_minor: 1
+        url: http://localhost:9000/graphql
+        header:
+            Accept: '*/*'
+            Accept-Encoding: gzip, deflate, br
+            Connection: keep-alive
+            Content-Length: "263"
+            Content-Type: application/json
+            Host: localhost:9000
+            Postman-Token: f649114e-d59d-4398-bbec-0354a6308a5b
+            User-Agent: PostmanRuntime/7.37.3
+        body: '{"query":"mutation CreateUser {\n  signUp(email: \"sagar.tomar@test.com\", password: \"sagar_password\", firstName: \"sagar\", lastName: \"tomar\") {\n    id\n    email\n    firstName\n    lastName\n    token\n    createdAt\n    deletedAt\n    updatedAt\n  }\n}"}'
+        timestamp: 2024-06-26T07:58:32.215167404Z
+    resp:
+        status_code: 200
+        header:
+            Cache-Control: no-store
+            Connection: keep-alive
+            Content-Length: "642"
+            Content-Type: application/json; charset=utf-8
+            Date: Wed, 26 Jun 2024 07:58:32 GMT
+            Etag: W/"282-2kT3aTfOGJBNcoLJOBBPy3UOGz8"
+            Keep-Alive: timeout=5
+            X-Powered-By: Express
+        body: |
+            {"data":{"signUp":{"id":"102","email":"sagar.tomar@test.com","firstName":"sagar","lastName":"tomar","token":"eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyIjp7ImNyZWF0ZWRBdCI6IjIwMjQtMDYtMjZUMDc6NTg6MzIuMjgwWiIsImlkIjoxMDIsImZpcnN0TmFtZSI6InNhZ2FyIiwibGFzdE5hbWUiOiJ0b21hciIsImVtYWlsIjoic2FnYXIudG9tYXJAdGVzdC5jb20iLCJwYXNzd29yZCI6IjU1ZjQ1MTg2OWI3OTZlMmFlZmU3ODA2ZjA0YTJlMzBkIiwidXBkYXRlZEF0IjoiMjAyNC0wNi0yNlQwNzo1ODozMi4yNDdaIiwiZGVsZXRlZEF0IjpudWxsfSwiaWF0IjoxNzE5Mzg4NzEyLCJleHAiOjE3MTk0NzUxMTJ9.bPk_Xfc2MEzaA7HwtEi5zv4L-_-PzFGB4ys8YM0ZtqM","createdAt":"2024-06-26T07:58:32.280Z","deletedAt":null,"updatedAt":"2024-06-26T07:58:32.247Z"}}}
+        status_message: OK
+        proto_major: 0
+        proto_minor: 0
+        timestamp: 2024-06-26T07:58:34.381712045Z
+    objects: []
+    assertions:
+        noise:
+            body.data.signUp.createdAt: []
+            body.data.signUp.updatedAt: []
+            header.Date: []
+    created: 1719388714
+curl: |-
+    curl --request POST \
+      --url http://localhost:9000/graphql \
+      --header 'User-Agent: PostmanRuntime/7.37.3' \
+      --header 'Accept: */*' \
+      --header 'Postman-Token: f649114e-d59d-4398-bbec-0354a6308a5b' \
+      --header 'Host: localhost:9000' \
+      --header 'Accept-Encoding: gzip, deflate, br' \
+      --header 'Connection: keep-alive' \
+      --header 'Content-Type: application/json' \
+      --data '{"query":"mutation CreateUser {\n  signUp(email: \"sagar.tomar@test.com\", password: \"sagar_password\", firstName: \"sagar\", lastName: \"tomar\") {\n    id\n    email\n    firstName\n    lastName\n    token\n    createdAt\n    deletedAt\n    updatedAt\n  }\n}"}'

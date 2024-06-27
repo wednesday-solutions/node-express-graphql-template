@@ -1,0 +1,56 @@
+version: api.keploy.io/v1beta1
+kind: Http
+name: test-7
+spec:
+    metadata: {}
+    req:
+        method: POST
+        proto_major: 1
+        proto_minor: 1
+        url: http://localhost:9000/graphql
+        header:
+            Accept: '*/*'
+            Accept-Encoding: gzip, deflate, br
+            Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyIjp7ImlkIjoxLCJmaXJzdE5hbWUiOiJTdGVybGluZyIsImxhc3ROYW1lIjoiU2F1ZXIiLCJlbWFpbCI6Ik1hc29uLkdvbGRuZXI0OUBob3RtYWlsLmNvbSIsInBhc3N3b3JkIjoiZGFhOTMyMGY1YzU4NDRiODRiMjhlMDE2YjRiOGM0MGIiLCJjcmVhdGVkQXQiOiIyMDIzLTEyLTA4VDE4OjE2OjQxLjYzOFoiLCJ1cGRhdGVkQXQiOm51bGwsImRlbGV0ZWRBdCI6bnVsbH0sImlhdCI6MTcxOTM0MzYzOCwiZXhwIjoxNzE5NDMwMDM4fQ.Kgm3Lmbg97M_QQP5Gn9q4suRYEF7_n4ITqehV4i7t_s
+            Connection: keep-alive
+            Content-Length: "438"
+            Content-Type: application/json
+            Host: localhost:9000
+            Postman-Token: 8e3a1a18-ef42-4f56-9939-444dd3b717c4
+            User-Agent: PostmanRuntime/7.37.3
+        body: '{"query":"query Suppliers {\n  suppliers (offset: 0, limit:10){\n    edges {\n      node {\n        id\n        name\n        addressId\n        addresses {\n          edges {\n            node {\n              id\n              address1\n            }\n          }\n        }\n        products {\n          edges {\n            node {\n              id\n              name\n            }\n          }\n        }\n      }\n    }\n  }\n}"}'
+        timestamp: 2024-06-26T07:59:12.845913339Z
+    resp:
+        status_code: 200
+        header:
+            Cache-Control: no-store
+            Connection: keep-alive
+            Content-Length: "2133"
+            Content-Type: application/json; charset=utf-8
+            Date: Wed, 26 Jun 2024 07:59:13 GMT
+            Etag: W/"855-whLs3xbB7iFBbrPEbmMoos9LraE"
+            Keep-Alive: timeout=5
+            X-Powered-By: Express
+        body: |
+            {"data":{"suppliers":{"edges":[{"node":{"id":"1","name":"Abshire - Breitenberg","addressId":564,"addresses":{"edges":[{"node":{"id":"564","address1":"Raynor Path"}}]},"products":{"edges":[]}}},{"node":{"id":"2","name":"O'Connell Inc","addressId":989,"addresses":{"edges":[{"node":{"id":"989","address1":"Lou Mill"}}]},"products":{"edges":[]}}},{"node":{"id":"3","name":"Bogisich, Maggio and Stokes","addressId":1123,"addresses":{"edges":[{"node":{"id":"1123","address1":"Torp Cliff"}}]},"products":{"edges":[{"node":{"id":"690","name":"Fantastic Plastic Pizza"}},{"node":{"id":"1109","name":"Generic Wooden Shoes"}},{"node":{"id":"1387","name":"Generic Concrete Bike"}},{"node":{"id":"1539","name":"Licensed Cotton Soap"}}]}}},{"node":{"id":"4","name":"McDermott - Davis","addressId":1632,"addresses":{"edges":[{"node":{"id":"1632","address1":"Friesen Spring"}}]},"products":{"edges":[]}}},{"node":{"id":"5","name":"Adams, Satterfield and Vandervort","addressId":465,"addresses":{"edges":[{"node":{"id":"465","address1":"Rolfson Rest"}}]},"products":{"edges":[]}}},{"node":{"id":"6","name":"Breitenberg, Glover and Leannon","addressId":587,"addresses":{"edges":[{"node":{"id":"587","address1":"Nickolas Cove"}}]},"products":{"edges":[]}}},{"node":{"id":"7","name":"Grady and Sons","addressId":52,"addresses":{"edges":[{"node":{"id":"52","address1":"Quigley Prairie"}}]},"products":{"edges":[{"node":{"id":"336","name":"Tasty Frozen Car"}},{"node":{"id":"1336","name":"Gorgeous Fresh Shoes"}}]}}},{"node":{"id":"8","name":"Blanda LLC","addressId":1266,"addresses":{"edges":[{"node":{"id":"1266","address1":"Corwin Ports"}}]},"products":{"edges":[{"node":{"id":"319","name":"Tasty Plastic Pizza"}}]}}},{"node":{"id":"9","name":"Sauer Group","addressId":1516,"addresses":{"edges":[{"node":{"id":"1516","address1":"Dibbert Passage"}}]},"products":{"edges":[{"node":{"id":"1182","name":"Handmade Frozen Pizza"}}]}}},{"node":{"id":"10","name":"Ruecker, Will and Schmidt","addressId":786,"addresses":{"edges":[{"node":{"id":"786","address1":"Ziemann Branch"}}]},"products":{"edges":[{"node":{"id":"311","name":"Small Steel Pants"}}]}}}]}}}
+        status_message: OK
+        proto_major: 0
+        proto_minor: 0
+        timestamp: 2024-06-26T07:59:15.109704133Z
+    objects: []
+    assertions:
+        noise:
+            header.Date: []
+    created: 1719388755
+curl: |-
+    curl --request POST \
+      --url http://localhost:9000/graphql \
+      --header 'Host: localhost:9000' \
+      --header 'Accept-Encoding: gzip, deflate, br' \
+      --header 'Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyIjp7ImlkIjoxLCJmaXJzdE5hbWUiOiJTdGVybGluZyIsImxhc3ROYW1lIjoiU2F1ZXIiLCJlbWFpbCI6Ik1hc29uLkdvbGRuZXI0OUBob3RtYWlsLmNvbSIsInBhc3N3b3JkIjoiZGFhOTMyMGY1YzU4NDRiODRiMjhlMDE2YjRiOGM0MGIiLCJjcmVhdGVkQXQiOiIyMDIzLTEyLTA4VDE4OjE2OjQxLjYzOFoiLCJ1cGRhdGVkQXQiOm51bGwsImRlbGV0ZWRBdCI6bnVsbH0sImlhdCI6MTcxOTM0MzYzOCwiZXhwIjoxNzE5NDMwMDM4fQ.Kgm3Lmbg97M_QQP5Gn9q4suRYEF7_n4ITqehV4i7t_s' \
+      --header 'Content-Type: application/json' \
+      --header 'Connection: keep-alive' \
+      --header 'Postman-Token: 8e3a1a18-ef42-4f56-9939-444dd3b717c4' \
+      --header 'Accept: */*' \
+      --header 'User-Agent: PostmanRuntime/7.37.3' \
+      --data '{"query":"query Suppliers {\n  suppliers (offset: 0, limit:10){\n    edges {\n      node {\n        id\n        name\n        addressId\n        addresses {\n          edges {\n            node {\n              id\n              address1\n            }\n          }\n        }\n        products {\n          edges {\n            node {\n              id\n              name\n            }\n          }\n        }\n      }\n    }\n  }\n}"}'

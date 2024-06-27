@@ -1,0 +1,56 @@
+version: api.keploy.io/v1beta1
+kind: Http
+name: test-3
+spec:
+    metadata: {}
+    req:
+        method: POST
+        proto_major: 1
+        proto_minor: 1
+        url: http://localhost:9000/graphql
+        header:
+            Accept: '*/*'
+            Accept-Encoding: gzip, deflate, br
+            Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyIjp7ImlkIjoxLCJmaXJzdE5hbWUiOiJTdGVybGluZyIsImxhc3ROYW1lIjoiU2F1ZXIiLCJlbWFpbCI6Ik1hc29uLkdvbGRuZXI0OUBob3RtYWlsLmNvbSIsInBhc3N3b3JkIjoiZGFhOTMyMGY1YzU4NDRiODRiMjhlMDE2YjRiOGM0MGIiLCJjcmVhdGVkQXQiOiIyMDIzLTEyLTA4VDE4OjE2OjQxLjYzOFoiLCJ1cGRhdGVkQXQiOm51bGwsImRlbGV0ZWRBdCI6bnVsbH0sImlhdCI6MTcxOTM0MzYzOCwiZXhwIjoxNzE5NDMwMDM4fQ.Kgm3Lmbg97M_QQP5Gn9q4suRYEF7_n4ITqehV4i7t_s
+            Connection: keep-alive
+            Content-Length: "438"
+            Content-Type: application/json
+            Host: localhost:9000
+            Postman-Token: cee7eace-b4b0-41f1-8725-b09a565e8bd6
+            User-Agent: PostmanRuntime/7.37.3
+        body: '{"query":"query SupplierProducts {\n  supplierProducts(offset: 0, limit: 10) {\n    edges {\n      node {\n        id\n        suppliers (first: 1){\n          edges {\n            node {\n              id\n              name\n            }\n          }\n        }\n        products(first: 1) {\n          edges {\n            node {\n              id\n              name\n            }\n          }\n        }\n      }\n    }\n  }\n}\n"}'
+        timestamp: 2024-06-26T07:58:41.0052097Z
+    resp:
+        status_code: 200
+        header:
+            Cache-Control: no-store
+            Connection: keep-alive
+            Content-Length: "1728"
+            Content-Type: application/json; charset=utf-8
+            Date: Wed, 26 Jun 2024 07:58:41 GMT
+            Etag: W/"6c0-0lXmF0a91N6cMiaSnZBZRh8Uxfs"
+            Keep-Alive: timeout=5
+            X-Powered-By: Express
+        body: |
+            {"data":{"supplierProducts":{"edges":[{"node":{"id":"1","suppliers":{"edges":[{"node":{"id":"649","name":"Hahn Inc"}}]},"products":{"edges":[{"node":{"id":"1","name":"Incredible Cotton Car"}}]}}},{"node":{"id":"2","suppliers":{"edges":[{"node":{"id":"312","name":"Goodwin, Feeney and Quitzon"}}]},"products":{"edges":[{"node":{"id":"2","name":"Refined Concrete Sausages"}}]}}},{"node":{"id":"3","suppliers":{"edges":[{"node":{"id":"528","name":"Christiansen Inc"}}]},"products":{"edges":[{"node":{"id":"3","name":"Handmade Wooden Table"}}]}}},{"node":{"id":"4","suppliers":{"edges":[{"node":{"id":"1375","name":"Reilly, Rutherford and Gaylord"}}]},"products":{"edges":[{"node":{"id":"4","name":"Handmade Granite Bacon"}}]}}},{"node":{"id":"5","suppliers":{"edges":[{"node":{"id":"1178","name":"Bayer Group"}}]},"products":{"edges":[{"node":{"id":"5","name":"Unbranded Wooden Shoes"}}]}}},{"node":{"id":"6","suppliers":{"edges":[{"node":{"id":"866","name":"Ruecker Inc"}}]},"products":{"edges":[{"node":{"id":"6","name":"Small Steel Bacon"}}]}}},{"node":{"id":"7","suppliers":{"edges":[{"node":{"id":"1955","name":"Abshire, Volkman and Emard"}}]},"products":{"edges":[{"node":{"id":"7","name":"Intelligent Steel Sausages"}}]}}},{"node":{"id":"8","suppliers":{"edges":[{"node":{"id":"529","name":"Greenfelder and Sons"}}]},"products":{"edges":[{"node":{"id":"8","name":"Rustic Plastic Hat"}}]}}},{"node":{"id":"9","suppliers":{"edges":[{"node":{"id":"447","name":"Gibson - Douglas"}}]},"products":{"edges":[{"node":{"id":"9","name":"Handmade Cotton Pants"}}]}}},{"node":{"id":"10","suppliers":{"edges":[{"node":{"id":"1453","name":"Kihn Inc"}}]},"products":{"edges":[{"node":{"id":"10","name":"Fantastic Metal Keyboard"}}]}}}]}}}
+        status_message: OK
+        proto_major: 0
+        proto_minor: 0
+        timestamp: 2024-06-26T07:58:43.282168632Z
+    objects: []
+    assertions:
+        noise:
+            header.Date: []
+    created: 1719388723
+curl: |-
+    curl --request POST \
+      --url http://localhost:9000/graphql \
+      --header 'Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyIjp7ImlkIjoxLCJmaXJzdE5hbWUiOiJTdGVybGluZyIsImxhc3ROYW1lIjoiU2F1ZXIiLCJlbWFpbCI6Ik1hc29uLkdvbGRuZXI0OUBob3RtYWlsLmNvbSIsInBhc3N3b3JkIjoiZGFhOTMyMGY1YzU4NDRiODRiMjhlMDE2YjRiOGM0MGIiLCJjcmVhdGVkQXQiOiIyMDIzLTEyLTA4VDE4OjE2OjQxLjYzOFoiLCJ1cGRhdGVkQXQiOm51bGwsImRlbGV0ZWRBdCI6bnVsbH0sImlhdCI6MTcxOTM0MzYzOCwiZXhwIjoxNzE5NDMwMDM4fQ.Kgm3Lmbg97M_QQP5Gn9q4suRYEF7_n4ITqehV4i7t_s' \
+      --header 'User-Agent: PostmanRuntime/7.37.3' \
+      --header 'Content-Type: application/json' \
+      --header 'Accept: */*' \
+      --header 'Accept-Encoding: gzip, deflate, br' \
+      --header 'Postman-Token: cee7eace-b4b0-41f1-8725-b09a565e8bd6' \
+      --header 'Host: localhost:9000' \
+      --header 'Connection: keep-alive' \
+      --data '{"query":"query SupplierProducts {\n  supplierProducts(offset: 0, limit: 10) {\n    edges {\n      node {\n        id\n        suppliers (first: 1){\n          edges {\n            node {\n              id\n              name\n            }\n          }\n        }\n        products(first: 1) {\n          edges {\n            node {\n              id\n              name\n            }\n          }\n        }\n      }\n    }\n  }\n}\n"}'

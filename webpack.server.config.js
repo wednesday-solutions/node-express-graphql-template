@@ -127,7 +127,7 @@ module.exports = (options = {}) => ({
       '@config': path.resolve(__dirname, 'config')
     },
     extensions: ['.js'],
-    mainFields: ['browser', 'jsnext:main', 'main']
+    mainFields: ['jsnext:main', 'main']
   },
   target: 'node'
 });

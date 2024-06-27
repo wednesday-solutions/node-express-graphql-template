@@ -1,0 +1,56 @@
+version: api.keploy.io/v1beta1
+kind: Http
+name: test-10
+spec:
+    metadata: {}
+    req:
+        method: POST
+        proto_major: 1
+        proto_minor: 1
+        url: http://localhost:9000/graphql
+        header:
+            Accept: '*/*'
+            Accept-Encoding: gzip, deflate, br
+            Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyIjp7ImlkIjoxLCJmaXJzdE5hbWUiOiJTdGVybGluZyIsImxhc3ROYW1lIjoiU2F1ZXIiLCJlbWFpbCI6Ik1hc29uLkdvbGRuZXI0OUBob3RtYWlsLmNvbSIsInBhc3N3b3JkIjoiZGFhOTMyMGY1YzU4NDRiODRiMjhlMDE2YjRiOGM0MGIiLCJjcmVhdGVkQXQiOiIyMDIzLTEyLTA4VDE4OjE2OjQxLjYzOFoiLCJ1cGRhdGVkQXQiOm51bGwsImRlbGV0ZWRBdCI6bnVsbH0sImlhdCI6MTcxOTM0MzYzOCwiZXhwIjoxNzE5NDMwMDM4fQ.Kgm3Lmbg97M_QQP5Gn9q4suRYEF7_n4ITqehV4i7t_s
+            Connection: keep-alive
+            Content-Length: "159"
+            Content-Type: application/json
+            Host: localhost:9000
+            Postman-Token: ca4e6a19-d366-4b22-8f75-4a87f2b4c886
+            User-Agent: PostmanRuntime/7.37.3
+        body: '{"query":"mutation CreateProduct {\n  createProduct (name:\"some product\", category:\"a\", amount:500) {\n    id\n    name\n    category\n    amount\n  }\n}"}'
+        timestamp: 2024-06-26T07:59:35.552259183Z
+    resp:
+        status_code: 200
+        header:
+            Cache-Control: no-store
+            Connection: keep-alive
+            Content-Length: "91"
+            Content-Type: application/json; charset=utf-8
+            Date: Wed, 26 Jun 2024 07:59:35 GMT
+            Etag: W/"5b-/s7abYV1S6peWGc1ZfWVg8ViT7U"
+            Keep-Alive: timeout=5
+            X-Powered-By: Express
+        body: |
+            {"data":{"createProduct":{"id":"2002","name":"some product","category":"a","amount":500}}}
+        status_message: OK
+        proto_major: 0
+        proto_minor: 0
+        timestamp: 2024-06-26T07:59:37.674393088Z
+    objects: []
+    assertions:
+        noise:
+            header.Date: []
+    created: 1719388777
+curl: |-
+    curl --request POST \
+      --url http://localhost:9000/graphql \
+      --header 'Accept-Encoding: gzip, deflate, br' \
+      --header 'Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyIjp7ImlkIjoxLCJmaXJzdE5hbWUiOiJTdGVybGluZyIsImxhc3ROYW1lIjoiU2F1ZXIiLCJlbWFpbCI6Ik1hc29uLkdvbGRuZXI0OUBob3RtYWlsLmNvbSIsInBhc3N3b3JkIjoiZGFhOTMyMGY1YzU4NDRiODRiMjhlMDE2YjRiOGM0MGIiLCJjcmVhdGVkQXQiOiIyMDIzLTEyLTA4VDE4OjE2OjQxLjYzOFoiLCJ1cGRhdGVkQXQiOm51bGwsImRlbGV0ZWRBdCI6bnVsbH0sImlhdCI6MTcxOTM0MzYzOCwiZXhwIjoxNzE5NDMwMDM4fQ.Kgm3Lmbg97M_QQP5Gn9q4suRYEF7_n4ITqehV4i7t_s' \
+      --header 'Accept: */*' \
+      --header 'Content-Type: application/json' \
+      --header 'Host: localhost:9000' \
+      --header 'User-Agent: PostmanRuntime/7.37.3' \
+      --header 'Postman-Token: ca4e6a19-d366-4b22-8f75-4a87f2b4c886' \
+      --header 'Connection: keep-alive' \
+      --data '{"query":"mutation CreateProduct {\n  createProduct (name:\"some product\", category:\"a\", amount:500) {\n    id\n    name\n    category\n    amount\n  }\n}"}'

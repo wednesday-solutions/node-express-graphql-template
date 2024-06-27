@@ -71,7 +71,7 @@ jobs:
     runs-on: ubuntu-latest
     strategy:
       matrix:
-        node-version: [14.x]
+        node-version: [18.x]
     steps:
       - uses: actions/checkout@v2
       - name: Setup environment
@@ -101,7 +101,7 @@ jobs:
     runs-on: ubuntu-latest
     strategy:
       matrix:
-        node-version: [14.x]
+        node-version: [18.x]
     steps:
       - uses: wednesday-solutions/repo-visualizer@0.0.5
         with:

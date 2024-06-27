@@ -1,0 +1,56 @@
+version: api.keploy.io/v1beta1
+kind: Http
+name: test-8
+spec:
+    metadata: {}
+    req:
+        method: POST
+        proto_major: 1
+        proto_minor: 1
+        url: http://localhost:9000/graphql
+        header:
+            Accept: '*/*'
+            Accept-Encoding: gzip, deflate, br
+            Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyIjp7ImlkIjoxLCJmaXJzdE5hbWUiOiJTdGVybGluZyIsImxhc3ROYW1lIjoiU2F1ZXIiLCJlbWFpbCI6Ik1hc29uLkdvbGRuZXI0OUBob3RtYWlsLmNvbSIsInBhc3N3b3JkIjoiZGFhOTMyMGY1YzU4NDRiODRiMjhlMDE2YjRiOGM0MGIiLCJjcmVhdGVkQXQiOiIyMDIzLTEyLTA4VDE4OjE2OjQxLjYzOFoiLCJ1cGRhdGVkQXQiOm51bGwsImRlbGV0ZWRBdCI6bnVsbH0sImlhdCI6MTcxOTM0MzYzOCwiZXhwIjoxNzE5NDMwMDM4fQ.Kgm3Lmbg97M_QQP5Gn9q4suRYEF7_n4ITqehV4i7t_s
+            Connection: keep-alive
+            Content-Length: "432"
+            Content-Type: application/json
+            Host: localhost:9000
+            Postman-Token: 5ff2c7f0-d7b1-4248-bfd4-63b85bf11c8e
+            User-Agent: PostmanRuntime/7.37.3
+        body: '{"query":"query Stores {\n  stores (offset: 0, limit:10){\n    edges {\n      node {\n        id\n        name\n        addressId\n        addresses {\n          edges {\n            node {\n              id\n              address1\n            }\n          }\n        }\n        products {\n          edges {\n            node {\n              id\n              name\n            }\n          }\n        }\n      }\n    }\n  }\n}"}'
+        timestamp: 2024-06-26T07:59:20.34448501Z
+    resp:
+        status_code: 200
+        header:
+            Cache-Control: no-store
+            Connection: keep-alive
+            Content-Length: "2202"
+            Content-Type: application/json; charset=utf-8
+            Date: Wed, 26 Jun 2024 07:59:20 GMT
+            Etag: W/"89a-pZ50SNdF0uuqyZG5rsVTwEhFRa4"
+            Keep-Alive: timeout=5
+            X-Powered-By: Express
+        body: |
+            {"data":{"stores":{"edges":[{"node":{"id":"1","name":"Tremblay, Fritsch and Farrell","addressId":1956,"addresses":{"edges":[{"node":{"id":"1956","address1":"Jacky Ville"}}]},"products":{"edges":[]}}},{"node":{"id":"2","name":"Grimes - Auer","addressId":1963,"addresses":{"edges":[{"node":{"id":"1963","address1":"Kling Springs"}}]},"products":{"edges":[{"node":{"id":"1111","name":"Incredible Fresh Tuna"}}]}}},{"node":{"id":"3","name":"Turcotte, Langosh and VonRueden","addressId":532,"addresses":{"edges":[{"node":{"id":"532","address1":"Tia Greens"}}]},"products":{"edges":[{"node":{"id":"723","name":"Incredible Metal Bacon"}},{"node":{"id":"1227","name":"Gorgeous Granite Shirt"}}]}}},{"node":{"id":"4","name":"West - Frami","addressId":282,"addresses":{"edges":[{"node":{"id":"282","address1":"Rodriguez Trace"}}]},"products":{"edges":[{"node":{"id":"205","name":"Practical Rubber Keyboard"}},{"node":{"id":"229","name":"Sleek Cotton Pizza"}},{"node":{"id":"616","name":"Gorgeous Concrete Keyboard"}}]}}},{"node":{"id":"5","name":"Carroll, Pollich and Stamm","addressId":1040,"addresses":{"edges":[{"node":{"id":"1040","address1":"Bartell Key"}}]},"products":{"edges":[]}}},{"node":{"id":"6","name":"Monahan and Sons","addressId":957,"addresses":{"edges":[{"node":{"id":"957","address1":"Jenkins Centers"}}]},"products":{"edges":[]}}},{"node":{"id":"7","name":"Schulist - Walsh","addressId":1097,"addresses":{"edges":[{"node":{"id":"1097","address1":"Roberts Curve"}}]},"products":{"edges":[{"node":{"id":"838","name":"Handmade Concrete Tuna"}},{"node":{"id":"1873","name":"Ergonomic Wooden Shoes"}}]}}},{"node":{"id":"8","name":"Christiansen - Lubowitz","addressId":639,"addresses":{"edges":[{"node":{"id":"639","address1":"Asa River"}}]},"products":{"edges":[{"node":{"id":"1068","name":"Tasty Granite Keyboard"}}]}}},{"node":{"id":"9","name":"Powlowski - Kihn","addressId":221,"addresses":{"edges":[{"node":{"id":"221","address1":"Schneider Light"}}]},"products":{"edges":[{"node":{"id":"1351","name":"Incredible Metal Pants"}}]}}},{"node":{"id":"10","name":"Jaskolski Inc","addressId":587,"addresses":{"edges":[{"node":{"id":"587","address1":"Nickolas Cove"}}]},"products":{"edges":[]}}}]}}}
+        status_message: OK
+        proto_major: 0
+        proto_minor: 0
+        timestamp: 2024-06-26T07:59:22.57414722Z
+    objects: []
+    assertions:
+        noise:
+            header.Date: []
+    created: 1719388762
+curl: |-
+    curl --request POST \
+      --url http://localhost:9000/graphql \
+      --header 'Content-Type: application/json' \
+      --header 'User-Agent: PostmanRuntime/7.37.3' \
+      --header 'Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyIjp7ImlkIjoxLCJmaXJzdE5hbWUiOiJTdGVybGluZyIsImxhc3ROYW1lIjoiU2F1ZXIiLCJlbWFpbCI6Ik1hc29uLkdvbGRuZXI0OUBob3RtYWlsLmNvbSIsInBhc3N3b3JkIjoiZGFhOTMyMGY1YzU4NDRiODRiMjhlMDE2YjRiOGM0MGIiLCJjcmVhdGVkQXQiOiIyMDIzLTEyLTA4VDE4OjE2OjQxLjYzOFoiLCJ1cGRhdGVkQXQiOm51bGwsImRlbGV0ZWRBdCI6bnVsbH0sImlhdCI6MTcxOTM0MzYzOCwiZXhwIjoxNzE5NDMwMDM4fQ.Kgm3Lmbg97M_QQP5Gn9q4suRYEF7_n4ITqehV4i7t_s' \
+      --header 'Postman-Token: 5ff2c7f0-d7b1-4248-bfd4-63b85bf11c8e' \
+      --header 'Host: localhost:9000' \
+      --header 'Accept-Encoding: gzip, deflate, br' \
+      --header 'Connection: keep-alive' \
+      --header 'Accept: */*' \
+      --data '{"query":"query Stores {\n  stores (offset: 0, limit:10){\n    edges {\n      node {\n        id\n        name\n        addressId\n        addresses {\n          edges {\n            node {\n              id\n              address1\n            }\n          }\n        }\n        products {\n          edges {\n            node {\n              id\n              name\n            }\n          }\n        }\n      }\n    }\n  }\n}"}'

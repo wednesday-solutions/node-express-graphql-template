@@ -1,0 +1,56 @@
+version: api.keploy.io/v1beta1
+kind: Http
+name: test-9
+spec:
+    metadata: {}
+    req:
+        method: POST
+        proto_major: 1
+        proto_minor: 1
+        url: http://localhost:9000/graphql
+        header:
+            Accept: '*/*'
+            Accept-Encoding: gzip, deflate, br
+            Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyIjp7ImlkIjoxLCJmaXJzdE5hbWUiOiJTdGVybGluZyIsImxhc3ROYW1lIjoiU2F1ZXIiLCJlbWFpbCI6Ik1hc29uLkdvbGRuZXI0OUBob3RtYWlsLmNvbSIsInBhc3N3b3JkIjoiZGFhOTMyMGY1YzU4NDRiODRiMjhlMDE2YjRiOGM0MGIiLCJjcmVhdGVkQXQiOiIyMDIzLTEyLTA4VDE4OjE2OjQxLjYzOFoiLCJ1cGRhdGVkQXQiOm51bGwsImRlbGV0ZWRBdCI6bnVsbH0sImlhdCI6MTcxOTM0MzYzOCwiZXhwIjoxNzE5NDMwMDM4fQ.Kgm3Lmbg97M_QQP5Gn9q4suRYEF7_n4ITqehV4i7t_s
+            Connection: keep-alive
+            Content-Length: "448"
+            Content-Type: application/json
+            Host: localhost:9000
+            Postman-Token: 88ba92c3-5048-4e28-9e94-505d3bca1331
+            User-Agent: PostmanRuntime/7.37.3
+        body: '{"query":"query Products {\n  products(offset: 0, limit: 10) {\n    edges {\n      node {\n        id\n        name\n        category\n        amount\n        stores {\n          edges {\n            node {\n              name\n              id\n            }\n          }\n        }\n        suppliers {\n          edges {\n            node {\n              id\n              name\n            }\n          }\n        }\n      }\n    }\n  }\n}\n"}'
+        timestamp: 2024-06-26T07:59:27.702254637Z
+    resp:
+        status_code: 200
+        header:
+            Cache-Control: no-store
+            Connection: keep-alive
+            Content-Length: "2329"
+            Content-Type: application/json; charset=utf-8
+            Date: Wed, 26 Jun 2024 07:59:27 GMT
+            Etag: W/"919-Tsc353H2HlVwKgtSxz6IYtJugYU"
+            Keep-Alive: timeout=5
+            X-Powered-By: Express
+        body: |
+            {"data":{"products":{"edges":[{"node":{"id":"1","name":"Incredible Cotton Car","category":"Movies","amount":97400,"stores":{"edges":[{"node":{"name":"Hodkiewicz Group","id":"1210"}}]},"suppliers":{"edges":[{"node":{"id":"649","name":"Hahn Inc"}}]}}},{"node":{"id":"2","name":"Refined Concrete Sausages","category":"Music","amount":16200,"stores":{"edges":[{"node":{"name":"Dicki, Harris and Beier","id":"1432"}}]},"suppliers":{"edges":[{"node":{"id":"312","name":"Goodwin, Feeney and Quitzon"}}]}}},{"node":{"id":"3","name":"Handmade Wooden Table","category":"Computers","amount":23100,"stores":{"edges":[{"node":{"name":"Berge - Schumm","id":"155"}}]},"suppliers":{"edges":[{"node":{"id":"528","name":"Christiansen Inc"}}]}}},{"node":{"id":"4","name":"Handmade Granite Bacon","category":"Automotive","amount":79700,"stores":{"edges":[{"node":{"name":"O'Connell - Turner","id":"1650"}}]},"suppliers":{"edges":[{"node":{"id":"1375","name":"Reilly, Rutherford and Gaylord"}}]}}},{"node":{"id":"5","name":"Unbranded Wooden Shoes","category":"Kids","amount":17400,"stores":{"edges":[{"node":{"name":"Lynch Inc","id":"151"}}]},"suppliers":{"edges":[{"node":{"id":"1178","name":"Bayer Group"}}]}}},{"node":{"id":"6","name":"Small Steel Bacon","category":"Books","amount":60500,"stores":{"edges":[{"node":{"name":"Kohler Group","id":"944"}}]},"suppliers":{"edges":[{"node":{"id":"866","name":"Ruecker Inc"}}]}}},{"node":{"id":"7","name":"Intelligent Steel Sausages","category":"Home","amount":300,"stores":{"edges":[{"node":{"name":"Cole - Bayer","id":"162"}}]},"suppliers":{"edges":[{"node":{"id":"1955","name":"Abshire, Volkman and Emard"}}]}}},{"node":{"id":"8","name":"Rustic Plastic Hat","category":"Shoes","amount":79100,"stores":{"edges":[{"node":{"name":"Gibson - Wisoky","id":"1672"}}]},"suppliers":{"edges":[{"node":{"id":"529","name":"Greenfelder and Sons"}}]}}},{"node":{"id":"9","name":"Handmade Cotton Pants","category":"Clothing","amount":89200,"stores":{"edges":[{"node":{"name":"Gislason, Larkin and Sipes","id":"1883"}}]},"suppliers":{"edges":[{"node":{"id":"447","name":"Gibson - Douglas"}}]}}},{"node":{"id":"10","name":"Fantastic Metal Keyboard","category":"Games","amount":8300,"stores":{"edges":[{"node":{"name":"Medhurst LLC","id":"465"}}]},"suppliers":{"edges":[{"node":{"id":"1453","name":"Kihn Inc"}}]}}}]}}}
+        status_message: OK
+        proto_major: 0
+        proto_minor: 0
+        timestamp: 2024-06-26T07:59:29.917534209Z
+    objects: []
+    assertions:
+        noise:
+            header.Date: []
+    created: 1719388769
+curl: |-
+    curl --request POST \
+      --url http://localhost:9000/graphql \
+      --header 'Content-Type: application/json' \
+      --header 'User-Agent: PostmanRuntime/7.37.3' \
+      --header 'Accept-Encoding: gzip, deflate, br' \
+      --header 'Accept: */*' \
+      --header 'Host: localhost:9000' \
+      --header 'Connection: keep-alive' \
+      --header 'Postman-Token: 88ba92c3-5048-4e28-9e94-505d3bca1331' \
+      --header 'Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyIjp7ImlkIjoxLCJmaXJzdE5hbWUiOiJTdGVybGluZyIsImxhc3ROYW1lIjoiU2F1ZXIiLCJlbWFpbCI6Ik1hc29uLkdvbGRuZXI0OUBob3RtYWlsLmNvbSIsInBhc3N3b3JkIjoiZGFhOTMyMGY1YzU4NDRiODRiMjhlMDE2YjRiOGM0MGIiLCJjcmVhdGVkQXQiOiIyMDIzLTEyLTA4VDE4OjE2OjQxLjYzOFoiLCJ1cGRhdGVkQXQiOm51bGwsImRlbGV0ZWRBdCI6bnVsbH0sImlhdCI6MTcxOTM0MzYzOCwiZXhwIjoxNzE5NDMwMDM4fQ.Kgm3Lmbg97M_QQP5Gn9q4suRYEF7_n4ITqehV4i7t_s' \
+      --data '{"query":"query Products {\n  products(offset: 0, limit: 10) {\n    edges {\n      node {\n        id\n        name\n        category\n        amount\n        stores {\n          edges {\n            node {\n              name\n              id\n            }\n          }\n        }\n        suppliers {\n          edges {\n            node {\n              id\n              name\n            }\n          }\n        }\n      }\n    }\n  }\n}\n"}'

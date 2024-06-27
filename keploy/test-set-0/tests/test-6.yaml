@@ -1,0 +1,56 @@
+version: api.keploy.io/v1beta1
+kind: Http
+name: test-6
+spec:
+    metadata: {}
+    req:
+        method: POST
+        proto_major: 1
+        proto_minor: 1
+        url: http://localhost:9000/graphql
+        header:
+            Accept: '*/*'
+            Accept-Encoding: gzip, deflate, br
+            Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyIjp7ImlkIjoxLCJmaXJzdE5hbWUiOiJTdGVybGluZyIsImxhc3ROYW1lIjoiU2F1ZXIiLCJlbWFpbCI6Ik1hc29uLkdvbGRuZXI0OUBob3RtYWlsLmNvbSIsInBhc3N3b3JkIjoiZGFhOTMyMGY1YzU4NDRiODRiMjhlMDE2YjRiOGM0MGIiLCJjcmVhdGVkQXQiOiIyMDIzLTEyLTA4VDE4OjE2OjQxLjYzOFoiLCJ1cGRhdGVkQXQiOm51bGwsImRlbGV0ZWRBdCI6bnVsbH0sImlhdCI6MTcxOTM0MzYzOCwiZXhwIjoxNzE5NDMwMDM4fQ.Kgm3Lmbg97M_QQP5Gn9q4suRYEF7_n4ITqehV4i7t_s
+            Connection: keep-alive
+            Content-Length: "432"
+            Content-Type: application/json
+            Host: localhost:9000
+            Postman-Token: e610f246-8a62-4132-b9d6-181b8661ecb7
+            User-Agent: PostmanRuntime/7.37.3
+        body: '{"query":"query Address {\n  addresses (offset:0, limit: 10){\n    edges {\n      node {\n        id\n        address1\n        address2\n        suppliers {\n          edges {\n            node{\n              id\n              name\n            }\n          }\n        }\n        stores {\n          edges {\n            node {\n              id\n              name\n            }\n          }\n        }\n      }\n    }\n  }\n}"}'
+        timestamp: 2024-06-26T07:59:06.51441367Z
+    resp:
+        status_code: 200
+        header:
+            Cache-Control: no-store
+            Connection: keep-alive
+            Content-Length: "2384"
+            Content-Type: application/json; charset=utf-8
+            Date: Wed, 26 Jun 2024 07:59:06 GMT
+            Etag: W/"950-dAOeW5lq82+Qg6TxylkZ51tMhJU"
+            Keep-Alive: timeout=5
+            X-Powered-By: Express
+        body: |
+            {"data":{"addresses":{"edges":[{"node":{"id":"1","address1":"Liliana Pine","address2":"030 Ervin Isle","suppliers":{"edges":[{"node":{"id":"1063","name":"Torp - Willms"}}]},"stores":{"edges":[{"node":{"id":"1549","name":"Johns - Schinner"}}]}}},{"node":{"id":"2","address1":"Enoch Cliff","address2":"7194 Norwood Stream","suppliers":{"edges":[{"node":{"id":"575","name":"Bogan - Will"}},{"node":{"id":"1980","name":"Funk, Mraz and Feest"}}]},"stores":{"edges":[{"node":{"id":"1589","name":"Nienow and Sons"}}]}}},{"node":{"id":"3","address1":"Adrienne Mountain","address2":"75728 Vincent Course","suppliers":{"edges":[]},"stores":{"edges":[{"node":{"id":"375","name":"Greenfelder, Haag and Beatty"}},{"node":{"id":"458","name":"Shields Inc"}}]}}},{"node":{"id":"4","address1":"Gusikowski Manor","address2":"8855 White Forges","suppliers":{"edges":[]},"stores":{"edges":[{"node":{"id":"743","name":"King - Hermann"}},{"node":{"id":"1001","name":"Franecki Group"}},{"node":{"id":"1633","name":"Spinka LLC"}},{"node":{"id":"1725","name":"Keeling Group"}},{"node":{"id":"1803","name":"Gislason - Lockman"}}]}}},{"node":{"id":"5","address1":"Muller Drive","address2":"275 Izaiah Junction","suppliers":{"edges":[{"node":{"id":"44","name":"Crona, Kuhlman and Blick"}},{"node":{"id":"1088","name":"Jacobi - Bruen"}}]},"stores":{"edges":[{"node":{"id":"532","name":"Bauch Group"}},{"node":{"id":"863","name":"Von - Lang"}}]}}},{"node":{"id":"6","address1":"Coralie Dale","address2":"02828 Effertz Mountain","suppliers":{"edges":[]},"stores":{"edges":[]}}},{"node":{"id":"7","address1":"Rick Fords","address2":"98890 Aufderhar Expressway","suppliers":{"edges":[]},"stores":{"edges":[]}}},{"node":{"id":"8","address1":"Anderson Centers","address2":"3770 Nadia Loaf","suppliers":{"edges":[]},"stores":{"edges":[]}}},{"node":{"id":"9","address1":"Miller Parkway","address2":"32567 Chelsey Mission","suppliers":{"edges":[{"node":{"id":"1376","name":"Streich - Armstrong"}}]},"stores":{"edges":[{"node":{"id":"587","name":"Moore - Nicolas"}}]}}},{"node":{"id":"10","address1":"Wisoky Mission","address2":"912 Schmeler Overpass","suppliers":{"edges":[{"node":{"id":"552","name":"Beier, Cruickshank and Luettgen"}},{"node":{"id":"1955","name":"Abshire, Volkman and Emard"}}]},"stores":{"edges":[{"node":{"id":"309","name":"Strosin - Prohaska"}},{"node":{"id":"952","name":"Ankunding - Howe"}}]}}}]}}}
+        status_message: OK
+        proto_major: 0
+        proto_minor: 0
+        timestamp: 2024-06-26T07:59:08.787969463Z
+    objects: []
+    assertions:
+        noise:
+            header.Date: []
+    created: 1719388748
+curl: |-
+    curl --request POST \
+      --url http://localhost:9000/graphql \
+      --header 'Accept-Encoding: gzip, deflate, br' \
+      --header 'Host: localhost:9000' \
+      --header 'Content-Type: application/json' \
+      --header 'Postman-Token: e610f246-8a62-4132-b9d6-181b8661ecb7' \
+      --header 'User-Agent: PostmanRuntime/7.37.3' \
+      --header 'Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyIjp7ImlkIjoxLCJmaXJzdE5hbWUiOiJTdGVybGluZyIsImxhc3ROYW1lIjoiU2F1ZXIiLCJlbWFpbCI6Ik1hc29uLkdvbGRuZXI0OUBob3RtYWlsLmNvbSIsInBhc3N3b3JkIjoiZGFhOTMyMGY1YzU4NDRiODRiMjhlMDE2YjRiOGM0MGIiLCJjcmVhdGVkQXQiOiIyMDIzLTEyLTA4VDE4OjE2OjQxLjYzOFoiLCJ1cGRhdGVkQXQiOm51bGwsImRlbGV0ZWRBdCI6bnVsbH0sImlhdCI6MTcxOTM0MzYzOCwiZXhwIjoxNzE5NDMwMDM4fQ.Kgm3Lmbg97M_QQP5Gn9q4suRYEF7_n4ITqehV4i7t_s' \
+      --header 'Accept: */*' \
+      --header 'Connection: keep-alive' \
+      --data '{"query":"query Address {\n  addresses (offset:0, limit: 10){\n    edges {\n      node {\n        id\n        address1\n        address2\n        suppliers {\n          edges {\n            node{\n              id\n              name\n            }\n          }\n        }\n        stores {\n          edges {\n            node {\n              id\n              name\n            }\n          }\n        }\n      }\n    }\n  }\n}"}'
