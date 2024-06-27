@@ -11,14 +11,14 @@ describe('Supplier Products graphQL-server-DB pagination tests', () => {
           id
           productId
           supplierId
-          suppliers {
+          suppliers (first: 10) {
             edges {
               node {
                 id
               }
             }
           }
-          products {
+          products (first: 10) {
             edges {
               node {
                 id

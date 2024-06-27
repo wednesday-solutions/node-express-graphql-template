@@ -1,6 +1,7 @@
 import get from 'lodash/get';
 import { getResponse, mockDBClient, resetAndMockDB } from '@utils/testUtils';
 import { productsTable } from '@utils/testUtils/mockData';
+import { MAX_PAGE_SIZE } from '@server/utils/constants';
 
 describe('purchased_product graphQL-server-DB query tests', () => {
   const id = 1;
@@ -9,7 +10,7 @@ describe('purchased_product graphQL-server-DB query tests', () => {
     purchasedProduct (id: ${id}) {
       id
       price
-      products {
+      products (first: ${MAX_PAGE_SIZE}) {
         edges {
           node {
             id
