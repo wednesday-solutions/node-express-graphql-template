@@ -18,7 +18,7 @@ services:
       args:
         ENVIRONMENT_NAME: .docker
         BUILD_NAME: docker
-        PLATFORM: arm64
+        PLATFORM: amd64
         APP_PATH: ${APP_PATH}
     restart: always
     depends_on:
