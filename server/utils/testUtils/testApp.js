@@ -1,11 +1,12 @@
 import express from 'express';
+import { expressMiddleware } from '@apollo/server/express4';
 import { GraphQLSchema } from 'graphql';
 import dotenv from 'dotenv';
 import { QueryRoot } from '@gql/queries';
 import { MutationRoot } from '@gql/mutations';
 import { client } from '@database';
 import { SubscriptionRoot } from '@gql/subscriptions';
-import { ApolloServer } from 'apollo-server-express';
+import { ApolloServer } from '@apollo/server';
 import { logger } from '..';
 
 const connect = async () => {
@@ -31,7 +32,7 @@ const getTestApp = async () => {
   });
   await server.start();
 
-  server.applyMiddleware({ app: testApp });
+  testApp.use('/graphql', express.json(), expressMiddleware(server));
   testApp.use('/', (_, response) => {
     response
       .status(200)

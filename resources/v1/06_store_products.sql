@@ -15,6 +15,7 @@ CREATE TABLE store_products
     (id),
     CONSTRAINT store_products_store_id FOREIGN KEY
     (store_id) REFERENCES stores
-    (id)
+    (id),
+    CONSTRAINT store_products_unique_key UNIQUE (product_id, store_id)
 );
 

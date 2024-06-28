@@ -1,6 +1,8 @@
-FROM node:14
+FROM node:20
 ARG ENVIRONMENT_NAME
 ARG BUILD_NAME
+ENV NODE_OPTIONS=--openssl-legacy-provider
+
 RUN mkdir -p /app-build
 ADD . /app-build
 WORKDIR /app-build
@@ -9,9 +11,11 @@ RUN yarn
 RUN yarn build:$BUILD_NAME
 
 
-FROM node:14-alpine
+FROM node:20-alpine
 ARG ENVIRONMENT_NAME
 ARG BUILD_NAME
+ENV NODE_OPTIONS=--openssl-legacy-provider
+
 RUN mkdir -p /dist
 RUN apk add yarn
 RUN yarn global add sequelize-cli@6.2.0

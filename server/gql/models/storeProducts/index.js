@@ -5,7 +5,7 @@ import { storeLists } from '../stores';
 import { timestamps } from '@gql/fields/timestamps';
 import { getNode } from '@gql/node';
 import db from '@database/models';
-import { totalConnectionFields } from '@utils/index';
+import { totalConnectionFields, listResolver, baseListResolver } from '@utils/index';
 import { sequelizedWhere } from '@database/dbUtils';
 import { getQueryFields, TYPE_ATTRIBUTES } from '@server/utils/gqlFieldUtils';
 
@@ -25,12 +25,12 @@ export const GraphQLStoreProduct = new GraphQLObjectType({
     products: {
       ...productLists.list,
       resolve: (source, args, context, info) =>
-        productLists.list.resolve(source, args, { ...context, storeProduct: source.dataValues }, info)
+        listResolver(productLists, source, args, { ...context, storeProduct: source.dataValues }, info)
     },
     stores: {
       ...storeLists.list,
       resolve: (source, args, context, info) =>
-        storeLists.list.resolve(source, args, { ...context, storeProduct: source.dataValues }, info)
+        listResolver(storeLists, source, args, { ...context, storeProduct: source.dataValues }, info)
     }
   })
 });
@@ -64,6 +64,7 @@ export const storeProductQueries = {
 export const storeProductLists = {
   list: {
     ...StoreProductConnection,
+    resolve: (...args) => baseListResolver(StoreProductConnection, ...args),
     type: StoreProductConnection.connectionType,
     args: StoreProductConnection.connectionArgs
   },

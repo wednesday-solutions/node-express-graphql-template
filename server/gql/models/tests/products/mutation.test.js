@@ -14,14 +14,14 @@ describe('Product graphQL-server-DB mutation tests', () => {
         createdAt
         updatedAt
         deletedAt
-        suppliers {
+        suppliers (first: 10) {
           edges {
             node {
               id
             }  
           }
         }
-        stores {
+        stores (first: 10) {
           edges {
             node {
               id
