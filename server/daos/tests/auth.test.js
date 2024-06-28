@@ -1,12 +1,12 @@
-import md5 from 'md5';
 import { getUserByEmailPassword, createUserBySignup } from '../auth';
 import db from '@database/models';
+import { checkPassword, createPassword } from '@server/utils/passwordUtils';
 
 describe('getUserBySign tests', () => {
   const email = 'rohansaroha2@wednesday.is';
-  const password = 1234;
-  const md5Password = md5(password);
-  const user = { email, password: md5Password };
+  const password = '1234';
+  const hashedPassword = createPassword(password);
+  const user = { email, password: hashedPassword };
   let mock;
 
   beforeEach(() => {
@@ -25,9 +25,12 @@ describe('creatUserBySignup tests', () => {
     const firstName = 'abc';
     const lastName = 'x';
     const email = 'abc@wednesday.is';
-    const password = 1234;
+    const password = '1234';
     const mock = jest.spyOn(db.users, 'create');
     await createUserBySignup(firstName, lastName, email, password);
-    expect(mock).toHaveBeenCalledWith({ firstName, lastName, email, password: md5(password) });
+    expect(mock).toHaveBeenCalledWith({ firstName, lastName, email, password: expect.any(String) });
+    expect(mock.mock.calls[0][0].password.length).toEqual(161);
+    const hashedPassword = mock.mock.calls[0][0].password;
+    expect(checkPassword(password, hashedPassword));
   });
 });

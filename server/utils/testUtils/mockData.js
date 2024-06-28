@@ -1,6 +1,6 @@
 import range from 'lodash/range';
 import faker from 'faker';
-import md5 from 'md5';
+import { createPassword } from '../passwordUtils';
 const createdBefore = parseInt(Math.random() * 1000);
 
 export const addressesTable = range(1, 10).map((_, index) => ({
@@ -18,7 +18,7 @@ export const usersTable = range(1, 10).map((_, index) => ({
   firstName: faker.name.firstName(),
   lastName: faker.name.lastName(),
   email: faker.internet.email(),
-  password: md5(faker.internet.password()),
+  password: createPassword(faker.internet.password()),
   created_at: faker.date.recent(createdBefore)
 }));
 

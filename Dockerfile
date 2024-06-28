@@ -1,9 +1,8 @@
-FROM node:18
+FROM node:20
 ARG ENVIRONMENT_NAME
 ARG BUILD_NAME
 ARG APP_PATH
 ARG PLATFORM
-ENV NODE_OPTIONS=--openssl-legacy-provider
 
 # RUN mkdir -p /app-build
 # ADD . /app-build
@@ -16,18 +15,18 @@ RUN yarn
 RUN yarn build:$BUILD_NAME
 
 
-FROM node:18-alpine
+FROM node:20-alpine
 ARG ENVIRONMENT_NAME
 ARG BUILD_NAME
 ARG APP_PATH
 ARG PLATFORM
-ENV NODE_OPTIONS=--openssl-legacy-provider
 
 WORKDIR ${APP_PATH}
 RUN mkdir -p ${APP_PATH}/dist
 RUN apk add yarn
+
 RUN yarn global add sequelize-cli@6.2.0 nyc@15.1.0
-RUN yarn add shelljs bull dotenv pg sequelize@6.6.5
+RUN yarn add shelljs dotenv pg sequelize@6.6.5
 RUN apk add --no-cache dumb-init
 ADD scripts/migrate-and-run.sh ${APP_PATH}/
 ADD package.json ${APP_PATH}/

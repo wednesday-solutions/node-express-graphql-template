@@ -9,14 +9,14 @@ describe('Address graphQL-server-DB query tests', () => {
     address (id: ${id}) {
       id
       address1
-      stores {
+      stores (first: 10) {
         edges {
           node {
             id 
           }
         }
       }
-      suppliers {
+      suppliers (first: 10) {
         edges {
           node {
             id 

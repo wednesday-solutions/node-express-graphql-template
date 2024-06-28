@@ -5,7 +5,7 @@ import { timestamps } from '@gql/fields/timestamps';
 import { GraphQLDateTime } from 'graphql-iso-date';
 import { getNode } from '@gql/node';
 import db from '@database/models';
-import { totalConnectionFields } from '@utils/index';
+import { totalConnectionFields, listResolver, baseListResolver } from '@utils/index';
 import { sequelizedWhere } from '@database/dbUtils';
 import customCreateResolver from './customCreateResolver';
 import { getQueryFields, CREATE_AND_QUERY_REQUIRED_ARGS, TYPE_ATTRIBUTES } from '@utils/gqlFieldUtils';
@@ -28,7 +28,7 @@ const GraphQLPurchasedProduct = new GraphQLObjectType({
     products: {
       ...productLists.list,
       resolve: (source, args, context, info) =>
-        productLists.list.resolve(source, args, { ...context, purchasedProduct: source.dataValues }, info)
+        listResolver(productLists, source, args, { ...context, purchasedProduct: source.dataValues }, info)
     }
   })
 });
@@ -62,6 +62,7 @@ export const purchasedProductQueries = {
 export const purchasedProductLists = {
   list: {
     ...PurchasedProductConnection,
+    resolve: (...args) => baseListResolver(PurchasedProductConnection, ...args),
     type: PurchasedProductConnection.connectionType,
     args: PurchasedProductConnection.connectionArgs
   },

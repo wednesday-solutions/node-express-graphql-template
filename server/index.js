@@ -17,7 +17,7 @@ import bodyParser from 'body-parser';
 import { connect } from '@database';
 import { QueryRoot } from '@gql/queries';
 import { MutationRoot } from '@gql/mutations';
-import { isLocalEnv, isTestEnv, logger } from '@utils/index';
+import { isKeploy, isLocalEnv, isTestEnv, logger } from '@utils/index';
 import cluster from 'cluster';
 import os from 'os';
 import 'source-map-support/register';
@@ -127,7 +127,7 @@ export const init = async () => {
 
 logger().info({ ENV: process.env.NODE_ENV });
 
-if (!isTestEnv() && !isLocalEnv() && cluster.isMaster) {
+if (!isKeploy() && !isTestEnv() && !isLocalEnv() && cluster.isMaster) {
   console.log(`Number of CPUs is ${totalCPUs}`);
   console.log(`Master ${process.pid} is running`);
 

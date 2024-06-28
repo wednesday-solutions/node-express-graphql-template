@@ -26,7 +26,7 @@ then
     npx sequelize-cli db:create
 fi
 
-bpx sequelize-cli db:migrate
+npx sequelize-cli db:migrate
 
 # seed data for local builds
 if [ "$BUILD_NAME" == "local" ]
