@@ -5,7 +5,8 @@ module.exports = function(api) {
   const plugins = [
     '@babel/plugin-proposal-throw-expressions',
     '@babel/plugin-proposal-class-properties',
-    '@babel/transform-runtime'
+    '@babel/transform-runtime',
+    'babel-plugin-istanbul'
   ];
 
   // Environment-specific configuration
