@@ -1,6 +1,5 @@
 {
   "testEnvironment": "node",
-  "automock": false,
   "setupFilesAfterEnv": ["./jest.setup.js"],
   "reporters": [
     "default",
