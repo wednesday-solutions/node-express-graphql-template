@@ -6,8 +6,7 @@ module.exports = {
       const createdBefore = parseInt(Math.random() * 1000);
       const crypto = require('crypto');
       const salt = crypto.randomBytes(16).toString('hex');
-      const hashedPassword = `${salt}:${crypto.scryptSync('WednesdaySolutions', salt, 64).toString('hex')}`;
-      console.log({ hashedPassword });
+      const hashedPassword = `${salt}:${crypto.scryptSync('wednesdaySolutions', salt, 64).toString('hex')}`;
       return {
         first_name: faker.name.firstName(),
         last_name: faker.name.lastName(),
