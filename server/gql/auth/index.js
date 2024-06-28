@@ -12,7 +12,8 @@ export const handleSignUp = async (parent, args, context, resolveInfo) => {
     delete dataValues.password;
     return { ...dataValues, token };
   } catch (err) {
-    logger().error(err);
+    logger().info('error:::', err);
+    logger().info(err);
     throw err;
   }
 };

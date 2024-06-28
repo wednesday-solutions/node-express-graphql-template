@@ -7,7 +7,7 @@ import { MutationRoot } from '@gql/mutations';
 import { client } from '@database';
 import { SubscriptionRoot } from '@gql/subscriptions';
 import { ApolloServer } from '@apollo/server';
-import { logger } from '..';
+import { logger } from '../index';
 
 const connect = async () => {
   await client.authenticate();
