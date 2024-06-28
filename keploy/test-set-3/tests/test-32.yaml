@@ -1,0 +1,101 @@
+version: api.keploy.io/v1beta1
+kind: Http
+name: test-32
+spec:
+    metadata: {}
+    req:
+        method: POST
+        proto_major: 1
+        proto_minor: 1
+        url: http://localhost:9000/graphql
+        header:
+            Accept: '*/*'
+            Accept-Encoding: gzip, deflate, br
+            Connection: keep-alive
+            Content-Length: "3862"
+            Content-Type: application/json
+            Host: localhost:9000
+            Postman-Token: 41872840-db99-4403-ba8b-8c5302a6f969
+            User-Agent: PostmanRuntime/7.37.3
+        body: |-
+            {"query":"mutation UpdateStoreProduct(\n  $updateStoreProductId: ID!\n  $updateStoreProductProductId: Int\n  $updateStoreProductStoreId: Int\n  $productsAfter: String\n  $productsFirst: Int\n  $productsBefore: String\n  $productsLast: Int\n  $suppliersAfter: String\n  $suppliersFirst: Int\n  $suppliersBefore: String\n  $suppliersLast: Int\n  $storesAfter: String\n  $storesFirst: Int\n  $storesBefore: String\n  $storesLast: Int\n  $addressesAfter: String\n  $addressesFirst: Int\n  $addressesBefore: String\n  $addressesLast: Int\n) {\n  updateStoreProduct(\n    id: $updateStoreProductId\n    productId: $updateStoreProductProductId\n    storeId: $updateStoreProductStoreId\n  ) {\n    id\n    productId\n    storeId\n    createdAt\n    updatedAt\n    deletedAt\n    products(\n      after: $productsAfter\n      first: $productsFirst\n      before: $productsBefore\n      last: $productsLast\n    ) {\n      pageInfo {\n        hasNextPage\n        hasPreviousPage\n        startCursor\n        endCursor\n      }\n      edges {\n        node {\n          id\n          name\n          category\n          amount\n          createdAt\n          updatedAt\n          deletedAt\n          suppliers(\n            after: $suppliersAfter\n            first: $suppliersFirst\n            before: $suppliersBefore\n            last: $suppliersLast\n          ) {\n            pageInfo {\n              hasNextPage\n              hasPreviousPage\n              startCursor\n              endCursor\n            }\n            edges {\n              cursor\n            }\n            total\n          }\n          stores(\n            after: $storesAfter\n            first: $storesFirst\n            before: $storesBefore\n            last: $storesLast\n          ) {\n            pageInfo {\n              hasNextPage\n              hasPreviousPage\n              startCursor\n              endCursor\n            }\n            edges {\n              cursor\n            }\n            total\n          }\n        }\n        cursor\n      }\n      total\n    }\n    stores(\n      after: $storesAfter\n      first: $storesFirst\n      before: $storesBefore\n      last: $storesLast\n    ) {\n      pageInfo {\n        hasNextPage\n        hasPreviousPage\n        startCursor\n        endCursor\n      }\n      edges {\n        node {\n          id\n          name\n          addressId\n          createdAt\n          updatedAt\n          deletedAt\n          addresses(\n            after: $addressesAfter\n            first: $addressesFirst\n            before: $addressesBefore\n            last: $addressesLast\n          ) {\n            pageInfo {\n              hasNextPage\n              hasPreviousPage\n              startCursor\n              endCursor\n            }\n            edges {\n              cursor\n            }\n            total\n          }\n          products(\n            after: $productsAfter\n            first: $productsFirst\n            before: $productsBefore\n            last: $productsLast\n          ) {\n            pageInfo {\n              hasNextPage\n              hasPreviousPage\n              startCursor\n              endCursor\n            }\n            edges {\n              cursor\n            }\n            total\n          }\n        }\n        cursor\n      }\n      total\n    }\n  }\n}\n","variables":{
+              "updateStoreProductId": 2000,
+              "updateStoreProductProductId": 1,
+              "updateStoreProductStoreId": 2,
+              "productsAfter": null,
+              "productsFirst": 10,
+              "productsBefore": null,
+              "productsLast": null,
+              "suppliersAfter": null,
+              "suppliersFirst": 10,
+              "suppliersBefore": null,
+              "suppliersLast": null,
+              "storesAfter": null,
+              "storesFirst": 10,
+              "storesBefore": null,
+              "storesLast": null,
+              "addressesAfter": null,
+              "addressesFirst": 10,
+              "addressesBefore": null,
+              "addressesLast": null
+            }
+            }
+        timestamp: 2024-06-28T19:38:05.144046804Z
+    resp:
+        status_code: 200
+        header:
+            Cache-Control: no-store
+            Connection: keep-alive
+            Content-Length: "2561"
+            Content-Type: application/json; charset=utf-8
+            Date: Fri, 28 Jun 2024 19:38:05 GMT
+            Etag: W/"a01-EpVj/Pp7UiTZeNOSnyCAs010JDY"
+            Keep-Alive: timeout=5
+            X-Powered-By: Express
+        body: |
+            {"data":{"updateStoreProduct":{"id":"2000","productId":1,"storeId":2,"createdAt":"2024-06-28T19:37:52.309Z","updatedAt":"2024-06-28T19:38:05.162Z","deletedAt":null,"products":{"pageInfo":{"hasNextPage":false,"hasPreviousPage":false,"startCursor":"WzEsMF0=","endCursor":"WzEsMV0="},"edges":[{"node":{"id":"1","name":"Awesome Fresh Sausages","category":"Clothing","amount":24900,"createdAt":"2024-06-28T19:21:00.126Z","updatedAt":null,"deletedAt":null,"suppliers":{"pageInfo":{"hasNextPage":false,"hasPreviousPage":false,"startCursor":"WzEsMF0=","endCursor":"WzEsMF0="},"edges":[{"cursor":"WzEsMF0="}],"total":1},"stores":{"pageInfo":{"hasNextPage":false,"hasPreviousPage":false,"startCursor":"WzIsMF0=","endCursor":"WzU5NiwxXQ=="},"edges":[{"cursor":"WzIsMF0="},{"cursor":"WzU5NiwxXQ=="}],"total":2}},"cursor":"WzEsMF0="},{"node":{"id":"1","name":"Awesome Fresh Sausages","category":"Clothing","amount":24900,"createdAt":"2024-06-28T19:21:00.126Z","updatedAt":null,"deletedAt":null,"suppliers":{"pageInfo":{"hasNextPage":false,"hasPreviousPage":false,"startCursor":"WzEsMF0=","endCursor":"WzEsMF0="},"edges":[{"cursor":"WzEsMF0="}],"total":1},"stores":{"pageInfo":{"hasNextPage":false,"hasPreviousPage":false,"startCursor":"WzIsMF0=","endCursor":"WzU5NiwxXQ=="},"edges":[{"cursor":"WzIsMF0="},{"cursor":"WzU5NiwxXQ=="}],"total":2}},"cursor":"WzEsMV0="}],"total":2},"stores":{"pageInfo":{"hasNextPage":false,"hasPreviousPage":false,"startCursor":"WzIsMF0=","endCursor":"WzIsMV0="},"edges":[{"node":{"id":"2","name":"O'Connell, Nolan and Waters","addressId":133,"createdAt":"2024-06-28T19:21:00.290Z","updatedAt":null,"deletedAt":null,"addresses":{"pageInfo":{"hasNextPage":false,"hasPreviousPage":false,"startCursor":"WzEzMywwXQ==","endCursor":"WzEzMywwXQ=="},"edges":[{"cursor":"WzEzMywwXQ=="}],"total":1},"products":{"pageInfo":{"hasNextPage":false,"hasPreviousPage":false,"startCursor":"WzEsMF0=","endCursor":"WzkxMiwxXQ=="},"edges":[{"cursor":"WzEsMF0="},{"cursor":"WzkxMiwxXQ=="}],"total":2}},"cursor":"WzIsMF0="},{"node":{"id":"2","name":"O'Connell, Nolan and Waters","addressId":133,"createdAt":"2024-06-28T19:21:00.290Z","updatedAt":null,"deletedAt":null,"addresses":{"pageInfo":{"hasNextPage":false,"hasPreviousPage":false,"startCursor":"WzEzMywwXQ==","endCursor":"WzEzMywwXQ=="},"edges":[{"cursor":"WzEzMywwXQ=="}],"total":1},"products":{"pageInfo":{"hasNextPage":false,"hasPreviousPage":false,"startCursor":"WzEsMF0=","endCursor":"WzkxMiwxXQ=="},"edges":[{"cursor":"WzEsMF0="},{"cursor":"WzkxMiwxXQ=="}],"total":2}},"cursor":"WzIsMV0="}],"total":2}}}}
+        status_message: OK
+        proto_major: 0
+        proto_minor: 0
+        timestamp: 2024-06-28T19:38:07.295952211Z
+    objects: []
+    assertions:
+        noise:
+            body.data.updateStoreProduct.createdAt: []
+            body.data.updateStoreProduct.products.edges.node.createdAt: []
+            body.data.updateStoreProduct.stores.edges.node.createdAt: []
+            body.data.updateStoreProduct.updatedAt: []
+            header.Date: []
+    created: 1719603487
+curl: |-
+    curl --request POST \
+      --url http://localhost:9000/graphql \
+      --header 'Content-Type: application/json' \
+      --header 'User-Agent: PostmanRuntime/7.37.3' \
+      --header 'Accept: */*' \
+      --header 'Postman-Token: 41872840-db99-4403-ba8b-8c5302a6f969' \
+      --header 'Host: localhost:9000' \
+      --header 'Accept-Encoding: gzip, deflate, br' \
+      --header 'Connection: keep-alive' \
+      --data '{"query":"mutation UpdateStoreProduct(\n  $updateStoreProductId: ID!\n  $updateStoreProductProductId: Int\n  $updateStoreProductStoreId: Int\n  $productsAfter: String\n  $productsFirst: Int\n  $productsBefore: String\n  $productsLast: Int\n  $suppliersAfter: String\n  $suppliersFirst: Int\n  $suppliersBefore: String\n  $suppliersLast: Int\n  $storesAfter: String\n  $storesFirst: Int\n  $storesBefore: String\n  $storesLast: Int\n  $addressesAfter: String\n  $addressesFirst: Int\n  $addressesBefore: String\n  $addressesLast: Int\n) {\n  updateStoreProduct(\n    id: $updateStoreProductId\n    productId: $updateStoreProductProductId\n    storeId: $updateStoreProductStoreId\n  ) {\n    id\n    productId\n    storeId\n    createdAt\n    updatedAt\n    deletedAt\n    products(\n      after: $productsAfter\n      first: $productsFirst\n      before: $productsBefore\n      last: $productsLast\n    ) {\n      pageInfo {\n        hasNextPage\n        hasPreviousPage\n        startCursor\n        endCursor\n      }\n      edges {\n        node {\n          id\n          name\n          category\n          amount\n          createdAt\n          updatedAt\n          deletedAt\n          suppliers(\n            after: $suppliersAfter\n            first: $suppliersFirst\n            before: $suppliersBefore\n            last: $suppliersLast\n          ) {\n            pageInfo {\n              hasNextPage\n              hasPreviousPage\n              startCursor\n              endCursor\n            }\n            edges {\n              cursor\n            }\n            total\n          }\n          stores(\n            after: $storesAfter\n            first: $storesFirst\n            before: $storesBefore\n            last: $storesLast\n          ) {\n            pageInfo {\n              hasNextPage\n              hasPreviousPage\n              startCursor\n              endCursor\n            }\n            edges {\n              cursor\n            }\n            total\n          }\n        }\n        cursor\n      }\n      total\n    }\n    stores(\n      after: $storesAfter\n      first: $storesFirst\n      before: $storesBefore\n      last: $storesLast\n    ) {\n      pageInfo {\n        hasNextPage\n        hasPreviousPage\n        startCursor\n        endCursor\n      }\n      edges {\n        node {\n          id\n          name\n          addressId\n          createdAt\n          updatedAt\n          deletedAt\n          addresses(\n            after: $addressesAfter\n            first: $addressesFirst\n            before: $addressesBefore\n            last: $addressesLast\n          ) {\n            pageInfo {\n              hasNextPage\n              hasPreviousPage\n              startCursor\n              endCursor\n            }\n            edges {\n              cursor\n            }\n            total\n          }\n          products(\n            after: $productsAfter\n            first: $productsFirst\n            before: $productsBefore\n            last: $productsLast\n          ) {\n            pageInfo {\n              hasNextPage\n              hasPreviousPage\n              startCursor\n              endCursor\n            }\n            edges {\n              cursor\n            }\n            total\n          }\n        }\n        cursor\n      }\n      total\n    }\n  }\n}\n","variables":{
+      "updateStoreProductId": 2000,
+      "updateStoreProductProductId": 1,
+      "updateStoreProductStoreId": 2,
+      "productsAfter": null,
+      "productsFirst": 10,
+      "productsBefore": null,
+      "productsLast": null,
+      "suppliersAfter": null,
+      "suppliersFirst": 10,
+      "suppliersBefore": null,
+      "suppliersLast": null,
+      "storesAfter": null,
+      "storesFirst": 10,
+      "storesBefore": null,
+      "storesLast": null,
+      "addressesAfter": null,
+      "addressesFirst": 10,
+      "addressesBefore": null,
+      "addressesLast": null
+    }
+    }'

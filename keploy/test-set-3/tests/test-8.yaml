@@ -1,0 +1,94 @@
+version: api.keploy.io/v1beta1
+kind: Http
+name: test-8
+spec:
+    metadata: {}
+    req:
+        method: POST
+        proto_major: 1
+        proto_minor: 1
+        url: http://localhost:9000/graphql
+        header:
+            Accept: '*/*'
+            Accept-Encoding: gzip, deflate, br
+            Connection: keep-alive
+            Content-Length: "2542"
+            Content-Type: application/json
+            Host: localhost:9000
+            Postman-Token: cbd9d024-9378-4ba8-aba3-bd9dc311a500
+            User-Agent: PostmanRuntime/7.37.3
+        body: |-
+            {"query":"query Addresses(\n  $addressesAfter: Int\n  $addressesFirst: Int\n  $addressesBefore: Int\n  $addressesLast: Int\n  $addressesLimit: Int!\n  $addressesOrder: String\n  $addressesWhere: SequelizeJSON\n  $addressesOffset: Int!\n  $suppliersAfter: String\n  $suppliersFirst: Int\n  $suppliersBefore: String\n  $suppliersLast: Int\n  $storesAfter: String\n  $storesFirst: Int\n  $storesBefore: String\n  $storesLast: Int\n) {\n  addresses(\n    after: $addressesAfter\n    first: $addressesFirst\n    before: $addressesBefore\n    last: $addressesLast\n    limit: $addressesLimit\n    order: $addressesOrder\n    where: $addressesWhere\n    offset: $addressesOffset\n  ) {\n    pageInfo {\n      hasNextPage\n      hasPreviousPage\n      startCursor\n      endCursor\n    }\n    edges {\n      node {\n        id\n        address1\n        address2\n        city\n        country\n        latitude\n        longitude\n        createdAt\n        updatedAt\n        deletedAt\n        suppliers(\n          after: $suppliersAfter\n          first: $suppliersFirst\n          before: $suppliersBefore\n          last: $suppliersLast\n        ) {\n          pageInfo {\n            hasNextPage\n            hasPreviousPage\n            startCursor\n            endCursor\n          }\n          edges {\n            node {\n              id\n              name\n              addressId\n              createdAt\n              updatedAt\n              deletedAt\n            }\n            cursor\n          }\n          total\n        }\n        stores(\n          after: $storesAfter\n          first: $storesFirst\n          before: $storesBefore\n          last: $storesLast\n        ) {\n          pageInfo {\n            hasNextPage\n            hasPreviousPage\n            startCursor\n            endCursor\n          }\n          edges {\n            node {\n              id\n              name\n              addressId\n              createdAt\n              updatedAt\n              deletedAt\n            }\n            cursor\n          }\n          total\n        }\n      }\n      cursor\n    }\n    total\n  }\n}\n","variables":{
+              "addressesAfter": null,
+              "addressesFirst": 10,
+              "addressesBefore": null,
+              "addressesLast": null,
+              "addressesLimit": 10,
+              "addressesOrder":"id",
+              "addressesWhere": {},
+              "addressesOffset": 0,
+              "suppliersAfter": null,
+              "suppliersFirst": 10,
+              "suppliersBefore": null,
+              "suppliersLast": null,
+              "storesAfter": null,
+              "storesFirst": 10,
+              "storesBefore": null,
+              "storesLast": null
+            }
+            }
+        timestamp: 2024-06-28T19:30:42.53782056Z
+    resp:
+        status_code: 200
+        header:
+            Cache-Control: no-store
+            Connection: keep-alive
+            Content-Length: "7868"
+            Content-Type: application/json; charset=utf-8
+            Date: Fri, 28 Jun 2024 19:30:42 GMT
+            Etag: W/"1ebc-Cj+tB4neSsXq4NJOVOTUU6aIw8s"
+            Keep-Alive: timeout=5
+            X-Powered-By: Express
+        body: |
+            {"data":{"addresses":{"pageInfo":{"hasNextPage":true,"hasPreviousPage":false,"startCursor":"WzEsMF0=","endCursor":"WzEwLDld"},"edges":[{"node":{"id":"1","address1":"Ullrich Fort","address2":"1563 Leffler Lakes","city":"Durganstad","country":"New Caledonia","latitude":-9.8497,"longitude":84.2791,"createdAt":"2024-06-28T19:21:00.219Z","updatedAt":null,"deletedAt":null,"suppliers":{"pageInfo":{"hasNextPage":false,"hasPreviousPage":false,"startCursor":null,"endCursor":null},"edges":[],"total":0},"stores":{"pageInfo":{"hasNextPage":false,"hasPreviousPage":false,"startCursor":null,"endCursor":null},"edges":[],"total":0}},"cursor":"WzEsMF0="},{"node":{"id":"2","address1":"Hessel Manor","address2":"95550 Ewald Pine","city":"Robelview","country":"Iceland","latitude":-21.0647,"longitude":-75.946,"createdAt":"2024-06-28T19:21:00.219Z","updatedAt":null,"deletedAt":null,"suppliers":{"pageInfo":{"hasNextPage":false,"hasPreviousPage":false,"startCursor":"WzkwOSwwXQ==","endCursor":"WzkwOSwwXQ=="},"edges":[{"node":{"id":"909","name":"Lang Group","addressId":2,"createdAt":"2024-06-28T19:21:00.367Z","updatedAt":null,"deletedAt":null},"cursor":"WzkwOSwwXQ=="}],"total":1},"stores":{"pageInfo":{"hasNextPage":false,"hasPreviousPage":false,"startCursor":"WzYwMCwwXQ==","endCursor":"WzE5NjMsMV0="},"edges":[{"node":{"id":"600","name":"Borer, Stokes and Durgan","addressId":2,"createdAt":"2024-06-28T19:21:00.290Z","updatedAt":null,"deletedAt":null},"cursor":"WzYwMCwwXQ=="},{"node":{"id":"1963","name":"Marvin - Yost","addressId":2,"createdAt":"2024-06-28T19:21:00.290Z","updatedAt":null,"deletedAt":null},"cursor":"WzE5NjMsMV0="}],"total":2}},"cursor":"WzIsMV0="},{"node":{"id":"3","address1":"Bertha Lakes","address2":"37503 DuBuque Rapid","city":"Port Orenland","country":"Poland","latitude":32.5328,"longitude":-74.8703,"createdAt":"2024-06-28T19:21:00.219Z","updatedAt":null,"deletedAt":null,"suppliers":{"pageInfo":{"hasNextPage":false,"hasPreviousPage":false,"startCursor":null,"endCursor":null},"edges":[],"total":0},"stores":{"pageInfo":{"hasNextPage":false,"hasPreviousPage":false,"startCursor":null,"endCursor":null},"edges":[],"total":0}},"cursor":"WzMsMl0="},{"node":{"id":"4","address1":"Alvah Streets","address2":"3320 Boyer Circle","city":"East Greyson","country":"Honduras","latitude":43.2242,"longitude":-144.2638,"createdAt":"2024-06-28T19:21:00.219Z","updatedAt":null,"deletedAt":null,"suppliers":{"pageInfo":{"hasNextPage":false,"hasPreviousPage":false,"startCursor":"WzM3NywwXQ==","endCursor":"WzM3NywwXQ=="},"edges":[{"node":{"id":"377","name":"Koss LLC","addressId":4,"createdAt":"2024-06-28T19:21:00.367Z","updatedAt":null,"deletedAt":null},"cursor":"WzM3NywwXQ=="}],"total":1},"stores":{"pageInfo":{"hasNextPage":false,"hasPreviousPage":false,"startCursor":null,"endCursor":null},"edges":[],"total":0}},"cursor":"WzQsM10="},{"node":{"id":"5","address1":"Howell Island","address2":"62820 Lucas Loaf","city":"Dangeloberg","country":"Angola","latitude":-16.0724,"longitude":-83.735,"createdAt":"2024-06-28T19:21:00.219Z","updatedAt":null,"deletedAt":null,"suppliers":{"pageInfo":{"hasNextPage":false,"hasPreviousPage":false,"startCursor":null,"endCursor":null},"edges":[],"total":0},"stores":{"pageInfo":{"hasNextPage":false,"hasPreviousPage":false,"startCursor":"WzEwMjUsMF0=","endCursor":"WzEwMjUsMF0="},"edges":[{"node":{"id":"1025","name":"Bruen, Bechtelar and Sporer","addressId":5,"createdAt":"2024-06-28T19:21:00.290Z","updatedAt":null,"deletedAt":null},"cursor":"WzEwMjUsMF0="}],"total":1}},"cursor":"WzUsNF0="},{"node":{"id":"6","address1":"Santino Shores","address2":"86831 Christiana Village","city":"Maryjanefurt","country":"Central African Republic","latitude":45.4515,"longitude":64.2109,"createdAt":"2024-06-28T19:21:00.219Z","updatedAt":null,"deletedAt":null,"suppliers":{"pageInfo":{"hasNextPage":false,"hasPreviousPage":false,"startCursor":"WzEwNDUsMF0=","endCursor":"WzEyNTcsMV0="},"edges":[{"node":{"id":"1045","name":"Marvin - Douglas","addressId":6,"createdAt":"2024-06-28T19:21:00.367Z","updatedAt":null,"deletedAt":null},"cursor":"WzEwNDUsMF0="},{"node":{"id":"1257","name":"Balistreri, Brakus and Okuneva","addressId":6,"createdAt":"2024-06-28T19:21:00.367Z","updatedAt":null,"deletedAt":null},"cursor":"WzEyNTcsMV0="}],"total":2},"stores":{"pageInfo":{"hasNextPage":false,"hasPreviousPage":false,"startCursor":null,"endCursor":null},"edges":[],"total":0}},"cursor":"WzYsNV0="},{"node":{"id":"7","address1":"Klein Ferry","address2":"809 Wilderman Hill","city":"Sunrise","country":"New Zealand","latitude":8.9901,"longitude":56.8885,"createdAt":"2024-06-28T19:21:00.219Z","updatedAt":null,"deletedAt":null,"suppliers":{"pageInfo":{"hasNextPage":false,"hasPreviousPage":false,"startCursor":"WzUyMiwwXQ==","endCursor":"WzEwODQsMV0="},"edges":[{"node":{"id":"522","name":"Kovacek - Schoen","addressId":7,"createdAt":"2024-06-28T19:21:00.367Z","updatedAt":null,"deletedAt":null},"cursor":"WzUyMiwwXQ=="},{"node":{"id":"1084","name":"Erdman, Ledner and West","addressId":7,"createdAt":"2024-06-28T19:21:00.367Z","updatedAt":null,"deletedAt":null},"cursor":"WzEwODQsMV0="}],"total":2},"stores":{"pageInfo":{"hasNextPage":false,"hasPreviousPage":false,"startCursor":null,"endCursor":null},"edges":[],"total":0}},"cursor":"WzcsNl0="},{"node":{"id":"8","address1":"Helga Haven","address2":"1388 Taya Fords","city":"Eau Claire","country":"Canada","latitude":-19.2363,"longitude":-22.5003,"createdAt":"2024-06-28T19:21:00.219Z","updatedAt":null,"deletedAt":null,"suppliers":{"pageInfo":{"hasNextPage":false,"hasPreviousPage":false,"startCursor":"WzY3MSwwXQ==","endCursor":"WzE3MDcsMl0="},"edges":[{"node":{"id":"671","name":"Stamm LLC","addressId":8,"createdAt":"2024-06-28T19:21:00.367Z","updatedAt":null,"deletedAt":null},"cursor":"WzY3MSwwXQ=="},{"node":{"id":"699","name":"Hagenes - Herman","addressId":8,"createdAt":"2024-06-28T19:21:00.367Z","updatedAt":null,"deletedAt":null},"cursor":"WzY5OSwxXQ=="},{"node":{"id":"1707","name":"Green Group","addressId":8,"createdAt":"2024-06-28T19:21:00.367Z","updatedAt":null,"deletedAt":null},"cursor":"WzE3MDcsMl0="}],"total":3},"stores":{"pageInfo":{"hasNextPage":false,"hasPreviousPage":false,"startCursor":"WzI3NiwwXQ==","endCursor":"WzI3NiwwXQ=="},"edges":[{"node":{"id":"276","name":"Schuster, Anderson and Robel","addressId":8,"createdAt":"2024-06-28T19:21:00.290Z","updatedAt":null,"deletedAt":null},"cursor":"WzI3NiwwXQ=="}],"total":1}},"cursor":"WzgsN10="},{"node":{"id":"9","address1":"Denis Track","address2":"579 Feil Overpass","city":"New Doris","country":"Trinidad and Tobago","latitude":57.9352,"longitude":77.9171,"createdAt":"2024-06-28T19:21:00.219Z","updatedAt":null,"deletedAt":null,"suppliers":{"pageInfo":{"hasNextPage":false,"hasPreviousPage":false,"startCursor":null,"endCursor":null},"edges":[],"total":0},"stores":{"pageInfo":{"hasNextPage":false,"hasPreviousPage":false,"startCursor":"WzczMiwwXQ==","endCursor":"WzczMiwwXQ=="},"edges":[{"node":{"id":"732","name":"Stark and Sons","addressId":9,"createdAt":"2024-06-28T19:21:00.290Z","updatedAt":null,"deletedAt":null},"cursor":"WzczMiwwXQ=="}],"total":1}},"cursor":"WzksOF0="},{"node":{"id":"10","address1":"Chanel Crescent","address2":"1640 Jefferey Street","city":"Guston","country":"Saint Vincent and the Grenadines","latitude":-54.696,"longitude":95.5943,"createdAt":"2024-06-28T19:21:00.219Z","updatedAt":null,"deletedAt":null,"suppliers":{"pageInfo":{"hasNextPage":false,"hasPreviousPage":false,"startCursor":null,"endCursor":null},"edges":[],"total":0},"stores":{"pageInfo":{"hasNextPage":false,"hasPreviousPage":false,"startCursor":"WzQ0NywwXQ==","endCursor":"WzQ0NywwXQ=="},"edges":[{"node":{"id":"447","name":"McGlynn, Beatty and Watsica","addressId":10,"createdAt":"2024-06-28T19:21:00.290Z","updatedAt":null,"deletedAt":null},"cursor":"WzQ0NywwXQ=="}],"total":1}},"cursor":"WzEwLDld"}],"total":1999}}}
+        status_message: OK
+        proto_major: 0
+        proto_minor: 0
+        timestamp: 2024-06-28T19:30:44.645098507Z
+    objects: []
+    assertions:
+        noise:
+            body.data.addresses.edges.node.createdAt: []
+            body.data.addresses.edges.node.stores.edges.node.createdAt: []
+            body.data.addresses.edges.node.suppliers.edges.node.createdAt: []
+            header.Date: []
+    created: 1719603044
+curl: |-
+    curl --request POST \
+      --url http://localhost:9000/graphql \
+      --header 'User-Agent: PostmanRuntime/7.37.3' \
+      --header 'Accept: */*' \
+      --header 'Postman-Token: cbd9d024-9378-4ba8-aba3-bd9dc311a500' \
+      --header 'Host: localhost:9000' \
+      --header 'Accept-Encoding: gzip, deflate, br' \
+      --header 'Connection: keep-alive' \
+      --header 'Content-Type: application/json' \
+      --data '{"query":"query Addresses(\n  $addressesAfter: Int\n  $addressesFirst: Int\n  $addressesBefore: Int\n  $addressesLast: Int\n  $addressesLimit: Int!\n  $addressesOrder: String\n  $addressesWhere: SequelizeJSON\n  $addressesOffset: Int!\n  $suppliersAfter: String\n  $suppliersFirst: Int\n  $suppliersBefore: String\n  $suppliersLast: Int\n  $storesAfter: String\n  $storesFirst: Int\n  $storesBefore: String\n  $storesLast: Int\n) {\n  addresses(\n    after: $addressesAfter\n    first: $addressesFirst\n    before: $addressesBefore\n    last: $addressesLast\n    limit: $addressesLimit\n    order: $addressesOrder\n    where: $addressesWhere\n    offset: $addressesOffset\n  ) {\n    pageInfo {\n      hasNextPage\n      hasPreviousPage\n      startCursor\n      endCursor\n    }\n    edges {\n      node {\n        id\n        address1\n        address2\n        city\n        country\n        latitude\n        longitude\n        createdAt\n        updatedAt\n        deletedAt\n        suppliers(\n          after: $suppliersAfter\n          first: $suppliersFirst\n          before: $suppliersBefore\n          last: $suppliersLast\n        ) {\n          pageInfo {\n            hasNextPage\n            hasPreviousPage\n            startCursor\n            endCursor\n          }\n          edges {\n            node {\n              id\n              name\n              addressId\n              createdAt\n              updatedAt\n              deletedAt\n            }\n            cursor\n          }\n          total\n        }\n        stores(\n          after: $storesAfter\n          first: $storesFirst\n          before: $storesBefore\n          last: $storesLast\n        ) {\n          pageInfo {\n            hasNextPage\n            hasPreviousPage\n            startCursor\n            endCursor\n          }\n          edges {\n            node {\n              id\n              name\n              addressId\n              createdAt\n              updatedAt\n              deletedAt\n            }\n            cursor\n          }\n          total\n        }\n      }\n      cursor\n    }\n    total\n  }\n}\n","variables":{
+      "addressesAfter": null,
+      "addressesFirst": 10,
+      "addressesBefore": null,
+      "addressesLast": null,
+      "addressesLimit": 10,
+      "addressesOrder":"id",
+      "addressesWhere": {},
+      "addressesOffset": 0,
+      "suppliersAfter": null,
+      "suppliersFirst": 10,
+      "suppliersBefore": null,
+      "suppliersLast": null,
+      "storesAfter": null,
+      "storesFirst": 10,
+      "storesBefore": null,
+      "storesLast": null
+    }
+    }'

@@ -1,0 +1,94 @@
+version: api.keploy.io/v1beta1
+kind: Http
+name: test-2
+spec:
+    metadata: {}
+    req:
+        method: POST
+        proto_major: 1
+        proto_minor: 1
+        url: http://localhost:9000/graphql
+        header:
+            Accept: '*/*'
+            Accept-Encoding: gzip, deflate, br
+            Connection: keep-alive
+            Content-Length: "2613"
+            Content-Type: application/json
+            Host: localhost:9000
+            Postman-Token: 2db29e2c-406d-4d01-858a-112a950231c8
+            User-Agent: PostmanRuntime/7.37.3
+        body: |-
+            {"query":"query Suppliers(\n  $suppliersAfter: Int\n  $suppliersFirst: Int\n  $suppliersBefore: Int\n  $suppliersLast: Int\n  $suppliersLimit: Int!\n  $suppliersOrder: String\n  $suppliersWhere: SequelizeJSON\n  $suppliersOffset: Int!\n  $addressesAfter: String\n  $addressesFirst: Int\n  $addressesBefore: String\n  $addressesLast: Int\n  $productsAfter: String\n  $productsFirst: Int\n  $productsBefore: String\n  $productsLast: Int\n) {\n  suppliers(\n    after: $suppliersAfter\n    first: $suppliersFirst\n    before: $suppliersBefore\n    last: $suppliersLast\n    limit: $suppliersLimit\n    order: $suppliersOrder\n    where: $suppliersWhere\n    offset: $suppliersOffset\n  ) {\n    pageInfo {\n      hasNextPage\n      hasPreviousPage\n      startCursor\n      endCursor\n    }\n    edges {\n      node {\n        id\n        name\n        addressId\n        createdAt\n        updatedAt\n        deletedAt\n        addresses(\n          after: $addressesAfter\n          first: $addressesFirst\n          before: $addressesBefore\n          last: $addressesLast\n        ) {\n          pageInfo {\n            hasNextPage\n            hasPreviousPage\n            startCursor\n            endCursor\n          }\n          edges {\n            node {\n              id\n              address1\n              address2\n              city\n              country\n              latitude\n              longitude\n              createdAt\n              updatedAt\n              deletedAt\n            }\n            cursor\n          }\n          total\n        }\n        products(\n          after: $productsAfter\n          first: $productsFirst\n          before: $productsBefore\n          last: $productsLast\n        ) {\n          pageInfo {\n            hasNextPage\n            hasPreviousPage\n            startCursor\n            endCursor\n          }\n          edges {\n            node {\n              id\n              name\n              category\n              amount\n              createdAt\n              updatedAt\n              deletedAt\n            }\n            cursor\n          }\n          total\n        }\n      }\n      cursor\n    }\n    total\n  }\n}\n","variables":{
+              "suppliersAfter": null,
+              "suppliersFirst": 10,
+              "suppliersBefore": null,
+              "suppliersLast": null,
+              "suppliersLimit": 10,
+              "suppliersOrder":"id",
+              "suppliersWhere": {},
+              "suppliersOffset": 0,
+              "addressesAfter": null,
+              "addressesFirst": 10,
+              "addressesBefore": null,
+              "addressesLast": null,
+              "productsAfter": null,
+              "productsFirst": 10,
+              "productsBefore": null,
+              "productsLast": null
+            }
+            }
+        timestamp: 2024-06-28T19:29:33.752837946Z
+    resp:
+        status_code: 200
+        header:
+            Cache-Control: no-store
+            Connection: keep-alive
+            Content-Length: "8912"
+            Content-Type: application/json; charset=utf-8
+            Date: Fri, 28 Jun 2024 19:29:33 GMT
+            Etag: W/"22d0-Mb/vmscTjf9nZiSxl9mgsp1dnFs"
+            Keep-Alive: timeout=5
+            X-Powered-By: Express
+        body: |
+            {"data":{"suppliers":{"pageInfo":{"hasNextPage":true,"hasPreviousPage":false,"startCursor":"WzEsMF0=","endCursor":"WzEwLDld"},"edges":[{"node":{"id":"1","name":"Jacobi, Douglas and Zboncak","addressId":977,"createdAt":"2024-06-28T19:21:00.367Z","updatedAt":null,"deletedAt":null,"addresses":{"pageInfo":{"hasNextPage":false,"hasPreviousPage":false,"startCursor":"Wzk3NywwXQ==","endCursor":"Wzk3NywwXQ=="},"edges":[{"node":{"id":"977","address1":"Murazik Trafficway","address2":"3883 Bashirian Port","city":"Lake Naomiville","country":"Somalia","latitude":53.0541,"longitude":-13.3148,"createdAt":"2024-06-28T19:21:00.219Z","updatedAt":null,"deletedAt":null},"cursor":"Wzk3NywwXQ=="}],"total":1},"products":{"pageInfo":{"hasNextPage":false,"hasPreviousPage":false,"startCursor":"WzEyMjcsMF0=","endCursor":"WzEyMjcsMF0="},"edges":[{"node":{"id":"1227","name":"Ergonomic Steel Cheese","category":"Electronics","amount":56000,"createdAt":"2024-06-28T19:21:00.126Z","updatedAt":null,"deletedAt":null},"cursor":"WzEyMjcsMF0="}],"total":1}},"cursor":"WzEsMF0="},{"node":{"id":"2","name":"Pfeffer Inc","addressId":1840,"createdAt":"2024-06-28T19:21:00.367Z","updatedAt":null,"deletedAt":null,"addresses":{"pageInfo":{"hasNextPage":false,"hasPreviousPage":false,"startCursor":"WzE4NDAsMF0=","endCursor":"WzE4NDAsMF0="},"edges":[{"node":{"id":"1840","address1":"Tremblay Expressway","address2":"730 Lakin Tunnel","city":"Camden","country":"Moldova","latitude":-70.0164,"longitude":11.4204,"createdAt":"2024-06-28T19:21:00.219Z","updatedAt":null,"deletedAt":null},"cursor":"WzE4NDAsMF0="}],"total":1},"products":{"pageInfo":{"hasNextPage":false,"hasPreviousPage":false,"startCursor":"Wzg1NCwwXQ==","endCursor":"WzE3NDcsMV0="},"edges":[{"node":{"id":"854","name":"Unbranded Soft Soap","category":"Sports","amount":44900,"createdAt":"2024-06-28T19:21:00.126Z","updatedAt":null,"deletedAt":null},"cursor":"Wzg1NCwwXQ=="},{"node":{"id":"1747","name":"Intelligent Concrete Chicken","category":"Industrial","amount":31000,"createdAt":"2024-06-28T19:21:00.126Z","updatedAt":null,"deletedAt":null},"cursor":"WzE3NDcsMV0="}],"total":2}},"cursor":"WzIsMV0="},{"node":{"id":"3","name":"Rath - Adams","addressId":1192,"createdAt":"2024-06-28T19:21:00.367Z","updatedAt":null,"deletedAt":null,"addresses":{"pageInfo":{"hasNextPage":false,"hasPreviousPage":false,"startCursor":"WzExOTIsMF0=","endCursor":"WzExOTIsMF0="},"edges":[{"node":{"id":"1192","address1":"Amina Locks","address2":"664 Iliana Locks","city":"Baytown","country":"Netherlands","latitude":58.7166,"longitude":-137.1659,"createdAt":"2024-06-28T19:21:00.219Z","updatedAt":null,"deletedAt":null},"cursor":"WzExOTIsMF0="}],"total":1},"products":{"pageInfo":{"hasNextPage":false,"hasPreviousPage":false,"startCursor":"WzY1NiwwXQ==","endCursor":"Wzc4MywxXQ=="},"edges":[{"node":{"id":"656","name":"Sleek Cotton Gloves","category":"Computers","amount":16200,"createdAt":"2024-06-28T19:21:00.126Z","updatedAt":null,"deletedAt":null},"cursor":"WzY1NiwwXQ=="},{"node":{"id":"783","name":"Handmade Plastic Keyboard","category":"Electronics","amount":25000,"createdAt":"2024-06-28T19:21:00.126Z","updatedAt":null,"deletedAt":null},"cursor":"Wzc4MywxXQ=="}],"total":2}},"cursor":"WzMsMl0="},{"node":{"id":"4","name":"Wiegand and Sons","addressId":461,"createdAt":"2024-06-28T19:21:00.367Z","updatedAt":null,"deletedAt":null,"addresses":{"pageInfo":{"hasNextPage":false,"hasPreviousPage":false,"startCursor":"WzQ2MSwwXQ==","endCursor":"WzQ2MSwwXQ=="},"edges":[{"node":{"id":"461","address1":"Hagenes Pike","address2":"05377 Gerry Cape","city":"Port Mckaylatown","country":"Saudi Arabia","latitude":18.5915,"longitude":-54.9665,"createdAt":"2024-06-28T19:21:00.219Z","updatedAt":null,"deletedAt":null},"cursor":"WzQ2MSwwXQ=="}],"total":1},"products":{"pageInfo":{"hasNextPage":false,"hasPreviousPage":false,"startCursor":"WzE1NDcsMF0=","endCursor":"WzE4NjQsMV0="},"edges":[{"node":{"id":"1547","name":"Handcrafted Granite Bike","category":"Clothing","amount":44000,"createdAt":"2024-06-28T19:21:00.126Z","updatedAt":null,"deletedAt":null},"cursor":"WzE1NDcsMF0="},{"node":{"id":"1864","name":"Gorgeous Frozen Shirt","category":"Clothing","amount":90000,"createdAt":"2024-06-28T19:21:00.126Z","updatedAt":null,"deletedAt":null},"cursor":"WzE4NjQsMV0="}],"total":2}},"cursor":"WzQsM10="},{"node":{"id":"5","name":"Buckridge - Connelly","addressId":359,"createdAt":"2024-06-28T19:21:00.367Z","updatedAt":null,"deletedAt":null,"addresses":{"pageInfo":{"hasNextPage":false,"hasPreviousPage":false,"startCursor":"WzM1OSwwXQ==","endCursor":"WzM1OSwwXQ=="},"edges":[{"node":{"id":"359","address1":"Crooks Dam","address2":"36330 Feeney Cove","city":"Madera","country":"Gabon","latitude":-5.3297,"longitude":-1.7028,"createdAt":"2024-06-28T19:21:00.219Z","updatedAt":null,"deletedAt":null},"cursor":"WzM1OSwwXQ=="}],"total":1},"products":{"pageInfo":{"hasNextPage":false,"hasPreviousPage":false,"startCursor":null,"endCursor":null},"edges":[],"total":0}},"cursor":"WzUsNF0="},{"node":{"id":"6","name":"Grant, Gibson and Halvorson","addressId":946,"createdAt":"2024-06-28T19:21:00.367Z","updatedAt":null,"deletedAt":null,"addresses":{"pageInfo":{"hasNextPage":false,"hasPreviousPage":false,"startCursor":"Wzk0NiwwXQ==","endCursor":"Wzk0NiwwXQ=="},"edges":[{"node":{"id":"946","address1":"Zelda Loaf","address2":"93218 Miller Hills","city":"South Jamisonland","country":"Bhutan","latitude":-83.2023,"longitude":16.6094,"createdAt":"2024-06-28T19:21:00.219Z","updatedAt":null,"deletedAt":null},"cursor":"Wzk0NiwwXQ=="}],"total":1},"products":{"pageInfo":{"hasNextPage":false,"hasPreviousPage":false,"startCursor":"WzE2NTIsMF0=","endCursor":"WzE2NTIsMF0="},"edges":[{"node":{"id":"1652","name":"Gorgeous Cotton Salad","category":"Books","amount":73300,"createdAt":"2024-06-28T19:21:00.126Z","updatedAt":null,"deletedAt":null},"cursor":"WzE2NTIsMF0="}],"total":1}},"cursor":"WzYsNV0="},{"node":{"id":"7","name":"Lesch, Halvorson and McCullough","addressId":579,"createdAt":"2024-06-28T19:21:00.367Z","updatedAt":null,"deletedAt":null,"addresses":{"pageInfo":{"hasNextPage":false,"hasPreviousPage":false,"startCursor":"WzU3OSwwXQ==","endCursor":"WzU3OSwwXQ=="},"edges":[{"node":{"id":"579","address1":"Rau Route","address2":"408 Gutkowski Turnpike","city":"O'Keefemouth","country":"Timor-Leste","latitude":74.199,"longitude":-19.1894,"createdAt":"2024-06-28T19:21:00.219Z","updatedAt":null,"deletedAt":null},"cursor":"WzU3OSwwXQ=="}],"total":1},"products":{"pageInfo":{"hasNextPage":false,"hasPreviousPage":false,"startCursor":null,"endCursor":null},"edges":[],"total":0}},"cursor":"WzcsNl0="},{"node":{"id":"8","name":"Buckridge - Hilpert","addressId":1723,"createdAt":"2024-06-28T19:21:00.367Z","updatedAt":null,"deletedAt":null,"addresses":{"pageInfo":{"hasNextPage":false,"hasPreviousPage":false,"startCursor":"WzE3MjMsMF0=","endCursor":"WzE3MjMsMF0="},"edges":[{"node":{"id":"1723","address1":"Waters Ford","address2":"3865 Beau Hills","city":"Lake Mckenzieland","country":"Belgium","latitude":87.8237,"longitude":26.5836,"createdAt":"2024-06-28T19:21:00.219Z","updatedAt":null,"deletedAt":null},"cursor":"WzE3MjMsMF0="}],"total":1},"products":{"pageInfo":{"hasNextPage":false,"hasPreviousPage":false,"startCursor":null,"endCursor":null},"edges":[],"total":0}},"cursor":"WzgsN10="},{"node":{"id":"9","name":"Rippin, Dare and Labadie","addressId":1694,"createdAt":"2024-06-28T19:21:00.367Z","updatedAt":null,"deletedAt":null,"addresses":{"pageInfo":{"hasNextPage":false,"hasPreviousPage":false,"startCursor":"WzE2OTQsMF0=","endCursor":"WzE2OTQsMF0="},"edges":[{"node":{"id":"1694","address1":"Goyette Springs","address2":"797 Nicole Mission","city":"Stammton","country":"Sao Tome and Principe","latitude":9.6785,"longitude":83.8726,"createdAt":"2024-06-28T19:21:00.219Z","updatedAt":null,"deletedAt":null},"cursor":"WzE2OTQsMF0="}],"total":1},"products":{"pageInfo":{"hasNextPage":false,"hasPreviousPage":false,"startCursor":"WzEzNDYsMF0=","endCursor":"WzEzNDYsMF0="},"edges":[{"node":{"id":"1346","name":"Practical Rubber Car","category":"Automotive","amount":36700,"createdAt":"2024-06-28T19:21:00.126Z","updatedAt":null,"deletedAt":null},"cursor":"WzEzNDYsMF0="}],"total":1}},"cursor":"WzksOF0="},{"node":{"id":"10","name":"Upton Group","addressId":348,"createdAt":"2024-06-28T19:21:00.367Z","updatedAt":null,"deletedAt":null,"addresses":{"pageInfo":{"hasNextPage":false,"hasPreviousPage":false,"startCursor":"WzM0OCwwXQ==","endCursor":"WzM0OCwwXQ=="},"edges":[{"node":{"id":"348","address1":"Harber Route","address2":"91607 Curtis Canyon","city":"Wylie","country":"Madagascar","latitude":65.7073,"longitude":58.0071,"createdAt":"2024-06-28T19:21:00.219Z","updatedAt":null,"deletedAt":null},"cursor":"WzM0OCwwXQ=="}],"total":1},"products":{"pageInfo":{"hasNextPage":false,"hasPreviousPage":false,"startCursor":null,"endCursor":null},"edges":[],"total":0}},"cursor":"WzEwLDld"}],"total":1999}}}
+        status_message: OK
+        proto_major: 0
+        proto_minor: 0
+        timestamp: 2024-06-28T19:29:36.003585627Z
+    objects: []
+    assertions:
+        noise:
+            body.data.suppliers.edges.node.addresses.edges.node.createdAt: []
+            body.data.suppliers.edges.node.createdAt: []
+            body.data.suppliers.edges.node.products.edges.node.createdAt: []
+            header.Date: []
+    created: 1719602976
+curl: |-
+    curl --request POST \
+      --url http://localhost:9000/graphql \
+      --header 'Accept: */*' \
+      --header 'Postman-Token: 2db29e2c-406d-4d01-858a-112a950231c8' \
+      --header 'Host: localhost:9000' \
+      --header 'Accept-Encoding: gzip, deflate, br' \
+      --header 'Connection: keep-alive' \
+      --header 'Content-Type: application/json' \
+      --header 'User-Agent: PostmanRuntime/7.37.3' \
+      --data '{"query":"query Suppliers(\n  $suppliersAfter: Int\n  $suppliersFirst: Int\n  $suppliersBefore: Int\n  $suppliersLast: Int\n  $suppliersLimit: Int!\n  $suppliersOrder: String\n  $suppliersWhere: SequelizeJSON\n  $suppliersOffset: Int!\n  $addressesAfter: String\n  $addressesFirst: Int\n  $addressesBefore: String\n  $addressesLast: Int\n  $productsAfter: String\n  $productsFirst: Int\n  $productsBefore: String\n  $productsLast: Int\n) {\n  suppliers(\n    after: $suppliersAfter\n    first: $suppliersFirst\n    before: $suppliersBefore\n    last: $suppliersLast\n    limit: $suppliersLimit\n    order: $suppliersOrder\n    where: $suppliersWhere\n    offset: $suppliersOffset\n  ) {\n    pageInfo {\n      hasNextPage\n      hasPreviousPage\n      startCursor\n      endCursor\n    }\n    edges {\n      node {\n        id\n        name\n        addressId\n        createdAt\n        updatedAt\n        deletedAt\n        addresses(\n          after: $addressesAfter\n          first: $addressesFirst\n          before: $addressesBefore\n          last: $addressesLast\n        ) {\n          pageInfo {\n            hasNextPage\n            hasPreviousPage\n            startCursor\n            endCursor\n          }\n          edges {\n            node {\n              id\n              address1\n              address2\n              city\n              country\n              latitude\n              longitude\n              createdAt\n              updatedAt\n              deletedAt\n            }\n            cursor\n          }\n          total\n        }\n        products(\n          after: $productsAfter\n          first: $productsFirst\n          before: $productsBefore\n          last: $productsLast\n        ) {\n          pageInfo {\n            hasNextPage\n            hasPreviousPage\n            startCursor\n            endCursor\n          }\n          edges {\n            node {\n              id\n              name\n              category\n              amount\n              createdAt\n              updatedAt\n              deletedAt\n            }\n            cursor\n          }\n          total\n        }\n      }\n      cursor\n    }\n    total\n  }\n}\n","variables":{
+      "suppliersAfter": null,
+      "suppliersFirst": 10,
+      "suppliersBefore": null,
+      "suppliersLast": null,
+      "suppliersLimit": 10,
+      "suppliersOrder":"id",
+      "suppliersWhere": {},
+      "suppliersOffset": 0,
+      "addressesAfter": null,
+      "addressesFirst": 10,
+      "addressesBefore": null,
+      "addressesLast": null,
+      "productsAfter": null,
+      "productsFirst": 10,
+      "productsBefore": null,
+      "productsLast": null
+    }
+    }'

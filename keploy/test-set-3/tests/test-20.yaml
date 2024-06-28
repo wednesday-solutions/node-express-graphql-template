@@ -1,0 +1,69 @@
+version: api.keploy.io/v1beta1
+kind: Http
+name: test-20
+spec:
+    metadata: {}
+    req:
+        method: POST
+        proto_major: 1
+        proto_minor: 1
+        url: http://localhost:9000/graphql
+        header:
+            Accept: '*/*'
+            Accept-Encoding: gzip, deflate, br
+            Connection: keep-alive
+            Content-Length: "557"
+            Content-Type: application/json
+            Host: localhost:9000
+            Postman-Token: 0c2ff550-36c9-417c-895b-89484228a79c
+            User-Agent: PostmanRuntime/7.37.3
+        body: |-
+            {"query":"mutation SignUp(\n  $signUpEmail: String!\n  $signUpPassword: String!\n  $signUpFirstName: String!\n  $signUpLastName: String!\n) {\n  signUp(\n    email: $signUpEmail\n    password: $signUpPassword\n    firstName: $signUpFirstName\n    lastName: $signUpLastName\n  ) {\n    id\n    email\n    firstName\n    lastName\n    token\n    createdAt\n    updatedAt\n    deletedAt\n  }\n}\n","variables":{
+              "signUpEmail": "dev@wednesday.is",
+              "signUpPassword": "wednesdaySolutions",
+              "signUpFirstName": "Wednesday",
+              "signUpLastName": "Solutions"
+            }
+            }
+        timestamp: 2024-06-28T19:35:08.180625682Z
+    resp:
+        status_code: 200
+        header:
+            Cache-Control: no-store
+            Connection: keep-alive
+            Content-Length: "824"
+            Content-Type: application/json; charset=utf-8
+            Date: Fri, 28 Jun 2024 19:35:08 GMT
+            Etag: W/"338-Z/9EaJgVZJu4ZpSgse4tZ3Lx//M"
+            Keep-Alive: timeout=5
+            X-Powered-By: Express
+        body: |
+            {"data":{"signUp":{"id":"100","email":"dev@wednesday.is","firstName":"Wednesday","lastName":"Solutions","token":"eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyIjp7ImNyZWF0ZWRBdCI6IjIwMjQtMDYtMjhUMTk6MzU6MDguMjcwWiIsImlkIjoxMDAsImZpcnN0TmFtZSI6IldlZG5lc2RheSIsImxhc3ROYW1lIjoiU29sdXRpb25zIiwiZW1haWwiOiJkZXZAd2VkbmVzZGF5LmlzIiwicGFzc3dvcmQiOiI4ZDUxYzYyY2YxOTkwY2Y1OGEwYTg1MzZmOTI3ZDFlYzozMTQxNTQ3YmQ4NTBkODE2YjRhNDc4ZTA3MGU5MDJlNjkwMDhjNjVkZTBiNWEzMmQyNmIxZDliNjE2NmYyNzE1YTM0MTVlMzgxZTMxNWRiYmE3YzI5ODJlZWE4YTJiODM3OWFmN2ViYjVmYzE3MjFhMTZkYTc5MTNhNGExYTkzNiIsInVwZGF0ZWRBdCI6IjIwMjQtMDYtMjhUMTk6MzU6MDguMjU5WiIsImRlbGV0ZWRBdCI6bnVsbH0sImlhdCI6MTcxOTYwMzMwOCwiZXhwIjoxNzE5Njg5NzA4fQ.MxC2HsE-MItlDRA_QfXojaLveRiwev9F3bxprKaShEo","createdAt":"2024-06-28T19:35:08.270Z","updatedAt":"2024-06-28T19:35:08.259Z","deletedAt":null}}}
+        status_message: OK
+        proto_major: 0
+        proto_minor: 0
+        timestamp: 2024-06-28T19:35:10.351642129Z
+    objects: []
+    assertions:
+        noise:
+            body.data.signUp.createdAt: []
+            body.data.signUp.updatedAt: []
+            header.Date: []
+    created: 1719603310
+curl: |-
+    curl --request POST \
+      --url http://localhost:9000/graphql \
+      --header 'Host: localhost:9000' \
+      --header 'Accept-Encoding: gzip, deflate, br' \
+      --header 'Connection: keep-alive' \
+      --header 'Content-Type: application/json' \
+      --header 'User-Agent: PostmanRuntime/7.37.3' \
+      --header 'Accept: */*' \
+      --header 'Postman-Token: 0c2ff550-36c9-417c-895b-89484228a79c' \
+      --data '{"query":"mutation SignUp(\n  $signUpEmail: String!\n  $signUpPassword: String!\n  $signUpFirstName: String!\n  $signUpLastName: String!\n) {\n  signUp(\n    email: $signUpEmail\n    password: $signUpPassword\n    firstName: $signUpFirstName\n    lastName: $signUpLastName\n  ) {\n    id\n    email\n    firstName\n    lastName\n    token\n    createdAt\n    updatedAt\n    deletedAt\n  }\n}\n","variables":{
+      "signUpEmail": "dev@wednesday.is",
+      "signUpPassword": "wednesdaySolutions",
+      "signUpFirstName": "Wednesday",
+      "signUpLastName": "Solutions"
+    }
+    }'

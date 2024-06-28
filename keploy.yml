@@ -37,7 +37,7 @@ test:
     mocking: true
     dedup: true
     disableMockUpload: false
-    freezeTime: false
+    freezeTime: true
 record:
     recordTimer: 0s
     filters: []

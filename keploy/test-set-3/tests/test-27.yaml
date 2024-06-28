@@ -1,0 +1,61 @@
+version: api.keploy.io/v1beta1
+kind: Http
+name: test-27
+spec:
+    metadata: {}
+    req:
+        method: POST
+        proto_major: 1
+        proto_minor: 1
+        url: http://localhost:9000/graphql
+        header:
+            Accept: '*/*'
+            Accept-Encoding: gzip, deflate, br
+            Connection: keep-alive
+            Content-Length: "199"
+            Content-Type: application/json
+            Host: localhost:9000
+            Postman-Token: 4ee81fe1-b065-498b-b347-12f647caec83
+            User-Agent: PostmanRuntime/7.37.3
+        body: |-
+            {"query":"mutation DeleteSupplierProduct($deleteSupplierProductId: Int!) {\n  deleteSupplierProduct(id: $deleteSupplierProductId) {\n    id\n  }\n}\n","variables":{
+              "deleteSupplierProductId": 1
+            }
+            }
+        timestamp: 2024-06-28T19:37:00.665555983Z
+    resp:
+        status_code: 200
+        header:
+            Cache-Control: no-store
+            Connection: keep-alive
+            Content-Length: "44"
+            Content-Type: application/json; charset=utf-8
+            Date: Fri, 28 Jun 2024 19:37:00 GMT
+            Etag: W/"2c-WYUquX6tUi5bpswvGaIhkGJWDNc"
+            Keep-Alive: timeout=5
+            X-Powered-By: Express
+        body: |
+            {"data":{"deleteSupplierProduct":{"id":1}}}
+        status_message: OK
+        proto_major: 0
+        proto_minor: 0
+        timestamp: 2024-06-28T19:37:02.745675417Z
+    objects: []
+    assertions:
+        noise:
+            header.Date: []
+    created: 1719603422
+curl: |-
+    curl --request POST \
+      --url http://localhost:9000/graphql \
+      --header 'Postman-Token: 4ee81fe1-b065-498b-b347-12f647caec83' \
+      --header 'Host: localhost:9000' \
+      --header 'Accept-Encoding: gzip, deflate, br' \
+      --header 'Connection: keep-alive' \
+      --header 'Content-Type: application/json' \
+      --header 'User-Agent: PostmanRuntime/7.37.3' \
+      --header 'Accept: */*' \
+      --data '{"query":"mutation DeleteSupplierProduct($deleteSupplierProductId: Int!) {\n  deleteSupplierProduct(id: $deleteSupplierProductId) {\n    id\n  }\n}\n","variables":{
+      "deleteSupplierProductId": 1
+    }
+    }'

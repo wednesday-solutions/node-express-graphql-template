@@ -1,0 +1,61 @@
+version: api.keploy.io/v1beta1
+kind: Http
+name: test-39
+spec:
+    metadata: {}
+    req:
+        method: POST
+        proto_major: 1
+        proto_minor: 1
+        url: http://localhost:9000/graphql
+        header:
+            Accept: '*/*'
+            Accept-Encoding: gzip, deflate, br
+            Connection: keep-alive
+            Content-Length: "162"
+            Content-Type: application/json
+            Host: localhost:9000
+            Postman-Token: 494e2cbb-8db8-4c09-988c-4eb9ae00992a
+            User-Agent: PostmanRuntime/7.37.3
+        body: |-
+            {"query":"mutation DeleteProduct($deleteProductId: Int!) {\n  deleteProduct(id: $deleteProductId) {\n    id\n  }\n}\n","variables":{
+              "deleteProductId": 2000
+            }
+            }
+        timestamp: 2024-06-28T19:39:26.339006133Z
+    resp:
+        status_code: 200
+        header:
+            Cache-Control: no-store
+            Connection: keep-alive
+            Content-Length: "39"
+            Content-Type: application/json; charset=utf-8
+            Date: Fri, 28 Jun 2024 19:39:26 GMT
+            Etag: W/"27-d5gCi3aqKFwQKTbTSAacGBd9PPU"
+            Keep-Alive: timeout=5
+            X-Powered-By: Express
+        body: |
+            {"data":{"deleteProduct":{"id":2000}}}
+        status_message: OK
+        proto_major: 0
+        proto_minor: 0
+        timestamp: 2024-06-28T19:39:28.374835721Z
+    objects: []
+    assertions:
+        noise:
+            header.Date: []
+    created: 1719603568
+curl: |-
+    curl --request POST \
+      --url http://localhost:9000/graphql \
+      --header 'Postman-Token: 494e2cbb-8db8-4c09-988c-4eb9ae00992a' \
+      --header 'Host: localhost:9000' \
+      --header 'Accept-Encoding: gzip, deflate, br' \
+      --header 'Connection: keep-alive' \
+      --header 'Content-Type: application/json' \
+      --header 'User-Agent: PostmanRuntime/7.37.3' \
+      --header 'Accept: */*' \
+      --data '{"query":"mutation DeleteProduct($deleteProductId: Int!) {\n  deleteProduct(id: $deleteProductId) {\n    id\n  }\n}\n","variables":{
+      "deleteProductId": 2000
+    }
+    }'
