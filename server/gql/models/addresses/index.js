@@ -5,7 +5,7 @@ import { supplierLists } from '../suppliers';
 import { timestamps } from '@gql/fields/timestamps';
 import db from '@database/models';
 import { storeLists } from '@gql/models/stores';
-import { totalConnectionFields } from '@utils/index';
+import { totalConnectionFields, listResolver, baseListResolver } from '@utils/index';
 import { getQueryFields, TYPE_ATTRIBUTES } from '@server/utils/gqlFieldUtils';
 
 const { nodeInterface } = getNode();
@@ -40,12 +40,12 @@ const GraphQLAddress = new GraphQLObjectType({
     suppliers: {
       ...supplierLists.list,
       resolve: (source, args, context, info) =>
-        supplierLists.list.resolve(source, args, { ...context, address: source.dataValues }, info)
+        listResolver(supplierLists, source, args, { ...context, address: source.dataValues }, info)
     },
     stores: {
       ...storeLists.list,
       resolve: (source, args, context, info) =>
-        storeLists.list.resolve(source, args, { ...context, address: source.dataValues }, info)
+        listResolver(storeLists, source, args, { ...context, address: source.dataValues }, info)
     }
   })
 });
@@ -97,7 +97,7 @@ export const addressQueries = {
 export const addressLists = {
   list: {
     ...AddressConnection,
-    resolve: AddressConnection.resolve,
+    resolve: (...args) => baseListResolver(AddressConnection, ...args),
     type: AddressConnection.connectionType,
     args: AddressConnection.connectionArgs
   },

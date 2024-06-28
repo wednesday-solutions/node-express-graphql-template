@@ -11,14 +11,14 @@ describe('Address graphQL-server-DB mutation tests', () => {
           id
           address1
           address2
-          stores {
+          stores (first: 10) {
             edges {
               node {
                 id 
               }
             }
           }
-          suppliers {
+          suppliers (first: 10) {
             edges {
               node {
                 id 

@@ -15,6 +15,7 @@ CREATE TABLE supplier_products
     (id),
     CONSTRAINT suppliers_product_supplier_id FOREIGN KEY
     (supplier_id) REFERENCES suppliers
-    (id)
+    (id),
+    CONSTRAINT supplier_products_unique_key UNIQUE (product_id, supplier_id)
 );
 

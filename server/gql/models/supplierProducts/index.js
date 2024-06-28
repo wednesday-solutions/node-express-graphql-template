@@ -6,7 +6,7 @@ import { timestamps } from '@gql/fields/timestamps';
 import { getNode } from '@gql/node';
 import db from '@database/models';
 import { productLists } from '@gql/models/products';
-import { totalConnectionFields } from '@utils/index';
+import { totalConnectionFields, listResolver, baseListResolver } from '@utils/index';
 import { sequelizedWhere } from '@database/dbUtils';
 import { getQueryFields, TYPE_ATTRIBUTES } from '@server/utils/gqlFieldUtils';
 
@@ -27,12 +27,12 @@ export const GraphQLSupplierProduct = new GraphQLObjectType({
     products: {
       ...productLists.list,
       resolve: (source, args, context, info) =>
-        productLists.list.resolve(source, args, { ...context, supplierProduct: source.dataValues }, info)
+        listResolver(productLists, source, args, { ...context, supplierProduct: source.dataValues }, info)
     },
     suppliers: {
       ...supplierLists.list,
       resolve: (source, args, context, info) =>
-        supplierLists.list.resolve(source, args, { ...context, supplierProduct: source.dataValues }, info)
+        listResolver(supplierLists, source, args, { ...context, supplierProduct: source.dataValues }, info)
     }
   })
 });
@@ -66,6 +66,7 @@ export const supplierProductQueries = {
 export const supplierProductLists = {
   list: {
     ...SupplierProductConnection,
+    resolve: (...args) => baseListResolver(SupplierProductConnection, ...args),
     type: SupplierProductConnection.connectionType,
     args: SupplierProductConnection.connectionArgs
   },
