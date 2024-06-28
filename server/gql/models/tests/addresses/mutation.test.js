@@ -28,14 +28,14 @@ describe('Address graphQL-server-DB mutation tests', () => {
       createdAt
       updatedAt
       deletedAt
-      suppliers {
+      suppliers (first: 10) {
         edges {
           node {
             name
           }
         }
       }
-      stores {
+      stores (first: 10) {
         edges {
           node {
             name

@@ -9,14 +9,14 @@ describe('Product graphQL-server-DB query tests', () => {
     product (id: ${id}) {
       id
       name
-        suppliers {
+        suppliers (first: 10) {
           edges {
             node {
               id
             }  
           }
         }
-        stores {
+        stores (first: 10) {
           edges {
             node {
               id

@@ -1,4 +1,4 @@
-FROM node:18
+FROM node:20
 ARG ENVIRONMENT_NAME
 ARG BUILD_NAME
 ENV NODE_OPTIONS=--openssl-legacy-provider
@@ -11,7 +11,7 @@ RUN yarn
 RUN yarn build:$BUILD_NAME
 
 
-FROM node:18-alpine
+FROM node:20-alpine
 ARG ENVIRONMENT_NAME
 ARG BUILD_NAME
 ENV NODE_OPTIONS=--openssl-legacy-provider

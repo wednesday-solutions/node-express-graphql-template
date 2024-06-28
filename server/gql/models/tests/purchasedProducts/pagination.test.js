@@ -11,7 +11,7 @@ describe('PurchasedProducts graphQL-server-DB pagination tests', () => {
           id
           price
           discount
-          products {
+          products (first: 10) {
             edges {
               node {
                 id
