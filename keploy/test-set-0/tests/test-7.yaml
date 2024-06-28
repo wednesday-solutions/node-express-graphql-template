@@ -11,46 +11,84 @@ spec:
         header:
             Accept: '*/*'
             Accept-Encoding: gzip, deflate, br
-            Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyIjp7ImlkIjoxLCJmaXJzdE5hbWUiOiJTdGVybGluZyIsImxhc3ROYW1lIjoiU2F1ZXIiLCJlbWFpbCI6Ik1hc29uLkdvbGRuZXI0OUBob3RtYWlsLmNvbSIsInBhc3N3b3JkIjoiZGFhOTMyMGY1YzU4NDRiODRiMjhlMDE2YjRiOGM0MGIiLCJjcmVhdGVkQXQiOiIyMDIzLTEyLTA4VDE4OjE2OjQxLjYzOFoiLCJ1cGRhdGVkQXQiOm51bGwsImRlbGV0ZWRBdCI6bnVsbH0sImlhdCI6MTcxOTM0MzYzOCwiZXhwIjoxNzE5NDMwMDM4fQ.Kgm3Lmbg97M_QQP5Gn9q4suRYEF7_n4ITqehV4i7t_s
             Connection: keep-alive
-            Content-Length: "438"
+            Content-Length: "2460"
             Content-Type: application/json
             Host: localhost:9000
-            Postman-Token: 8e3a1a18-ef42-4f56-9939-444dd3b717c4
+            Postman-Token: 5945598e-0d00-4d6b-a14e-263542f8f378
             User-Agent: PostmanRuntime/7.37.3
-        body: '{"query":"query Suppliers {\n  suppliers (offset: 0, limit:10){\n    edges {\n      node {\n        id\n        name\n        addressId\n        addresses {\n          edges {\n            node {\n              id\n              address1\n            }\n          }\n        }\n        products {\n          edges {\n            node {\n              id\n              name\n            }\n          }\n        }\n      }\n    }\n  }\n}"}'
-        timestamp: 2024-06-26T07:59:12.845913339Z
+        body: |-
+            {"query":"query Products(\n  $productsAfter: Int\n  $productsFirst: Int\n  $productsBefore: Int\n  $productsLast: Int\n  $productsLimit: Int!\n  $productsOrder: String\n  $productsWhere: SequelizeJSON\n  $productsOffset: Int!\n  $suppliersAfter: String\n  $suppliersFirst: Int\n  $suppliersBefore: String\n  $suppliersLast: Int\n  $storesAfter: String\n  $storesFirst: Int\n  $storesBefore: String\n  $storesLast: Int\n) {\n  products(\n    after: $productsAfter\n    first: $productsFirst\n    before: $productsBefore\n    last: $productsLast\n    limit: $productsLimit\n    order: $productsOrder\n    where: $productsWhere\n    offset: $productsOffset\n  ) {\n    pageInfo {\n      hasNextPage\n      hasPreviousPage\n      startCursor\n      endCursor\n    }\n    edges {\n      node {\n        id\n        name\n        category\n        amount\n        createdAt\n        updatedAt\n        deletedAt\n        suppliers(\n          after: $suppliersAfter\n          first: $suppliersFirst\n          before: $suppliersBefore\n          last: $suppliersLast\n        ) {\n          pageInfo {\n            hasNextPage\n            hasPreviousPage\n            startCursor\n            endCursor\n          }\n          edges {\n            node {\n              id\n              name\n              addressId\n              createdAt\n              updatedAt\n              deletedAt\n            }\n            cursor\n          }\n          total\n        }\n        stores(\n          after: $storesAfter\n          first: $storesFirst\n          before: $storesBefore\n          last: $storesLast\n        ) {\n          pageInfo {\n            hasNextPage\n            hasPreviousPage\n            startCursor\n            endCursor\n          }\n          edges {\n            node {\n              id\n              name\n              addressId\n              createdAt\n              updatedAt\n              deletedAt\n            }\n            cursor\n          }\n          total\n        }\n      }\n      cursor\n    }\n    total\n  }\n}\n","variables":{
+              "productsAfter": null,
+              "productsFirst": 10,
+              "productsBefore": null,
+              "productsLast": null,
+              "productsLimit": 10,
+              "productsOrder":"id",
+              "productsWhere": {},
+              "productsOffset": 0,
+              "suppliersAfter": null,
+              "suppliersFirst": 10,
+              "suppliersBefore": null,
+              "suppliersLast": null,
+              "storesAfter": null,
+              "storesFirst": 10,
+              "storesBefore": null,
+              "storesLast": null
+            }
+            }
+        timestamp: 2024-06-28T06:08:28.359830054Z
     resp:
         status_code: 200
         header:
             Cache-Control: no-store
             Connection: keep-alive
-            Content-Length: "2133"
+            Content-Length: "8096"
             Content-Type: application/json; charset=utf-8
-            Date: Wed, 26 Jun 2024 07:59:13 GMT
-            Etag: W/"855-whLs3xbB7iFBbrPEbmMoos9LraE"
+            Date: Fri, 28 Jun 2024 06:08:28 GMT
+            Etag: W/"1fa0-AP45ltAhEDKa1CasFZ840Lach4c"
             Keep-Alive: timeout=5
             X-Powered-By: Express
         body: |
-            {"data":{"suppliers":{"edges":[{"node":{"id":"1","name":"Abshire - Breitenberg","addressId":564,"addresses":{"edges":[{"node":{"id":"564","address1":"Raynor Path"}}]},"products":{"edges":[]}}},{"node":{"id":"2","name":"O'Connell Inc","addressId":989,"addresses":{"edges":[{"node":{"id":"989","address1":"Lou Mill"}}]},"products":{"edges":[]}}},{"node":{"id":"3","name":"Bogisich, Maggio and Stokes","addressId":1123,"addresses":{"edges":[{"node":{"id":"1123","address1":"Torp Cliff"}}]},"products":{"edges":[{"node":{"id":"690","name":"Fantastic Plastic Pizza"}},{"node":{"id":"1109","name":"Generic Wooden Shoes"}},{"node":{"id":"1387","name":"Generic Concrete Bike"}},{"node":{"id":"1539","name":"Licensed Cotton Soap"}}]}}},{"node":{"id":"4","name":"McDermott - Davis","addressId":1632,"addresses":{"edges":[{"node":{"id":"1632","address1":"Friesen Spring"}}]},"products":{"edges":[]}}},{"node":{"id":"5","name":"Adams, Satterfield and Vandervort","addressId":465,"addresses":{"edges":[{"node":{"id":"465","address1":"Rolfson Rest"}}]},"products":{"edges":[]}}},{"node":{"id":"6","name":"Breitenberg, Glover and Leannon","addressId":587,"addresses":{"edges":[{"node":{"id":"587","address1":"Nickolas Cove"}}]},"products":{"edges":[]}}},{"node":{"id":"7","name":"Grady and Sons","addressId":52,"addresses":{"edges":[{"node":{"id":"52","address1":"Quigley Prairie"}}]},"products":{"edges":[{"node":{"id":"336","name":"Tasty Frozen Car"}},{"node":{"id":"1336","name":"Gorgeous Fresh Shoes"}}]}}},{"node":{"id":"8","name":"Blanda LLC","addressId":1266,"addresses":{"edges":[{"node":{"id":"1266","address1":"Corwin Ports"}}]},"products":{"edges":[{"node":{"id":"319","name":"Tasty Plastic Pizza"}}]}}},{"node":{"id":"9","name":"Sauer Group","addressId":1516,"addresses":{"edges":[{"node":{"id":"1516","address1":"Dibbert Passage"}}]},"products":{"edges":[{"node":{"id":"1182","name":"Handmade Frozen Pizza"}}]}}},{"node":{"id":"10","name":"Ruecker, Will and Schmidt","addressId":786,"addresses":{"edges":[{"node":{"id":"786","address1":"Ziemann Branch"}}]},"products":{"edges":[{"node":{"id":"311","name":"Small Steel Pants"}}]}}}]}}}
+            {"data":{"products":{"pageInfo":{"hasNextPage":true,"hasPreviousPage":false,"startCursor":"WzEsMF0=","endCursor":"WzEwLDld"},"edges":[{"node":{"id":"1","name":"Unbranded Wooden Shoes","category":"Tools","amount":25200,"createdAt":"2024-06-28T05:42:33.592Z","updatedAt":null,"deletedAt":null,"suppliers":{"pageInfo":{"hasNextPage":false,"hasPreviousPage":false,"startCursor":"WzY1MCwwXQ==","endCursor":"WzY1MCwwXQ=="},"edges":[{"node":{"id":"650","name":"Batz - Watsica","addressId":935,"createdAt":"2024-06-28T05:42:33.899Z","updatedAt":null,"deletedAt":null},"cursor":"WzY1MCwwXQ=="}],"total":1},"stores":{"pageInfo":{"hasNextPage":false,"hasPreviousPage":false,"startCursor":"Wzk3MiwwXQ==","endCursor":"Wzk3MiwwXQ=="},"edges":[{"node":{"id":"972","name":"Walter LLC","addressId":1968,"createdAt":"2024-06-28T05:42:33.771Z","updatedAt":null,"deletedAt":null},"cursor":"Wzk3MiwwXQ=="}],"total":1}},"cursor":"WzEsMF0="},{"node":{"id":"2","name":"Small Steel Computer","category":"Clothing","amount":12800,"createdAt":"2024-06-28T05:42:33.592Z","updatedAt":null,"deletedAt":null,"suppliers":{"pageInfo":{"hasNextPage":false,"hasPreviousPage":false,"startCursor":"WzIwLDBd","endCursor":"WzIwLDBd"},"edges":[{"node":{"id":"20","name":"Toy, Lang and Cassin","addressId":1296,"createdAt":"2024-06-28T05:42:33.899Z","updatedAt":null,"deletedAt":null},"cursor":"WzIwLDBd"}],"total":1},"stores":{"pageInfo":{"hasNextPage":false,"hasPreviousPage":false,"startCursor":"WzE3NzcsMF0=","endCursor":"WzE3NzcsMF0="},"edges":[{"node":{"id":"1777","name":"Senger - Ferry","addressId":1707,"createdAt":"2024-06-28T05:42:33.771Z","updatedAt":null,"deletedAt":null},"cursor":"WzE3NzcsMF0="}],"total":1}},"cursor":"WzIsMV0="},{"node":{"id":"3","name":"Handcrafted Soft Car","category":"Health","amount":36400,"createdAt":"2024-06-28T05:42:33.592Z","updatedAt":null,"deletedAt":null,"suppliers":{"pageInfo":{"hasNextPage":false,"hasPreviousPage":false,"startCursor":"WzkyOCwwXQ==","endCursor":"WzkyOCwwXQ=="},"edges":[{"node":{"id":"928","name":"Littel Group","addressId":488,"createdAt":"2024-06-28T05:42:33.899Z","updatedAt":null,"deletedAt":null},"cursor":"WzkyOCwwXQ=="}],"total":1},"stores":{"pageInfo":{"hasNextPage":false,"hasPreviousPage":false,"startCursor":"WzExNjIsMF0=","endCursor":"WzExNjIsMF0="},"edges":[{"node":{"id":"1162","name":"Parisian and Sons","addressId":1551,"createdAt":"2024-06-28T05:42:33.771Z","updatedAt":null,"deletedAt":null},"cursor":"WzExNjIsMF0="}],"total":1}},"cursor":"WzMsMl0="},{"node":{"id":"4","name":"Licensed Fresh Chicken","category":"Outdoors","amount":19800,"createdAt":"2024-06-28T05:42:33.592Z","updatedAt":null,"deletedAt":null,"suppliers":{"pageInfo":{"hasNextPage":false,"hasPreviousPage":false,"startCursor":"WzE5MDksMF0=","endCursor":"WzE5MDksMF0="},"edges":[{"node":{"id":"1909","name":"Lakin, Lubowitz and Yundt","addressId":524,"createdAt":"2024-06-28T05:42:33.899Z","updatedAt":null,"deletedAt":null},"cursor":"WzE5MDksMF0="}],"total":1},"stores":{"pageInfo":{"hasNextPage":false,"hasPreviousPage":false,"startCursor":"WzE0NzQsMF0=","endCursor":"WzE0NzQsMF0="},"edges":[{"node":{"id":"1474","name":"Schaefer - Bernier","addressId":1326,"createdAt":"2024-06-28T05:42:33.771Z","updatedAt":null,"deletedAt":null},"cursor":"WzE0NzQsMF0="}],"total":1}},"cursor":"WzQsM10="},{"node":{"id":"5","name":"Generic Plastic Chicken","category":"Automotive","amount":45500,"createdAt":"2024-06-28T05:42:33.592Z","updatedAt":null,"deletedAt":null,"suppliers":{"pageInfo":{"hasNextPage":false,"hasPreviousPage":false,"startCursor":"Wzc0OSwwXQ==","endCursor":"Wzc0OSwwXQ=="},"edges":[{"node":{"id":"749","name":"Schuster - Ward","addressId":1213,"createdAt":"2024-06-28T05:42:33.899Z","updatedAt":null,"deletedAt":null},"cursor":"Wzc0OSwwXQ=="}],"total":1},"stores":{"pageInfo":{"hasNextPage":false,"hasPreviousPage":false,"startCursor":"WzE5NDksMF0=","endCursor":"WzE5NDksMF0="},"edges":[{"node":{"id":"1949","name":"Kris Group","addressId":539,"createdAt":"2024-06-28T05:42:33.771Z","updatedAt":null,"deletedAt":null},"cursor":"WzE5NDksMF0="}],"total":1}},"cursor":"WzUsNF0="},{"node":{"id":"6","name":"Refined Frozen Computer","category":"Beauty","amount":39900,"createdAt":"2024-06-28T05:42:33.592Z","updatedAt":null,"deletedAt":null,"suppliers":{"pageInfo":{"hasNextPage":false,"hasPreviousPage":false,"startCursor":"WzEzNSwwXQ==","endCursor":"WzEzNSwwXQ=="},"edges":[{"node":{"id":"135","name":"Davis, Bradtke and Zulauf","addressId":1953,"createdAt":"2024-06-28T05:42:33.899Z","updatedAt":null,"deletedAt":null},"cursor":"WzEzNSwwXQ=="}],"total":1},"stores":{"pageInfo":{"hasNextPage":false,"hasPreviousPage":false,"startCursor":"WzQ5MSwwXQ==","endCursor":"WzQ5MSwwXQ=="},"edges":[{"node":{"id":"491","name":"Gutmann, Blick and Schowalter","addressId":1452,"createdAt":"2024-06-28T05:42:33.771Z","updatedAt":null,"deletedAt":null},"cursor":"WzQ5MSwwXQ=="}],"total":1}},"cursor":"WzYsNV0="},{"node":{"id":"7","name":"Handmade Soft Pants","category":"Sports","amount":1700,"createdAt":"2024-06-28T05:42:33.592Z","updatedAt":null,"deletedAt":null,"suppliers":{"pageInfo":{"hasNextPage":false,"hasPreviousPage":false,"startCursor":"Wzk1MywwXQ==","endCursor":"Wzk1MywwXQ=="},"edges":[{"node":{"id":"953","name":"Metz Inc","addressId":766,"createdAt":"2024-06-28T05:42:33.899Z","updatedAt":null,"deletedAt":null},"cursor":"Wzk1MywwXQ=="}],"total":1},"stores":{"pageInfo":{"hasNextPage":false,"hasPreviousPage":false,"startCursor":"WzE3NCwwXQ==","endCursor":"WzE3NCwwXQ=="},"edges":[{"node":{"id":"174","name":"Littel, Hettinger and Muller","addressId":1838,"createdAt":"2024-06-28T05:42:33.771Z","updatedAt":null,"deletedAt":null},"cursor":"WzE3NCwwXQ=="}],"total":1}},"cursor":"WzcsNl0="},{"node":{"id":"8","name":"Small Soft Fish","category":"Books","amount":47700,"createdAt":"2024-06-28T05:42:33.592Z","updatedAt":null,"deletedAt":null,"suppliers":{"pageInfo":{"hasNextPage":false,"hasPreviousPage":false,"startCursor":"Wzk4NywwXQ==","endCursor":"Wzk4NywwXQ=="},"edges":[{"node":{"id":"987","name":"Raynor, Romaguera and Weissnat","addressId":132,"createdAt":"2024-06-28T05:42:33.899Z","updatedAt":null,"deletedAt":null},"cursor":"Wzk4NywwXQ=="}],"total":1},"stores":{"pageInfo":{"hasNextPage":false,"hasPreviousPage":false,"startCursor":"WzE0NDYsMF0=","endCursor":"WzE0NDYsMF0="},"edges":[{"node":{"id":"1446","name":"Hessel, Hayes and Maggio","addressId":1331,"createdAt":"2024-06-28T05:42:33.771Z","updatedAt":null,"deletedAt":null},"cursor":"WzE0NDYsMF0="}],"total":1}},"cursor":"WzgsN10="},{"node":{"id":"9","name":"Sleek Frozen Hat","category":"Sports","amount":66700,"createdAt":"2024-06-28T05:42:33.592Z","updatedAt":null,"deletedAt":null,"suppliers":{"pageInfo":{"hasNextPage":false,"hasPreviousPage":false,"startCursor":"Wzc1MywwXQ==","endCursor":"Wzc1MywwXQ=="},"edges":[{"node":{"id":"753","name":"Turcotte - Heaney","addressId":1143,"createdAt":"2024-06-28T05:42:33.899Z","updatedAt":null,"deletedAt":null},"cursor":"Wzc1MywwXQ=="}],"total":1},"stores":{"pageInfo":{"hasNextPage":false,"hasPreviousPage":false,"startCursor":"WzYxLDBd","endCursor":"WzYxLDBd"},"edges":[{"node":{"id":"61","name":"Kilback - Senger","addressId":1905,"createdAt":"2024-06-28T05:42:33.771Z","updatedAt":null,"deletedAt":null},"cursor":"WzYxLDBd"}],"total":1}},"cursor":"WzksOF0="},{"node":{"id":"10","name":"Unbranded Cotton Pizza","category":"Music","amount":58100,"createdAt":"2024-06-28T05:42:33.592Z","updatedAt":null,"deletedAt":null,"suppliers":{"pageInfo":{"hasNextPage":false,"hasPreviousPage":false,"startCursor":"WzM0NSwwXQ==","endCursor":"WzM0NSwwXQ=="},"edges":[{"node":{"id":"345","name":"Welch Inc","addressId":267,"createdAt":"2024-06-28T05:42:33.899Z","updatedAt":null,"deletedAt":null},"cursor":"WzM0NSwwXQ=="}],"total":1},"stores":{"pageInfo":{"hasNextPage":false,"hasPreviousPage":false,"startCursor":"WzE1NzgsMF0=","endCursor":"WzE1NzgsMF0="},"edges":[{"node":{"id":"1578","name":"Kunze - Carter","addressId":769,"createdAt":"2024-06-28T05:42:33.771Z","updatedAt":null,"deletedAt":null},"cursor":"WzE1NzgsMF0="}],"total":1}},"cursor":"WzEwLDld"}],"total":1999}}}
         status_message: OK
         proto_major: 0
         proto_minor: 0
-        timestamp: 2024-06-26T07:59:15.109704133Z
+        timestamp: 2024-06-28T06:08:30.548035805Z
     objects: []
     assertions:
         noise:
+            body.data.products.edges.node.createdAt: []
+            body.data.products.edges.node.stores.edges.node.createdAt: []
+            body.data.products.edges.node.suppliers.edges.node.createdAt: []
             header.Date: []
-    created: 1719388755
+    created: 1719554910
 curl: |-
     curl --request POST \
       --url http://localhost:9000/graphql \
+      --header 'Postman-Token: 5945598e-0d00-4d6b-a14e-263542f8f378' \
       --header 'Host: localhost:9000' \
       --header 'Accept-Encoding: gzip, deflate, br' \
-      --header 'Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyIjp7ImlkIjoxLCJmaXJzdE5hbWUiOiJTdGVybGluZyIsImxhc3ROYW1lIjoiU2F1ZXIiLCJlbWFpbCI6Ik1hc29uLkdvbGRuZXI0OUBob3RtYWlsLmNvbSIsInBhc3N3b3JkIjoiZGFhOTMyMGY1YzU4NDRiODRiMjhlMDE2YjRiOGM0MGIiLCJjcmVhdGVkQXQiOiIyMDIzLTEyLTA4VDE4OjE2OjQxLjYzOFoiLCJ1cGRhdGVkQXQiOm51bGwsImRlbGV0ZWRBdCI6bnVsbH0sImlhdCI6MTcxOTM0MzYzOCwiZXhwIjoxNzE5NDMwMDM4fQ.Kgm3Lmbg97M_QQP5Gn9q4suRYEF7_n4ITqehV4i7t_s' \
-      --header 'Content-Type: application/json' \
       --header 'Connection: keep-alive' \
-      --header 'Postman-Token: 8e3a1a18-ef42-4f56-9939-444dd3b717c4' \
-      --header 'Accept: */*' \
+      --header 'Content-Type: application/json' \
       --header 'User-Agent: PostmanRuntime/7.37.3' \
-      --data '{"query":"query Suppliers {\n  suppliers (offset: 0, limit:10){\n    edges {\n      node {\n        id\n        name\n        addressId\n        addresses {\n          edges {\n            node {\n              id\n              address1\n            }\n          }\n        }\n        products {\n          edges {\n            node {\n              id\n              name\n            }\n          }\n        }\n      }\n    }\n  }\n}"}'
+      --header 'Accept: */*' \
+      --data '{"query":"query Products(\n  $productsAfter: Int\n  $productsFirst: Int\n  $productsBefore: Int\n  $productsLast: Int\n  $productsLimit: Int!\n  $productsOrder: String\n  $productsWhere: SequelizeJSON\n  $productsOffset: Int!\n  $suppliersAfter: String\n  $suppliersFirst: Int\n  $suppliersBefore: String\n  $suppliersLast: Int\n  $storesAfter: String\n  $storesFirst: Int\n  $storesBefore: String\n  $storesLast: Int\n) {\n  products(\n    after: $productsAfter\n    first: $productsFirst\n    before: $productsBefore\n    last: $productsLast\n    limit: $productsLimit\n    order: $productsOrder\n    where: $productsWhere\n    offset: $productsOffset\n  ) {\n    pageInfo {\n      hasNextPage\n      hasPreviousPage\n      startCursor\n      endCursor\n    }\n    edges {\n      node {\n        id\n        name\n        category\n        amount\n        createdAt\n        updatedAt\n        deletedAt\n        suppliers(\n          after: $suppliersAfter\n          first: $suppliersFirst\n          before: $suppliersBefore\n          last: $suppliersLast\n        ) {\n          pageInfo {\n            hasNextPage\n            hasPreviousPage\n            startCursor\n            endCursor\n          }\n          edges {\n            node {\n              id\n              name\n              addressId\n              createdAt\n              updatedAt\n              deletedAt\n            }\n            cursor\n          }\n          total\n        }\n        stores(\n          after: $storesAfter\n          first: $storesFirst\n          before: $storesBefore\n          last: $storesLast\n        ) {\n          pageInfo {\n            hasNextPage\n            hasPreviousPage\n            startCursor\n            endCursor\n          }\n          edges {\n            node {\n              id\n              name\n              addressId\n              createdAt\n              updatedAt\n              deletedAt\n            }\n            cursor\n          }\n          total\n        }\n      }\n      cursor\n    }\n    total\n  }\n}\n","variables":{
+      "productsAfter": null,
+      "productsFirst": 10,
+      "productsBefore": null,
+      "productsLast": null,
+      "productsLimit": 10,
+      "productsOrder":"id",
+      "productsWhere": {},
+      "productsOffset": 0,
+      "suppliersAfter": null,
+      "suppliersFirst": 10,
+      "suppliersBefore": null,
+      "suppliersLast": null,
+      "storesAfter": null,
+      "storesFirst": 10,
+      "storesBefore": null,
+      "storesLast": null
+    }
+    }'

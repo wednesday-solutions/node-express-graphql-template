@@ -1,5 +1,6 @@
 path: ""
-appId: ""
+appId: 0
+appName: ""
 command: ""
 port: 0
 proxyPort: 16789
@@ -15,24 +16,28 @@ buildDelay: 30
 test:
     selectedTests: {}
     globalNoise:
-      global:
-        body:
-          data.signIn.token: []
-          data.signUp.token: []
-        header:
-          Etag: []
-          Vary: []
-      test-sets: {}
+        global:
+          body:
+            data.signIn.token: []
+            data.signUp.token: []
+          header:
+            Etag: []
+            Vary: []
+        test-sets: {}
     delay: 5
     apiTimeout: 5
-    coverage: true
+    coverage: false
     goCoverage: false
     coverageReportPath: ""
     ignoreOrdering: true
     mongoPassword: "default@123"
     language: ""
     removeUnusedMocks: false
+    basePath: ""
     mocking: true
+    dedup: true
+    disableMockUpload: false
+    freezeTime: false
 record:
     recordTimer: 0s
     filters: []

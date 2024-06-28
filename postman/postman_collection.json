@@ -1,0 +1,1683 @@
+{
+  "info": {
+    "_postman_id": "22bfb526-d142-40a9-9ce3-ddc112eec355",
+    "name": "Node Express Graphql Template",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+    "_exporter_id": "9158491"
+  },
+  "item": [
+    {
+      "name": "query",
+      "item": [
+        {
+          "name": "query aggregate",
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "exec": [
+                  "pm.test(\"errors is undefined\", function() {",
+                  "    const response = JSON.parse(responseBody);",
+                  "    pm.expect(response.errors).to.be.undefined",
+                  "});"
+                ],
+                "type": "text/javascript"
+              }
+            }
+          ],
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "",
+                "type": "text"
+              }
+            ],
+            "body": {
+              "mode": "graphql",
+              "graphql": {
+                "query": "query Aggregate(\n  $aggregateStartDate: DateTime\n  $aggregateEndDate: DateTime\n  $aggregateCategory: String\n) {\n  aggregate(\n    startDate: $aggregateStartDate\n    endDate: $aggregateEndDate\n    category: $aggregateCategory\n  ) {\n    total {\n      purchasedProductsPrice\n    }\n    max {\n      purchasedProductsPrice\n    }\n    count {\n      purchasedProducts\n    }\n  }\n}\n",
+                "variables": "{\n  \"aggregateStartDate\": null,\n  \"aggregateEndDate\": null,\n  \"aggregateCategory\": null\n}\n"
+              }
+            },
+            "url": {
+              "raw": "http://localhost:9000/graphql",
+              "protocol": "http",
+              "host": ["localhost"],
+              "port": "9000",
+              "path": ["graphql"]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "query address",
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "exec": [
+                  "pm.test(\"errors is undefined\", function() {",
+                  "    const response = JSON.parse(responseBody);",
+                  "    pm.expect(response.errors).to.be.undefined",
+                  "});"
+                ],
+                "type": "text/javascript"
+              }
+            }
+          ],
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "",
+                "type": "text"
+              }
+            ],
+            "body": {
+              "mode": "graphql",
+              "graphql": {
+                "query": "query Address(\n  $addressId: Int\n  $addressWhere: SequelizeJSON\n  $suppliersAfter: String\n  $suppliersFirst: Int\n  $suppliersBefore: String\n  $suppliersLast: Int\n  $addressesAfter: String\n  $addressesFirst: Int\n  $addressesBefore: String\n  $addressesLast: Int\n  $productsAfter: String\n  $productsFirst: Int\n  $productsBefore: String\n  $productsLast: Int\n  $storesAfter: String\n  $storesFirst: Int\n  $storesBefore: String\n  $storesLast: Int\n) {\n  address(id: $addressId, where: $addressWhere) {\n    id\n    address1\n    address2\n    city\n    country\n    latitude\n    longitude\n    createdAt\n    updatedAt\n    deletedAt\n    suppliers(\n      after: $suppliersAfter\n      first: $suppliersFirst\n      before: $suppliersBefore\n      last: $suppliersLast\n    ) {\n      pageInfo {\n        hasNextPage\n        hasPreviousPage\n        startCursor\n        endCursor\n      }\n      edges {\n        node {\n          id\n          name\n          addressId\n          createdAt\n          updatedAt\n          deletedAt\n          addresses(\n            after: $addressesAfter\n            first: $addressesFirst\n            before: $addressesBefore\n            last: $addressesLast\n          ) {\n            pageInfo {\n              hasNextPage\n              hasPreviousPage\n              startCursor\n              endCursor\n            }\n            edges {\n              cursor\n            }\n            total\n          }\n          products(\n            after: $productsAfter\n            first: $productsFirst\n            before: $productsBefore\n            last: $productsLast\n          ) {\n            pageInfo {\n              hasNextPage\n              hasPreviousPage\n              startCursor\n              endCursor\n            }\n            edges {\n              cursor\n            }\n            total\n          }\n        }\n        cursor\n      }\n      total\n    }\n    stores(\n      after: $storesAfter\n      first: $storesFirst\n      before: $storesBefore\n      last: $storesLast\n    ) {\n      pageInfo {\n        hasNextPage\n        hasPreviousPage\n        startCursor\n        endCursor\n      }\n      edges {\n        node {\n          id\n          name\n          addressId\n          createdAt\n          updatedAt\n          deletedAt\n          addresses(\n            after: $addressesAfter\n            first: $addressesFirst\n            before: $addressesBefore\n            last: $addressesLast\n          ) {\n            pageInfo {\n              hasNextPage\n              hasPreviousPage\n              startCursor\n              endCursor\n            }\n            edges {\n              cursor\n            }\n            total\n          }\n          products(\n            after: $productsAfter\n            first: $productsFirst\n            before: $productsBefore\n            last: $productsLast\n          ) {\n            pageInfo {\n              hasNextPage\n              hasPreviousPage\n              startCursor\n              endCursor\n            }\n            edges {\n              cursor\n            }\n            total\n          }\n        }\n        cursor\n      }\n      total\n    }\n  }\n}\n",
+                "variables": "{\n  \"addressId\": null,\n  \"addressWhere\": {},\n  \"suppliersAfter\": null,\n  \"suppliersFirst\": 10,\n  \"suppliersBefore\": null,\n  \"suppliersLast\": null,\n  \"addressesAfter\": null,\n  \"addressesFirst\": 10,\n  \"addressesBefore\": null,\n  \"addressesLast\": null,\n  \"productsAfter\": null,\n  \"productsFirst\": 10,\n  \"productsBefore\": null,\n  \"productsLast\": null,\n  \"storesAfter\": null,\n  \"storesFirst\": 10,\n  \"storesBefore\": null,\n  \"storesLast\": null\n}\n"
+              }
+            },
+            "url": {
+              "raw": "http://localhost:9000/graphql",
+              "protocol": "http",
+              "host": ["localhost"],
+              "port": "9000",
+              "path": ["graphql"]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "query product",
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "exec": [
+                  "pm.test(\"errors is undefined\", function() {",
+                  "    const response = JSON.parse(responseBody);",
+                  "    pm.expect(response.errors).to.be.undefined",
+                  "});"
+                ],
+                "type": "text/javascript"
+              }
+            }
+          ],
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "",
+                "type": "text"
+              }
+            ],
+            "body": {
+              "mode": "graphql",
+              "graphql": {
+                "query": "query Product(\n  $productId: Int\n  $productWhere: SequelizeJSON\n  $suppliersAfter: String\n  $suppliersFirst: Int\n  $suppliersBefore: String\n  $suppliersLast: Int\n  $addressesAfter: String\n  $addressesFirst: Int\n  $addressesBefore: String\n  $addressesLast: Int\n  $productsAfter: String\n  $productsFirst: Int\n  $productsBefore: String\n  $productsLast: Int\n  $storesAfter: String\n  $storesFirst: Int\n  $storesBefore: String\n  $storesLast: Int\n) {\n  product(id: $productId, where: $productWhere) {\n    id\n    name\n    category\n    amount\n    createdAt\n    updatedAt\n    deletedAt\n    suppliers(\n      after: $suppliersAfter\n      first: $suppliersFirst\n      before: $suppliersBefore\n      last: $suppliersLast\n    ) {\n      pageInfo {\n        hasNextPage\n        hasPreviousPage\n        startCursor\n        endCursor\n      }\n      edges {\n        node {\n          id\n          name\n          addressId\n          createdAt\n          updatedAt\n          deletedAt\n          addresses(\n            after: $addressesAfter\n            first: $addressesFirst\n            before: $addressesBefore\n            last: $addressesLast\n          ) {\n            pageInfo {\n              hasNextPage\n              hasPreviousPage\n              startCursor\n              endCursor\n            }\n            edges {\n              cursor\n            }\n            total\n          }\n          products(\n            after: $productsAfter\n            first: $productsFirst\n            before: $productsBefore\n            last: $productsLast\n          ) {\n            pageInfo {\n              hasNextPage\n              hasPreviousPage\n              startCursor\n              endCursor\n            }\n            edges {\n              cursor\n            }\n            total\n          }\n        }\n        cursor\n      }\n      total\n    }\n    stores(\n      after: $storesAfter\n      first: $storesFirst\n      before: $storesBefore\n      last: $storesLast\n    ) {\n      pageInfo {\n        hasNextPage\n        hasPreviousPage\n        startCursor\n        endCursor\n      }\n      edges {\n        node {\n          id\n          name\n          addressId\n          createdAt\n          updatedAt\n          deletedAt\n          addresses(\n            after: $addressesAfter\n            first: $addressesFirst\n            before: $addressesBefore\n            last: $addressesLast\n          ) {\n            pageInfo {\n              hasNextPage\n              hasPreviousPage\n              startCursor\n              endCursor\n            }\n            edges {\n              cursor\n            }\n            total\n          }\n          products(\n            after: $productsAfter\n            first: $productsFirst\n            before: $productsBefore\n            last: $productsLast\n          ) {\n            pageInfo {\n              hasNextPage\n              hasPreviousPage\n              startCursor\n              endCursor\n            }\n            edges {\n              cursor\n            }\n            total\n          }\n        }\n        cursor\n      }\n      total\n    }\n  }\n}\n",
+                "variables": "{\n  \"productId\": null,\n  \"productWhere\": {},\n  \"suppliersAfter\": null,\n  \"suppliersFirst\": 10,\n  \"suppliersBefore\": null,\n  \"suppliersLast\": null,\n  \"addressesAfter\": null,\n  \"addressesFirst\": 10,\n  \"addressesBefore\": null,\n  \"addressesLast\": null,\n  \"productsAfter\": null,\n  \"productsFirst\": 10,\n  \"productsBefore\": null,\n  \"productsLast\": null,\n  \"storesAfter\": null,\n  \"storesFirst\": 10,\n  \"storesBefore\": null,\n  \"storesLast\": null\n}\n"
+              }
+            },
+            "url": {
+              "raw": "http://localhost:9000/graphql",
+              "protocol": "http",
+              "host": ["localhost"],
+              "port": "9000",
+              "path": ["graphql"]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "query purchasedProduct",
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "exec": [
+                  "pm.test(\"errors is undefined\", function() {",
+                  "    const response = JSON.parse(responseBody);",
+                  "    pm.expect(response.errors).to.be.undefined",
+                  "});"
+                ],
+                "type": "text/javascript"
+              }
+            }
+          ],
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "",
+                "type": "text"
+              }
+            ],
+            "body": {
+              "mode": "graphql",
+              "graphql": {
+                "query": "query PurchasedProduct(\n  $purchasedProductId: Int\n  $purchasedProductWhere: SequelizeJSON\n  $productsAfter: String\n  $productsFirst: Int\n  $productsBefore: String\n  $productsLast: Int\n  $suppliersAfter: String\n  $suppliersFirst: Int\n  $suppliersBefore: String\n  $suppliersLast: Int\n  $storesAfter: String\n  $storesFirst: Int\n  $storesBefore: String\n  $storesLast: Int\n) {\n  purchasedProduct(id: $purchasedProductId, where: $purchasedProductWhere) {\n    id\n    price\n    discount\n    deliveryDate\n    productId\n    storeId\n    createdAt\n    updatedAt\n    deletedAt\n    products(\n      after: $productsAfter\n      first: $productsFirst\n      before: $productsBefore\n      last: $productsLast\n    ) {\n      pageInfo {\n        hasNextPage\n        hasPreviousPage\n        startCursor\n        endCursor\n      }\n      edges {\n        node {\n          id\n          name\n          category\n          amount\n          createdAt\n          updatedAt\n          deletedAt\n          suppliers(\n            after: $suppliersAfter\n            first: $suppliersFirst\n            before: $suppliersBefore\n            last: $suppliersLast\n          ) {\n            pageInfo {\n              hasNextPage\n              hasPreviousPage\n              startCursor\n              endCursor\n            }\n            edges {\n              cursor\n            }\n            total\n          }\n          stores(\n            after: $storesAfter\n            first: $storesFirst\n            before: $storesBefore\n            last: $storesLast\n          ) {\n            pageInfo {\n              hasNextPage\n              hasPreviousPage\n              startCursor\n              endCursor\n            }\n            edges {\n              cursor\n            }\n            total\n          }\n        }\n        cursor\n      }\n      total\n    }\n  }\n}\n",
+                "variables": "{\n  \"purchasedProductId\": null,\n  \"purchasedProductWhere\": {},\n  \"productsAfter\": null,\n  \"productsFirst\": 10,\n  \"productsBefore\": null,\n  \"productsLast\": null,\n  \"suppliersAfter\": null,\n  \"suppliersFirst\": 10,\n  \"suppliersBefore\": null,\n  \"suppliersLast\": null,\n  \"storesAfter\": null,\n  \"storesFirst\": 10,\n  \"storesBefore\": null,\n  \"storesLast\": null\n}\n"
+              }
+            },
+            "url": {
+              "raw": "http://localhost:9000/graphql",
+              "protocol": "http",
+              "host": ["localhost"],
+              "port": "9000",
+              "path": ["graphql"]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "query storeProduct",
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "exec": [
+                  "pm.test(\"errors is undefined\", function() {",
+                  "    const response = JSON.parse(responseBody);",
+                  "    pm.expect(response.errors).to.be.undefined",
+                  "});"
+                ],
+                "type": "text/javascript"
+              }
+            }
+          ],
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "",
+                "type": "text"
+              }
+            ],
+            "body": {
+              "mode": "graphql",
+              "graphql": {
+                "query": "query StoreProduct(\n  $storeProductId: Int\n  $storeProductWhere: SequelizeJSON\n  $productsAfter: String\n  $productsFirst: Int\n  $productsBefore: String\n  $productsLast: Int\n  $suppliersAfter: String\n  $suppliersFirst: Int\n  $suppliersBefore: String\n  $suppliersLast: Int\n  $storesAfter: String\n  $storesFirst: Int\n  $storesBefore: String\n  $storesLast: Int\n  $addressesAfter: String\n  $addressesFirst: Int\n  $addressesBefore: String\n  $addressesLast: Int\n) {\n  storeProduct(id: $storeProductId, where: $storeProductWhere) {\n    id\n    productId\n    storeId\n    createdAt\n    updatedAt\n    deletedAt\n    products(\n      after: $productsAfter\n      first: $productsFirst\n      before: $productsBefore\n      last: $productsLast\n    ) {\n      pageInfo {\n        hasNextPage\n        hasPreviousPage\n        startCursor\n        endCursor\n      }\n      edges {\n        node {\n          id\n          name\n          category\n          amount\n          createdAt\n          updatedAt\n          deletedAt\n          suppliers(\n            after: $suppliersAfter\n            first: $suppliersFirst\n            before: $suppliersBefore\n            last: $suppliersLast\n          ) {\n            pageInfo {\n              hasNextPage\n              hasPreviousPage\n              startCursor\n              endCursor\n            }\n            edges {\n              cursor\n            }\n            total\n          }\n          stores(\n            after: $storesAfter\n            first: $storesFirst\n            before: $storesBefore\n            last: $storesLast\n          ) {\n            pageInfo {\n              hasNextPage\n              hasPreviousPage\n              startCursor\n              endCursor\n            }\n            edges {\n              cursor\n            }\n            total\n          }\n        }\n        cursor\n      }\n      total\n    }\n    stores(\n      after: $storesAfter\n      first: $storesFirst\n      before: $storesBefore\n      last: $storesLast\n    ) {\n      pageInfo {\n        hasNextPage\n        hasPreviousPage\n        startCursor\n        endCursor\n      }\n      edges {\n        node {\n          id\n          name\n          addressId\n          createdAt\n          updatedAt\n          deletedAt\n          addresses(\n            after: $addressesAfter\n            first: $addressesFirst\n            before: $addressesBefore\n            last: $addressesLast\n          ) {\n            pageInfo {\n              hasNextPage\n              hasPreviousPage\n              startCursor\n              endCursor\n            }\n            edges {\n              cursor\n            }\n            total\n          }\n          products(\n            after: $productsAfter\n            first: $productsFirst\n            before: $productsBefore\n            last: $productsLast\n          ) {\n            pageInfo {\n              hasNextPage\n              hasPreviousPage\n              startCursor\n              endCursor\n            }\n            edges {\n              cursor\n            }\n            total\n          }\n        }\n        cursor\n      }\n      total\n    }\n  }\n}\n",
+                "variables": "{\n  \"storeProductId\": null,\n  \"storeProductWhere\": {},\n  \"productsAfter\": null,\n  \"productsFirst\": 10,\n  \"productsBefore\": null,\n  \"productsLast\": null,\n  \"suppliersAfter\": null,\n  \"suppliersFirst\": 10,\n  \"suppliersBefore\": null,\n  \"suppliersLast\": null,\n  \"storesAfter\": null,\n  \"storesFirst\": 10,\n  \"storesBefore\": null,\n  \"storesLast\": null,\n  \"addressesAfter\": null,\n  \"addressesFirst\": 10,\n  \"addressesBefore\": null,\n  \"addressesLast\": null\n}\n"
+              }
+            },
+            "url": {
+              "raw": "http://localhost:9000/graphql",
+              "protocol": "http",
+              "host": ["localhost"],
+              "port": "9000",
+              "path": ["graphql"]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "query store",
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "exec": [
+                  "pm.test(\"errors is undefined\", function() {",
+                  "    const response = JSON.parse(responseBody);",
+                  "    pm.expect(response.errors).to.be.undefined",
+                  "});"
+                ],
+                "type": "text/javascript"
+              }
+            }
+          ],
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "",
+                "type": "text"
+              }
+            ],
+            "body": {
+              "mode": "graphql",
+              "graphql": {
+                "query": "query Store(\n  $storeId: Int\n  $storeWhere: SequelizeJSON\n  $addressesAfter: String\n  $addressesFirst: Int\n  $addressesBefore: String\n  $addressesLast: Int\n  $suppliersAfter: String\n  $suppliersFirst: Int\n  $suppliersBefore: String\n  $suppliersLast: Int\n  $storesAfter: String\n  $storesFirst: Int\n  $storesBefore: String\n  $storesLast: Int\n  $productsAfter: String\n  $productsFirst: Int\n  $productsBefore: String\n  $productsLast: Int\n) {\n  store(id: $storeId, where: $storeWhere) {\n    id\n    name\n    addressId\n    createdAt\n    updatedAt\n    deletedAt\n    addresses(\n      after: $addressesAfter\n      first: $addressesFirst\n      before: $addressesBefore\n      last: $addressesLast\n    ) {\n      pageInfo {\n        hasNextPage\n        hasPreviousPage\n        startCursor\n        endCursor\n      }\n      edges {\n        node {\n          id\n          address1\n          address2\n          city\n          country\n          latitude\n          longitude\n          createdAt\n          updatedAt\n          deletedAt\n          suppliers(\n            after: $suppliersAfter\n            first: $suppliersFirst\n            before: $suppliersBefore\n            last: $suppliersLast\n          ) {\n            pageInfo {\n              hasNextPage\n              hasPreviousPage\n              startCursor\n              endCursor\n            }\n            edges {\n              cursor\n            }\n            total\n          }\n          stores(\n            after: $storesAfter\n            first: $storesFirst\n            before: $storesBefore\n            last: $storesLast\n          ) {\n            pageInfo {\n              hasNextPage\n              hasPreviousPage\n              startCursor\n              endCursor\n            }\n            edges {\n              cursor\n            }\n            total\n          }\n        }\n        cursor\n      }\n      total\n    }\n    products(\n      after: $productsAfter\n      first: $productsFirst\n      before: $productsBefore\n      last: $productsLast\n    ) {\n      pageInfo {\n        hasNextPage\n        hasPreviousPage\n        startCursor\n        endCursor\n      }\n      edges {\n        node {\n          id\n          name\n          category\n          amount\n          createdAt\n          updatedAt\n          deletedAt\n          suppliers(\n            after: $suppliersAfter\n            first: $suppliersFirst\n            before: $suppliersBefore\n            last: $suppliersLast\n          ) {\n            pageInfo {\n              hasNextPage\n              hasPreviousPage\n              startCursor\n              endCursor\n            }\n            edges {\n              cursor\n            }\n            total\n          }\n          stores(\n            after: $storesAfter\n            first: $storesFirst\n            before: $storesBefore\n            last: $storesLast\n          ) {\n            pageInfo {\n              hasNextPage\n              hasPreviousPage\n              startCursor\n              endCursor\n            }\n            edges {\n              cursor\n            }\n            total\n          }\n        }\n        cursor\n      }\n      total\n    }\n  }\n}\n",
+                "variables": "{\n  \"storeId\": null,\n  \"storeWhere\": {},\n  \"addressesAfter\": null,\n  \"addressesFirst\": 10,\n  \"addressesBefore\": null,\n  \"addressesLast\": null,\n  \"suppliersAfter\": null,\n  \"suppliersFirst\": 10,\n  \"suppliersBefore\": null,\n  \"suppliersLast\": null,\n  \"storesAfter\": null,\n  \"storesFirst\": 10,\n  \"storesBefore\": null,\n  \"storesLast\": null,\n  \"productsAfter\": null,\n  \"productsFirst\": 10,\n  \"productsBefore\": null,\n  \"productsLast\": null\n}\n"
+              }
+            },
+            "url": {
+              "raw": "http://localhost:9000/graphql",
+              "protocol": "http",
+              "host": ["localhost"],
+              "port": "9000",
+              "path": ["graphql"]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "query supplierProduct",
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "exec": [
+                  "pm.test(\"errors is undefined\", function() {",
+                  "    const response = JSON.parse(responseBody);",
+                  "    pm.expect(response.errors).to.be.undefined",
+                  "});"
+                ],
+                "type": "text/javascript"
+              }
+            }
+          ],
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "",
+                "type": "text"
+              }
+            ],
+            "body": {
+              "mode": "graphql",
+              "graphql": {
+                "query": "query SupplierProduct(\n  $supplierProductId: Int\n  $supplierProductWhere: SequelizeJSON\n  $productsAfter: String\n  $productsFirst: Int\n  $productsBefore: String\n  $productsLast: Int\n  $suppliersAfter: String\n  $suppliersFirst: Int\n  $suppliersBefore: String\n  $suppliersLast: Int\n  $storesAfter: String\n  $storesFirst: Int\n  $storesBefore: String\n  $storesLast: Int\n  $addressesAfter: String\n  $addressesFirst: Int\n  $addressesBefore: String\n  $addressesLast: Int\n) {\n  supplierProduct(id: $supplierProductId, where: $supplierProductWhere) {\n    id\n    supplierId\n    productId\n    createdAt\n    updatedAt\n    deletedAt\n    products(\n      after: $productsAfter\n      first: $productsFirst\n      before: $productsBefore\n      last: $productsLast\n    ) {\n      pageInfo {\n        hasNextPage\n        hasPreviousPage\n        startCursor\n        endCursor\n      }\n      edges {\n        node {\n          id\n          name\n          category\n          amount\n          createdAt\n          updatedAt\n          deletedAt\n          suppliers(\n            after: $suppliersAfter\n            first: $suppliersFirst\n            before: $suppliersBefore\n            last: $suppliersLast\n          ) {\n            pageInfo {\n              hasNextPage\n              hasPreviousPage\n              startCursor\n              endCursor\n            }\n            edges {\n              cursor\n            }\n            total\n          }\n          stores(\n            after: $storesAfter\n            first: $storesFirst\n            before: $storesBefore\n            last: $storesLast\n          ) {\n            pageInfo {\n              hasNextPage\n              hasPreviousPage\n              startCursor\n              endCursor\n            }\n            edges {\n              cursor\n            }\n            total\n          }\n        }\n        cursor\n      }\n      total\n    }\n    suppliers(\n      after: $suppliersAfter\n      first: $suppliersFirst\n      before: $suppliersBefore\n      last: $suppliersLast\n    ) {\n      pageInfo {\n        hasNextPage\n        hasPreviousPage\n        startCursor\n        endCursor\n      }\n      edges {\n        node {\n          id\n          name\n          addressId\n          createdAt\n          updatedAt\n          deletedAt\n          addresses(\n            after: $addressesAfter\n            first: $addressesFirst\n            before: $addressesBefore\n            last: $addressesLast\n          ) {\n            pageInfo {\n              hasNextPage\n              hasPreviousPage\n              startCursor\n              endCursor\n            }\n            edges {\n              cursor\n            }\n            total\n          }\n          products(\n            after: $productsAfter\n            first: $productsFirst\n            before: $productsBefore\n            last: $productsLast\n          ) {\n            pageInfo {\n              hasNextPage\n              hasPreviousPage\n              startCursor\n              endCursor\n            }\n            edges {\n              cursor\n            }\n            total\n          }\n        }\n        cursor\n      }\n      total\n    }\n  }\n}\n",
+                "variables": "{\n  \"supplierProductId\": null,\n  \"supplierProductWhere\": {},\n  \"productsAfter\": null,\n  \"productsFirst\": 10,\n  \"productsBefore\": null,\n  \"productsLast\": null,\n  \"suppliersAfter\": null,\n  \"suppliersFirst\": 10,\n  \"suppliersBefore\": null,\n  \"suppliersLast\": null,\n  \"storesAfter\": null,\n  \"storesFirst\": 10,\n  \"storesBefore\": null,\n  \"storesLast\": null,\n  \"addressesAfter\": null,\n  \"addressesFirst\": 10,\n  \"addressesBefore\": null,\n  \"addressesLast\": null\n}\n"
+              }
+            },
+            "url": {
+              "raw": "http://localhost:9000/graphql",
+              "protocol": "http",
+              "host": ["localhost"],
+              "port": "9000",
+              "path": ["graphql"]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "query supplier",
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "exec": [
+                  "pm.test(\"errors is undefined\", function() {",
+                  "    const response = JSON.parse(responseBody);",
+                  "    pm.expect(response.errors).to.be.undefined",
+                  "});"
+                ],
+                "type": "text/javascript"
+              }
+            }
+          ],
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "",
+                "type": "text"
+              }
+            ],
+            "body": {
+              "mode": "graphql",
+              "graphql": {
+                "query": "query Supplier(\n  $supplierId: Int\n  $supplierWhere: SequelizeJSON\n  $addressesAfter: String\n  $addressesFirst: Int\n  $addressesBefore: String\n  $addressesLast: Int\n  $suppliersAfter: String\n  $suppliersFirst: Int\n  $suppliersBefore: String\n  $suppliersLast: Int\n  $storesAfter: String\n  $storesFirst: Int\n  $storesBefore: String\n  $storesLast: Int\n  $productsAfter: String\n  $productsFirst: Int\n  $productsBefore: String\n  $productsLast: Int\n) {\n  supplier(id: $supplierId, where: $supplierWhere) {\n    id\n    name\n    addressId\n    createdAt\n    updatedAt\n    deletedAt\n    addresses(\n      after: $addressesAfter\n      first: $addressesFirst\n      before: $addressesBefore\n      last: $addressesLast\n    ) {\n      pageInfo {\n        hasNextPage\n        hasPreviousPage\n        startCursor\n        endCursor\n      }\n      edges {\n        node {\n          id\n          address1\n          address2\n          city\n          country\n          latitude\n          longitude\n          createdAt\n          updatedAt\n          deletedAt\n          suppliers(\n            after: $suppliersAfter\n            first: $suppliersFirst\n            before: $suppliersBefore\n            last: $suppliersLast\n          ) {\n            pageInfo {\n              hasNextPage\n              hasPreviousPage\n              startCursor\n              endCursor\n            }\n            edges {\n              cursor\n            }\n            total\n          }\n          stores(\n            after: $storesAfter\n            first: $storesFirst\n            before: $storesBefore\n            last: $storesLast\n          ) {\n            pageInfo {\n              hasNextPage\n              hasPreviousPage\n              startCursor\n              endCursor\n            }\n            edges {\n              cursor\n            }\n            total\n          }\n        }\n        cursor\n      }\n      total\n    }\n    products(\n      after: $productsAfter\n      first: $productsFirst\n      before: $productsBefore\n      last: $productsLast\n    ) {\n      pageInfo {\n        hasNextPage\n        hasPreviousPage\n        startCursor\n        endCursor\n      }\n      edges {\n        node {\n          id\n          name\n          category\n          amount\n          createdAt\n          updatedAt\n          deletedAt\n          suppliers(\n            after: $suppliersAfter\n            first: $suppliersFirst\n            before: $suppliersBefore\n            last: $suppliersLast\n          ) {\n            pageInfo {\n              hasNextPage\n              hasPreviousPage\n              startCursor\n              endCursor\n            }\n            edges {\n              cursor\n            }\n            total\n          }\n          stores(\n            after: $storesAfter\n            first: $storesFirst\n            before: $storesBefore\n            last: $storesLast\n          ) {\n            pageInfo {\n              hasNextPage\n              hasPreviousPage\n              startCursor\n              endCursor\n            }\n            edges {\n              cursor\n            }\n            total\n          }\n        }\n        cursor\n      }\n      total\n    }\n  }\n}\n",
+                "variables": "{\n  \"supplierId\": null,\n  \"supplierWhere\": {},\n  \"addressesAfter\": null,\n  \"addressesFirst\": 10,\n  \"addressesBefore\": null,\n  \"addressesLast\": null,\n  \"suppliersAfter\": null,\n  \"suppliersFirst\": 10,\n  \"suppliersBefore\": null,\n  \"suppliersLast\": null,\n  \"storesAfter\": null,\n  \"storesFirst\": 10,\n  \"storesBefore\": null,\n  \"storesLast\": null,\n  \"productsAfter\": null,\n  \"productsFirst\": 10,\n  \"productsBefore\": null,\n  \"productsLast\": null\n}\n"
+              }
+            },
+            "url": {
+              "raw": "http://localhost:9000/graphql",
+              "protocol": "http",
+              "host": ["localhost"],
+              "port": "9000",
+              "path": ["graphql"]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "query user",
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "exec": [
+                  "pm.test(\"errors is undefined\", function() {",
+                  "    const response = JSON.parse(responseBody);",
+                  "    pm.expect(response.errors).to.be.undefined",
+                  "});"
+                ],
+                "type": "text/javascript"
+              }
+            }
+          ],
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "",
+                "type": "text"
+              }
+            ],
+            "body": {
+              "mode": "graphql",
+              "graphql": {
+                "query": "query User($userId: Int, $userWhere: SequelizeJSON) {\n  user(id: $userId, where: $userWhere) {\n    firstName\n    lastName\n    id\n    email\n    createdAt\n    updatedAt\n    deletedAt\n  }\n}\n",
+                "variables": "{\n  \"userId\": null,\n  \"userWhere\": {}\n}\n"
+              }
+            },
+            "url": {
+              "raw": "http://localhost:9000/graphql",
+              "protocol": "http",
+              "host": ["localhost"],
+              "port": "9000",
+              "path": ["graphql"]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "query addresses",
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "exec": [
+                  "pm.test(\"errors is undefined\", function() {",
+                  "    const response = JSON.parse(responseBody);",
+                  "    pm.expect(response.errors).to.be.undefined",
+                  "});"
+                ],
+                "type": "text/javascript"
+              }
+            }
+          ],
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "",
+                "type": "text"
+              }
+            ],
+            "body": {
+              "mode": "graphql",
+              "graphql": {
+                "query": "query Addresses(\n  $addressesAfter: Int\n  $addressesFirst: Int\n  $addressesBefore: Int\n  $addressesLast: Int\n  $addressesLimit: Int!\n  $addressesOrder: String\n  $addressesWhere: SequelizeJSON\n  $addressesOffset: Int!\n  $suppliersAfter: String\n  $suppliersFirst: Int\n  $suppliersBefore: String\n  $suppliersLast: Int\n  $storesAfter: String\n  $storesFirst: Int\n  $storesBefore: String\n  $storesLast: Int\n) {\n  addresses(\n    after: $addressesAfter\n    first: $addressesFirst\n    before: $addressesBefore\n    last: $addressesLast\n    limit: $addressesLimit\n    order: $addressesOrder\n    where: $addressesWhere\n    offset: $addressesOffset\n  ) {\n    pageInfo {\n      hasNextPage\n      hasPreviousPage\n      startCursor\n      endCursor\n    }\n    edges {\n      node {\n        id\n        address1\n        address2\n        city\n        country\n        latitude\n        longitude\n        createdAt\n        updatedAt\n        deletedAt\n        suppliers(\n          after: $suppliersAfter\n          first: $suppliersFirst\n          before: $suppliersBefore\n          last: $suppliersLast\n        ) {\n          pageInfo {\n            hasNextPage\n            hasPreviousPage\n            startCursor\n            endCursor\n          }\n          edges {\n            node {\n              id\n              name\n              addressId\n              createdAt\n              updatedAt\n              deletedAt\n            }\n            cursor\n          }\n          total\n        }\n        stores(\n          after: $storesAfter\n          first: $storesFirst\n          before: $storesBefore\n          last: $storesLast\n        ) {\n          pageInfo {\n            hasNextPage\n            hasPreviousPage\n            startCursor\n            endCursor\n          }\n          edges {\n            node {\n              id\n              name\n              addressId\n              createdAt\n              updatedAt\n              deletedAt\n            }\n            cursor\n          }\n          total\n        }\n      }\n      cursor\n    }\n    total\n  }\n}\n",
+                "variables": "{\n  \"addressesAfter\": null,\n  \"addressesFirst\": 10,\n  \"addressesBefore\": null,\n  \"addressesLast\": null,\n  \"addressesLimit\": 10,\n  \"addressesOrder\":\"id\",\n  \"addressesWhere\": {},\n  \"addressesOffset\": 0,\n  \"suppliersAfter\": null,\n  \"suppliersFirst\": 10,\n  \"suppliersBefore\": null,\n  \"suppliersLast\": null,\n  \"storesAfter\": null,\n  \"storesFirst\": 10,\n  \"storesBefore\": null,\n  \"storesLast\": null\n}\n"
+              }
+            },
+            "url": {
+              "raw": "http://localhost:9000/graphql",
+              "protocol": "http",
+              "host": ["localhost"],
+              "port": "9000",
+              "path": ["graphql"]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "query products",
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "exec": [
+                  "pm.test(\"errors is undefined\", function() {",
+                  "    const response = JSON.parse(responseBody);",
+                  "    pm.expect(response.errors).to.be.undefined",
+                  "});"
+                ],
+                "type": "text/javascript"
+              }
+            }
+          ],
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "",
+                "type": "text"
+              }
+            ],
+            "body": {
+              "mode": "graphql",
+              "graphql": {
+                "query": "query Products(\n  $productsAfter: Int\n  $productsFirst: Int\n  $productsBefore: Int\n  $productsLast: Int\n  $productsLimit: Int!\n  $productsOrder: String\n  $productsWhere: SequelizeJSON\n  $productsOffset: Int!\n  $suppliersAfter: String\n  $suppliersFirst: Int\n  $suppliersBefore: String\n  $suppliersLast: Int\n  $storesAfter: String\n  $storesFirst: Int\n  $storesBefore: String\n  $storesLast: Int\n) {\n  products(\n    after: $productsAfter\n    first: $productsFirst\n    before: $productsBefore\n    last: $productsLast\n    limit: $productsLimit\n    order: $productsOrder\n    where: $productsWhere\n    offset: $productsOffset\n  ) {\n    pageInfo {\n      hasNextPage\n      hasPreviousPage\n      startCursor\n      endCursor\n    }\n    edges {\n      node {\n        id\n        name\n        category\n        amount\n        createdAt\n        updatedAt\n        deletedAt\n        suppliers(\n          after: $suppliersAfter\n          first: $suppliersFirst\n          before: $suppliersBefore\n          last: $suppliersLast\n        ) {\n          pageInfo {\n            hasNextPage\n            hasPreviousPage\n            startCursor\n            endCursor\n          }\n          edges {\n            node {\n              id\n              name\n              addressId\n              createdAt\n              updatedAt\n              deletedAt\n            }\n            cursor\n          }\n          total\n        }\n        stores(\n          after: $storesAfter\n          first: $storesFirst\n          before: $storesBefore\n          last: $storesLast\n        ) {\n          pageInfo {\n            hasNextPage\n            hasPreviousPage\n            startCursor\n            endCursor\n          }\n          edges {\n            node {\n              id\n              name\n              addressId\n              createdAt\n              updatedAt\n              deletedAt\n            }\n            cursor\n          }\n          total\n        }\n      }\n      cursor\n    }\n    total\n  }\n}\n",
+                "variables": "{\n  \"productsAfter\": null,\n  \"productsFirst\": 10,\n  \"productsBefore\": null,\n  \"productsLast\": null,\n  \"productsLimit\": 10,\n  \"productsOrder\":\"id\",\n  \"productsWhere\": {},\n  \"productsOffset\": 0,\n  \"suppliersAfter\": null,\n  \"suppliersFirst\": 10,\n  \"suppliersBefore\": null,\n  \"suppliersLast\": null,\n  \"storesAfter\": null,\n  \"storesFirst\": 10,\n  \"storesBefore\": null,\n  \"storesLast\": null\n}\n"
+              }
+            },
+            "url": {
+              "raw": "http://localhost:9000/graphql",
+              "protocol": "http",
+              "host": ["localhost"],
+              "port": "9000",
+              "path": ["graphql"]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "query purchasedProducts",
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "exec": [
+                  "pm.test(\"errors is undefined\", function() {",
+                  "    const response = JSON.parse(responseBody);",
+                  "    pm.expect(response.errors).to.be.undefined",
+                  "});"
+                ],
+                "type": "text/javascript"
+              }
+            }
+          ],
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "",
+                "type": "text"
+              }
+            ],
+            "body": {
+              "mode": "graphql",
+              "graphql": {
+                "query": "query PurchasedProducts(\n  $purchasedProductsAfter: Int\n  $purchasedProductsFirst: Int\n  $purchasedProductsBefore: Int\n  $purchasedProductsLast: Int\n  $purchasedProductsLimit: Int!\n  $purchasedProductsOrder: String\n  $purchasedProductsWhere: SequelizeJSON\n  $purchasedProductsOffset: Int!\n  $productsAfter: String\n  $productsFirst: Int\n  $productsBefore: String\n  $productsLast: Int\n) {\n  purchasedProducts(\n    after: $purchasedProductsAfter\n    first: $purchasedProductsFirst\n    before: $purchasedProductsBefore\n    last: $purchasedProductsLast\n    limit: $purchasedProductsLimit\n    order: $purchasedProductsOrder\n    where: $purchasedProductsWhere\n    offset: $purchasedProductsOffset\n  ) {\n    pageInfo {\n      hasNextPage\n      hasPreviousPage\n      startCursor\n      endCursor\n    }\n    edges {\n      node {\n        id\n        price\n        discount\n        deliveryDate\n        productId\n        storeId\n        createdAt\n        updatedAt\n        deletedAt\n        products(\n          after: $productsAfter\n          first: $productsFirst\n          before: $productsBefore\n          last: $productsLast\n        ) {\n          pageInfo {\n            hasNextPage\n            hasPreviousPage\n            startCursor\n            endCursor\n          }\n          edges {\n            node {\n              id\n              name\n              category\n              amount\n              createdAt\n              updatedAt\n              deletedAt\n            }\n            cursor\n          }\n          total\n        }\n      }\n      cursor\n    }\n    total\n  }\n}\n",
+                "variables": "{\n  \"purchasedProductsAfter\": null,\n  \"purchasedProductsFirst\": 10,\n  \"purchasedProductsBefore\": null,\n  \"purchasedProductsLast\": null,\n  \"purchasedProductsLimit\": 10,\n  \"purchasedProductsOrder\":\"id\",\n  \"purchasedProductsWhere\": {},\n  \"purchasedProductsOffset\": 0,\n  \"productsAfter\": null,\n  \"productsFirst\": 10,\n  \"productsBefore\": null,\n  \"productsLast\": null\n}\n"
+              }
+            },
+            "url": {
+              "raw": "http://localhost:9000/graphql",
+              "protocol": "http",
+              "host": ["localhost"],
+              "port": "9000",
+              "path": ["graphql"]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "query storeProducts",
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "exec": [
+                  "pm.test(\"errors is undefined\", function() {",
+                  "    const response = JSON.parse(responseBody);",
+                  "    pm.expect(response.errors).to.be.undefined",
+                  "});"
+                ],
+                "type": "text/javascript"
+              }
+            }
+          ],
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "",
+                "type": "text"
+              }
+            ],
+            "body": {
+              "mode": "graphql",
+              "graphql": {
+                "query": "query StoreProducts(\n  $storeProductsAfter: Int\n  $storeProductsFirst: Int\n  $storeProductsBefore: Int\n  $storeProductsLast: Int\n  $storeProductsLimit: Int!\n  $storeProductsOrder: String\n  $storeProductsWhere: SequelizeJSON\n  $storeProductsOffset: Int!\n  $productsAfter: String\n  $productsFirst: Int\n  $productsBefore: String\n  $productsLast: Int\n  $storesAfter: String\n  $storesFirst: Int\n  $storesBefore: String\n  $storesLast: Int\n) {\n  storeProducts(\n    after: $storeProductsAfter\n    first: $storeProductsFirst\n    before: $storeProductsBefore\n    last: $storeProductsLast\n    limit: $storeProductsLimit\n    order: $storeProductsOrder\n    where: $storeProductsWhere\n    offset: $storeProductsOffset\n  ) {\n    pageInfo {\n      hasNextPage\n      hasPreviousPage\n      startCursor\n      endCursor\n    }\n    edges {\n      node {\n        id\n        productId\n        storeId\n        createdAt\n        updatedAt\n        deletedAt\n        products(\n          after: $productsAfter\n          first: $productsFirst\n          before: $productsBefore\n          last: $productsLast\n        ) {\n          pageInfo {\n            hasNextPage\n            hasPreviousPage\n            startCursor\n            endCursor\n          }\n          edges {\n            node {\n              id\n              name\n              category\n              amount\n              createdAt\n              updatedAt\n              deletedAt\n            }\n            cursor\n          }\n          total\n        }\n        stores(\n          after: $storesAfter\n          first: $storesFirst\n          before: $storesBefore\n          last: $storesLast\n        ) {\n          pageInfo {\n            hasNextPage\n            hasPreviousPage\n            startCursor\n            endCursor\n          }\n          edges {\n            node {\n              id\n              name\n              addressId\n              createdAt\n              updatedAt\n              deletedAt\n            }\n            cursor\n          }\n          total\n        }\n      }\n      cursor\n    }\n    total\n  }\n}\n",
+                "variables": "{\n  \"storeProductsAfter\": null,\n  \"storeProductsFirst\": 10,\n  \"storeProductsBefore\": null,\n  \"storeProductsLast\": null,\n  \"storeProductsLimit\": 10,\n  \"storeProductsOrder\":\"id\",\n  \"storeProductsWhere\": {},\n  \"storeProductsOffset\": 0,\n  \"productsAfter\": null,\n  \"productsFirst\": 10,\n  \"productsBefore\": null,\n  \"productsLast\": null,\n  \"storesAfter\": null,\n  \"storesFirst\": 10,\n  \"storesBefore\": null,\n  \"storesLast\": null\n}\n"
+              }
+            },
+            "url": {
+              "raw": "http://localhost:9000/graphql",
+              "protocol": "http",
+              "host": ["localhost"],
+              "port": "9000",
+              "path": ["graphql"]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "query stores",
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "exec": [
+                  "pm.test(\"errors is undefined\", function() {",
+                  "    const response = JSON.parse(responseBody);",
+                  "    pm.expect(response.errors).to.be.undefined",
+                  "});"
+                ],
+                "type": "text/javascript"
+              }
+            }
+          ],
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "",
+                "type": "text"
+              }
+            ],
+            "body": {
+              "mode": "graphql",
+              "graphql": {
+                "query": "query Stores(\n  $storesAfter: Int\n  $storesFirst: Int\n  $storesBefore: Int\n  $storesLast: Int\n  $storesLimit: Int!\n  $storesOrder: String\n  $storesWhere: SequelizeJSON\n  $storesOffset: Int!\n  $addressesAfter: String\n  $addressesFirst: Int\n  $addressesBefore: String\n  $addressesLast: Int\n  $productsAfter: String\n  $productsFirst: Int\n  $productsBefore: String\n  $productsLast: Int\n) {\n  stores(\n    after: $storesAfter\n    first: $storesFirst\n    before: $storesBefore\n    last: $storesLast\n    limit: $storesLimit\n    order: $storesOrder\n    where: $storesWhere\n    offset: $storesOffset\n  ) {\n    pageInfo {\n      hasNextPage\n      hasPreviousPage\n      startCursor\n      endCursor\n    }\n    edges {\n      node {\n        id\n        name\n        addressId\n        createdAt\n        updatedAt\n        deletedAt\n        addresses(\n          after: $addressesAfter\n          first: $addressesFirst\n          before: $addressesBefore\n          last: $addressesLast\n        ) {\n          pageInfo {\n            hasNextPage\n            hasPreviousPage\n            startCursor\n            endCursor\n          }\n          edges {\n            node {\n              id\n              address1\n              address2\n              city\n              country\n              latitude\n              longitude\n              createdAt\n              updatedAt\n              deletedAt\n            }\n            cursor\n          }\n          total\n        }\n        products(\n          after: $productsAfter\n          first: $productsFirst\n          before: $productsBefore\n          last: $productsLast\n        ) {\n          pageInfo {\n            hasNextPage\n            hasPreviousPage\n            startCursor\n            endCursor\n          }\n          edges {\n            node {\n              id\n              name\n              category\n              amount\n              createdAt\n              updatedAt\n              deletedAt\n            }\n            cursor\n          }\n          total\n        }\n      }\n      cursor\n    }\n    total\n  }\n}\n",
+                "variables": "{\n  \"storesAfter\": null,\n  \"storesFirst\": 10,\n  \"storesBefore\": null,\n  \"storesLast\": null,\n  \"storesLimit\": 10,\n  \"storesOrder\":\"id\",\n  \"storesWhere\": {},\n  \"storesOffset\": 0,\n  \"addressesAfter\": null,\n  \"addressesFirst\": 10,\n  \"addressesBefore\": null,\n  \"addressesLast\": null,\n  \"productsAfter\": null,\n  \"productsFirst\": 10,\n  \"productsBefore\": null,\n  \"productsLast\": null\n}\n"
+              }
+            },
+            "url": {
+              "raw": "http://localhost:9000/graphql",
+              "protocol": "http",
+              "host": ["localhost"],
+              "port": "9000",
+              "path": ["graphql"]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "query supplierProducts",
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "exec": [
+                  "pm.test(\"errors is undefined\", function() {",
+                  "    const response = JSON.parse(responseBody);",
+                  "    pm.expect(response.errors).to.be.undefined",
+                  "});"
+                ],
+                "type": "text/javascript"
+              }
+            }
+          ],
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "",
+                "type": "text"
+              }
+            ],
+            "body": {
+              "mode": "graphql",
+              "graphql": {
+                "query": "query SupplierProducts(\n  $supplierProductsAfter: Int\n  $supplierProductsFirst: Int\n  $supplierProductsBefore: Int\n  $supplierProductsLast: Int\n  $supplierProductsLimit: Int!\n  $supplierProductsOrder: String\n  $supplierProductsWhere: SequelizeJSON\n  $supplierProductsOffset: Int!\n  $productsAfter: String\n  $productsFirst: Int\n  $productsBefore: String\n  $productsLast: Int\n  $suppliersAfter: String\n  $suppliersFirst: Int\n  $suppliersBefore: String\n  $suppliersLast: Int\n) {\n  supplierProducts(\n    after: $supplierProductsAfter\n    first: $supplierProductsFirst\n    before: $supplierProductsBefore\n    last: $supplierProductsLast\n    limit: $supplierProductsLimit\n    order: $supplierProductsOrder\n    where: $supplierProductsWhere\n    offset: $supplierProductsOffset\n  ) {\n    pageInfo {\n      hasNextPage\n      hasPreviousPage\n      startCursor\n      endCursor\n    }\n    edges {\n      node {\n        id\n        supplierId\n        productId\n        createdAt\n        updatedAt\n        deletedAt\n        products(\n          after: $productsAfter\n          first: $productsFirst\n          before: $productsBefore\n          last: $productsLast\n        ) {\n          pageInfo {\n            hasNextPage\n            hasPreviousPage\n            startCursor\n            endCursor\n          }\n          edges {\n            node {\n              id\n              name\n              category\n              amount\n              createdAt\n              updatedAt\n              deletedAt\n            }\n            cursor\n          }\n          total\n        }\n        suppliers(\n          after: $suppliersAfter\n          first: $suppliersFirst\n          before: $suppliersBefore\n          last: $suppliersLast\n        ) {\n          pageInfo {\n            hasNextPage\n            hasPreviousPage\n            startCursor\n            endCursor\n          }\n          edges {\n            node {\n              id\n              name\n              addressId\n              createdAt\n              updatedAt\n              deletedAt\n            }\n            cursor\n          }\n          total\n        }\n      }\n      cursor\n    }\n    total\n  }\n}\n",
+                "variables": "{\n  \"supplierProductsAfter\": null,\n  \"supplierProductsFirst\": 10,\n  \"supplierProductsBefore\": null,\n  \"supplierProductsLast\": null,\n  \"supplierProductsLimit\": 10,\n  \"supplierProductsOrder\":\"id\",\n  \"supplierProductsWhere\": {},\n  \"supplierProductsOffset\": 0,\n  \"productsAfter\": null,\n  \"productsFirst\": 10,\n  \"productsBefore\": null,\n  \"productsLast\": null,\n  \"suppliersAfter\": null,\n  \"suppliersFirst\": 10,\n  \"suppliersBefore\": null,\n  \"suppliersLast\": null\n}\n"
+              }
+            },
+            "url": {
+              "raw": "http://localhost:9000/graphql",
+              "protocol": "http",
+              "host": ["localhost"],
+              "port": "9000",
+              "path": ["graphql"]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "query suppliers",
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "exec": [
+                  "pm.test(\"errors is undefined\", function() {",
+                  "    const response = JSON.parse(responseBody);",
+                  "    pm.expect(response.errors).to.be.undefined",
+                  "});"
+                ],
+                "type": "text/javascript"
+              }
+            }
+          ],
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "",
+                "type": "text"
+              }
+            ],
+            "body": {
+              "mode": "graphql",
+              "graphql": {
+                "query": "query Suppliers(\n  $suppliersAfter: Int\n  $suppliersFirst: Int\n  $suppliersBefore: Int\n  $suppliersLast: Int\n  $suppliersLimit: Int!\n  $suppliersOrder: String\n  $suppliersWhere: SequelizeJSON\n  $suppliersOffset: Int!\n  $addressesAfter: String\n  $addressesFirst: Int\n  $addressesBefore: String\n  $addressesLast: Int\n  $productsAfter: String\n  $productsFirst: Int\n  $productsBefore: String\n  $productsLast: Int\n) {\n  suppliers(\n    after: $suppliersAfter\n    first: $suppliersFirst\n    before: $suppliersBefore\n    last: $suppliersLast\n    limit: $suppliersLimit\n    order: $suppliersOrder\n    where: $suppliersWhere\n    offset: $suppliersOffset\n  ) {\n    pageInfo {\n      hasNextPage\n      hasPreviousPage\n      startCursor\n      endCursor\n    }\n    edges {\n      node {\n        id\n        name\n        addressId\n        createdAt\n        updatedAt\n        deletedAt\n        addresses(\n          after: $addressesAfter\n          first: $addressesFirst\n          before: $addressesBefore\n          last: $addressesLast\n        ) {\n          pageInfo {\n            hasNextPage\n            hasPreviousPage\n            startCursor\n            endCursor\n          }\n          edges {\n            node {\n              id\n              address1\n              address2\n              city\n              country\n              latitude\n              longitude\n              createdAt\n              updatedAt\n              deletedAt\n            }\n            cursor\n          }\n          total\n        }\n        products(\n          after: $productsAfter\n          first: $productsFirst\n          before: $productsBefore\n          last: $productsLast\n        ) {\n          pageInfo {\n            hasNextPage\n            hasPreviousPage\n            startCursor\n            endCursor\n          }\n          edges {\n            node {\n              id\n              name\n              category\n              amount\n              createdAt\n              updatedAt\n              deletedAt\n            }\n            cursor\n          }\n          total\n        }\n      }\n      cursor\n    }\n    total\n  }\n}\n",
+                "variables": "{\n  \"suppliersAfter\": null,\n  \"suppliersFirst\": 10,\n  \"suppliersBefore\": null,\n  \"suppliersLast\": null,\n  \"suppliersLimit\": 10,\n  \"suppliersOrder\":\"id\",\n  \"suppliersWhere\": {},\n  \"suppliersOffset\": 0,\n  \"addressesAfter\": null,\n  \"addressesFirst\": 10,\n  \"addressesBefore\": null,\n  \"addressesLast\": null,\n  \"productsAfter\": null,\n  \"productsFirst\": 10,\n  \"productsBefore\": null,\n  \"productsLast\": null\n}\n"
+              }
+            },
+            "url": {
+              "raw": "http://localhost:9000/graphql",
+              "protocol": "http",
+              "host": ["localhost"],
+              "port": "9000",
+              "path": ["graphql"]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "query users",
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "exec": [
+                  "pm.test(\"errors is undefined\", function() {",
+                  "    const response = JSON.parse(responseBody);",
+                  "    pm.expect(response.errors).to.be.undefined",
+                  "});"
+                ],
+                "type": "text/javascript"
+              }
+            }
+          ],
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "",
+                "type": "text"
+              }
+            ],
+            "body": {
+              "mode": "graphql",
+              "graphql": {
+                "query": "query Users(\n  $usersAfter: Int\n  $usersFirst: Int\n  $usersBefore: Int\n  $usersLast: Int\n  $usersLimit: Int!\n  $usersOrder: String\n  $usersWhere: SequelizeJSON\n  $usersOffset: Int!\n) {\n  users(\n    after: $usersAfter\n    first: $usersFirst\n    before: $usersBefore\n    last: $usersLast\n    limit: $usersLimit\n    order: $usersOrder\n    where: $usersWhere\n    offset: $usersOffset\n  ) {\n    pageInfo {\n      hasNextPage\n      hasPreviousPage\n      startCursor\n      endCursor\n    }\n    edges {\n      node {\n        firstName\n        lastName\n        id\n        email\n        createdAt\n        updatedAt\n        deletedAt\n      }\n      cursor\n    }\n    total\n  }\n}\n",
+                "variables": "{\n  \"usersAfter\": null,\n  \"usersFirst\": 10,\n  \"usersBefore\": null,\n  \"usersLast\": null,\n  \"usersLimit\": 10,\n  \"usersOrder\":\"id\",\n  \"usersWhere\": {},\n  \"usersOffset\": 0\n}\n"
+              }
+            },
+            "url": {
+              "raw": "http://localhost:9000/graphql",
+              "protocol": "http",
+              "host": ["localhost"],
+              "port": "9000",
+              "path": ["graphql"]
+            }
+          },
+          "response": []
+        }
+      ]
+    },
+    {
+      "name": "mutation",
+      "item": [
+        {
+          "name": "mutation createAddress",
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "exec": [
+                  "pm.test(\"errors is undefined\", function() {",
+                  "    const response = JSON.parse(responseBody);",
+                  "    pm.expect(response.errors).to.be.undefined",
+                  "});"
+                ],
+                "type": "text/javascript",
+                "packages": {}
+              }
+            }
+          ],
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "",
+                "type": "text"
+              }
+            ],
+            "body": {
+              "mode": "graphql",
+              "graphql": {
+                "query": "mutation CreateAddress(\n  $createAddressAddress1: String\n  $createAddressAddress2: String\n  $createAddressCity: String\n  $createAddressCountry: String\n  $createAddressLatitude: Float!\n  $createAddressLongitude: Float!\n  $suppliersAfter: String\n  $suppliersFirst: Int\n  $suppliersBefore: String\n  $suppliersLast: Int\n  $addressesAfter: String\n  $addressesFirst: Int\n  $addressesBefore: String\n  $addressesLast: Int\n  $productsAfter: String\n  $productsFirst: Int\n  $productsBefore: String\n  $productsLast: Int\n  $storesAfter: String\n  $storesFirst: Int\n  $storesBefore: String\n  $storesLast: Int\n) {\n  createAddress(\n    address1: $createAddressAddress1\n    address2: $createAddressAddress2\n    city: $createAddressCity\n    country: $createAddressCountry\n    latitude: $createAddressLatitude\n    longitude: $createAddressLongitude\n  ) {\n    id\n    address1\n    address2\n    city\n    country\n    latitude\n    longitude\n    createdAt\n    updatedAt\n    deletedAt\n    suppliers(\n      after: $suppliersAfter\n      first: $suppliersFirst\n      before: $suppliersBefore\n      last: $suppliersLast\n    ) {\n      pageInfo {\n        hasNextPage\n        hasPreviousPage\n        startCursor\n        endCursor\n      }\n      edges {\n        node {\n          id\n          name\n          addressId\n          createdAt\n          updatedAt\n          deletedAt\n          addresses(\n            after: $addressesAfter\n            first: $addressesFirst\n            before: $addressesBefore\n            last: $addressesLast\n          ) {\n            pageInfo {\n              hasNextPage\n              hasPreviousPage\n              startCursor\n              endCursor\n            }\n            edges {\n              cursor\n            }\n            total\n          }\n          products(\n            after: $productsAfter\n            first: $productsFirst\n            before: $productsBefore\n            last: $productsLast\n          ) {\n            pageInfo {\n              hasNextPage\n              hasPreviousPage\n              startCursor\n              endCursor\n            }\n            edges {\n              cursor\n            }\n            total\n          }\n        }\n        cursor\n      }\n      total\n    }\n    stores(\n      after: $storesAfter\n      first: $storesFirst\n      before: $storesBefore\n      last: $storesLast\n    ) {\n      pageInfo {\n        hasNextPage\n        hasPreviousPage\n        startCursor\n        endCursor\n      }\n      edges {\n        node {\n          id\n          name\n          addressId\n          createdAt\n          updatedAt\n          deletedAt\n          addresses(\n            after: $addressesAfter\n            first: $addressesFirst\n            before: $addressesBefore\n            last: $addressesLast\n          ) {\n            pageInfo {\n              hasNextPage\n              hasPreviousPage\n              startCursor\n              endCursor\n            }\n            edges {\n              cursor\n            }\n            total\n          }\n          products(\n            after: $productsAfter\n            first: $productsFirst\n            before: $productsBefore\n            last: $productsLast\n          ) {\n            pageInfo {\n              hasNextPage\n              hasPreviousPage\n              startCursor\n              endCursor\n            }\n            edges {\n              cursor\n            }\n            total\n          }\n        }\n        cursor\n      }\n      total\n    }\n  }\n}\n",
+                "variables": "{\n  \"createAddressAddress1\": \"Gerlach Drive\",\n  \"createAddressAddress2\": \"61547 Scot Court\",\n  \"createAddressCity\": \"New Rosemaryberg\",\n  \"createAddressCountry\": \"Mozambique\",\n  \"createAddressLatitude\": -22.6111,\n  \"createAddressLongitude\": 60.6756,\n  \"suppliersAfter\": null,\n  \"suppliersFirst\": 10,\n  \"suppliersBefore\": null,\n  \"suppliersLast\": null,\n  \"addressesAfter\": null,\n  \"addressesFirst\": 10,\n  \"addressesBefore\": null,\n  \"addressesLast\": null,\n  \"productsAfter\": null,\n  \"productsFirst\": 10,\n  \"productsBefore\": null,\n  \"productsLast\": null,\n  \"storesAfter\": null,\n  \"storesFirst\": 10,\n  \"storesBefore\": null,\n  \"storesLast\": null\n}\n"
+              }
+            },
+            "url": {
+              "raw": "http://localhost:9000/graphql",
+              "protocol": "http",
+              "host": ["localhost"],
+              "port": "9000",
+              "path": ["graphql"]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "mutation updateAddress",
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "exec": [
+                  "pm.test(\"errors is undefined\", function() {",
+                  "    const response = JSON.parse(responseBody);",
+                  "    pm.expect(response.errors).to.be.undefined",
+                  "});"
+                ],
+                "type": "text/javascript",
+                "packages": {}
+              }
+            }
+          ],
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "",
+                "type": "text"
+              }
+            ],
+            "body": {
+              "mode": "graphql",
+              "graphql": {
+                "query": "mutation UpdateAddress(\n  $updateAddressId: ID!\n  $updateAddressAddress1: String\n  $updateAddressAddress2: String\n  $updateAddressCity: String\n  $updateAddressCountry: String\n  $updateAddressLatitude: Float!\n  $updateAddressLongitude: Float!\n  $suppliersAfter: String\n  $suppliersFirst: Int\n  $suppliersBefore: String\n  $suppliersLast: Int\n  $addressesAfter: String\n  $addressesFirst: Int\n  $addressesBefore: String\n  $addressesLast: Int\n  $productsAfter: String\n  $productsFirst: Int\n  $productsBefore: String\n  $productsLast: Int\n  $storesAfter: String\n  $storesFirst: Int\n  $storesBefore: String\n  $storesLast: Int\n) {\n  updateAddress(\n    id: $updateAddressId\n    address1: $updateAddressAddress1\n    address2: $updateAddressAddress2\n    city: $updateAddressCity\n    country: $updateAddressCountry\n    latitude: $updateAddressLatitude\n    longitude: $updateAddressLongitude\n  ) {\n    id\n    address1\n    address2\n    city\n    country\n    latitude\n    longitude\n    createdAt\n    updatedAt\n    deletedAt\n    suppliers(\n      after: $suppliersAfter\n      first: $suppliersFirst\n      before: $suppliersBefore\n      last: $suppliersLast\n    ) {\n      pageInfo {\n        hasNextPage\n        hasPreviousPage\n        startCursor\n        endCursor\n      }\n      edges {\n        node {\n          id\n          name\n          addressId\n          createdAt\n          updatedAt\n          deletedAt\n          addresses(\n            after: $addressesAfter\n            first: $addressesFirst\n            before: $addressesBefore\n            last: $addressesLast\n          ) {\n            pageInfo {\n              hasNextPage\n              hasPreviousPage\n              startCursor\n              endCursor\n            }\n            edges {\n              cursor\n            }\n            total\n          }\n          products(\n            after: $productsAfter\n            first: $productsFirst\n            before: $productsBefore\n            last: $productsLast\n          ) {\n            pageInfo {\n              hasNextPage\n              hasPreviousPage\n              startCursor\n              endCursor\n            }\n            edges {\n              cursor\n            }\n            total\n          }\n        }\n        cursor\n      }\n      total\n    }\n    stores(\n      after: $storesAfter\n      first: $storesFirst\n      before: $storesBefore\n      last: $storesLast\n    ) {\n      pageInfo {\n        hasNextPage\n        hasPreviousPage\n        startCursor\n        endCursor\n      }\n      edges {\n        node {\n          id\n          name\n          addressId\n          createdAt\n          updatedAt\n          deletedAt\n          addresses(\n            after: $addressesAfter\n            first: $addressesFirst\n            before: $addressesBefore\n            last: $addressesLast\n          ) {\n            pageInfo {\n              hasNextPage\n              hasPreviousPage\n              startCursor\n              endCursor\n            }\n            edges {\n              cursor\n            }\n            total\n          }\n          products(\n            after: $productsAfter\n            first: $productsFirst\n            before: $productsBefore\n            last: $productsLast\n          ) {\n            pageInfo {\n              hasNextPage\n              hasPreviousPage\n              startCursor\n              endCursor\n            }\n            edges {\n              cursor\n            }\n            total\n          }\n        }\n        cursor\n      }\n      total\n    }\n  }\n}\n",
+                "variables": "{\n  \"updateAddressId\": 1,\n  \"updateAddressAddress1\": \"Gerlach Drive\",\n  \"updateAddressAddress2\": \"61547 Scot Court\",\n  \"updateAddressCity\": \"New Rosemaryberg\",\n  \"updateAddressCountry\": \"Mozambique\",\n  \"updateAddressLatitude\": -22.6111,\n  \"updateAddressLongitude\": 60.6756,\n  \"suppliersAfter\": null,\n  \"suppliersFirst\": 10,\n  \"suppliersBefore\": null,\n  \"suppliersLast\": null,\n  \"addressesAfter\": null,\n  \"addressesFirst\": 10,\n  \"addressesBefore\": null,\n  \"addressesLast\": null,\n  \"productsAfter\": null,\n  \"productsFirst\": 10,\n  \"productsBefore\": null,\n  \"productsLast\": null,\n  \"storesAfter\": null,\n  \"storesFirst\": 10,\n  \"storesBefore\": null,\n  \"storesLast\": null\n}\n"
+              }
+            },
+            "url": {
+              "raw": "http://localhost:9000/graphql",
+              "protocol": "http",
+              "host": ["localhost"],
+              "port": "9000",
+              "path": ["graphql"]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "mutation deleteAddress",
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "exec": [
+                  "pm.test(\"errors is undefined\", function() {",
+                  "    const response = JSON.parse(responseBody);",
+                  "    pm.expect(response.errors).to.be.undefined",
+                  "});"
+                ],
+                "type": "text/javascript",
+                "packages": {}
+              }
+            }
+          ],
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "",
+                "type": "text"
+              }
+            ],
+            "body": {
+              "mode": "graphql",
+              "graphql": {
+                "query": "mutation DeleteAddress($deleteAddressId: Int!) {\n  deleteAddress(id: $deleteAddressId) {\n    id\n  }\n}\n",
+                "variables": "{\n  \"deleteAddressId\": 1\n}\n"
+              }
+            },
+            "url": {
+              "raw": "http://localhost:9000/graphql",
+              "protocol": "http",
+              "host": ["localhost"],
+              "port": "9000",
+              "path": ["graphql"]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "mutation createProduct",
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "exec": [
+                  "pm.test(\"errors is undefined\", function() {",
+                  "    const response = JSON.parse(responseBody);",
+                  "    pm.expect(response.errors).to.be.undefined",
+                  "});"
+                ],
+                "type": "text/javascript",
+                "packages": {}
+              }
+            }
+          ],
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "",
+                "type": "text"
+              }
+            ],
+            "body": {
+              "mode": "graphql",
+              "graphql": {
+                "query": "mutation CreateProduct(\n  $createProductName: String\n  $createProductCategory: String\n  $createProductAmount: Int\n  $suppliersAfter: String\n  $suppliersFirst: Int\n  $suppliersBefore: String\n  $suppliersLast: Int\n  $addressesAfter: String\n  $addressesFirst: Int\n  $addressesBefore: String\n  $addressesLast: Int\n  $productsAfter: String\n  $productsFirst: Int\n  $productsBefore: String\n  $productsLast: Int\n  $storesAfter: String\n  $storesFirst: Int\n  $storesBefore: String\n  $storesLast: Int\n) {\n  createProduct(\n    name: $createProductName\n    category: $createProductCategory\n    amount: $createProductAmount\n  ) {\n    id\n    name\n    category\n    amount\n    createdAt\n    updatedAt\n    deletedAt\n    suppliers(\n      after: $suppliersAfter\n      first: $suppliersFirst\n      before: $suppliersBefore\n      last: $suppliersLast\n    ) {\n      pageInfo {\n        hasNextPage\n        hasPreviousPage\n        startCursor\n        endCursor\n      }\n      edges {\n        node {\n          id\n          name\n          addressId\n          createdAt\n          updatedAt\n          deletedAt\n          addresses(\n            after: $addressesAfter\n            first: $addressesFirst\n            before: $addressesBefore\n            last: $addressesLast\n          ) {\n            pageInfo {\n              hasNextPage\n              hasPreviousPage\n              startCursor\n              endCursor\n            }\n            edges {\n              cursor\n            }\n            total\n          }\n          products(\n            after: $productsAfter\n            first: $productsFirst\n            before: $productsBefore\n            last: $productsLast\n          ) {\n            pageInfo {\n              hasNextPage\n              hasPreviousPage\n              startCursor\n              endCursor\n            }\n            edges {\n              cursor\n            }\n            total\n          }\n        }\n        cursor\n      }\n      total\n    }\n    stores(\n      after: $storesAfter\n      first: $storesFirst\n      before: $storesBefore\n      last: $storesLast\n    ) {\n      pageInfo {\n        hasNextPage\n        hasPreviousPage\n        startCursor\n        endCursor\n      }\n      edges {\n        node {\n          id\n          name\n          addressId\n          createdAt\n          updatedAt\n          deletedAt\n          addresses(\n            after: $addressesAfter\n            first: $addressesFirst\n            before: $addressesBefore\n            last: $addressesLast\n          ) {\n            pageInfo {\n              hasNextPage\n              hasPreviousPage\n              startCursor\n              endCursor\n            }\n            edges {\n              cursor\n            }\n            total\n          }\n          products(\n            after: $productsAfter\n            first: $productsFirst\n            before: $productsBefore\n            last: $productsLast\n          ) {\n            pageInfo {\n              hasNextPage\n              hasPreviousPage\n              startCursor\n              endCursor\n            }\n            edges {\n              cursor\n            }\n            total\n          }\n        }\n        cursor\n      }\n      total\n    }\n  }\n}\n",
+                "variables": "{\n  \"createProductName\": \"Generic Fresh Mouse\",\n  \"createProductCategory\": \"Garden\",\n  \"createProductAmount\": 48800,\n  \"suppliersAfter\": null,\n  \"suppliersFirst\": 10,\n  \"suppliersBefore\": null,\n  \"suppliersLast\": null,\n  \"addressesAfter\": null,\n  \"addressesFirst\": 10,\n  \"addressesBefore\": null,\n  \"addressesLast\": null,\n  \"productsAfter\": null,\n  \"productsFirst\": 10,\n  \"productsBefore\": null,\n  \"productsLast\": null,\n  \"storesAfter\": null,\n  \"storesFirst\": 10,\n  \"storesBefore\": null,\n  \"storesLast\": null\n}\n"
+              }
+            },
+            "url": {
+              "raw": "http://localhost:9000/graphql",
+              "protocol": "http",
+              "host": ["localhost"],
+              "port": "9000",
+              "path": ["graphql"]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "mutation updateProduct",
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "exec": [
+                  "pm.test(\"errors is undefined\", function() {",
+                  "    const response = JSON.parse(responseBody);",
+                  "    pm.expect(response.errors).to.be.undefined",
+                  "});"
+                ],
+                "type": "text/javascript",
+                "packages": {}
+              }
+            }
+          ],
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "",
+                "type": "text"
+              }
+            ],
+            "body": {
+              "mode": "graphql",
+              "graphql": {
+                "query": "mutation UpdateProduct(\n  $updateProductId: ID!\n  $updateProductName: String\n  $updateProductCategory: String\n  $updateProductAmount: Int\n  $suppliersAfter: String\n  $suppliersFirst: Int\n  $suppliersBefore: String\n  $suppliersLast: Int\n  $addressesAfter: String\n  $addressesFirst: Int\n  $addressesBefore: String\n  $addressesLast: Int\n  $productsAfter: String\n  $productsFirst: Int\n  $productsBefore: String\n  $productsLast: Int\n  $storesAfter: String\n  $storesFirst: Int\n  $storesBefore: String\n  $storesLast: Int\n) {\n  updateProduct(\n    id: $updateProductId\n    name: $updateProductName\n    category: $updateProductCategory\n    amount: $updateProductAmount\n  ) {\n    id\n    name\n    category\n    amount\n    createdAt\n    updatedAt\n    deletedAt\n    suppliers(\n      after: $suppliersAfter\n      first: $suppliersFirst\n      before: $suppliersBefore\n      last: $suppliersLast\n    ) {\n      pageInfo {\n        hasNextPage\n        hasPreviousPage\n        startCursor\n        endCursor\n      }\n      edges {\n        node {\n          id\n          name\n          addressId\n          createdAt\n          updatedAt\n          deletedAt\n          addresses(\n            after: $addressesAfter\n            first: $addressesFirst\n            before: $addressesBefore\n            last: $addressesLast\n          ) {\n            pageInfo {\n              hasNextPage\n              hasPreviousPage\n              startCursor\n              endCursor\n            }\n            edges {\n              cursor\n            }\n            total\n          }\n          products(\n            after: $productsAfter\n            first: $productsFirst\n            before: $productsBefore\n            last: $productsLast\n          ) {\n            pageInfo {\n              hasNextPage\n              hasPreviousPage\n              startCursor\n              endCursor\n            }\n            edges {\n              cursor\n            }\n            total\n          }\n        }\n        cursor\n      }\n      total\n    }\n    stores(\n      after: $storesAfter\n      first: $storesFirst\n      before: $storesBefore\n      last: $storesLast\n    ) {\n      pageInfo {\n        hasNextPage\n        hasPreviousPage\n        startCursor\n        endCursor\n      }\n      edges {\n        node {\n          id\n          name\n          addressId\n          createdAt\n          updatedAt\n          deletedAt\n          addresses(\n            after: $addressesAfter\n            first: $addressesFirst\n            before: $addressesBefore\n            last: $addressesLast\n          ) {\n            pageInfo {\n              hasNextPage\n              hasPreviousPage\n              startCursor\n              endCursor\n            }\n            edges {\n              cursor\n            }\n            total\n          }\n          products(\n            after: $productsAfter\n            first: $productsFirst\n            before: $productsBefore\n            last: $productsLast\n          ) {\n            pageInfo {\n              hasNextPage\n              hasPreviousPage\n              startCursor\n              endCursor\n            }\n            edges {\n              cursor\n            }\n            total\n          }\n        }\n        cursor\n      }\n      total\n    }\n  }\n}\n",
+                "variables": "{\n  \"updateProductId\": 1,\n  \"updateProductName\": \"Generic Fresh Mouse\",\n  \"updateProductCategory\": \"Garden\",\n  \"updateProductAmount\": 48800,\n  \"suppliersAfter\": null,\n  \"suppliersFirst\": 10,\n  \"suppliersBefore\": null,\n  \"suppliersLast\": null,\n  \"addressesAfter\": null,\n  \"addressesFirst\": 10,\n  \"addressesBefore\": null,\n  \"addressesLast\": null,\n  \"productsAfter\": null,\n  \"productsFirst\": 10,\n  \"productsBefore\": null,\n  \"productsLast\": null,\n  \"storesAfter\": null,\n  \"storesFirst\": 10,\n  \"storesBefore\": null,\n  \"storesLast\": null\n}\n"
+              }
+            },
+            "url": {
+              "raw": "http://localhost:9000/graphql",
+              "protocol": "http",
+              "host": ["localhost"],
+              "port": "9000",
+              "path": ["graphql"]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "mutation deleteProduct",
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "exec": [
+                  "pm.test(\"errors is undefined\", function() {",
+                  "    const response = JSON.parse(responseBody);",
+                  "    pm.expect(response.errors).to.be.undefined",
+                  "});"
+                ],
+                "type": "text/javascript",
+                "packages": {}
+              }
+            }
+          ],
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "",
+                "type": "text"
+              }
+            ],
+            "body": {
+              "mode": "graphql",
+              "graphql": {
+                "query": "mutation DeleteProduct($deleteProductId: Int!) {\n  deleteProduct(id: $deleteProductId) {\n    id\n  }\n}\n",
+                "variables": "{\n  \"deleteProductId\": 1\n}\n"
+              }
+            },
+            "url": {
+              "raw": "http://localhost:9000/graphql",
+              "protocol": "http",
+              "host": ["localhost"],
+              "port": "9000",
+              "path": ["graphql"]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "mutation createPurchasedProduct",
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "exec": [
+                  "pm.test(\"errors is undefined\", function() {",
+                  "    const response = JSON.parse(responseBody);",
+                  "    pm.expect(response.errors).to.be.undefined",
+                  "});"
+                ],
+                "type": "text/javascript",
+                "packages": {}
+              }
+            }
+          ],
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "",
+                "type": "text"
+              }
+            ],
+            "body": {
+              "mode": "graphql",
+              "graphql": {
+                "query": "mutation CreatePurchasedProduct(\n  $createPurchasedProductPrice: Int!\n  $createPurchasedProductDiscount: Int!\n  $createPurchasedProductDeliveryDate: DateTime!\n  $createPurchasedProductProductId: ID!\n  $createPurchasedProductStoreId: ID!\n  $productsAfter: String\n  $productsFirst: Int\n  $productsBefore: String\n  $productsLast: Int\n  $suppliersAfter: String\n  $suppliersFirst: Int\n  $suppliersBefore: String\n  $suppliersLast: Int\n  $storesAfter: String\n  $storesFirst: Int\n  $storesBefore: String\n  $storesLast: Int\n) {\n  createPurchasedProduct(\n    price: $createPurchasedProductPrice\n    discount: $createPurchasedProductDiscount\n    deliveryDate: $createPurchasedProductDeliveryDate\n    productId: $createPurchasedProductProductId\n    storeId: $createPurchasedProductStoreId\n  ) {\n    id\n    price\n    discount\n    deliveryDate\n    productId\n    storeId\n    createdAt\n    updatedAt\n    deletedAt\n    products(\n      after: $productsAfter\n      first: $productsFirst\n      before: $productsBefore\n      last: $productsLast\n    ) {\n      pageInfo {\n        hasNextPage\n        hasPreviousPage\n        startCursor\n        endCursor\n      }\n      edges {\n        node {\n          id\n          name\n          category\n          amount\n          createdAt\n          updatedAt\n          deletedAt\n          suppliers(\n            after: $suppliersAfter\n            first: $suppliersFirst\n            before: $suppliersBefore\n            last: $suppliersLast\n          ) {\n            pageInfo {\n              hasNextPage\n              hasPreviousPage\n              startCursor\n              endCursor\n            }\n            edges {\n              cursor\n            }\n            total\n          }\n          stores(\n            after: $storesAfter\n            first: $storesFirst\n            before: $storesBefore\n            last: $storesLast\n          ) {\n            pageInfo {\n              hasNextPage\n              hasPreviousPage\n              startCursor\n              endCursor\n            }\n            edges {\n              cursor\n            }\n            total\n          }\n        }\n        cursor\n      }\n      total\n    }\n  }\n}\n",
+                "variables": "{\n  \"createPurchasedProductPrice\": 16800,\n  \"createPurchasedProductDiscount\": 497,\n  \"createPurchasedProductDeliveryDate\": \"2022-03-11T06:49:10.749Z\",\n  \"createPurchasedProductProductId\": 686,\n  \"createPurchasedProductStoreId\": 647,\n  \"productsAfter\": null,\n  \"productsFirst\": 10,\n  \"productsBefore\": null,\n  \"productsLast\": null,\n  \"suppliersAfter\": null,\n  \"suppliersFirst\": 10,\n  \"suppliersBefore\": null,\n  \"suppliersLast\": null,\n  \"storesAfter\": null,\n  \"storesFirst\": 10,\n  \"storesBefore\": null,\n  \"storesLast\": null\n}\n"
+              }
+            },
+            "url": {
+              "raw": "http://localhost:9000/graphql",
+              "protocol": "http",
+              "host": ["localhost"],
+              "port": "9000",
+              "path": ["graphql"]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "mutation deletePurchasedProduct",
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "exec": [
+                  "pm.test(\"errors is undefined\", function() {",
+                  "    const response = JSON.parse(responseBody);",
+                  "    pm.expect(response.errors).to.be.undefined",
+                  "});"
+                ],
+                "type": "text/javascript",
+                "packages": {}
+              }
+            }
+          ],
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "",
+                "type": "text"
+              }
+            ],
+            "body": {
+              "mode": "graphql",
+              "graphql": {
+                "query": "mutation DeletePurchasedProduct($deletePurchasedProductId: Int!) {\n  deletePurchasedProduct(id: $deletePurchasedProductId) {\n    id\n  }\n}\n",
+                "variables": "{\n  \"deletePurchasedProductId\": 1\n}\n"
+              }
+            },
+            "url": {
+              "raw": "http://localhost:9000/graphql",
+              "protocol": "http",
+              "host": ["localhost"],
+              "port": "9000",
+              "path": ["graphql"]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "mutation createStoreProduct",
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "exec": [
+                  "pm.test(\"errors is undefined\", function() {",
+                  "    const response = JSON.parse(responseBody);",
+                  "    pm.expect(response.errors).to.be.undefined",
+                  "});"
+                ],
+                "type": "text/javascript",
+                "packages": {}
+              }
+            }
+          ],
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "",
+                "type": "text"
+              }
+            ],
+            "body": {
+              "mode": "graphql",
+              "graphql": {
+                "query": "mutation CreateStoreProduct(\n  $createStoreProductProductId: Int\n  $createStoreProductStoreId: Int\n  $productsAfter: String\n  $productsFirst: Int\n  $productsBefore: String\n  $productsLast: Int\n  $suppliersAfter: String\n  $suppliersFirst: Int\n  $suppliersBefore: String\n  $suppliersLast: Int\n  $storesAfter: String\n  $storesFirst: Int\n  $storesBefore: String\n  $storesLast: Int\n  $addressesAfter: String\n  $addressesFirst: Int\n  $addressesBefore: String\n  $addressesLast: Int\n) {\n  createStoreProduct(\n    productId: $createStoreProductProductId\n    storeId: $createStoreProductStoreId\n  ) {\n    id\n    productId\n    storeId\n    createdAt\n    updatedAt\n    deletedAt\n    products(\n      after: $productsAfter\n      first: $productsFirst\n      before: $productsBefore\n      last: $productsLast\n    ) {\n      pageInfo {\n        hasNextPage\n        hasPreviousPage\n        startCursor\n        endCursor\n      }\n      edges {\n        node {\n          id\n          name\n          category\n          amount\n          createdAt\n          updatedAt\n          deletedAt\n          suppliers(\n            after: $suppliersAfter\n            first: $suppliersFirst\n            before: $suppliersBefore\n            last: $suppliersLast\n          ) {\n            pageInfo {\n              hasNextPage\n              hasPreviousPage\n              startCursor\n              endCursor\n            }\n            edges {\n              cursor\n            }\n            total\n          }\n          stores(\n            after: $storesAfter\n            first: $storesFirst\n            before: $storesBefore\n            last: $storesLast\n          ) {\n            pageInfo {\n              hasNextPage\n              hasPreviousPage\n              startCursor\n              endCursor\n            }\n            edges {\n              cursor\n            }\n            total\n          }\n        }\n        cursor\n      }\n      total\n    }\n    stores(\n      after: $storesAfter\n      first: $storesFirst\n      before: $storesBefore\n      last: $storesLast\n    ) {\n      pageInfo {\n        hasNextPage\n        hasPreviousPage\n        startCursor\n        endCursor\n      }\n      edges {\n        node {\n          id\n          name\n          addressId\n          createdAt\n          updatedAt\n          deletedAt\n          addresses(\n            after: $addressesAfter\n            first: $addressesFirst\n            before: $addressesBefore\n            last: $addressesLast\n          ) {\n            pageInfo {\n              hasNextPage\n              hasPreviousPage\n              startCursor\n              endCursor\n            }\n            edges {\n              cursor\n            }\n            total\n          }\n          products(\n            after: $productsAfter\n            first: $productsFirst\n            before: $productsBefore\n            last: $productsLast\n          ) {\n            pageInfo {\n              hasNextPage\n              hasPreviousPage\n              startCursor\n              endCursor\n            }\n            edges {\n              cursor\n            }\n            total\n          }\n        }\n        cursor\n      }\n      total\n    }\n  }\n}\n",
+                "variables": "{\n  \"createStoreProductProductId\": 1,\n  \"createStoreProductStoreId\": 1,\n  \"productsAfter\": null,\n  \"productsFirst\": 10,\n  \"productsBefore\": null,\n  \"productsLast\": null,\n  \"suppliersAfter\": null,\n  \"suppliersFirst\": 10,\n  \"suppliersBefore\": null,\n  \"suppliersLast\": null,\n  \"storesAfter\": null,\n  \"storesFirst\": 10,\n  \"storesBefore\": null,\n  \"storesLast\": null,\n  \"addressesAfter\": null,\n  \"addressesFirst\": 10,\n  \"addressesBefore\": null,\n  \"addressesLast\": null\n}\n"
+              }
+            },
+            "url": {
+              "raw": "http://localhost:9000/graphql",
+              "protocol": "http",
+              "host": ["localhost"],
+              "port": "9000",
+              "path": ["graphql"]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "mutation updateStoreProduct",
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "exec": [
+                  "pm.test(\"errors is undefined\", function() {",
+                  "    const response = JSON.parse(responseBody);",
+                  "    pm.expect(response.errors).to.be.undefined",
+                  "});"
+                ],
+                "type": "text/javascript",
+                "packages": {}
+              }
+            }
+          ],
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "",
+                "type": "text"
+              }
+            ],
+            "body": {
+              "mode": "graphql",
+              "graphql": {
+                "query": "mutation UpdateStoreProduct(\n  $updateStoreProductId: ID!\n  $updateStoreProductProductId: Int\n  $updateStoreProductStoreId: Int\n  $productsAfter: String\n  $productsFirst: Int\n  $productsBefore: String\n  $productsLast: Int\n  $suppliersAfter: String\n  $suppliersFirst: Int\n  $suppliersBefore: String\n  $suppliersLast: Int\n  $storesAfter: String\n  $storesFirst: Int\n  $storesBefore: String\n  $storesLast: Int\n  $addressesAfter: String\n  $addressesFirst: Int\n  $addressesBefore: String\n  $addressesLast: Int\n) {\n  updateStoreProduct(\n    id: $updateStoreProductId\n    productId: $updateStoreProductProductId\n    storeId: $updateStoreProductStoreId\n  ) {\n    id\n    productId\n    storeId\n    createdAt\n    updatedAt\n    deletedAt\n    products(\n      after: $productsAfter\n      first: $productsFirst\n      before: $productsBefore\n      last: $productsLast\n    ) {\n      pageInfo {\n        hasNextPage\n        hasPreviousPage\n        startCursor\n        endCursor\n      }\n      edges {\n        node {\n          id\n          name\n          category\n          amount\n          createdAt\n          updatedAt\n          deletedAt\n          suppliers(\n            after: $suppliersAfter\n            first: $suppliersFirst\n            before: $suppliersBefore\n            last: $suppliersLast\n          ) {\n            pageInfo {\n              hasNextPage\n              hasPreviousPage\n              startCursor\n              endCursor\n            }\n            edges {\n              cursor\n            }\n            total\n          }\n          stores(\n            after: $storesAfter\n            first: $storesFirst\n            before: $storesBefore\n            last: $storesLast\n          ) {\n            pageInfo {\n              hasNextPage\n              hasPreviousPage\n              startCursor\n              endCursor\n            }\n            edges {\n              cursor\n            }\n            total\n          }\n        }\n        cursor\n      }\n      total\n    }\n    stores(\n      after: $storesAfter\n      first: $storesFirst\n      before: $storesBefore\n      last: $storesLast\n    ) {\n      pageInfo {\n        hasNextPage\n        hasPreviousPage\n        startCursor\n        endCursor\n      }\n      edges {\n        node {\n          id\n          name\n          addressId\n          createdAt\n          updatedAt\n          deletedAt\n          addresses(\n            after: $addressesAfter\n            first: $addressesFirst\n            before: $addressesBefore\n            last: $addressesLast\n          ) {\n            pageInfo {\n              hasNextPage\n              hasPreviousPage\n              startCursor\n              endCursor\n            }\n            edges {\n              cursor\n            }\n            total\n          }\n          products(\n            after: $productsAfter\n            first: $productsFirst\n            before: $productsBefore\n            last: $productsLast\n          ) {\n            pageInfo {\n              hasNextPage\n              hasPreviousPage\n              startCursor\n              endCursor\n            }\n            edges {\n              cursor\n            }\n            total\n          }\n        }\n        cursor\n      }\n      total\n    }\n  }\n}\n",
+                "variables": "{\n  \"updateStoreProductId\": 1,\n  \"updateStoreProductProductId\": 1,\n  \"updateStoreProductStoreId\": 2,\n  \"productsAfter\": null,\n  \"productsFirst\": 10,\n  \"productsBefore\": null,\n  \"productsLast\": null,\n  \"suppliersAfter\": null,\n  \"suppliersFirst\": 10,\n  \"suppliersBefore\": null,\n  \"suppliersLast\": null,\n  \"storesAfter\": null,\n  \"storesFirst\": 10,\n  \"storesBefore\": null,\n  \"storesLast\": null,\n  \"addressesAfter\": null,\n  \"addressesFirst\": 10,\n  \"addressesBefore\": null,\n  \"addressesLast\": null\n}\n"
+              }
+            },
+            "url": {
+              "raw": "http://localhost:9000/graphql",
+              "protocol": "http",
+              "host": ["localhost"],
+              "port": "9000",
+              "path": ["graphql"]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "mutation deleteStoreProduct",
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "exec": [
+                  "pm.test(\"errors is undefined\", function() {",
+                  "    const response = JSON.parse(responseBody);",
+                  "    pm.expect(response.errors).to.be.undefined",
+                  "});"
+                ],
+                "type": "text/javascript",
+                "packages": {}
+              }
+            }
+          ],
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "",
+                "type": "text"
+              }
+            ],
+            "body": {
+              "mode": "graphql",
+              "graphql": {
+                "query": "mutation DeleteStoreProduct($deleteStoreProductId: Int!) {\n  deleteStoreProduct(id: $deleteStoreProductId) {\n    id\n  }\n}\n",
+                "variables": "{\n  \"deleteStoreProductId\": 1\n}\n"
+              }
+            },
+            "url": {
+              "raw": "http://localhost:9000/graphql",
+              "protocol": "http",
+              "host": ["localhost"],
+              "port": "9000",
+              "path": ["graphql"]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "mutation createStore",
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "exec": [
+                  "pm.test(\"errors is undefined\", function() {",
+                  "    const response = JSON.parse(responseBody);",
+                  "    pm.expect(response.errors).to.be.undefined",
+                  "});"
+                ],
+                "type": "text/javascript",
+                "packages": {}
+              }
+            }
+          ],
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "",
+                "type": "text"
+              }
+            ],
+            "body": {
+              "mode": "graphql",
+              "graphql": {
+                "query": "mutation CreateStore(\n  $createStoreName: String\n  $createStoreAddressId: Int!\n  $addressesAfter: String\n  $addressesFirst: Int\n  $addressesBefore: String\n  $addressesLast: Int\n  $suppliersAfter: String\n  $suppliersFirst: Int\n  $suppliersBefore: String\n  $suppliersLast: Int\n  $storesAfter: String\n  $storesFirst: Int\n  $storesBefore: String\n  $storesLast: Int\n  $productsAfter: String\n  $productsFirst: Int\n  $productsBefore: String\n  $productsLast: Int\n) {\n  createStore(name: $createStoreName, addressId: $createStoreAddressId) {\n    id\n    name\n    addressId\n    createdAt\n    updatedAt\n    deletedAt\n    addresses(\n      after: $addressesAfter\n      first: $addressesFirst\n      before: $addressesBefore\n      last: $addressesLast\n    ) {\n      pageInfo {\n        hasNextPage\n        hasPreviousPage\n        startCursor\n        endCursor\n      }\n      edges {\n        node {\n          id\n          address1\n          address2\n          city\n          country\n          latitude\n          longitude\n          createdAt\n          updatedAt\n          deletedAt\n          suppliers(\n            after: $suppliersAfter\n            first: $suppliersFirst\n            before: $suppliersBefore\n            last: $suppliersLast\n          ) {\n            pageInfo {\n              hasNextPage\n              hasPreviousPage\n              startCursor\n              endCursor\n            }\n            edges {\n              cursor\n            }\n            total\n          }\n          stores(\n            after: $storesAfter\n            first: $storesFirst\n            before: $storesBefore\n            last: $storesLast\n          ) {\n            pageInfo {\n              hasNextPage\n              hasPreviousPage\n              startCursor\n              endCursor\n            }\n            edges {\n              cursor\n            }\n            total\n          }\n        }\n        cursor\n      }\n      total\n    }\n    products(\n      after: $productsAfter\n      first: $productsFirst\n      before: $productsBefore\n      last: $productsLast\n    ) {\n      pageInfo {\n        hasNextPage\n        hasPreviousPage\n        startCursor\n        endCursor\n      }\n      edges {\n        node {\n          id\n          name\n          category\n          amount\n          createdAt\n          updatedAt\n          deletedAt\n          suppliers(\n            after: $suppliersAfter\n            first: $suppliersFirst\n            before: $suppliersBefore\n            last: $suppliersLast\n          ) {\n            pageInfo {\n              hasNextPage\n              hasPreviousPage\n              startCursor\n              endCursor\n            }\n            edges {\n              cursor\n            }\n            total\n          }\n          stores(\n            after: $storesAfter\n            first: $storesFirst\n            before: $storesBefore\n            last: $storesLast\n          ) {\n            pageInfo {\n              hasNextPage\n              hasPreviousPage\n              startCursor\n              endCursor\n            }\n            edges {\n              cursor\n            }\n            total\n          }\n        }\n        cursor\n      }\n      total\n    }\n  }\n}\n",
+                "variables": "{\n  \"createStoreName\": \"Johnson, Turner and Erdman\",\n  \"createStoreAddressId\": 1703,\n  \"addressesAfter\": null,\n  \"addressesFirst\": 10,\n  \"addressesBefore\": null,\n  \"addressesLast\": null,\n  \"suppliersAfter\": null,\n  \"suppliersFirst\": 10,\n  \"suppliersBefore\": null,\n  \"suppliersLast\": null,\n  \"storesAfter\": null,\n  \"storesFirst\": 10,\n  \"storesBefore\": null,\n  \"storesLast\": null,\n  \"productsAfter\": null,\n  \"productsFirst\": 10,\n  \"productsBefore\": null,\n  \"productsLast\": null\n}\n"
+              }
+            },
+            "url": {
+              "raw": "http://localhost:9000/graphql",
+              "protocol": "http",
+              "host": ["localhost"],
+              "port": "9000",
+              "path": ["graphql"]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "mutation updateStore",
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "exec": [
+                  "pm.test(\"errors is undefined\", function() {",
+                  "    const response = JSON.parse(responseBody);",
+                  "    pm.expect(response.errors).to.be.undefined",
+                  "});"
+                ],
+                "type": "text/javascript",
+                "packages": {}
+              }
+            }
+          ],
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "",
+                "type": "text"
+              }
+            ],
+            "body": {
+              "mode": "graphql",
+              "graphql": {
+                "query": "mutation UpdateStore(\n  $updateStoreId: ID!\n  $updateStoreName: String\n  $updateStoreAddressId: Int!\n  $addressesAfter: String\n  $addressesFirst: Int\n  $addressesBefore: String\n  $addressesLast: Int\n  $suppliersAfter: String\n  $suppliersFirst: Int\n  $suppliersBefore: String\n  $suppliersLast: Int\n  $storesAfter: String\n  $storesFirst: Int\n  $storesBefore: String\n  $storesLast: Int\n  $productsAfter: String\n  $productsFirst: Int\n  $productsBefore: String\n  $productsLast: Int\n) {\n  updateStore(\n    id: $updateStoreId\n    name: $updateStoreName\n    addressId: $updateStoreAddressId\n  ) {\n    id\n    name\n    addressId\n    createdAt\n    updatedAt\n    deletedAt\n    addresses(\n      after: $addressesAfter\n      first: $addressesFirst\n      before: $addressesBefore\n      last: $addressesLast\n    ) {\n      pageInfo {\n        hasNextPage\n        hasPreviousPage\n        startCursor\n        endCursor\n      }\n      edges {\n        node {\n          id\n          address1\n          address2\n          city\n          country\n          latitude\n          longitude\n          createdAt\n          updatedAt\n          deletedAt\n          suppliers(\n            after: $suppliersAfter\n            first: $suppliersFirst\n            before: $suppliersBefore\n            last: $suppliersLast\n          ) {\n            pageInfo {\n              hasNextPage\n              hasPreviousPage\n              startCursor\n              endCursor\n            }\n            edges {\n              cursor\n            }\n            total\n          }\n          stores(\n            after: $storesAfter\n            first: $storesFirst\n            before: $storesBefore\n            last: $storesLast\n          ) {\n            pageInfo {\n              hasNextPage\n              hasPreviousPage\n              startCursor\n              endCursor\n            }\n            edges {\n              cursor\n            }\n            total\n          }\n        }\n        cursor\n      }\n      total\n    }\n    products(\n      after: $productsAfter\n      first: $productsFirst\n      before: $productsBefore\n      last: $productsLast\n    ) {\n      pageInfo {\n        hasNextPage\n        hasPreviousPage\n        startCursor\n        endCursor\n      }\n      edges {\n        node {\n          id\n          name\n          category\n          amount\n          createdAt\n          updatedAt\n          deletedAt\n          suppliers(\n            after: $suppliersAfter\n            first: $suppliersFirst\n            before: $suppliersBefore\n            last: $suppliersLast\n          ) {\n            pageInfo {\n              hasNextPage\n              hasPreviousPage\n              startCursor\n              endCursor\n            }\n            edges {\n              cursor\n            }\n            total\n          }\n          stores(\n            after: $storesAfter\n            first: $storesFirst\n            before: $storesBefore\n            last: $storesLast\n          ) {\n            pageInfo {\n              hasNextPage\n              hasPreviousPage\n              startCursor\n              endCursor\n            }\n            edges {\n              cursor\n            }\n            total\n          }\n        }\n        cursor\n      }\n      total\n    }\n  }\n}\n",
+                "variables": "{\n  \"updateStoreId\": 1,\n  \"updateStoreName\": \"Johnson, Turner and Erdman\",\n  \"updateStoreAddressId\": 1703,\n  \"addressesAfter\": null,\n  \"addressesFirst\": 10,\n  \"addressesBefore\": null,\n  \"addressesLast\": null,\n  \"suppliersAfter\": null,\n  \"suppliersFirst\": 10,\n  \"suppliersBefore\": null,\n  \"suppliersLast\": null,\n  \"storesAfter\": null,\n  \"storesFirst\": 10,\n  \"storesBefore\": null,\n  \"storesLast\": null,\n  \"productsAfter\": null,\n  \"productsFirst\": 10,\n  \"productsBefore\": null,\n  \"productsLast\": null\n}\n"
+              }
+            },
+            "url": {
+              "raw": "http://localhost:9000/graphql",
+              "protocol": "http",
+              "host": ["localhost"],
+              "port": "9000",
+              "path": ["graphql"]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "mutation deleteStore",
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "exec": [
+                  "pm.test(\"errors is undefined\", function() {",
+                  "    const response = JSON.parse(responseBody);",
+                  "    pm.expect(response.errors).to.be.undefined",
+                  "});"
+                ],
+                "type": "text/javascript",
+                "packages": {}
+              }
+            }
+          ],
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "",
+                "type": "text"
+              }
+            ],
+            "body": {
+              "mode": "graphql",
+              "graphql": {
+                "query": "mutation DeleteStore($deleteStoreId: Int!) {\n  deleteStore(id: $deleteStoreId) {\n    id\n  }\n}\n",
+                "variables": "{\n  \"deleteStoreId\": 1\n}\n"
+              }
+            },
+            "url": {
+              "raw": "http://localhost:9000/graphql",
+              "protocol": "http",
+              "host": ["localhost"],
+              "port": "9000",
+              "path": ["graphql"]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "mutation createSupplierProduct",
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "exec": [
+                  "pm.test(\"errors is undefined\", function() {",
+                  "    const response = JSON.parse(responseBody);",
+                  "    pm.expect(response.errors).to.be.undefined",
+                  "});"
+                ],
+                "type": "text/javascript",
+                "packages": {}
+              }
+            }
+          ],
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "",
+                "type": "text"
+              }
+            ],
+            "body": {
+              "mode": "graphql",
+              "graphql": {
+                "query": "mutation CreateSupplierProduct(\n  $createSupplierProductSupplierId: Int\n  $createSupplierProductProductId: Int\n  $productsAfter: String\n  $productsFirst: Int\n  $productsBefore: String\n  $productsLast: Int\n  $suppliersAfter: String\n  $suppliersFirst: Int\n  $suppliersBefore: String\n  $suppliersLast: Int\n  $storesAfter: String\n  $storesFirst: Int\n  $storesBefore: String\n  $storesLast: Int\n  $addressesAfter: String\n  $addressesFirst: Int\n  $addressesBefore: String\n  $addressesLast: Int\n) {\n  createSupplierProduct(\n    supplierId: $createSupplierProductSupplierId\n    productId: $createSupplierProductProductId\n  ) {\n    id\n    supplierId\n    productId\n    createdAt\n    updatedAt\n    deletedAt\n    products(\n      after: $productsAfter\n      first: $productsFirst\n      before: $productsBefore\n      last: $productsLast\n    ) {\n      pageInfo {\n        hasNextPage\n        hasPreviousPage\n        startCursor\n        endCursor\n      }\n      edges {\n        node {\n          id\n          name\n          category\n          amount\n          createdAt\n          updatedAt\n          deletedAt\n          suppliers(\n            after: $suppliersAfter\n            first: $suppliersFirst\n            before: $suppliersBefore\n            last: $suppliersLast\n          ) {\n            pageInfo {\n              hasNextPage\n              hasPreviousPage\n              startCursor\n              endCursor\n            }\n            edges {\n              cursor\n            }\n            total\n          }\n          stores(\n            after: $storesAfter\n            first: $storesFirst\n            before: $storesBefore\n            last: $storesLast\n          ) {\n            pageInfo {\n              hasNextPage\n              hasPreviousPage\n              startCursor\n              endCursor\n            }\n            edges {\n              cursor\n            }\n            total\n          }\n        }\n        cursor\n      }\n      total\n    }\n    suppliers(\n      after: $suppliersAfter\n      first: $suppliersFirst\n      before: $suppliersBefore\n      last: $suppliersLast\n    ) {\n      pageInfo {\n        hasNextPage\n        hasPreviousPage\n        startCursor\n        endCursor\n      }\n      edges {\n        node {\n          id\n          name\n          addressId\n          createdAt\n          updatedAt\n          deletedAt\n          addresses(\n            after: $addressesAfter\n            first: $addressesFirst\n            before: $addressesBefore\n            last: $addressesLast\n          ) {\n            pageInfo {\n              hasNextPage\n              hasPreviousPage\n              startCursor\n              endCursor\n            }\n            edges {\n              cursor\n            }\n            total\n          }\n          products(\n            after: $productsAfter\n            first: $productsFirst\n            before: $productsBefore\n            last: $productsLast\n          ) {\n            pageInfo {\n              hasNextPage\n              hasPreviousPage\n              startCursor\n              endCursor\n            }\n            edges {\n              cursor\n            }\n            total\n          }\n        }\n        cursor\n      }\n      total\n    }\n  }\n}\n",
+                "variables": "{\n  \"createSupplierProductSupplierId\": 1,\n  \"createSupplierProductProductId\": 1,\n  \"productsAfter\": null,\n  \"productsFirst\": 10,\n  \"productsBefore\": null,\n  \"productsLast\": null,\n  \"suppliersAfter\": null,\n  \"suppliersFirst\": 10,\n  \"suppliersBefore\": null,\n  \"suppliersLast\": null,\n  \"storesAfter\": null,\n  \"storesFirst\": 10,\n  \"storesBefore\": null,\n  \"storesLast\": null,\n  \"addressesAfter\": null,\n  \"addressesFirst\": 10,\n  \"addressesBefore\": null,\n  \"addressesLast\": null\n}\n"
+              }
+            },
+            "url": {
+              "raw": "http://localhost:9000/graphql",
+              "protocol": "http",
+              "host": ["localhost"],
+              "port": "9000",
+              "path": ["graphql"]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "mutation updateSupplierProduct",
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "exec": [
+                  "pm.test(\"errors is undefined\", function() {",
+                  "    const response = JSON.parse(responseBody);",
+                  "    pm.expect(response.errors).to.be.undefined",
+                  "});"
+                ],
+                "type": "text/javascript",
+                "packages": {}
+              }
+            }
+          ],
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "",
+                "type": "text"
+              }
+            ],
+            "body": {
+              "mode": "graphql",
+              "graphql": {
+                "query": "mutation UpdateSupplierProduct(\n  $updateSupplierProductId: ID!\n  $updateSupplierProductSupplierId: Int\n  $updateSupplierProductProductId: Int\n  $productsAfter: String\n  $productsFirst: Int\n  $productsBefore: String\n  $productsLast: Int\n  $suppliersAfter: String\n  $suppliersFirst: Int\n  $suppliersBefore: String\n  $suppliersLast: Int\n  $storesAfter: String\n  $storesFirst: Int\n  $storesBefore: String\n  $storesLast: Int\n  $addressesAfter: String\n  $addressesFirst: Int\n  $addressesBefore: String\n  $addressesLast: Int\n) {\n  updateSupplierProduct(\n    id: $updateSupplierProductId\n    supplierId: $updateSupplierProductSupplierId\n    productId: $updateSupplierProductProductId\n  ) {\n    id\n    supplierId\n    productId\n    createdAt\n    updatedAt\n    deletedAt\n    products(\n      after: $productsAfter\n      first: $productsFirst\n      before: $productsBefore\n      last: $productsLast\n    ) {\n      pageInfo {\n        hasNextPage\n        hasPreviousPage\n        startCursor\n        endCursor\n      }\n      edges {\n        node {\n          id\n          name\n          category\n          amount\n          createdAt\n          updatedAt\n          deletedAt\n          suppliers(\n            after: $suppliersAfter\n            first: $suppliersFirst\n            before: $suppliersBefore\n            last: $suppliersLast\n          ) {\n            pageInfo {\n              hasNextPage\n              hasPreviousPage\n              startCursor\n              endCursor\n            }\n            edges {\n              cursor\n            }\n            total\n          }\n          stores(\n            after: $storesAfter\n            first: $storesFirst\n            before: $storesBefore\n            last: $storesLast\n          ) {\n            pageInfo {\n              hasNextPage\n              hasPreviousPage\n              startCursor\n              endCursor\n            }\n            edges {\n              cursor\n            }\n            total\n          }\n        }\n        cursor\n      }\n      total\n    }\n    suppliers(\n      after: $suppliersAfter\n      first: $suppliersFirst\n      before: $suppliersBefore\n      last: $suppliersLast\n    ) {\n      pageInfo {\n        hasNextPage\n        hasPreviousPage\n        startCursor\n        endCursor\n      }\n      edges {\n        node {\n          id\n          name\n          addressId\n          createdAt\n          updatedAt\n          deletedAt\n          addresses(\n            after: $addressesAfter\n            first: $addressesFirst\n            before: $addressesBefore\n            last: $addressesLast\n          ) {\n            pageInfo {\n              hasNextPage\n              hasPreviousPage\n              startCursor\n              endCursor\n            }\n            edges {\n              cursor\n            }\n            total\n          }\n          products(\n            after: $productsAfter\n            first: $productsFirst\n            before: $productsBefore\n            last: $productsLast\n          ) {\n            pageInfo {\n              hasNextPage\n              hasPreviousPage\n              startCursor\n              endCursor\n            }\n            edges {\n              cursor\n            }\n            total\n          }\n        }\n        cursor\n      }\n      total\n    }\n  }\n}\n",
+                "variables": "{\n  \"updateSupplierProductId\": 1,\n  \"updateSupplierProductSupplierId\": 1,\n  \"updateSupplierProductProductId\": 2,\n  \"productsAfter\": null,\n  \"productsFirst\": 10,\n  \"productsBefore\": null,\n  \"productsLast\": null,\n  \"suppliersAfter\": null,\n  \"suppliersFirst\": 10,\n  \"suppliersBefore\": null,\n  \"suppliersLast\": null,\n  \"storesAfter\": null,\n  \"storesFirst\": 10,\n  \"storesBefore\": null,\n  \"storesLast\": null,\n  \"addressesAfter\": null,\n  \"addressesFirst\": 10,\n  \"addressesBefore\": null,\n  \"addressesLast\": null\n}\n"
+              }
+            },
+            "url": {
+              "raw": "http://localhost:9000/graphql",
+              "protocol": "http",
+              "host": ["localhost"],
+              "port": "9000",
+              "path": ["graphql"]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "mutation deleteSupplierProduct",
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "exec": [
+                  "pm.test(\"errors is undefined\", function() {",
+                  "    const response = JSON.parse(responseBody);",
+                  "    pm.expect(response.errors).to.be.undefined",
+                  "});"
+                ],
+                "type": "text/javascript",
+                "packages": {}
+              }
+            }
+          ],
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "",
+                "type": "text"
+              }
+            ],
+            "body": {
+              "mode": "graphql",
+              "graphql": {
+                "query": "mutation DeleteSupplierProduct($deleteSupplierProductId: Int!) {\n  deleteSupplierProduct(id: $deleteSupplierProductId) {\n    id\n  }\n}\n",
+                "variables": "{\n  \"deleteSupplierProductId\": 1\n}\n"
+              }
+            },
+            "url": {
+              "raw": "http://localhost:9000/graphql",
+              "protocol": "http",
+              "host": ["localhost"],
+              "port": "9000",
+              "path": ["graphql"]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "mutation createSupplier",
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "exec": [
+                  "pm.test(\"errors is undefined\", function() {",
+                  "    const response = JSON.parse(responseBody);",
+                  "    pm.expect(response.errors).to.be.undefined",
+                  "});"
+                ],
+                "type": "text/javascript",
+                "packages": {}
+              }
+            }
+          ],
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "",
+                "type": "text"
+              }
+            ],
+            "body": {
+              "mode": "graphql",
+              "graphql": {
+                "query": "mutation CreateSupplier(\n  $createSupplierName: String\n  $createSupplierAddressId: Int\n  $addressesAfter: String\n  $addressesFirst: Int\n  $addressesBefore: String\n  $addressesLast: Int\n  $suppliersAfter: String\n  $suppliersFirst: Int\n  $suppliersBefore: String\n  $suppliersLast: Int\n  $storesAfter: String\n  $storesFirst: Int\n  $storesBefore: String\n  $storesLast: Int\n  $productsAfter: String\n  $productsFirst: Int\n  $productsBefore: String\n  $productsLast: Int\n) {\n  createSupplier(\n    name: $createSupplierName\n    addressId: $createSupplierAddressId\n  ) {\n    id\n    name\n    addressId\n    createdAt\n    updatedAt\n    deletedAt\n    addresses(\n      after: $addressesAfter\n      first: $addressesFirst\n      before: $addressesBefore\n      last: $addressesLast\n    ) {\n      pageInfo {\n        hasNextPage\n        hasPreviousPage\n        startCursor\n        endCursor\n      }\n      edges {\n        node {\n          id\n          address1\n          address2\n          city\n          country\n          latitude\n          longitude\n          createdAt\n          updatedAt\n          deletedAt\n          suppliers(\n            after: $suppliersAfter\n            first: $suppliersFirst\n            before: $suppliersBefore\n            last: $suppliersLast\n          ) {\n            pageInfo {\n              hasNextPage\n              hasPreviousPage\n              startCursor\n              endCursor\n            }\n            edges {\n              cursor\n            }\n            total\n          }\n          stores(\n            after: $storesAfter\n            first: $storesFirst\n            before: $storesBefore\n            last: $storesLast\n          ) {\n            pageInfo {\n              hasNextPage\n              hasPreviousPage\n              startCursor\n              endCursor\n            }\n            edges {\n              cursor\n            }\n            total\n          }\n        }\n        cursor\n      }\n      total\n    }\n    products(\n      after: $productsAfter\n      first: $productsFirst\n      before: $productsBefore\n      last: $productsLast\n    ) {\n      pageInfo {\n        hasNextPage\n        hasPreviousPage\n        startCursor\n        endCursor\n      }\n      edges {\n        node {\n          id\n          name\n          category\n          amount\n          createdAt\n          updatedAt\n          deletedAt\n          suppliers(\n            after: $suppliersAfter\n            first: $suppliersFirst\n            before: $suppliersBefore\n            last: $suppliersLast\n          ) {\n            pageInfo {\n              hasNextPage\n              hasPreviousPage\n              startCursor\n              endCursor\n            }\n            edges {\n              cursor\n            }\n            total\n          }\n          stores(\n            after: $storesAfter\n            first: $storesFirst\n            before: $storesBefore\n            last: $storesLast\n          ) {\n            pageInfo {\n              hasNextPage\n              hasPreviousPage\n              startCursor\n              endCursor\n            }\n            edges {\n              cursor\n            }\n            total\n          }\n        }\n        cursor\n      }\n      total\n    }\n  }\n}\n",
+                "variables": "{\n  \"createSupplierName\": \"Skiles Inc\",\n  \"createSupplierAddressId\": 83,\n  \"addressesAfter\": null,\n  \"addressesFirst\": 10,\n  \"addressesBefore\": null,\n  \"addressesLast\": null,\n  \"suppliersAfter\": null,\n  \"suppliersFirst\": 10,\n  \"suppliersBefore\": null,\n  \"suppliersLast\": null,\n  \"storesAfter\": null,\n  \"storesFirst\": 10,\n  \"storesBefore\": null,\n  \"storesLast\": null,\n  \"productsAfter\": null,\n  \"productsFirst\": 10,\n  \"productsBefore\": null,\n  \"productsLast\": null\n}\n"
+              }
+            },
+            "url": {
+              "raw": "http://localhost:9000/graphql",
+              "protocol": "http",
+              "host": ["localhost"],
+              "port": "9000",
+              "path": ["graphql"]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "mutation updateSupplier",
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "exec": [
+                  "pm.test(\"errors is undefined\", function() {",
+                  "    const response = JSON.parse(responseBody);",
+                  "    pm.expect(response.errors).to.be.undefined",
+                  "});"
+                ],
+                "type": "text/javascript",
+                "packages": {}
+              }
+            }
+          ],
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "",
+                "type": "text"
+              }
+            ],
+            "body": {
+              "mode": "graphql",
+              "graphql": {
+                "query": "mutation UpdateSupplier(\n  $updateSupplierId: ID!\n  $updateSupplierName: String\n  $updateSupplierAddressId: Int\n  $addressesAfter: String\n  $addressesFirst: Int\n  $addressesBefore: String\n  $addressesLast: Int\n  $suppliersAfter: String\n  $suppliersFirst: Int\n  $suppliersBefore: String\n  $suppliersLast: Int\n  $storesAfter: String\n  $storesFirst: Int\n  $storesBefore: String\n  $storesLast: Int\n  $productsAfter: String\n  $productsFirst: Int\n  $productsBefore: String\n  $productsLast: Int\n) {\n  updateSupplier(\n    id: $updateSupplierId\n    name: $updateSupplierName\n    addressId: $updateSupplierAddressId\n  ) {\n    id\n    name\n    addressId\n    createdAt\n    updatedAt\n    deletedAt\n    addresses(\n      after: $addressesAfter\n      first: $addressesFirst\n      before: $addressesBefore\n      last: $addressesLast\n    ) {\n      pageInfo {\n        hasNextPage\n        hasPreviousPage\n        startCursor\n        endCursor\n      }\n      edges {\n        node {\n          id\n          address1\n          address2\n          city\n          country\n          latitude\n          longitude\n          createdAt\n          updatedAt\n          deletedAt\n          suppliers(\n            after: $suppliersAfter\n            first: $suppliersFirst\n            before: $suppliersBefore\n            last: $suppliersLast\n          ) {\n            pageInfo {\n              hasNextPage\n              hasPreviousPage\n              startCursor\n              endCursor\n            }\n            edges {\n              cursor\n            }\n            total\n          }\n          stores(\n            after: $storesAfter\n            first: $storesFirst\n            before: $storesBefore\n            last: $storesLast\n          ) {\n            pageInfo {\n              hasNextPage\n              hasPreviousPage\n              startCursor\n              endCursor\n            }\n            edges {\n              cursor\n            }\n            total\n          }\n        }\n        cursor\n      }\n      total\n    }\n    products(\n      after: $productsAfter\n      first: $productsFirst\n      before: $productsBefore\n      last: $productsLast\n    ) {\n      pageInfo {\n        hasNextPage\n        hasPreviousPage\n        startCursor\n        endCursor\n      }\n      edges {\n        node {\n          id\n          name\n          category\n          amount\n          createdAt\n          updatedAt\n          deletedAt\n          suppliers(\n            after: $suppliersAfter\n            first: $suppliersFirst\n            before: $suppliersBefore\n            last: $suppliersLast\n          ) {\n            pageInfo {\n              hasNextPage\n              hasPreviousPage\n              startCursor\n              endCursor\n            }\n            edges {\n              cursor\n            }\n            total\n          }\n          stores(\n            after: $storesAfter\n            first: $storesFirst\n            before: $storesBefore\n            last: $storesLast\n          ) {\n            pageInfo {\n              hasNextPage\n              hasPreviousPage\n              startCursor\n              endCursor\n            }\n            edges {\n              cursor\n            }\n            total\n          }\n        }\n        cursor\n      }\n      total\n    }\n  }\n}\n",
+                "variables": "{\n  \"updateSupplierId\": 1,\n  \"updateSupplierName\": \"Skiles Inc\",\n  \"updateSupplierAddressId\": 83,\n  \"addressesAfter\": null,\n  \"addressesFirst\": 10,\n  \"addressesBefore\": null,\n  \"addressesLast\": null,\n  \"suppliersAfter\": null,\n  \"suppliersFirst\": 10,\n  \"suppliersBefore\": null,\n  \"suppliersLast\": null,\n  \"storesAfter\": null,\n  \"storesFirst\": 10,\n  \"storesBefore\": null,\n  \"storesLast\": null,\n  \"productsAfter\": null,\n  \"productsFirst\": 10,\n  \"productsBefore\": null,\n  \"productsLast\": null\n}\n"
+              }
+            },
+            "url": {
+              "raw": "http://localhost:9000/graphql",
+              "protocol": "http",
+              "host": ["localhost"],
+              "port": "9000",
+              "path": ["graphql"]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "mutation deleteSupplier",
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "exec": [
+                  "pm.test(\"errors is undefined\", function() {",
+                  "    const response = JSON.parse(responseBody);",
+                  "    pm.expect(response.errors).to.be.undefined",
+                  "});"
+                ],
+                "type": "text/javascript",
+                "packages": {}
+              }
+            }
+          ],
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "",
+                "type": "text"
+              }
+            ],
+            "body": {
+              "mode": "graphql",
+              "graphql": {
+                "query": "mutation DeleteSupplier($deleteSupplierId: Int!) {\n  deleteSupplier(id: $deleteSupplierId) {\n    id\n  }\n}\n",
+                "variables": "{\n  \"deleteSupplierId\": 1\n}\n"
+              }
+            },
+            "url": {
+              "raw": "http://localhost:9000/graphql",
+              "protocol": "http",
+              "host": ["localhost"],
+              "port": "9000",
+              "path": ["graphql"]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "mutation updateUser",
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "exec": [
+                  "pm.test(\"errors is undefined\", function() {",
+                  "    const response = JSON.parse(responseBody);",
+                  "    pm.expect(response.errors).to.be.undefined",
+                  "});"
+                ],
+                "type": "text/javascript",
+                "packages": {}
+              }
+            }
+          ],
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "",
+                "type": "text"
+              }
+            ],
+            "body": {
+              "mode": "graphql",
+              "graphql": {
+                "query": "mutation UpdateUser(\n  $updateUserFirstName: String!\n  $updateUserLastName: String!\n  $updateUserID: ID!\n) {\n  updateUser(firstName: $updateUserFirstName, lastName: $updateUserLastName, \n  id: $updateUserID) {\n    firstName\n    lastName\n    id\n    email\n    createdAt\n    updatedAt\n    deletedAt\n  }\n}\n",
+                "variables": "{\n  \"updateUserID\": 1,\n  \"updateUserFirstName\": \"John\",\n  \"updateUserLastName\": \"Doe\"\n}\n"
+              }
+            },
+            "url": {
+              "raw": "http://localhost:9000/graphql",
+              "protocol": "http",
+              "host": ["localhost"],
+              "port": "9000",
+              "path": ["graphql"]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "mutation signUp",
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "exec": [
+                  "pm.test(\"errors is undefined\", function() {",
+                  "    const response = JSON.parse(responseBody);",
+                  "    pm.expect(response.errors).to.be.undefined",
+                  "});"
+                ],
+                "type": "text/javascript",
+                "packages": {}
+              }
+            }
+          ],
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "",
+                "type": "text"
+              }
+            ],
+            "body": {
+              "mode": "graphql",
+              "graphql": {
+                "query": "mutation SignUp(\n  $signUpEmail: String!\n  $signUpPassword: String!\n  $signUpFirstName: String!\n  $signUpLastName: String!\n) {\n  signUp(\n    email: $signUpEmail\n    password: $signUpPassword\n    firstName: $signUpFirstName\n    lastName: $signUpLastName\n  ) {\n    id\n    email\n    firstName\n    lastName\n    token\n    createdAt\n    updatedAt\n    deletedAt\n  }\n}\n",
+                "variables": "{\n  \"signUpEmail\": \"dev@wednesday.is\",\n  \"signUpPassword\": \"wednesdaySolutions\",\n  \"signUpFirstName\": \"Wednesday\",\n  \"signUpLastName\": \"Solutions\"\n}\n"
+              }
+            },
+            "url": {
+              "raw": "http://localhost:9000/graphql",
+              "protocol": "http",
+              "host": ["localhost"],
+              "port": "9000",
+              "path": ["graphql"]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "mutation signIn",
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "exec": [
+                  "pm.test(\"errors is undefined\", function() {",
+                  "    const response = JSON.parse(responseBody);",
+                  "    pm.expect(response.errors).to.be.undefined",
+                  "});"
+                ],
+                "type": "text/javascript",
+                "packages": {}
+              }
+            }
+          ],
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "",
+                "type": "text"
+              }
+            ],
+            "body": {
+              "mode": "graphql",
+              "graphql": {
+                "query": "mutation SignIn($signInEmail: String!, $signInPassword: String!) {\n  signIn(email: $signInEmail, password: $signInPassword) {\n    token\n  }\n}\n",
+                "variables": "{\n  \"signInEmail\": \"mac+0@wednesday.is\",\n  \"signInPassword\": \"wednesdaySolutions\"\n}\n"
+              }
+            },
+            "url": {
+              "raw": "http://localhost:9000/graphql",
+              "protocol": "http",
+              "host": ["localhost"],
+              "port": "9000",
+              "path": ["graphql"]
+            }
+          },
+          "response": []
+        }
+      ]
+    }
+  ]
+}

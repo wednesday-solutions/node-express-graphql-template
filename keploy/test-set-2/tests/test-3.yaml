@@ -1,0 +1,61 @@
+version: api.keploy.io/v1beta1
+kind: Http
+name: test-3
+spec:
+    metadata: {}
+    req:
+        method: POST
+        proto_major: 1
+        proto_minor: 1
+        url: http://localhost:9000/graphql
+        header:
+            Accept: '*/*'
+            Accept-Encoding: gzip, deflate, br
+            Connection: keep-alive
+            Content-Length: "162"
+            Content-Type: application/json
+            Host: localhost:9000
+            Postman-Token: 7cb73161-9d5b-45e6-9b8b-975d71c7cb29
+            User-Agent: PostmanRuntime/7.37.3
+        body: |-
+            {"query":"mutation DeleteAddress($deleteAddressId: Int!) {\n  deleteAddress(id: $deleteAddressId) {\n    id\n  }\n}\n","variables":{
+              "deleteAddressId": 2001
+            }
+            }
+        timestamp: 2024-06-28T09:14:01.165137829Z
+    resp:
+        status_code: 200
+        header:
+            Cache-Control: no-store
+            Connection: keep-alive
+            Content-Length: "39"
+            Content-Type: application/json; charset=utf-8
+            Date: Fri, 28 Jun 2024 09:14:01 GMT
+            Etag: W/"27-/JJ8t9y1S8k74irPqE2JyFyyMfs"
+            Keep-Alive: timeout=5
+            X-Powered-By: Express
+        body: |
+            {"data":{"deleteAddress":{"id":2001}}}
+        status_message: OK
+        proto_major: 0
+        proto_minor: 0
+        timestamp: 2024-06-28T09:14:03.250572011Z
+    objects: []
+    assertions:
+        noise:
+            header.Date: []
+    created: 1719566043
+curl: |-
+    curl --request POST \
+      --url http://localhost:9000/graphql \
+      --header 'Postman-Token: 7cb73161-9d5b-45e6-9b8b-975d71c7cb29' \
+      --header 'Host: localhost:9000' \
+      --header 'Accept-Encoding: gzip, deflate, br' \
+      --header 'Connection: keep-alive' \
+      --header 'Content-Type: application/json' \
+      --header 'User-Agent: PostmanRuntime/7.37.3' \
+      --header 'Accept: */*' \
+      --data '{"query":"mutation DeleteAddress($deleteAddressId: Int!) {\n  deleteAddress(id: $deleteAddressId) {\n    id\n  }\n}\n","variables":{
+      "deleteAddressId": 2001
+    }
+    }'

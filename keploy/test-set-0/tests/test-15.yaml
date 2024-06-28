@@ -1,0 +1,98 @@
+version: api.keploy.io/v1beta1
+kind: Http
+name: test-15
+spec:
+    metadata: {}
+    req:
+        method: POST
+        proto_major: 1
+        proto_minor: 1
+        url: http://localhost:9000/graphql
+        header:
+            Accept: '*/*'
+            Accept-Encoding: gzip, deflate, br
+            Connection: keep-alive
+            Content-Length: "3656"
+            Content-Type: application/json
+            Host: localhost:9000
+            Postman-Token: 105cc9b9-d329-42f6-8eb4-7ab9e9349e65
+            User-Agent: PostmanRuntime/7.37.3
+        body: |-
+            {"query":"query Product(\n  $productId: Int\n  $productWhere: SequelizeJSON\n  $suppliersAfter: String\n  $suppliersFirst: Int\n  $suppliersBefore: String\n  $suppliersLast: Int\n  $addressesAfter: String\n  $addressesFirst: Int\n  $addressesBefore: String\n  $addressesLast: Int\n  $productsAfter: String\n  $productsFirst: Int\n  $productsBefore: String\n  $productsLast: Int\n  $storesAfter: String\n  $storesFirst: Int\n  $storesBefore: String\n  $storesLast: Int\n) {\n  product(id: $productId, where: $productWhere) {\n    id\n    name\n    category\n    amount\n    createdAt\n    updatedAt\n    deletedAt\n    suppliers(\n      after: $suppliersAfter\n      first: $suppliersFirst\n      before: $suppliersBefore\n      last: $suppliersLast\n    ) {\n      pageInfo {\n        hasNextPage\n        hasPreviousPage\n        startCursor\n        endCursor\n      }\n      edges {\n        node {\n          id\n          name\n          addressId\n          createdAt\n          updatedAt\n          deletedAt\n          addresses(\n            after: $addressesAfter\n            first: $addressesFirst\n            before: $addressesBefore\n            last: $addressesLast\n          ) {\n            pageInfo {\n              hasNextPage\n              hasPreviousPage\n              startCursor\n              endCursor\n            }\n            edges {\n              cursor\n            }\n            total\n          }\n          products(\n            after: $productsAfter\n            first: $productsFirst\n            before: $productsBefore\n            last: $productsLast\n          ) {\n            pageInfo {\n              hasNextPage\n              hasPreviousPage\n              startCursor\n              endCursor\n            }\n            edges {\n              cursor\n            }\n            total\n          }\n        }\n        cursor\n      }\n      total\n    }\n    stores(\n      after: $storesAfter\n      first: $storesFirst\n      before: $storesBefore\n      last: $storesLast\n    ) {\n      pageInfo {\n        hasNextPage\n        hasPreviousPage\n        startCursor\n        endCursor\n      }\n      edges {\n        node {\n          id\n          name\n          addressId\n          createdAt\n          updatedAt\n          deletedAt\n          addresses(\n            after: $addressesAfter\n            first: $addressesFirst\n            before: $addressesBefore\n            last: $addressesLast\n          ) {\n            pageInfo {\n              hasNextPage\n              hasPreviousPage\n              startCursor\n              endCursor\n            }\n            edges {\n              cursor\n            }\n            total\n          }\n          products(\n            after: $productsAfter\n            first: $productsFirst\n            before: $productsBefore\n            last: $productsLast\n          ) {\n            pageInfo {\n              hasNextPage\n              hasPreviousPage\n              startCursor\n              endCursor\n            }\n            edges {\n              cursor\n            }\n            total\n          }\n        }\n        cursor\n      }\n      total\n    }\n  }\n}\n","variables":{
+              "productId": null,
+              "productWhere": {"id": 45},
+              "suppliersAfter": null,
+              "suppliersFirst": 10,
+              "suppliersBefore": null,
+              "suppliersLast": null,
+              "addressesAfter": null,
+              "addressesFirst": 10,
+              "addressesBefore": null,
+              "addressesLast": null,
+              "productsAfter": null,
+              "productsFirst": 10,
+              "productsBefore": null,
+              "productsLast": null,
+              "storesAfter": null,
+              "storesFirst": 10,
+              "storesBefore": null,
+              "storesLast": null
+            }
+            }
+        timestamp: 2024-06-28T06:09:47.957381299Z
+    resp:
+        status_code: 200
+        header:
+            Cache-Control: no-store
+            Connection: keep-alive
+            Content-Length: "1485"
+            Content-Type: application/json; charset=utf-8
+            Date: Fri, 28 Jun 2024 06:09:48 GMT
+            Etag: W/"5cd-wQNIgn7RwFNe+E8vinud44TM7NQ"
+            Keep-Alive: timeout=5
+            X-Powered-By: Express
+        body: |
+            {"data":{"product":{"id":"45","name":"Licensed Granite Mouse","category":"Jewelery","amount":17200,"createdAt":"2024-06-28T05:42:33.592Z","updatedAt":null,"deletedAt":null,"suppliers":{"pageInfo":{"hasNextPage":false,"hasPreviousPage":false,"startCursor":"Wzg4OSwwXQ==","endCursor":"Wzg4OSwwXQ=="},"edges":[{"node":{"id":"889","name":"Daniel - Ullrich","addressId":1493,"createdAt":"2024-06-28T05:42:33.899Z","updatedAt":null,"deletedAt":null,"addresses":{"pageInfo":{"hasNextPage":false,"hasPreviousPage":false,"startCursor":"WzE0OTMsMF0=","endCursor":"WzE0OTMsMF0="},"edges":[{"cursor":"WzE0OTMsMF0="}],"total":1},"products":{"pageInfo":{"hasNextPage":false,"hasPreviousPage":false,"startCursor":"WzQ1LDBd","endCursor":"WzE1MTIsMV0="},"edges":[{"cursor":"WzQ1LDBd"},{"cursor":"WzE1MTIsMV0="}],"total":2}},"cursor":"Wzg4OSwwXQ=="}],"total":1},"stores":{"pageInfo":{"hasNextPage":false,"hasPreviousPage":false,"startCursor":"WzE1MjcsMF0=","endCursor":"WzE1MjcsMF0="},"edges":[{"node":{"id":"1527","name":"Blanda and Sons","addressId":457,"createdAt":"2024-06-28T05:42:33.771Z","updatedAt":null,"deletedAt":null,"addresses":{"pageInfo":{"hasNextPage":false,"hasPreviousPage":false,"startCursor":"WzQ1NywwXQ==","endCursor":"WzQ1NywwXQ=="},"edges":[{"cursor":"WzQ1NywwXQ=="}],"total":1},"products":{"pageInfo":{"hasNextPage":false,"hasPreviousPage":false,"startCursor":"WzQ1LDBd","endCursor":"WzQ1LDBd"},"edges":[{"cursor":"WzQ1LDBd"}],"total":1}},"cursor":"WzE1MjcsMF0="}],"total":1}}}}
+        status_message: OK
+        proto_major: 0
+        proto_minor: 0
+        timestamp: 2024-06-28T06:09:50.327670717Z
+    objects: []
+    assertions:
+        noise:
+            body.data.product.createdAt: []
+            body.data.product.stores.edges.node.createdAt: []
+            body.data.product.suppliers.edges.node.createdAt: []
+            header.Date: []
+    created: 1719554990
+curl: |-
+    curl --request POST \
+      --url http://localhost:9000/graphql \
+      --header 'User-Agent: PostmanRuntime/7.37.3' \
+      --header 'Accept: */*' \
+      --header 'Postman-Token: 105cc9b9-d329-42f6-8eb4-7ab9e9349e65' \
+      --header 'Host: localhost:9000' \
+      --header 'Accept-Encoding: gzip, deflate, br' \
+      --header 'Connection: keep-alive' \
+      --header 'Content-Type: application/json' \
+      --data '{"query":"query Product(\n  $productId: Int\n  $productWhere: SequelizeJSON\n  $suppliersAfter: String\n  $suppliersFirst: Int\n  $suppliersBefore: String\n  $suppliersLast: Int\n  $addressesAfter: String\n  $addressesFirst: Int\n  $addressesBefore: String\n  $addressesLast: Int\n  $productsAfter: String\n  $productsFirst: Int\n  $productsBefore: String\n  $productsLast: Int\n  $storesAfter: String\n  $storesFirst: Int\n  $storesBefore: String\n  $storesLast: Int\n) {\n  product(id: $productId, where: $productWhere) {\n    id\n    name\n    category\n    amount\n    createdAt\n    updatedAt\n    deletedAt\n    suppliers(\n      after: $suppliersAfter\n      first: $suppliersFirst\n      before: $suppliersBefore\n      last: $suppliersLast\n    ) {\n      pageInfo {\n        hasNextPage\n        hasPreviousPage\n        startCursor\n        endCursor\n      }\n      edges {\n        node {\n          id\n          name\n          addressId\n          createdAt\n          updatedAt\n          deletedAt\n          addresses(\n            after: $addressesAfter\n            first: $addressesFirst\n            before: $addressesBefore\n            last: $addressesLast\n          ) {\n            pageInfo {\n              hasNextPage\n              hasPreviousPage\n              startCursor\n              endCursor\n            }\n            edges {\n              cursor\n            }\n            total\n          }\n          products(\n            after: $productsAfter\n            first: $productsFirst\n            before: $productsBefore\n            last: $productsLast\n          ) {\n            pageInfo {\n              hasNextPage\n              hasPreviousPage\n              startCursor\n              endCursor\n            }\n            edges {\n              cursor\n            }\n            total\n          }\n        }\n        cursor\n      }\n      total\n    }\n    stores(\n      after: $storesAfter\n      first: $storesFirst\n      before: $storesBefore\n      last: $storesLast\n    ) {\n      pageInfo {\n        hasNextPage\n        hasPreviousPage\n        startCursor\n        endCursor\n      }\n      edges {\n        node {\n          id\n          name\n          addressId\n          createdAt\n          updatedAt\n          deletedAt\n          addresses(\n            after: $addressesAfter\n            first: $addressesFirst\n            before: $addressesBefore\n            last: $addressesLast\n          ) {\n            pageInfo {\n              hasNextPage\n              hasPreviousPage\n              startCursor\n              endCursor\n            }\n            edges {\n              cursor\n            }\n            total\n          }\n          products(\n            after: $productsAfter\n            first: $productsFirst\n            before: $productsBefore\n            last: $productsLast\n          ) {\n            pageInfo {\n              hasNextPage\n              hasPreviousPage\n              startCursor\n              endCursor\n            }\n            edges {\n              cursor\n            }\n            total\n          }\n        }\n        cursor\n      }\n      total\n    }\n  }\n}\n","variables":{
+      "productId": null,
+      "productWhere": {"id": 45},
+      "suppliersAfter": null,
+      "suppliersFirst": 10,
+      "suppliersBefore": null,
+      "suppliersLast": null,
+      "addressesAfter": null,
+      "addressesFirst": 10,
+      "addressesBefore": null,
+      "addressesLast": null,
+      "productsAfter": null,
+      "productsFirst": 10,
+      "productsBefore": null,
+      "productsLast": null,
+      "storesAfter": null,
+      "storesFirst": 10,
+      "storesBefore": null,
+      "storesLast": null
+    }
+    }'

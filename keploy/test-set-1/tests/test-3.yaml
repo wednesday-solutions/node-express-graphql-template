@@ -1,0 +1,61 @@
+version: api.keploy.io/v1beta1
+kind: Http
+name: test-3
+spec:
+    metadata: {}
+    req:
+        method: POST
+        proto_major: 1
+        proto_minor: 1
+        url: http://localhost:9000/graphql
+        header:
+            Accept: '*/*'
+            Accept-Encoding: gzip, deflate, br
+            Connection: keep-alive
+            Content-Length: "152"
+            Content-Type: application/json
+            Host: localhost:9000
+            Postman-Token: 59a4632e-2d56-41ec-8e8d-95f0fd318afd
+            User-Agent: PostmanRuntime/7.37.3
+        body: |-
+            {"query":"mutation DeleteStore($deleteStoreId: Int!) {\n  deleteStore(id: $deleteStoreId) {\n    id\n  }\n}\n","variables":{
+              "deleteStoreId": 2001
+            }
+            }
+        timestamp: 2024-06-28T07:32:26.231314706Z
+    resp:
+        status_code: 200
+        header:
+            Cache-Control: no-store
+            Connection: keep-alive
+            Content-Length: "37"
+            Content-Type: application/json; charset=utf-8
+            Date: Fri, 28 Jun 2024 07:32:26 GMT
+            Etag: W/"25-VYdIiIhwipTbeFAKIU/ztlmJCqA"
+            Keep-Alive: timeout=5
+            X-Powered-By: Express
+        body: |
+            {"data":{"deleteStore":{"id":2001}}}
+        status_message: OK
+        proto_major: 0
+        proto_minor: 0
+        timestamp: 2024-06-28T07:32:28.324148054Z
+    objects: []
+    assertions:
+        noise:
+            header.Date: []
+    created: 1719559948
+curl: |-
+    curl --request POST \
+      --url http://localhost:9000/graphql \
+      --header 'Content-Type: application/json' \
+      --header 'User-Agent: PostmanRuntime/7.37.3' \
+      --header 'Accept: */*' \
+      --header 'Postman-Token: 59a4632e-2d56-41ec-8e8d-95f0fd318afd' \
+      --header 'Host: localhost:9000' \
+      --header 'Accept-Encoding: gzip, deflate, br' \
+      --header 'Connection: keep-alive' \
+      --data '{"query":"mutation DeleteStore($deleteStoreId: Int!) {\n  deleteStore(id: $deleteStoreId) {\n    id\n  }\n}\n","variables":{
+      "deleteStoreId": 2001
+    }
+    }'

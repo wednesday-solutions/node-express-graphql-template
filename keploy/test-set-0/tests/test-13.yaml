@@ -11,46 +11,88 @@ spec:
         header:
             Accept: '*/*'
             Accept-Encoding: gzip, deflate, br
-            Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyIjp7ImlkIjoxLCJmaXJzdE5hbWUiOiJTdGVybGluZyIsImxhc3ROYW1lIjoiU2F1ZXIiLCJlbWFpbCI6Ik1hc29uLkdvbGRuZXI0OUBob3RtYWlsLmNvbSIsInBhc3N3b3JkIjoiZGFhOTMyMGY1YzU4NDRiODRiMjhlMDE2YjRiOGM0MGIiLCJjcmVhdGVkQXQiOiIyMDIzLTEyLTA4VDE4OjE2OjQxLjYzOFoiLCJ1cGRhdGVkQXQiOm51bGwsImRlbGV0ZWRBdCI6bnVsbH0sImlhdCI6MTcxOTM0MzYzOCwiZXhwIjoxNzE5NDMwMDM4fQ.Kgm3Lmbg97M_QQP5Gn9q4suRYEF7_n4ITqehV4i7t_s
             Connection: keep-alive
-            Content-Length: "286"
+            Content-Length: "3690"
             Content-Type: application/json
             Host: localhost:9000
-            Postman-Token: 2936f470-aa67-420c-b62a-0cbaf064698c
+            Postman-Token: 7066b7b4-31b1-40e4-9c69-72585b787042
             User-Agent: PostmanRuntime/7.37.3
-        body: '{"query":"query Aggregate {\n  aggregate (startDate: \"2007-12-01T10:15:30Z\", endDate:\"2007-12-31T10:15:30Z\", category:\"Baby\") {\n    max {\n      purchasedProductsPrice\n    }\n    total {\n      purchasedProductsPrice\n    }\n    count {\n      purchasedProducts\n    }\n  }\n}"}'
-        timestamp: 2024-06-26T08:00:36.696921085Z
+        body: |-
+            {"query":"query StoreProduct(\n  $storeProductId: Int\n  $storeProductWhere: SequelizeJSON\n  $productsAfter: String\n  $productsFirst: Int\n  $productsBefore: String\n  $productsLast: Int\n  $suppliersAfter: String\n  $suppliersFirst: Int\n  $suppliersBefore: String\n  $suppliersLast: Int\n  $storesAfter: String\n  $storesFirst: Int\n  $storesBefore: String\n  $storesLast: Int\n  $addressesAfter: String\n  $addressesFirst: Int\n  $addressesBefore: String\n  $addressesLast: Int\n) {\n  storeProduct(id: $storeProductId, where: $storeProductWhere) {\n    id\n    productId\n    storeId\n    createdAt\n    updatedAt\n    deletedAt\n    products(\n      after: $productsAfter\n      first: $productsFirst\n      before: $productsBefore\n      last: $productsLast\n    ) {\n      pageInfo {\n        hasNextPage\n        hasPreviousPage\n        startCursor\n        endCursor\n      }\n      edges {\n        node {\n          id\n          name\n          category\n          amount\n          createdAt\n          updatedAt\n          deletedAt\n          suppliers(\n            after: $suppliersAfter\n            first: $suppliersFirst\n            before: $suppliersBefore\n            last: $suppliersLast\n          ) {\n            pageInfo {\n              hasNextPage\n              hasPreviousPage\n              startCursor\n              endCursor\n            }\n            edges {\n              cursor\n            }\n            total\n          }\n          stores(\n            after: $storesAfter\n            first: $storesFirst\n            before: $storesBefore\n            last: $storesLast\n          ) {\n            pageInfo {\n              hasNextPage\n              hasPreviousPage\n              startCursor\n              endCursor\n            }\n            edges {\n              cursor\n            }\n            total\n          }\n        }\n        cursor\n      }\n      total\n    }\n    stores(\n      after: $storesAfter\n      first: $storesFirst\n      before: $storesBefore\n      last: $storesLast\n    ) {\n      pageInfo {\n        hasNextPage\n        hasPreviousPage\n        startCursor\n        endCursor\n      }\n      edges {\n        node {\n          id\n          name\n          addressId\n          createdAt\n          updatedAt\n          deletedAt\n          addresses(\n            after: $addressesAfter\n            first: $addressesFirst\n            before: $addressesBefore\n            last: $addressesLast\n          ) {\n            pageInfo {\n              hasNextPage\n              hasPreviousPage\n              startCursor\n              endCursor\n            }\n            edges {\n              cursor\n            }\n            total\n          }\n          products(\n            after: $productsAfter\n            first: $productsFirst\n            before: $productsBefore\n            last: $productsLast\n          ) {\n            pageInfo {\n              hasNextPage\n              hasPreviousPage\n              startCursor\n              endCursor\n            }\n            edges {\n              cursor\n            }\n            total\n          }\n        }\n        cursor\n      }\n      total\n    }\n  }\n}\n","variables":{
+              "storeProductId": null,
+              "storeProductWhere": {"id": 10},
+              "productsAfter": null,
+              "productsFirst": 10,
+              "productsBefore": null,
+              "productsLast": null,
+              "suppliersAfter": null,
+              "suppliersFirst": 10,
+              "suppliersBefore": null,
+              "suppliersLast": null,
+              "storesAfter": null,
+              "storesFirst": 10,
+              "storesBefore": null,
+              "storesLast": null,
+              "addressesAfter": null,
+              "addressesFirst": 10,
+              "addressesBefore": null,
+              "addressesLast": null
+            }
+            }
+        timestamp: 2024-06-28T06:09:33.007099958Z
     resp:
         status_code: 200
         header:
             Cache-Control: no-store
             Connection: keep-alive
-            Content-Length: "133"
+            Content-Length: "1992"
             Content-Type: application/json; charset=utf-8
-            Date: Wed, 26 Jun 2024 08:00:36 GMT
-            Etag: W/"85-GXWVYs4x7aUXLCvBdfOA/Nj40+0"
+            Date: Fri, 28 Jun 2024 06:09:33 GMT
+            Etag: W/"7c8-Uox6RrUk0xMZIHgRrzqpYJNORWE"
             Keep-Alive: timeout=5
             X-Powered-By: Express
         body: |
-            {"data":{"aggregate":{"max":{"purchasedProductsPrice":69200},"total":{"purchasedProductsPrice":0},"count":{"purchasedProducts":0}}}}
+            {"data":{"storeProduct":{"id":"10","productId":10,"storeId":1578,"createdAt":"2024-06-28T05:42:33.941Z","updatedAt":null,"deletedAt":null,"products":{"pageInfo":{"hasNextPage":false,"hasPreviousPage":false,"startCursor":"WzEwLDBd","endCursor":"WzEwLDBd"},"edges":[{"node":{"id":"10","name":"Unbranded Cotton Pizza","category":"Music","amount":58100,"createdAt":"2024-06-28T05:42:33.592Z","updatedAt":null,"deletedAt":null,"suppliers":{"pageInfo":{"hasNextPage":false,"hasPreviousPage":false,"startCursor":"WzM0NSwwXQ==","endCursor":"WzM0NSwwXQ=="},"edges":[{"cursor":"WzM0NSwwXQ=="}],"total":1},"stores":{"pageInfo":{"hasNextPage":false,"hasPreviousPage":false,"startCursor":"WzE1NzgsMF0=","endCursor":"WzE1NzgsMF0="},"edges":[{"cursor":"WzE1NzgsMF0="}],"total":1}},"cursor":"WzEwLDBd"}],"total":1},"stores":{"pageInfo":{"hasNextPage":false,"hasPreviousPage":false,"startCursor":"WzE1NzgsMF0=","endCursor":"WzE1NzgsMV0="},"edges":[{"node":{"id":"1578","name":"Kunze - Carter","addressId":769,"createdAt":"2024-06-28T05:42:33.771Z","updatedAt":null,"deletedAt":null,"addresses":{"pageInfo":{"hasNextPage":false,"hasPreviousPage":false,"startCursor":"Wzc2OSwwXQ==","endCursor":"Wzc2OSwwXQ=="},"edges":[{"cursor":"Wzc2OSwwXQ=="}],"total":1},"products":{"pageInfo":{"hasNextPage":false,"hasPreviousPage":false,"startCursor":"WzEwLDBd","endCursor":"Wzk4NywxXQ=="},"edges":[{"cursor":"WzEwLDBd"},{"cursor":"Wzk4NywxXQ=="}],"total":2}},"cursor":"WzE1NzgsMF0="},{"node":{"id":"1578","name":"Kunze - Carter","addressId":769,"createdAt":"2024-06-28T05:42:33.771Z","updatedAt":null,"deletedAt":null,"addresses":{"pageInfo":{"hasNextPage":false,"hasPreviousPage":false,"startCursor":"Wzc2OSwwXQ==","endCursor":"Wzc2OSwwXQ=="},"edges":[{"cursor":"Wzc2OSwwXQ=="}],"total":1},"products":{"pageInfo":{"hasNextPage":false,"hasPreviousPage":false,"startCursor":"WzEwLDBd","endCursor":"Wzk4NywxXQ=="},"edges":[{"cursor":"WzEwLDBd"},{"cursor":"Wzk4NywxXQ=="}],"total":2}},"cursor":"WzE1NzgsMV0="}],"total":2}}}}
         status_message: OK
         proto_major: 0
         proto_minor: 0
-        timestamp: 2024-06-26T08:00:38.777956255Z
+        timestamp: 2024-06-28T06:09:35.318132418Z
     objects: []
     assertions:
         noise:
+            body.data.storeProduct.createdAt: []
+            body.data.storeProduct.products.edges.node.createdAt: []
+            body.data.storeProduct.stores.edges.node.createdAt: []
             header.Date: []
-    created: 1719388838
+    created: 1719554975
 curl: |-
     curl --request POST \
       --url http://localhost:9000/graphql \
-      --header 'Host: localhost:9000' \
-      --header 'User-Agent: PostmanRuntime/7.37.3' \
-      --header 'Postman-Token: 2936f470-aa67-420c-b62a-0cbaf064698c' \
-      --header 'Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyIjp7ImlkIjoxLCJmaXJzdE5hbWUiOiJTdGVybGluZyIsImxhc3ROYW1lIjoiU2F1ZXIiLCJlbWFpbCI6Ik1hc29uLkdvbGRuZXI0OUBob3RtYWlsLmNvbSIsInBhc3N3b3JkIjoiZGFhOTMyMGY1YzU4NDRiODRiMjhlMDE2YjRiOGM0MGIiLCJjcmVhdGVkQXQiOiIyMDIzLTEyLTA4VDE4OjE2OjQxLjYzOFoiLCJ1cGRhdGVkQXQiOm51bGwsImRlbGV0ZWRBdCI6bnVsbH0sImlhdCI6MTcxOTM0MzYzOCwiZXhwIjoxNzE5NDMwMDM4fQ.Kgm3Lmbg97M_QQP5Gn9q4suRYEF7_n4ITqehV4i7t_s' \
       --header 'Accept: */*' \
+      --header 'Postman-Token: 7066b7b4-31b1-40e4-9c69-72585b787042' \
+      --header 'Host: localhost:9000' \
       --header 'Accept-Encoding: gzip, deflate, br' \
       --header 'Connection: keep-alive' \
       --header 'Content-Type: application/json' \
-      --data '{"query":"query Aggregate {\n  aggregate (startDate: \"2007-12-01T10:15:30Z\", endDate:\"2007-12-31T10:15:30Z\", category:\"Baby\") {\n    max {\n      purchasedProductsPrice\n    }\n    total {\n      purchasedProductsPrice\n    }\n    count {\n      purchasedProducts\n    }\n  }\n}"}'
+      --header 'User-Agent: PostmanRuntime/7.37.3' \
+      --data '{"query":"query StoreProduct(\n  $storeProductId: Int\n  $storeProductWhere: SequelizeJSON\n  $productsAfter: String\n  $productsFirst: Int\n  $productsBefore: String\n  $productsLast: Int\n  $suppliersAfter: String\n  $suppliersFirst: Int\n  $suppliersBefore: String\n  $suppliersLast: Int\n  $storesAfter: String\n  $storesFirst: Int\n  $storesBefore: String\n  $storesLast: Int\n  $addressesAfter: String\n  $addressesFirst: Int\n  $addressesBefore: String\n  $addressesLast: Int\n) {\n  storeProduct(id: $storeProductId, where: $storeProductWhere) {\n    id\n    productId\n    storeId\n    createdAt\n    updatedAt\n    deletedAt\n    products(\n      after: $productsAfter\n      first: $productsFirst\n      before: $productsBefore\n      last: $productsLast\n    ) {\n      pageInfo {\n        hasNextPage\n        hasPreviousPage\n        startCursor\n        endCursor\n      }\n      edges {\n        node {\n          id\n          name\n          category\n          amount\n          createdAt\n          updatedAt\n          deletedAt\n          suppliers(\n            after: $suppliersAfter\n            first: $suppliersFirst\n            before: $suppliersBefore\n            last: $suppliersLast\n          ) {\n            pageInfo {\n              hasNextPage\n              hasPreviousPage\n              startCursor\n              endCursor\n            }\n            edges {\n              cursor\n            }\n            total\n          }\n          stores(\n            after: $storesAfter\n            first: $storesFirst\n            before: $storesBefore\n            last: $storesLast\n          ) {\n            pageInfo {\n              hasNextPage\n              hasPreviousPage\n              startCursor\n              endCursor\n            }\n            edges {\n              cursor\n            }\n            total\n          }\n        }\n        cursor\n      }\n      total\n    }\n    stores(\n      after: $storesAfter\n      first: $storesFirst\n      before: $storesBefore\n      last: $storesLast\n    ) {\n      pageInfo {\n        hasNextPage\n        hasPreviousPage\n        startCursor\n        endCursor\n      }\n      edges {\n        node {\n          id\n          name\n          addressId\n          createdAt\n          updatedAt\n          deletedAt\n          addresses(\n            after: $addressesAfter\n            first: $addressesFirst\n            before: $addressesBefore\n            last: $addressesLast\n          ) {\n            pageInfo {\n              hasNextPage\n              hasPreviousPage\n              startCursor\n              endCursor\n            }\n            edges {\n              cursor\n            }\n            total\n          }\n          products(\n            after: $productsAfter\n            first: $productsFirst\n            before: $productsBefore\n            last: $productsLast\n          ) {\n            pageInfo {\n              hasNextPage\n              hasPreviousPage\n              startCursor\n              endCursor\n            }\n            edges {\n              cursor\n            }\n            total\n          }\n        }\n        cursor\n      }\n      total\n    }\n  }\n}\n","variables":{
+      "storeProductId": null,
+      "storeProductWhere": {"id": 10},
+      "productsAfter": null,
+      "productsFirst": 10,
+      "productsBefore": null,
+      "productsLast": null,
+      "suppliersAfter": null,
+      "suppliersFirst": 10,
+      "suppliersBefore": null,
+      "suppliersLast": null,
+      "storesAfter": null,
+      "storesFirst": 10,
+      "storesBefore": null,
+      "storesLast": null,
+      "addressesAfter": null,
+      "addressesFirst": 10,
+      "addressesBefore": null,
+      "addressesLast": null
+    }
+    }'

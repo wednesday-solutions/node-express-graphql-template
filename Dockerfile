@@ -28,6 +28,7 @@ RUN mkdir -p ${APP_PATH}/dist
 RUN apk add yarn
 RUN yarn global add sequelize-cli@6.2.0 nyc@15.1.0
 RUN yarn add shelljs bull dotenv pg sequelize@6.6.5
+RUN apk add --no-cache dumb-init
 ADD scripts/migrate-and-run.sh ${APP_PATH}/
 ADD package.json ${APP_PATH}/
 ADD . ./
@@ -35,7 +36,7 @@ COPY --from=0 ${APP_PATH}/dist ${APP_PATH}/dist
 ADD https://keploy-enterprise.s3.us-west-2.amazonaws.com/releases/latest/assets/freeze_time_$PLATFORM.so /lib/keploy/freeze_time_$PLATFORM.so
 RUN chmod +x /lib/keploy/freeze_time_$PLATFORM.so
 ENV LD_PRELOAD=/lib/keploy/freeze_time_$PLATFORM.so
-
+ENTRYPOINT ["dumb-init", "--"]
 STOPSIGNAL SIGINT
 
 CMD ["sh", "./migrate-and-run.sh"]
