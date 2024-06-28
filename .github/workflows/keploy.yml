@@ -43,6 +43,7 @@ jobs:
 
     - name: Run the node-express-graphql template
       run: |
+        docker compose -f docker-compose-1.yml --env-file=.env.docker  up -d
         chmod +x /home/runner/work/node-express-graphql-template/node-express-graphql-template/.github/workflows/test_workflows/keploy.sh
         /home/runner/work/node-express-graphql-template/node-express-graphql-template/.github/workflows/test_workflows/keploy.sh
       env:
