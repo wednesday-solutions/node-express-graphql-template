@@ -37,6 +37,7 @@
   },
   "dependencies": {
     "@apollo/server": "^4.10.4",
+    "@keploy/sdk": "2.0.9-alpha1",
     "aws-sdk": "^2.949.0",
     "axios": "^0.26.0",
     "bufferutil": "^4.0.8",
@@ -61,6 +62,7 @@
     "http": "^0.0.1-security",
     "ioredis": "^5.2.2",
     "jsonwebtoken": "^8.5.1",
+    "libpq": "^1.8.13",
     "loadash": "^1.0.0",
     "lodash": "^4.17.21",
     "map-keys-deep": "^0.0.2",
@@ -94,8 +96,7 @@
     "whatwg-fetch": "^3.6.2",
     "winston": "^3.3.3",
     "ws": "^8.17.1",
-    "zlib": "^1.0.5",
-    "@keploy/sdk": "2.0.9-alpha1"
+    "zlib": "^1.0.5"
   },
   "devDependencies": {
     "@babel/cli": "^7.8.4",
