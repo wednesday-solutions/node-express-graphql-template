@@ -10,6 +10,7 @@ import { getQueryFields, TYPE_ATTRIBUTES } from '@server/utils/gqlFieldUtils';
 const { nodeInterface } = getNode();
 
 export const userFields = {
+  id: { type: new GraphQLNonNull(GraphQLID) },
   firstName: { type: new GraphQLNonNull(GraphQLString) },
   lastName: { type: new GraphQLNonNull(GraphQLString) }
 };

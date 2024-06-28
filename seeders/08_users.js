@@ -9,7 +9,7 @@ module.exports = {
       return {
         first_name: faker.name.firstName(),
         last_name: faker.name.lastName(),
-        email: faker.internet.email(),
+        email: `mac+${index}@wednesday.is`,
         password: md5('wednesdaySolutions'),
         created_at: faker.date.recent(createdBefore)
       };
