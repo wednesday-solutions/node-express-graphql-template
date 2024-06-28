@@ -62,7 +62,6 @@
     "http": "^0.0.1-security",
     "ioredis": "^5.2.2",
     "jsonwebtoken": "^8.5.1",
-    "libpq": "^1.8.13",
     "loadash": "^1.0.0",
     "lodash": "^4.17.21",
     "map-keys-deep": "^0.0.2",
