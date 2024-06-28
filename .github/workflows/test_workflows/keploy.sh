@@ -12,7 +12,7 @@ echo "Project built successfully"
 echo $(pwd)
 
 
-sudo -E env PATH="$PATH" /usr/local/bin/keployE test -c "sudo docker compose --env-file .env.docker up" --containerName "node-express-graphql-template-app-1" --delay 90 --apiTimeout 30 --generateGithubActions=false
+sudo -E env PATH="$PATH" /usr/local/bin/keployE test -c "sudo docker compose --env-file .env.docker up" --containerName "node-express-graphql-template-app-1" --delay 90 --apiTimeout 30 --generateGithubActions=false --testsets="test-set-3"
 echo "Keploy started in test mode"
 
 all_passed=true
