@@ -25,7 +25,7 @@ WORKDIR ${APP_PATH}
 RUN mkdir -p ${APP_PATH}/dist
 RUN apk add yarn
 
-RUN yarn global add sequelize-cli@6.2.0 nyc@15.1.0
+RUN yarn global add sequelize-cli@latest nyc@15.1.0
 RUN yarn add shelljs dotenv pg sequelize@6.6.5
 RUN apk add --no-cache dumb-init
 ADD scripts/migrate-and-run.sh ${APP_PATH}/
