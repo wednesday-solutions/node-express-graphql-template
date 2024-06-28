@@ -27,7 +27,7 @@ export const GraphQLProduct = new GraphQLObjectType({
     suppliers: {
       ...supplierLists.list,
       resolve: (source, args, context, info) =>
-        listResolver(storeLists, source, args, { ...context, product: source.dataValues }, info)
+        listResolver(supplierLists, source, args, { ...context, product: source.dataValues }, info)
     },
     stores: {
       ...storeLists.list,
