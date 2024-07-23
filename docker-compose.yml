@@ -18,11 +18,18 @@ services:
       args:
         ENVIRONMENT_NAME: .docker
         BUILD_NAME: docker
+        PLATFORM: amd64
+        APP_PATH: ${APP_PATH}
     restart: always
     depends_on:
       - db_postgres
       - redis
     ports:
       - 9000:9000
+    environment:
+      ENABLE_DEDUP: "false"
     env_file:
       - ./.env.docker
+    volumes:
+      - ${APP_PATH}/dedupData.yaml:${APP_PATH}/dedupData.yaml
+    stop_grace_period: 50s

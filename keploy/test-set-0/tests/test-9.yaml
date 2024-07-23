@@ -1,0 +1,64 @@
+version: api.keploy.io/v1beta1
+kind: Http
+name: test-9
+spec:
+    metadata: {}
+    req:
+        method: POST
+        proto_major: 1
+        proto_minor: 1
+        url: http://localhost:9000/graphql
+        header:
+            Accept: '*/*'
+            Accept-Encoding: gzip, deflate, br
+            Connection: keep-alive
+            Content-Length: "270"
+            Content-Type: application/json
+            Host: localhost:9000
+            Postman-Token: cac7b2d3-48fa-47e7-850b-875ec4fb671a
+            User-Agent: PostmanRuntime/7.37.3
+        body: |-
+            {"query":"query User($userId: Int, $userWhere: SequelizeJSON) {\n  user(id: $userId, where: $userWhere) {\n    firstName\n    lastName\n    id\n    email\n    createdAt\n    updatedAt\n    deletedAt\n  }\n}\n","variables":{
+              "userId": null,
+              "userWhere": {"id": 3}
+            }
+            }
+        timestamp: 2024-06-28T06:08:54.171957066Z
+    resp:
+        status_code: 200
+        header:
+            Cache-Control: no-store
+            Connection: keep-alive
+            Content-Length: "180"
+            Content-Type: application/json; charset=utf-8
+            Date: Fri, 28 Jun 2024 06:08:54 GMT
+            Etag: W/"b4-A+sXmy/JCKz0oz8hhtTcXydch+s"
+            Keep-Alive: timeout=5
+            X-Powered-By: Express
+        body: |
+            {"data":{"user":{"firstName":"Davion","lastName":"Sporer","id":"3","email":"Jaydon_Pfeffer@hotmail.com","createdAt":"2022-09-03T17:05:41.586Z","updatedAt":null,"deletedAt":null}}}
+        status_message: OK
+        proto_major: 0
+        proto_minor: 0
+        timestamp: 2024-06-28T06:08:56.243961553Z
+    objects: []
+    assertions:
+        noise:
+            body.data.user.createdAt: []
+            header.Date: []
+    created: 1719554936
+curl: |-
+    curl --request POST \
+      --url http://localhost:9000/graphql \
+      --header 'Accept: */*' \
+      --header 'Postman-Token: cac7b2d3-48fa-47e7-850b-875ec4fb671a' \
+      --header 'Host: localhost:9000' \
+      --header 'Accept-Encoding: gzip, deflate, br' \
+      --header 'Connection: keep-alive' \
+      --header 'Content-Type: application/json' \
+      --header 'User-Agent: PostmanRuntime/7.37.3' \
+      --data '{"query":"query User($userId: Int, $userWhere: SequelizeJSON) {\n  user(id: $userId, where: $userWhere) {\n    firstName\n    lastName\n    id\n    email\n    createdAt\n    updatedAt\n    deletedAt\n  }\n}\n","variables":{
+      "userId": null,
+      "userWhere": {"id": 3}
+    }
+    }'

@@ -1,0 +1,63 @@
+version: api.keploy.io/v1beta1
+kind: Http
+name: test-19
+spec:
+    metadata: {}
+    req:
+        method: POST
+        proto_major: 1
+        proto_minor: 1
+        url: http://localhost:9000/graphql
+        header:
+            Accept: '*/*'
+            Accept-Encoding: gzip, deflate, br
+            Connection: keep-alive
+            Content-Length: "256"
+            Content-Type: application/json
+            Host: localhost:9000
+            Postman-Token: 91d6d2b7-2616-4b6b-b029-2b28315b651e
+            User-Agent: PostmanRuntime/7.37.3
+        body: |-
+            {"query":"mutation SignIn($signInEmail: String!, $signInPassword: String!) {\n  signIn(email: $signInEmail, password: $signInPassword) {\n    token\n  }\n}\n","variables":{
+              "signInEmail": "mac+0@wednesday.is",
+              "signInPassword": "wednesdaySolutions"
+            }
+            }
+        timestamp: 2024-06-28T19:34:51.0563883Z
+    resp:
+        status_code: 200
+        header:
+            Cache-Control: no-store
+            Connection: keep-alive
+            Content-Length: "609"
+            Content-Type: application/json; charset=utf-8
+            Date: Fri, 28 Jun 2024 19:34:51 GMT
+            Etag: W/"261-J94Y6dRy4+Liyy+dbzbaju/jdH4"
+            Keep-Alive: timeout=5
+            X-Powered-By: Express
+        body: |
+            {"data":{"signIn":{"token":"eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyIjp7ImlkIjoxLCJmaXJzdE5hbWUiOiJEZWFubmEiLCJsYXN0TmFtZSI6IlByZWRvdmljIiwiZW1haWwiOiJtYWMrMEB3ZWRuZXNkYXkuaXMiLCJwYXNzd29yZCI6IjBhZmE1MGNjYjQwMjQwYWQ2YmYwMDNkMGM4Yzk4YWUxOmRmOWRhMTg3YjM5OGNhZDQzYTY0OTY5Yzc0YTNlMDQxZmU3MWU2YzI3NWNkOTRmZDFiYzJjZTlkZGQ3YzU5MDA1OWM2MmI5NjhlYjU1MDg4OGJlYTNmNjgxYzFkNzk4ZjRiOTVmYTgzZjJiYzRiYzJmYjQxN2QwMjk1MGYxMzNmIiwiY3JlYXRlZEF0IjoiMjAyMy0wOS0xNVQxNjoyOTo0OC4xMzlaIiwidXBkYXRlZEF0IjpudWxsLCJkZWxldGVkQXQiOm51bGx9LCJpYXQiOjE3MTk2MDMyOTEsImV4cCI6MTcxOTY4OTY5MX0.CFdgfOxpLo9xS_Zec2MjCQ2D0Hpc2YewQH1BruRjyg8"}}}
+        status_message: OK
+        proto_major: 0
+        proto_minor: 0
+        timestamp: 2024-06-28T19:34:53.167272844Z
+    objects: []
+    assertions:
+        noise:
+            header.Date: []
+    created: 1719603293
+curl: |-
+    curl --request POST \
+      --url http://localhost:9000/graphql \
+      --header 'User-Agent: PostmanRuntime/7.37.3' \
+      --header 'Accept: */*' \
+      --header 'Postman-Token: 91d6d2b7-2616-4b6b-b029-2b28315b651e' \
+      --header 'Host: localhost:9000' \
+      --header 'Accept-Encoding: gzip, deflate, br' \
+      --header 'Connection: keep-alive' \
+      --header 'Content-Type: application/json' \
+      --data '{"query":"mutation SignIn($signInEmail: String!, $signInPassword: String!) {\n  signIn(email: $signInEmail, password: $signInPassword) {\n    token\n  }\n}\n","variables":{
+      "signInEmail": "mac+0@wednesday.is",
+      "signInPassword": "wednesdaySolutions"
+    }
+    }'

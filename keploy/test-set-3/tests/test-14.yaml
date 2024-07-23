@@ -1,0 +1,90 @@
+version: api.keploy.io/v1beta1
+kind: Http
+name: test-14
+spec:
+    metadata: {}
+    req:
+        method: POST
+        proto_major: 1
+        proto_minor: 1
+        url: http://localhost:9000/graphql
+        header:
+            Accept: '*/*'
+            Accept-Encoding: gzip, deflate, br
+            Connection: keep-alive
+            Content-Length: "2281"
+            Content-Type: application/json
+            Host: localhost:9000
+            Postman-Token: 4d155551-1a43-4911-8cd1-ff7fe1b8e2fb
+            User-Agent: PostmanRuntime/7.37.3
+        body: |-
+            {"query":"query PurchasedProduct(\n  $purchasedProductId: Int\n  $purchasedProductWhere: SequelizeJSON\n  $productsAfter: String\n  $productsFirst: Int\n  $productsBefore: String\n  $productsLast: Int\n  $suppliersAfter: String\n  $suppliersFirst: Int\n  $suppliersBefore: String\n  $suppliersLast: Int\n  $storesAfter: String\n  $storesFirst: Int\n  $storesBefore: String\n  $storesLast: Int\n) {\n  purchasedProduct(id: $purchasedProductId, where: $purchasedProductWhere) {\n    id\n    price\n    discount\n    deliveryDate\n    productId\n    storeId\n    createdAt\n    updatedAt\n    deletedAt\n    products(\n      after: $productsAfter\n      first: $productsFirst\n      before: $productsBefore\n      last: $productsLast\n    ) {\n      pageInfo {\n        hasNextPage\n        hasPreviousPage\n        startCursor\n        endCursor\n      }\n      edges {\n        node {\n          id\n          name\n          category\n          amount\n          createdAt\n          updatedAt\n          deletedAt\n          suppliers(\n            after: $suppliersAfter\n            first: $suppliersFirst\n            before: $suppliersBefore\n            last: $suppliersLast\n          ) {\n            pageInfo {\n              hasNextPage\n              hasPreviousPage\n              startCursor\n              endCursor\n            }\n            edges {\n              cursor\n            }\n            total\n          }\n          stores(\n            after: $storesAfter\n            first: $storesFirst\n            before: $storesBefore\n            last: $storesLast\n          ) {\n            pageInfo {\n              hasNextPage\n              hasPreviousPage\n              startCursor\n              endCursor\n            }\n            edges {\n              cursor\n            }\n            total\n          }\n        }\n        cursor\n      }\n      total\n    }\n  }\n}\n","variables":{
+              "purchasedProductId": null,
+              "purchasedProductWhere": {"id": 5},
+              "productsAfter": null,
+              "productsFirst": 10,
+              "productsBefore": null,
+              "productsLast": null,
+              "suppliersAfter": null,
+              "suppliersFirst": 10,
+              "suppliersBefore": null,
+              "suppliersLast": null,
+              "storesAfter": null,
+              "storesFirst": 10,
+              "storesBefore": null,
+              "storesLast": null
+            }
+            }
+        timestamp: 2024-06-28T19:32:30.504323484Z
+    resp:
+        status_code: 200
+        header:
+            Cache-Control: no-store
+            Connection: keep-alive
+            Content-Length: "895"
+            Content-Type: application/json; charset=utf-8
+            Date: Fri, 28 Jun 2024 19:32:30 GMT
+            Etag: W/"37f-Myurzh0LSYZ2Vk/gF+k4dDSWipg"
+            Keep-Alive: timeout=5
+            X-Powered-By: Express
+        body: |
+            {"data":{"purchasedProduct":{"id":"5","price":44600,"discount":1547,"deliveryDate":"2022-03-15T06:49:10.749Z","productId":"1241","storeId":"679","createdAt":"1994-10-28T06:38:06.236Z","updatedAt":null,"deletedAt":null,"products":{"pageInfo":{"hasNextPage":false,"hasPreviousPage":false,"startCursor":"WzEyNDEsMF0=","endCursor":"WzEyNDEsMF0="},"edges":[{"node":{"id":"1241","name":"Small Rubber Pants","category":"Clothing","amount":36700,"createdAt":"2024-06-28T19:21:00.126Z","updatedAt":null,"deletedAt":null,"suppliers":{"pageInfo":{"hasNextPage":false,"hasPreviousPage":false,"startCursor":"WzY3MCwwXQ==","endCursor":"WzY3MCwwXQ=="},"edges":[{"cursor":"WzY3MCwwXQ=="}],"total":1},"stores":{"pageInfo":{"hasNextPage":false,"hasPreviousPage":false,"startCursor":"WzI1NiwwXQ==","endCursor":"WzI1NiwwXQ=="},"edges":[{"cursor":"WzI1NiwwXQ=="}],"total":1}},"cursor":"WzEyNDEsMF0="}],"total":1}}}}
+        status_message: OK
+        proto_major: 0
+        proto_minor: 0
+        timestamp: 2024-06-28T19:32:32.651886501Z
+    objects: []
+    assertions:
+        noise:
+            body.data.purchasedProduct.createdAt: []
+            body.data.purchasedProduct.deliveryDate: []
+            body.data.purchasedProduct.products.edges.node.createdAt: []
+            header.Date: []
+    created: 1719603152
+curl: |-
+    curl --request POST \
+      --url http://localhost:9000/graphql \
+      --header 'Content-Type: application/json' \
+      --header 'User-Agent: PostmanRuntime/7.37.3' \
+      --header 'Accept: */*' \
+      --header 'Postman-Token: 4d155551-1a43-4911-8cd1-ff7fe1b8e2fb' \
+      --header 'Host: localhost:9000' \
+      --header 'Accept-Encoding: gzip, deflate, br' \
+      --header 'Connection: keep-alive' \
+      --data '{"query":"query PurchasedProduct(\n  $purchasedProductId: Int\n  $purchasedProductWhere: SequelizeJSON\n  $productsAfter: String\n  $productsFirst: Int\n  $productsBefore: String\n  $productsLast: Int\n  $suppliersAfter: String\n  $suppliersFirst: Int\n  $suppliersBefore: String\n  $suppliersLast: Int\n  $storesAfter: String\n  $storesFirst: Int\n  $storesBefore: String\n  $storesLast: Int\n) {\n  purchasedProduct(id: $purchasedProductId, where: $purchasedProductWhere) {\n    id\n    price\n    discount\n    deliveryDate\n    productId\n    storeId\n    createdAt\n    updatedAt\n    deletedAt\n    products(\n      after: $productsAfter\n      first: $productsFirst\n      before: $productsBefore\n      last: $productsLast\n    ) {\n      pageInfo {\n        hasNextPage\n        hasPreviousPage\n        startCursor\n        endCursor\n      }\n      edges {\n        node {\n          id\n          name\n          category\n          amount\n          createdAt\n          updatedAt\n          deletedAt\n          suppliers(\n            after: $suppliersAfter\n            first: $suppliersFirst\n            before: $suppliersBefore\n            last: $suppliersLast\n          ) {\n            pageInfo {\n              hasNextPage\n              hasPreviousPage\n              startCursor\n              endCursor\n            }\n            edges {\n              cursor\n            }\n            total\n          }\n          stores(\n            after: $storesAfter\n            first: $storesFirst\n            before: $storesBefore\n            last: $storesLast\n          ) {\n            pageInfo {\n              hasNextPage\n              hasPreviousPage\n              startCursor\n              endCursor\n            }\n            edges {\n              cursor\n            }\n            total\n          }\n        }\n        cursor\n      }\n      total\n    }\n  }\n}\n","variables":{
+      "purchasedProductId": null,
+      "purchasedProductWhere": {"id": 5},
+      "productsAfter": null,
+      "productsFirst": 10,
+      "productsBefore": null,
+      "productsLast": null,
+      "suppliersAfter": null,
+      "suppliersFirst": 10,
+      "suppliersBefore": null,
+      "suppliersLast": null,
+      "storesAfter": null,
+      "storesFirst": 10,
+      "storesBefore": null,
+      "storesLast": null
+    }
+    }'

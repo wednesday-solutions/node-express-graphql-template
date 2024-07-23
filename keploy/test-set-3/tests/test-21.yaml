@@ -1,0 +1,67 @@
+version: api.keploy.io/v1beta1
+kind: Http
+name: test-21
+spec:
+    metadata: {}
+    req:
+        method: POST
+        proto_major: 1
+        proto_minor: 1
+        url: http://localhost:9000/graphql
+        header:
+            Accept: '*/*'
+            Accept-Encoding: gzip, deflate, br
+            Connection: keep-alive
+            Content-Length: "431"
+            Content-Type: application/json
+            Host: localhost:9000
+            Postman-Token: 04ef0771-6891-44d7-89c0-bc8857123881
+            User-Agent: PostmanRuntime/7.37.3
+        body: |-
+            {"query":"mutation UpdateUser(\n  $updateUserFirstName: String!\n  $updateUserLastName: String!\n  $updateUserID: ID!\n) {\n  updateUser(firstName: $updateUserFirstName, lastName: $updateUserLastName, \n  id: $updateUserID) {\n    firstName\n    lastName\n    id\n    email\n    createdAt\n    updatedAt\n    deletedAt\n  }\n}\n","variables":{
+              "updateUserID": 1,
+              "updateUserFirstName": "John",
+              "updateUserLastName": "Doe"
+            }
+            }
+        timestamp: 2024-06-28T19:35:19.673000021Z
+    resp:
+        status_code: 200
+        header:
+            Cache-Control: no-store
+            Connection: keep-alive
+            Content-Length: "195"
+            Content-Type: application/json; charset=utf-8
+            Date: Fri, 28 Jun 2024 19:35:19 GMT
+            Etag: W/"c3-uTWvS+Lf2DWgpZThrwKBByWXRuk"
+            Keep-Alive: timeout=5
+            X-Powered-By: Express
+        body: |
+            {"data":{"updateUser":{"firstName":"John","lastName":"Doe","id":"1","email":"mac+0@wednesday.is","createdAt":"2023-09-15T16:29:48.139Z","updatedAt":"2024-06-28T19:35:19.686Z","deletedAt":null}}}
+        status_message: OK
+        proto_major: 0
+        proto_minor: 0
+        timestamp: 2024-06-28T19:35:21.753509302Z
+    objects: []
+    assertions:
+        noise:
+            body.data.updateUser.createdAt: []
+            body.data.updateUser.updatedAt: []
+            header.Date: []
+    created: 1719603321
+curl: |-
+    curl --request POST \
+      --url http://localhost:9000/graphql \
+      --header 'Host: localhost:9000' \
+      --header 'Accept-Encoding: gzip, deflate, br' \
+      --header 'Connection: keep-alive' \
+      --header 'Content-Type: application/json' \
+      --header 'User-Agent: PostmanRuntime/7.37.3' \
+      --header 'Accept: */*' \
+      --header 'Postman-Token: 04ef0771-6891-44d7-89c0-bc8857123881' \
+      --data '{"query":"mutation UpdateUser(\n  $updateUserFirstName: String!\n  $updateUserLastName: String!\n  $updateUserID: ID!\n) {\n  updateUser(firstName: $updateUserFirstName, lastName: $updateUserLastName, \n  id: $updateUserID) {\n    firstName\n    lastName\n    id\n    email\n    createdAt\n    updatedAt\n    deletedAt\n  }\n}\n","variables":{
+      "updateUserID": 1,
+      "updateUserFirstName": "John",
+      "updateUserLastName": "Doe"
+    }
+    }'

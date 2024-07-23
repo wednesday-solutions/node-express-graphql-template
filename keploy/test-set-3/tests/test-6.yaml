@@ -1,0 +1,86 @@
+version: api.keploy.io/v1beta1
+kind: Http
+name: test-6
+spec:
+    metadata: {}
+    req:
+        method: POST
+        proto_major: 1
+        proto_minor: 1
+        url: http://localhost:9000/graphql
+        header:
+            Accept: '*/*'
+            Accept-Encoding: gzip, deflate, br
+            Connection: keep-alive
+            Content-Length: "2021"
+            Content-Type: application/json
+            Host: localhost:9000
+            Postman-Token: 1b08fcde-4036-481a-bdcc-383a646f57fc
+            User-Agent: PostmanRuntime/7.37.3
+        body: |-
+            {"query":"query PurchasedProducts(\n  $purchasedProductsAfter: Int\n  $purchasedProductsFirst: Int\n  $purchasedProductsBefore: Int\n  $purchasedProductsLast: Int\n  $purchasedProductsLimit: Int!\n  $purchasedProductsOrder: String\n  $purchasedProductsWhere: SequelizeJSON\n  $purchasedProductsOffset: Int!\n  $productsAfter: String\n  $productsFirst: Int\n  $productsBefore: String\n  $productsLast: Int\n) {\n  purchasedProducts(\n    after: $purchasedProductsAfter\n    first: $purchasedProductsFirst\n    before: $purchasedProductsBefore\n    last: $purchasedProductsLast\n    limit: $purchasedProductsLimit\n    order: $purchasedProductsOrder\n    where: $purchasedProductsWhere\n    offset: $purchasedProductsOffset\n  ) {\n    pageInfo {\n      hasNextPage\n      hasPreviousPage\n      startCursor\n      endCursor\n    }\n    edges {\n      node {\n        id\n        price\n        discount\n        deliveryDate\n        productId\n        storeId\n        createdAt\n        updatedAt\n        deletedAt\n        products(\n          after: $productsAfter\n          first: $productsFirst\n          before: $productsBefore\n          last: $productsLast\n        ) {\n          pageInfo {\n            hasNextPage\n            hasPreviousPage\n            startCursor\n            endCursor\n          }\n          edges {\n            node {\n              id\n              name\n              category\n              amount\n              createdAt\n              updatedAt\n              deletedAt\n            }\n            cursor\n          }\n          total\n        }\n      }\n      cursor\n    }\n    total\n  }\n}\n","variables":{
+              "purchasedProductsAfter": null,
+              "purchasedProductsFirst": 10,
+              "purchasedProductsBefore": null,
+              "purchasedProductsLast": null,
+              "purchasedProductsLimit": 10,
+              "purchasedProductsOrder":"id",
+              "purchasedProductsWhere": {},
+              "purchasedProductsOffset": 0,
+              "productsAfter": null,
+              "productsFirst": 10,
+              "productsBefore": null,
+              "productsLast": null
+            }
+            }
+        timestamp: 2024-06-28T19:30:24.562633844Z
+    resp:
+        status_code: 200
+        header:
+            Cache-Control: no-store
+            Connection: keep-alive
+            Content-Length: "5686"
+            Content-Type: application/json; charset=utf-8
+            Date: Fri, 28 Jun 2024 19:30:24 GMT
+            Etag: W/"1636-68eyEYXPid/X20fHScB4DKnWUCk"
+            Keep-Alive: timeout=5
+            X-Powered-By: Express
+        body: |
+            {"data":{"purchasedProducts":{"pageInfo":{"hasNextPage":true,"hasPreviousPage":false,"startCursor":"WzEsMF0=","endCursor":"WzEwLDld"},"edges":[{"node":{"id":"1","price":28000,"discount":331,"deliveryDate":"2022-03-11T06:49:10.749Z","productId":"287","storeId":"1680","createdAt":"1994-10-24T06:38:06.236Z","updatedAt":null,"deletedAt":null,"products":{"pageInfo":{"hasNextPage":false,"hasPreviousPage":false,"startCursor":"WzI4NywwXQ==","endCursor":"WzI4NywwXQ=="},"edges":[{"node":{"id":"287","name":"Generic Concrete Shoes","category":"Movies","amount":35500,"createdAt":"2024-06-28T19:21:00.126Z","updatedAt":null,"deletedAt":null},"cursor":"WzI4NywwXQ=="}],"total":1}},"cursor":"WzEsMF0="},{"node":{"id":"2","price":98700,"discount":1367,"deliveryDate":"2022-03-12T06:49:10.749Z","productId":"1630","storeId":"571","createdAt":"1994-10-25T06:38:06.236Z","updatedAt":null,"deletedAt":null,"products":{"pageInfo":{"hasNextPage":false,"hasPreviousPage":false,"startCursor":"WzE2MzAsMF0=","endCursor":"WzE2MzAsMF0="},"edges":[{"node":{"id":"1630","name":"Awesome Concrete Fish","category":"Baby","amount":12700,"createdAt":"2024-06-28T19:21:00.126Z","updatedAt":null,"deletedAt":null},"cursor":"WzE2MzAsMF0="}],"total":1}},"cursor":"WzIsMV0="},{"node":{"id":"3","price":97700,"discount":2085,"deliveryDate":"2022-03-13T06:49:10.749Z","productId":"1616","storeId":"1083","createdAt":"1994-10-26T06:38:06.236Z","updatedAt":null,"deletedAt":null,"products":{"pageInfo":{"hasNextPage":false,"hasPreviousPage":false,"startCursor":"WzE2MTYsMF0=","endCursor":"WzE2MTYsMF0="},"edges":[{"node":{"id":"1616","name":"Fantastic Concrete Soap","category":"Music","amount":85000,"createdAt":"2024-06-28T19:21:00.126Z","updatedAt":null,"deletedAt":null},"cursor":"WzE2MTYsMF0="}],"total":1}},"cursor":"WzMsMl0="},{"node":{"id":"4","price":82400,"discount":1528,"deliveryDate":"2022-03-14T06:49:10.749Z","productId":"1704","storeId":"1409","createdAt":"1994-10-27T06:38:06.236Z","updatedAt":null,"deletedAt":null,"products":{"pageInfo":{"hasNextPage":false,"hasPreviousPage":false,"startCursor":"WzE3MDQsMF0=","endCursor":"WzE3MDQsMF0="},"edges":[{"node":{"id":"1704","name":"Intelligent Wooden Ball","category":"Jewelery","amount":81500,"createdAt":"2024-06-28T19:21:00.126Z","updatedAt":null,"deletedAt":null},"cursor":"WzE3MDQsMF0="}],"total":1}},"cursor":"WzQsM10="},{"node":{"id":"5","price":44600,"discount":1547,"deliveryDate":"2022-03-15T06:49:10.749Z","productId":"1241","storeId":"679","createdAt":"1994-10-28T06:38:06.236Z","updatedAt":null,"deletedAt":null,"products":{"pageInfo":{"hasNextPage":false,"hasPreviousPage":false,"startCursor":"WzEyNDEsMF0=","endCursor":"WzEyNDEsMF0="},"edges":[{"node":{"id":"1241","name":"Small Rubber Pants","category":"Clothing","amount":36700,"createdAt":"2024-06-28T19:21:00.126Z","updatedAt":null,"deletedAt":null},"cursor":"WzEyNDEsMF0="}],"total":1}},"cursor":"WzUsNF0="},{"node":{"id":"6","price":54800,"discount":608,"deliveryDate":"2022-03-16T06:49:10.749Z","productId":"683","storeId":"851","createdAt":"1994-10-29T06:38:06.236Z","updatedAt":null,"deletedAt":null,"products":{"pageInfo":{"hasNextPage":false,"hasPreviousPage":false,"startCursor":"WzY4MywwXQ==","endCursor":"WzY4MywwXQ=="},"edges":[{"node":{"id":"683","name":"Ergonomic Soft Computer","category":"Automotive","amount":2500,"createdAt":"2024-06-28T19:21:00.126Z","updatedAt":null,"deletedAt":null},"cursor":"WzY4MywwXQ=="}],"total":1}},"cursor":"WzYsNV0="},{"node":{"id":"7","price":76300,"discount":14280291,"deliveryDate":"2022-03-17T06:49:10.749Z","productId":"58","storeId":"407","createdAt":"1994-10-30T06:38:06.236Z","updatedAt":null,"deletedAt":null,"products":{"pageInfo":{"hasNextPage":false,"hasPreviousPage":false,"startCursor":"WzU4LDBd","endCursor":"WzU4LDBd"},"edges":[{"node":{"id":"58","name":"Unbranded Rubber Cheese","category":"Industrial","amount":35100,"createdAt":"2024-06-28T19:21:00.126Z","updatedAt":null,"deletedAt":null},"cursor":"WzU4LDBd"}],"total":1}},"cursor":"WzcsNl0="},{"node":{"id":"8","price":50100,"discount":53325,"deliveryDate":"2022-03-18T06:49:10.749Z","productId":"1904","storeId":"1654","createdAt":"1994-10-31T06:38:06.236Z","updatedAt":null,"deletedAt":null,"products":{"pageInfo":{"hasNextPage":false,"hasPreviousPage":false,"startCursor":"WzE5MDQsMF0=","endCursor":"WzE5MDQsMF0="},"edges":[{"node":{"id":"1904","name":"Incredible Steel Cheese","category":"Shoes","amount":23500,"createdAt":"2024-06-28T19:21:00.126Z","updatedAt":null,"deletedAt":null},"cursor":"WzE5MDQsMF0="}],"total":1}},"cursor":"WzgsN10="},{"node":{"id":"9","price":33100,"discount":582,"deliveryDate":"2022-03-19T06:49:10.749Z","productId":"1220","storeId":"759","createdAt":"1994-11-01T06:38:06.236Z","updatedAt":null,"deletedAt":null,"products":{"pageInfo":{"hasNextPage":false,"hasPreviousPage":false,"startCursor":"WzEyMjAsMF0=","endCursor":"WzEyMjAsMF0="},"edges":[{"node":{"id":"1220","name":"Handcrafted Cotton Salad","category":"Outdoors","amount":97600,"createdAt":"2024-06-28T19:21:00.126Z","updatedAt":null,"deletedAt":null},"cursor":"WzEyMjAsMF0="}],"total":1}},"cursor":"WzksOF0="},{"node":{"id":"10","price":92500,"discount":1298,"deliveryDate":"2022-03-20T06:49:10.749Z","productId":"1891","storeId":"1806","createdAt":"1994-11-02T06:38:06.236Z","updatedAt":null,"deletedAt":null,"products":{"pageInfo":{"hasNextPage":false,"hasPreviousPage":false,"startCursor":"WzE4OTEsMF0=","endCursor":"WzE4OTEsMF0="},"edges":[{"node":{"id":"1891","name":"Sleek Concrete Bike","category":"Health","amount":39300,"createdAt":"2024-06-28T19:21:00.126Z","updatedAt":null,"deletedAt":null},"cursor":"WzE4OTEsMF0="}],"total":1}},"cursor":"WzEwLDld"}],"total":9999}}}
+        status_message: OK
+        proto_major: 0
+        proto_minor: 0
+        timestamp: 2024-06-28T19:30:26.623042012Z
+    objects: []
+    assertions:
+        noise:
+            body.data.purchasedProducts.edges.node.createdAt: []
+            body.data.purchasedProducts.edges.node.deliveryDate: []
+            body.data.purchasedProducts.edges.node.products.edges.node.createdAt: []
+            header.Date: []
+    created: 1719603026
+curl: |-
+    curl --request POST \
+      --url http://localhost:9000/graphql \
+      --header 'Postman-Token: 1b08fcde-4036-481a-bdcc-383a646f57fc' \
+      --header 'Host: localhost:9000' \
+      --header 'Accept-Encoding: gzip, deflate, br' \
+      --header 'Connection: keep-alive' \
+      --header 'Content-Type: application/json' \
+      --header 'User-Agent: PostmanRuntime/7.37.3' \
+      --header 'Accept: */*' \
+      --data '{"query":"query PurchasedProducts(\n  $purchasedProductsAfter: Int\n  $purchasedProductsFirst: Int\n  $purchasedProductsBefore: Int\n  $purchasedProductsLast: Int\n  $purchasedProductsLimit: Int!\n  $purchasedProductsOrder: String\n  $purchasedProductsWhere: SequelizeJSON\n  $purchasedProductsOffset: Int!\n  $productsAfter: String\n  $productsFirst: Int\n  $productsBefore: String\n  $productsLast: Int\n) {\n  purchasedProducts(\n    after: $purchasedProductsAfter\n    first: $purchasedProductsFirst\n    before: $purchasedProductsBefore\n    last: $purchasedProductsLast\n    limit: $purchasedProductsLimit\n    order: $purchasedProductsOrder\n    where: $purchasedProductsWhere\n    offset: $purchasedProductsOffset\n  ) {\n    pageInfo {\n      hasNextPage\n      hasPreviousPage\n      startCursor\n      endCursor\n    }\n    edges {\n      node {\n        id\n        price\n        discount\n        deliveryDate\n        productId\n        storeId\n        createdAt\n        updatedAt\n        deletedAt\n        products(\n          after: $productsAfter\n          first: $productsFirst\n          before: $productsBefore\n          last: $productsLast\n        ) {\n          pageInfo {\n            hasNextPage\n            hasPreviousPage\n            startCursor\n            endCursor\n          }\n          edges {\n            node {\n              id\n              name\n              category\n              amount\n              createdAt\n              updatedAt\n              deletedAt\n            }\n            cursor\n          }\n          total\n        }\n      }\n      cursor\n    }\n    total\n  }\n}\n","variables":{
+      "purchasedProductsAfter": null,
+      "purchasedProductsFirst": 10,
+      "purchasedProductsBefore": null,
+      "purchasedProductsLast": null,
+      "purchasedProductsLimit": 10,
+      "purchasedProductsOrder":"id",
+      "purchasedProductsWhere": {},
+      "purchasedProductsOffset": 0,
+      "productsAfter": null,
+      "productsFirst": 10,
+      "productsBefore": null,
+      "productsLast": null
+    }
+    }'

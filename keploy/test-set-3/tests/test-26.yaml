@@ -1,0 +1,101 @@
+version: api.keploy.io/v1beta1
+kind: Http
+name: test-26
+spec:
+    metadata: {}
+    req:
+        method: POST
+        proto_major: 1
+        proto_minor: 1
+        url: http://localhost:9000/graphql
+        header:
+            Accept: '*/*'
+            Accept-Encoding: gzip, deflate, br
+            Connection: keep-alive
+            Content-Length: "3922"
+            Content-Type: application/json
+            Host: localhost:9000
+            Postman-Token: ea7b96c8-f618-404c-ad98-f8ed8a25c6b2
+            User-Agent: PostmanRuntime/7.37.3
+        body: |-
+            {"query":"mutation UpdateSupplierProduct(\n  $updateSupplierProductId: ID!\n  $updateSupplierProductSupplierId: Int\n  $updateSupplierProductProductId: Int\n  $productsAfter: String\n  $productsFirst: Int\n  $productsBefore: String\n  $productsLast: Int\n  $suppliersAfter: String\n  $suppliersFirst: Int\n  $suppliersBefore: String\n  $suppliersLast: Int\n  $storesAfter: String\n  $storesFirst: Int\n  $storesBefore: String\n  $storesLast: Int\n  $addressesAfter: String\n  $addressesFirst: Int\n  $addressesBefore: String\n  $addressesLast: Int\n) {\n  updateSupplierProduct(\n    id: $updateSupplierProductId\n    supplierId: $updateSupplierProductSupplierId\n    productId: $updateSupplierProductProductId\n  ) {\n    id\n    supplierId\n    productId\n    createdAt\n    updatedAt\n    deletedAt\n    products(\n      after: $productsAfter\n      first: $productsFirst\n      before: $productsBefore\n      last: $productsLast\n    ) {\n      pageInfo {\n        hasNextPage\n        hasPreviousPage\n        startCursor\n        endCursor\n      }\n      edges {\n        node {\n          id\n          name\n          category\n          amount\n          createdAt\n          updatedAt\n          deletedAt\n          suppliers(\n            after: $suppliersAfter\n            first: $suppliersFirst\n            before: $suppliersBefore\n            last: $suppliersLast\n          ) {\n            pageInfo {\n              hasNextPage\n              hasPreviousPage\n              startCursor\n              endCursor\n            }\n            edges {\n              cursor\n            }\n            total\n          }\n          stores(\n            after: $storesAfter\n            first: $storesFirst\n            before: $storesBefore\n            last: $storesLast\n          ) {\n            pageInfo {\n              hasNextPage\n              hasPreviousPage\n              startCursor\n              endCursor\n            }\n            edges {\n              cursor\n            }\n            total\n          }\n        }\n        cursor\n      }\n      total\n    }\n    suppliers(\n      after: $suppliersAfter\n      first: $suppliersFirst\n      before: $suppliersBefore\n      last: $suppliersLast\n    ) {\n      pageInfo {\n        hasNextPage\n        hasPreviousPage\n        startCursor\n        endCursor\n      }\n      edges {\n        node {\n          id\n          name\n          addressId\n          createdAt\n          updatedAt\n          deletedAt\n          addresses(\n            after: $addressesAfter\n            first: $addressesFirst\n            before: $addressesBefore\n            last: $addressesLast\n          ) {\n            pageInfo {\n              hasNextPage\n              hasPreviousPage\n              startCursor\n              endCursor\n            }\n            edges {\n              cursor\n            }\n            total\n          }\n          products(\n            after: $productsAfter\n            first: $productsFirst\n            before: $productsBefore\n            last: $productsLast\n          ) {\n            pageInfo {\n              hasNextPage\n              hasPreviousPage\n              startCursor\n              endCursor\n            }\n            edges {\n              cursor\n            }\n            total\n          }\n        }\n        cursor\n      }\n      total\n    }\n  }\n}\n","variables":{
+              "updateSupplierProductId": 1,
+              "updateSupplierProductSupplierId": 1,
+              "updateSupplierProductProductId": 2,
+              "productsAfter": null,
+              "productsFirst": 10,
+              "productsBefore": null,
+              "productsLast": null,
+              "suppliersAfter": null,
+              "suppliersFirst": 10,
+              "suppliersBefore": null,
+              "suppliersLast": null,
+              "storesAfter": null,
+              "storesFirst": 10,
+              "storesBefore": null,
+              "storesLast": null,
+              "addressesAfter": null,
+              "addressesFirst": 10,
+              "addressesBefore": null,
+              "addressesLast": null
+            }
+            }
+        timestamp: 2024-06-28T19:36:53.732422606Z
+    resp:
+        status_code: 200
+        header:
+            Cache-Control: no-store
+            Connection: keep-alive
+            Content-Length: "2643"
+            Content-Type: application/json; charset=utf-8
+            Date: Fri, 28 Jun 2024 19:36:53 GMT
+            Etag: W/"a53-Lr1r5m5FGqNGIIZzZjQkEC5TkOU"
+            Keep-Alive: timeout=5
+            X-Powered-By: Express
+        body: |
+            {"data":{"updateSupplierProduct":{"id":"1","supplierId":1,"productId":2,"createdAt":"2024-06-28T19:21:00.415Z","updatedAt":"2024-06-28T19:36:53.751Z","deletedAt":null,"products":{"pageInfo":{"hasNextPage":false,"hasPreviousPage":false,"startCursor":"WzIsMF0=","endCursor":"WzIsMF0="},"edges":[{"node":{"id":"2","name":"Handcrafted Wooden Table","category":"Sports","amount":50600,"createdAt":"2024-06-28T19:21:00.126Z","updatedAt":null,"deletedAt":null,"suppliers":{"pageInfo":{"hasNextPage":false,"hasPreviousPage":false,"startCursor":"WzEsMF0=","endCursor":"WzExNTEsMV0="},"edges":[{"cursor":"WzEsMF0="},{"cursor":"WzExNTEsMV0="}],"total":2},"stores":{"pageInfo":{"hasNextPage":false,"hasPreviousPage":false,"startCursor":"WzE5MTMsMF0=","endCursor":"WzE5MTMsMF0="},"edges":[{"cursor":"WzE5MTMsMF0="}],"total":1}},"cursor":"WzIsMF0="}],"total":1},"suppliers":{"pageInfo":{"hasNextPage":false,"hasPreviousPage":false,"startCursor":"WzEsMF0=","endCursor":"WzEsMl0="},"edges":[{"node":{"id":"1","name":"Jacobi, Douglas and Zboncak","addressId":977,"createdAt":"2024-06-28T19:21:00.367Z","updatedAt":null,"deletedAt":null,"addresses":{"pageInfo":{"hasNextPage":false,"hasPreviousPage":false,"startCursor":"Wzk3NywwXQ==","endCursor":"Wzk3NywwXQ=="},"edges":[{"cursor":"Wzk3NywwXQ=="}],"total":1},"products":{"pageInfo":{"hasNextPage":false,"hasPreviousPage":false,"startCursor":"WzEsMF0=","endCursor":"WzEyMjcsMl0="},"edges":[{"cursor":"WzEsMF0="},{"cursor":"WzIsMV0="},{"cursor":"WzEyMjcsMl0="}],"total":3}},"cursor":"WzEsMF0="},{"node":{"id":"1","name":"Jacobi, Douglas and Zboncak","addressId":977,"createdAt":"2024-06-28T19:21:00.367Z","updatedAt":null,"deletedAt":null,"addresses":{"pageInfo":{"hasNextPage":false,"hasPreviousPage":false,"startCursor":"Wzk3NywwXQ==","endCursor":"Wzk3NywwXQ=="},"edges":[{"cursor":"Wzk3NywwXQ=="}],"total":1},"products":{"pageInfo":{"hasNextPage":false,"hasPreviousPage":false,"startCursor":"WzEsMF0=","endCursor":"WzEyMjcsMl0="},"edges":[{"cursor":"WzEsMF0="},{"cursor":"WzIsMV0="},{"cursor":"WzEyMjcsMl0="}],"total":3}},"cursor":"WzEsMV0="},{"node":{"id":"1","name":"Jacobi, Douglas and Zboncak","addressId":977,"createdAt":"2024-06-28T19:21:00.367Z","updatedAt":null,"deletedAt":null,"addresses":{"pageInfo":{"hasNextPage":false,"hasPreviousPage":false,"startCursor":"Wzk3NywwXQ==","endCursor":"Wzk3NywwXQ=="},"edges":[{"cursor":"Wzk3NywwXQ=="}],"total":1},"products":{"pageInfo":{"hasNextPage":false,"hasPreviousPage":false,"startCursor":"WzEsMF0=","endCursor":"WzEyMjcsMl0="},"edges":[{"cursor":"WzEsMF0="},{"cursor":"WzIsMV0="},{"cursor":"WzEyMjcsMl0="}],"total":3}},"cursor":"WzEsMl0="}],"total":3}}}}
+        status_message: OK
+        proto_major: 0
+        proto_minor: 0
+        timestamp: 2024-06-28T19:36:55.859183262Z
+    objects: []
+    assertions:
+        noise:
+            body.data.updateSupplierProduct.createdAt: []
+            body.data.updateSupplierProduct.products.edges.node.createdAt: []
+            body.data.updateSupplierProduct.suppliers.edges.node.createdAt: []
+            body.data.updateSupplierProduct.updatedAt: []
+            header.Date: []
+    created: 1719603415
+curl: |-
+    curl --request POST \
+      --url http://localhost:9000/graphql \
+      --header 'Postman-Token: ea7b96c8-f618-404c-ad98-f8ed8a25c6b2' \
+      --header 'Host: localhost:9000' \
+      --header 'Accept-Encoding: gzip, deflate, br' \
+      --header 'Connection: keep-alive' \
+      --header 'Content-Type: application/json' \
+      --header 'User-Agent: PostmanRuntime/7.37.3' \
+      --header 'Accept: */*' \
+      --data '{"query":"mutation UpdateSupplierProduct(\n  $updateSupplierProductId: ID!\n  $updateSupplierProductSupplierId: Int\n  $updateSupplierProductProductId: Int\n  $productsAfter: String\n  $productsFirst: Int\n  $productsBefore: String\n  $productsLast: Int\n  $suppliersAfter: String\n  $suppliersFirst: Int\n  $suppliersBefore: String\n  $suppliersLast: Int\n  $storesAfter: String\n  $storesFirst: Int\n  $storesBefore: String\n  $storesLast: Int\n  $addressesAfter: String\n  $addressesFirst: Int\n  $addressesBefore: String\n  $addressesLast: Int\n) {\n  updateSupplierProduct(\n    id: $updateSupplierProductId\n    supplierId: $updateSupplierProductSupplierId\n    productId: $updateSupplierProductProductId\n  ) {\n    id\n    supplierId\n    productId\n    createdAt\n    updatedAt\n    deletedAt\n    products(\n      after: $productsAfter\n      first: $productsFirst\n      before: $productsBefore\n      last: $productsLast\n    ) {\n      pageInfo {\n        hasNextPage\n        hasPreviousPage\n        startCursor\n        endCursor\n      }\n      edges {\n        node {\n          id\n          name\n          category\n          amount\n          createdAt\n          updatedAt\n          deletedAt\n          suppliers(\n            after: $suppliersAfter\n            first: $suppliersFirst\n            before: $suppliersBefore\n            last: $suppliersLast\n          ) {\n            pageInfo {\n              hasNextPage\n              hasPreviousPage\n              startCursor\n              endCursor\n            }\n            edges {\n              cursor\n            }\n            total\n          }\n          stores(\n            after: $storesAfter\n            first: $storesFirst\n            before: $storesBefore\n            last: $storesLast\n          ) {\n            pageInfo {\n              hasNextPage\n              hasPreviousPage\n              startCursor\n              endCursor\n            }\n            edges {\n              cursor\n            }\n            total\n          }\n        }\n        cursor\n      }\n      total\n    }\n    suppliers(\n      after: $suppliersAfter\n      first: $suppliersFirst\n      before: $suppliersBefore\n      last: $suppliersLast\n    ) {\n      pageInfo {\n        hasNextPage\n        hasPreviousPage\n        startCursor\n        endCursor\n      }\n      edges {\n        node {\n          id\n          name\n          addressId\n          createdAt\n          updatedAt\n          deletedAt\n          addresses(\n            after: $addressesAfter\n            first: $addressesFirst\n            before: $addressesBefore\n            last: $addressesLast\n          ) {\n            pageInfo {\n              hasNextPage\n              hasPreviousPage\n              startCursor\n              endCursor\n            }\n            edges {\n              cursor\n            }\n            total\n          }\n          products(\n            after: $productsAfter\n            first: $productsFirst\n            before: $productsBefore\n            last: $productsLast\n          ) {\n            pageInfo {\n              hasNextPage\n              hasPreviousPage\n              startCursor\n              endCursor\n            }\n            edges {\n              cursor\n            }\n            total\n          }\n        }\n        cursor\n      }\n      total\n    }\n  }\n}\n","variables":{
+      "updateSupplierProductId": 1,
+      "updateSupplierProductSupplierId": 1,
+      "updateSupplierProductProductId": 2,
+      "productsAfter": null,
+      "productsFirst": 10,
+      "productsBefore": null,
+      "productsLast": null,
+      "suppliersAfter": null,
+      "suppliersFirst": 10,
+      "suppliersBefore": null,
+      "suppliersLast": null,
+      "storesAfter": null,
+      "storesFirst": 10,
+      "storesBefore": null,
+      "storesLast": null,
+      "addressesAfter": null,
+      "addressesFirst": 10,
+      "addressesBefore": null,
+      "addressesLast": null
+    }
+    }'

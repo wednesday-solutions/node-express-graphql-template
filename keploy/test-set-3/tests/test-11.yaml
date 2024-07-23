@@ -1,0 +1,98 @@
+version: api.keploy.io/v1beta1
+kind: Http
+name: test-11
+spec:
+    metadata: {}
+    req:
+        method: POST
+        proto_major: 1
+        proto_minor: 1
+        url: http://localhost:9000/graphql
+        header:
+            Accept: '*/*'
+            Accept-Encoding: gzip, deflate, br
+            Connection: keep-alive
+            Content-Length: "3731"
+            Content-Type: application/json
+            Host: localhost:9000
+            Postman-Token: 56524916-8e8f-494b-b7d2-bc5a9793fab5
+            User-Agent: PostmanRuntime/7.37.3
+        body: |-
+            {"query":"query SupplierProduct(\n  $supplierProductId: Int\n  $supplierProductWhere: SequelizeJSON\n  $productsAfter: String\n  $productsFirst: Int\n  $productsBefore: String\n  $productsLast: Int\n  $suppliersAfter: String\n  $suppliersFirst: Int\n  $suppliersBefore: String\n  $suppliersLast: Int\n  $storesAfter: String\n  $storesFirst: Int\n  $storesBefore: String\n  $storesLast: Int\n  $addressesAfter: String\n  $addressesFirst: Int\n  $addressesBefore: String\n  $addressesLast: Int\n) {\n  supplierProduct(id: $supplierProductId, where: $supplierProductWhere) {\n    id\n    supplierId\n    productId\n    createdAt\n    updatedAt\n    deletedAt\n    products(\n      after: $productsAfter\n      first: $productsFirst\n      before: $productsBefore\n      last: $productsLast\n    ) {\n      pageInfo {\n        hasNextPage\n        hasPreviousPage\n        startCursor\n        endCursor\n      }\n      edges {\n        node {\n          id\n          name\n          category\n          amount\n          createdAt\n          updatedAt\n          deletedAt\n          suppliers(\n            after: $suppliersAfter\n            first: $suppliersFirst\n            before: $suppliersBefore\n            last: $suppliersLast\n          ) {\n            pageInfo {\n              hasNextPage\n              hasPreviousPage\n              startCursor\n              endCursor\n            }\n            edges {\n              cursor\n            }\n            total\n          }\n          stores(\n            after: $storesAfter\n            first: $storesFirst\n            before: $storesBefore\n            last: $storesLast\n          ) {\n            pageInfo {\n              hasNextPage\n              hasPreviousPage\n              startCursor\n              endCursor\n            }\n            edges {\n              cursor\n            }\n            total\n          }\n        }\n        cursor\n      }\n      total\n    }\n    suppliers(\n      after: $suppliersAfter\n      first: $suppliersFirst\n      before: $suppliersBefore\n      last: $suppliersLast\n    ) {\n      pageInfo {\n        hasNextPage\n        hasPreviousPage\n        startCursor\n        endCursor\n      }\n      edges {\n        node {\n          id\n          name\n          addressId\n          createdAt\n          updatedAt\n          deletedAt\n          addresses(\n            after: $addressesAfter\n            first: $addressesFirst\n            before: $addressesBefore\n            last: $addressesLast\n          ) {\n            pageInfo {\n              hasNextPage\n              hasPreviousPage\n              startCursor\n              endCursor\n            }\n            edges {\n              cursor\n            }\n            total\n          }\n          products(\n            after: $productsAfter\n            first: $productsFirst\n            before: $productsBefore\n            last: $productsLast\n          ) {\n            pageInfo {\n              hasNextPage\n              hasPreviousPage\n              startCursor\n              endCursor\n            }\n            edges {\n              cursor\n            }\n            total\n          }\n        }\n        cursor\n      }\n      total\n    }\n  }\n}\n","variables":{
+              "supplierProductId": null,
+              "supplierProductWhere": {"id": 5},
+              "productsAfter": null,
+              "productsFirst": 10,
+              "productsBefore": null,
+              "productsLast": null,
+              "suppliersAfter": null,
+              "suppliersFirst": 10,
+              "suppliersBefore": null,
+              "suppliersLast": null,
+              "storesAfter": null,
+              "storesFirst": 10,
+              "storesBefore": null,
+              "storesLast": null,
+              "addressesAfter": null,
+              "addressesFirst": 10,
+              "addressesBefore": null,
+              "addressesLast": null
+            }
+            }
+        timestamp: 2024-06-28T19:31:48.913805757Z
+    resp:
+        status_code: 200
+        header:
+            Cache-Control: no-store
+            Connection: keep-alive
+            Content-Length: "2021"
+            Content-Type: application/json; charset=utf-8
+            Date: Fri, 28 Jun 2024 19:31:48 GMT
+            Etag: W/"7e5-PfEzJDeEtP9s8MucXWsWMSKtzkY"
+            Keep-Alive: timeout=5
+            X-Powered-By: Express
+        body: |
+            {"data":{"supplierProduct":{"id":"5","supplierId":1274,"productId":5,"createdAt":"2024-06-28T19:21:00.415Z","updatedAt":null,"deletedAt":null,"products":{"pageInfo":{"hasNextPage":false,"hasPreviousPage":false,"startCursor":"WzUsMF0=","endCursor":"WzUsMF0="},"edges":[{"node":{"id":"5","name":"Ergonomic Cotton Pants","category":"Garden","amount":21200,"createdAt":"2024-06-28T19:21:00.126Z","updatedAt":null,"deletedAt":null,"suppliers":{"pageInfo":{"hasNextPage":false,"hasPreviousPage":false,"startCursor":"WzEyNzQsMF0=","endCursor":"WzEyNzQsMF0="},"edges":[{"cursor":"WzEyNzQsMF0="}],"total":1},"stores":{"pageInfo":{"hasNextPage":false,"hasPreviousPage":false,"startCursor":"WzExNzgsMF0=","endCursor":"WzExNzgsMF0="},"edges":[{"cursor":"WzExNzgsMF0="}],"total":1}},"cursor":"WzUsMF0="}],"total":1},"suppliers":{"pageInfo":{"hasNextPage":false,"hasPreviousPage":false,"startCursor":"WzEyNzQsMF0=","endCursor":"WzEyNzQsMV0="},"edges":[{"node":{"id":"1274","name":"Hirthe, Berge and Maggio","addressId":1380,"createdAt":"2024-06-28T19:21:00.367Z","updatedAt":null,"deletedAt":null,"addresses":{"pageInfo":{"hasNextPage":false,"hasPreviousPage":false,"startCursor":"WzEzODAsMF0=","endCursor":"WzEzODAsMF0="},"edges":[{"cursor":"WzEzODAsMF0="}],"total":1},"products":{"pageInfo":{"hasNextPage":false,"hasPreviousPage":false,"startCursor":"WzUsMF0=","endCursor":"WzE0NDQsMV0="},"edges":[{"cursor":"WzUsMF0="},{"cursor":"WzE0NDQsMV0="}],"total":2}},"cursor":"WzEyNzQsMF0="},{"node":{"id":"1274","name":"Hirthe, Berge and Maggio","addressId":1380,"createdAt":"2024-06-28T19:21:00.367Z","updatedAt":null,"deletedAt":null,"addresses":{"pageInfo":{"hasNextPage":false,"hasPreviousPage":false,"startCursor":"WzEzODAsMF0=","endCursor":"WzEzODAsMF0="},"edges":[{"cursor":"WzEzODAsMF0="}],"total":1},"products":{"pageInfo":{"hasNextPage":false,"hasPreviousPage":false,"startCursor":"WzUsMF0=","endCursor":"WzE0NDQsMV0="},"edges":[{"cursor":"WzUsMF0="},{"cursor":"WzE0NDQsMV0="}],"total":2}},"cursor":"WzEyNzQsMV0="}],"total":2}}}}
+        status_message: OK
+        proto_major: 0
+        proto_minor: 0
+        timestamp: 2024-06-28T19:31:51.053500593Z
+    objects: []
+    assertions:
+        noise:
+            body.data.supplierProduct.createdAt: []
+            body.data.supplierProduct.products.edges.node.createdAt: []
+            body.data.supplierProduct.suppliers.edges.node.createdAt: []
+            header.Date: []
+    created: 1719603111
+curl: |-
+    curl --request POST \
+      --url http://localhost:9000/graphql \
+      --header 'Accept: */*' \
+      --header 'Postman-Token: 56524916-8e8f-494b-b7d2-bc5a9793fab5' \
+      --header 'Host: localhost:9000' \
+      --header 'Accept-Encoding: gzip, deflate, br' \
+      --header 'Connection: keep-alive' \
+      --header 'Content-Type: application/json' \
+      --header 'User-Agent: PostmanRuntime/7.37.3' \
+      --data '{"query":"query SupplierProduct(\n  $supplierProductId: Int\n  $supplierProductWhere: SequelizeJSON\n  $productsAfter: String\n  $productsFirst: Int\n  $productsBefore: String\n  $productsLast: Int\n  $suppliersAfter: String\n  $suppliersFirst: Int\n  $suppliersBefore: String\n  $suppliersLast: Int\n  $storesAfter: String\n  $storesFirst: Int\n  $storesBefore: String\n  $storesLast: Int\n  $addressesAfter: String\n  $addressesFirst: Int\n  $addressesBefore: String\n  $addressesLast: Int\n) {\n  supplierProduct(id: $supplierProductId, where: $supplierProductWhere) {\n    id\n    supplierId\n    productId\n    createdAt\n    updatedAt\n    deletedAt\n    products(\n      after: $productsAfter\n      first: $productsFirst\n      before: $productsBefore\n      last: $productsLast\n    ) {\n      pageInfo {\n        hasNextPage\n        hasPreviousPage\n        startCursor\n        endCursor\n      }\n      edges {\n        node {\n          id\n          name\n          category\n          amount\n          createdAt\n          updatedAt\n          deletedAt\n          suppliers(\n            after: $suppliersAfter\n            first: $suppliersFirst\n            before: $suppliersBefore\n            last: $suppliersLast\n          ) {\n            pageInfo {\n              hasNextPage\n              hasPreviousPage\n              startCursor\n              endCursor\n            }\n            edges {\n              cursor\n            }\n            total\n          }\n          stores(\n            after: $storesAfter\n            first: $storesFirst\n            before: $storesBefore\n            last: $storesLast\n          ) {\n            pageInfo {\n              hasNextPage\n              hasPreviousPage\n              startCursor\n              endCursor\n            }\n            edges {\n              cursor\n            }\n            total\n          }\n        }\n        cursor\n      }\n      total\n    }\n    suppliers(\n      after: $suppliersAfter\n      first: $suppliersFirst\n      before: $suppliersBefore\n      last: $suppliersLast\n    ) {\n      pageInfo {\n        hasNextPage\n        hasPreviousPage\n        startCursor\n        endCursor\n      }\n      edges {\n        node {\n          id\n          name\n          addressId\n          createdAt\n          updatedAt\n          deletedAt\n          addresses(\n            after: $addressesAfter\n            first: $addressesFirst\n            before: $addressesBefore\n            last: $addressesLast\n          ) {\n            pageInfo {\n              hasNextPage\n              hasPreviousPage\n              startCursor\n              endCursor\n            }\n            edges {\n              cursor\n            }\n            total\n          }\n          products(\n            after: $productsAfter\n            first: $productsFirst\n            before: $productsBefore\n            last: $productsLast\n          ) {\n            pageInfo {\n              hasNextPage\n              hasPreviousPage\n              startCursor\n              endCursor\n            }\n            edges {\n              cursor\n            }\n            total\n          }\n        }\n        cursor\n      }\n      total\n    }\n  }\n}\n","variables":{
+      "supplierProductId": null,
+      "supplierProductWhere": {"id": 5},
+      "productsAfter": null,
+      "productsFirst": 10,
+      "productsBefore": null,
+      "productsLast": null,
+      "suppliersAfter": null,
+      "suppliersFirst": 10,
+      "suppliersBefore": null,
+      "suppliersLast": null,
+      "storesAfter": null,
+      "storesFirst": 10,
+      "storesBefore": null,
+      "storesLast": null,
+      "addressesAfter": null,
+      "addressesFirst": 10,
+      "addressesBefore": null,
+      "addressesLast": null
+    }
+    }'

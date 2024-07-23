@@ -1,0 +1,65 @@
+version: api.keploy.io/v1beta1
+kind: Http
+name: test-17
+spec:
+    metadata: {}
+    req:
+        method: POST
+        proto_major: 1
+        proto_minor: 1
+        url: http://localhost:9000/graphql
+        header:
+            Accept: '*/*'
+            Accept-Encoding: gzip, deflate, br
+            Connection: keep-alive
+            Content-Length: "545"
+            Content-Type: application/json
+            Host: localhost:9000
+            Postman-Token: df7a0500-e065-4618-9306-747da85d8576
+            User-Agent: PostmanRuntime/7.37.3
+        body: |-
+            {"query":"query Aggregate(\n  $aggregateStartDate: DateTime\n  $aggregateEndDate: DateTime\n  $aggregateCategory: String\n) {\n  aggregate(\n    startDate: $aggregateStartDate\n    endDate: $aggregateEndDate\n    category: $aggregateCategory\n  ) {\n    total {\n      purchasedProductsPrice\n    }\n    max {\n      purchasedProductsPrice\n    }\n    count {\n      purchasedProducts\n    }\n  }\n}\n","variables":{
+              "aggregateStartDate": "2007-12-01T10:15:30Z",
+              "aggregateEndDate": "2007-12-15T10:15:30Z",
+              "aggregateCategory": "Tools"
+            }
+            }
+        timestamp: 2024-06-28T06:10:23.032409189Z
+    resp:
+        status_code: 200
+        header:
+            Cache-Control: no-store
+            Connection: keep-alive
+            Content-Length: "133"
+            Content-Type: application/json; charset=utf-8
+            Date: Fri, 28 Jun 2024 06:10:23 GMT
+            Etag: W/"85-nCmevrQ6X4+eSjhGGfFgm0gooOE"
+            Keep-Alive: timeout=5
+            X-Powered-By: Express
+        body: |
+            {"data":{"aggregate":{"total":{"purchasedProductsPrice":0},"max":{"purchasedProductsPrice":30500},"count":{"purchasedProducts":0}}}}
+        status_message: OK
+        proto_major: 0
+        proto_minor: 0
+        timestamp: 2024-06-28T06:10:25.177858469Z
+    objects: []
+    assertions:
+        noise:
+            header.Date: []
+    created: 1719555025
+curl: |-
+    curl --request POST \
+      --url http://localhost:9000/graphql \
+      --header 'Content-Type: application/json' \
+      --header 'User-Agent: PostmanRuntime/7.37.3' \
+      --header 'Accept: */*' \
+      --header 'Postman-Token: df7a0500-e065-4618-9306-747da85d8576' \
+      --header 'Host: localhost:9000' \
+      --header 'Accept-Encoding: gzip, deflate, br' \
+      --header 'Connection: keep-alive' \
+      --data '{"query":"query Aggregate(\n  $aggregateStartDate: DateTime\n  $aggregateEndDate: DateTime\n  $aggregateCategory: String\n) {\n  aggregate(\n    startDate: $aggregateStartDate\n    endDate: $aggregateEndDate\n    category: $aggregateCategory\n  ) {\n    total {\n      purchasedProductsPrice\n    }\n    max {\n      purchasedProductsPrice\n    }\n    count {\n      purchasedProducts\n    }\n  }\n}\n","variables":{
+      "aggregateStartDate": "2007-12-01T10:15:30Z",
+      "aggregateEndDate": "2007-12-15T10:15:30Z",
+      "aggregateCategory": "Tools"
+    }
+    }'

@@ -1,0 +1,61 @@
+version: api.keploy.io/v1beta1
+kind: Http
+name: test-35
+spec:
+    metadata: {}
+    req:
+        method: POST
+        proto_major: 1
+        proto_minor: 1
+        url: http://localhost:9000/graphql
+        header:
+            Accept: '*/*'
+            Accept-Encoding: gzip, deflate, br
+            Connection: keep-alive
+            Content-Length: "209"
+            Content-Type: application/json
+            Host: localhost:9000
+            Postman-Token: 17272074-f559-441e-8f20-ba8aad1cb381
+            User-Agent: PostmanRuntime/7.37.3
+        body: |-
+            {"query":"mutation DeletePurchasedProduct($deletePurchasedProductId: Int!) {\n  deletePurchasedProduct(id: $deletePurchasedProductId) {\n    id\n  }\n}\n","variables":{
+              "deletePurchasedProductId": 100000
+            }
+            }
+        timestamp: 2024-06-28T19:38:47.753661574Z
+    resp:
+        status_code: 200
+        header:
+            Cache-Control: no-store
+            Connection: keep-alive
+            Content-Length: "69"
+            Content-Type: application/json; charset=utf-8
+            Date: Fri, 28 Jun 2024 19:38:47 GMT
+            Etag: W/"45-uGeC16H7UjIL98BsNouzznZq7ZU"
+            Keep-Alive: timeout=5
+            X-Powered-By: Express
+        body: |
+            {"errors":["Data not found"],"data":{"deletePurchasedProduct":null}}
+        status_message: OK
+        proto_major: 0
+        proto_minor: 0
+        timestamp: 2024-06-28T19:38:49.838290134Z
+    objects: []
+    assertions:
+        noise:
+            header.Date: []
+    created: 1719603529
+curl: |-
+    curl --request POST \
+      --url http://localhost:9000/graphql \
+      --header 'Accept: */*' \
+      --header 'Postman-Token: 17272074-f559-441e-8f20-ba8aad1cb381' \
+      --header 'Host: localhost:9000' \
+      --header 'Accept-Encoding: gzip, deflate, br' \
+      --header 'Connection: keep-alive' \
+      --header 'Content-Type: application/json' \
+      --header 'User-Agent: PostmanRuntime/7.37.3' \
+      --data '{"query":"mutation DeletePurchasedProduct($deletePurchasedProductId: Int!) {\n  deletePurchasedProduct(id: $deletePurchasedProductId) {\n    id\n  }\n}\n","variables":{
+      "deletePurchasedProductId": 100000
+    }
+    }'

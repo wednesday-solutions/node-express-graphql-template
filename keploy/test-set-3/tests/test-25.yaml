@@ -1,0 +1,99 @@
+version: api.keploy.io/v1beta1
+kind: Http
+name: test-25
+spec:
+    metadata: {}
+    req:
+        method: POST
+        proto_major: 1
+        proto_minor: 1
+        url: http://localhost:9000/graphql
+        header:
+            Accept: '*/*'
+            Accept-Encoding: gzip, deflate, br
+            Connection: keep-alive
+            Content-Length: "3823"
+            Content-Type: application/json
+            Host: localhost:9000
+            Postman-Token: 3f0d932d-fcf9-40c5-add3-513bc9f992e3
+            User-Agent: PostmanRuntime/7.37.3
+        body: |-
+            {"query":"mutation CreateSupplierProduct(\n  $createSupplierProductSupplierId: Int\n  $createSupplierProductProductId: Int\n  $productsAfter: String\n  $productsFirst: Int\n  $productsBefore: String\n  $productsLast: Int\n  $suppliersAfter: String\n  $suppliersFirst: Int\n  $suppliersBefore: String\n  $suppliersLast: Int\n  $storesAfter: String\n  $storesFirst: Int\n  $storesBefore: String\n  $storesLast: Int\n  $addressesAfter: String\n  $addressesFirst: Int\n  $addressesBefore: String\n  $addressesLast: Int\n) {\n  createSupplierProduct(\n    supplierId: $createSupplierProductSupplierId\n    productId: $createSupplierProductProductId\n  ) {\n    id\n    supplierId\n    productId\n    createdAt\n    updatedAt\n    deletedAt\n    products(\n      after: $productsAfter\n      first: $productsFirst\n      before: $productsBefore\n      last: $productsLast\n    ) {\n      pageInfo {\n        hasNextPage\n        hasPreviousPage\n        startCursor\n        endCursor\n      }\n      edges {\n        node {\n          id\n          name\n          category\n          amount\n          createdAt\n          updatedAt\n          deletedAt\n          suppliers(\n            after: $suppliersAfter\n            first: $suppliersFirst\n            before: $suppliersBefore\n            last: $suppliersLast\n          ) {\n            pageInfo {\n              hasNextPage\n              hasPreviousPage\n              startCursor\n              endCursor\n            }\n            edges {\n              cursor\n            }\n            total\n          }\n          stores(\n            after: $storesAfter\n            first: $storesFirst\n            before: $storesBefore\n            last: $storesLast\n          ) {\n            pageInfo {\n              hasNextPage\n              hasPreviousPage\n              startCursor\n              endCursor\n            }\n            edges {\n              cursor\n            }\n            total\n          }\n        }\n        cursor\n      }\n      total\n    }\n    suppliers(\n      after: $suppliersAfter\n      first: $suppliersFirst\n      before: $suppliersBefore\n      last: $suppliersLast\n    ) {\n      pageInfo {\n        hasNextPage\n        hasPreviousPage\n        startCursor\n        endCursor\n      }\n      edges {\n        node {\n          id\n          name\n          addressId\n          createdAt\n          updatedAt\n          deletedAt\n          addresses(\n            after: $addressesAfter\n            first: $addressesFirst\n            before: $addressesBefore\n            last: $addressesLast\n          ) {\n            pageInfo {\n              hasNextPage\n              hasPreviousPage\n              startCursor\n              endCursor\n            }\n            edges {\n              cursor\n            }\n            total\n          }\n          products(\n            after: $productsAfter\n            first: $productsFirst\n            before: $productsBefore\n            last: $productsLast\n          ) {\n            pageInfo {\n              hasNextPage\n              hasPreviousPage\n              startCursor\n              endCursor\n            }\n            edges {\n              cursor\n            }\n            total\n          }\n        }\n        cursor\n      }\n      total\n    }\n  }\n}\n","variables":{
+              "createSupplierProductSupplierId": 1,
+              "createSupplierProductProductId": 1,
+              "productsAfter": null,
+              "productsFirst": 10,
+              "productsBefore": null,
+              "productsLast": null,
+              "suppliersAfter": null,
+              "suppliersFirst": 10,
+              "suppliersBefore": null,
+              "suppliersLast": null,
+              "storesAfter": null,
+              "storesFirst": 10,
+              "storesBefore": null,
+              "storesLast": null,
+              "addressesAfter": null,
+              "addressesFirst": 10,
+              "addressesBefore": null,
+              "addressesLast": null
+            }
+            }
+        timestamp: 2024-06-28T19:36:38.71261239Z
+    resp:
+        status_code: 200
+        header:
+            Cache-Control: no-store
+            Connection: keep-alive
+            Content-Length: "2051"
+            Content-Type: application/json; charset=utf-8
+            Date: Fri, 28 Jun 2024 19:36:38 GMT
+            Etag: W/"803-1fuYo9kfM0hA2hNZcjfpbUkQdFM"
+            Keep-Alive: timeout=5
+            X-Powered-By: Express
+        body: |
+            {"data":{"createSupplierProduct":{"id":"2000","supplierId":1,"productId":1,"createdAt":"2024-06-28T19:36:38.748Z","updatedAt":"2024-06-28T19:36:38.734Z","deletedAt":null,"products":{"pageInfo":{"hasNextPage":false,"hasPreviousPage":false,"startCursor":"WzEsMF0=","endCursor":"WzEsMF0="},"edges":[{"node":{"id":"1","name":"Awesome Fresh Sausages","category":"Clothing","amount":24900,"createdAt":"2024-06-28T19:21:00.126Z","updatedAt":null,"deletedAt":null,"suppliers":{"pageInfo":{"hasNextPage":false,"hasPreviousPage":false,"startCursor":"WzEsMF0=","endCursor":"WzE4MDAsMV0="},"edges":[{"cursor":"WzEsMF0="},{"cursor":"WzE4MDAsMV0="}],"total":2},"stores":{"pageInfo":{"hasNextPage":false,"hasPreviousPage":false,"startCursor":"WzU5NiwwXQ==","endCursor":"WzU5NiwwXQ=="},"edges":[{"cursor":"WzU5NiwwXQ=="}],"total":1}},"cursor":"WzEsMF0="}],"total":1},"suppliers":{"pageInfo":{"hasNextPage":false,"hasPreviousPage":false,"startCursor":"WzEsMF0=","endCursor":"WzEsMV0="},"edges":[{"node":{"id":"1","name":"Jacobi, Douglas and Zboncak","addressId":977,"createdAt":"2024-06-28T19:21:00.367Z","updatedAt":null,"deletedAt":null,"addresses":{"pageInfo":{"hasNextPage":false,"hasPreviousPage":false,"startCursor":"Wzk3NywwXQ==","endCursor":"Wzk3NywwXQ=="},"edges":[{"cursor":"Wzk3NywwXQ=="}],"total":1},"products":{"pageInfo":{"hasNextPage":false,"hasPreviousPage":false,"startCursor":"WzEsMF0=","endCursor":"WzEyMjcsMV0="},"edges":[{"cursor":"WzEsMF0="},{"cursor":"WzEyMjcsMV0="}],"total":2}},"cursor":"WzEsMF0="},{"node":{"id":"1","name":"Jacobi, Douglas and Zboncak","addressId":977,"createdAt":"2024-06-28T19:21:00.367Z","updatedAt":null,"deletedAt":null,"addresses":{"pageInfo":{"hasNextPage":false,"hasPreviousPage":false,"startCursor":"Wzk3NywwXQ==","endCursor":"Wzk3NywwXQ=="},"edges":[{"cursor":"Wzk3NywwXQ=="}],"total":1},"products":{"pageInfo":{"hasNextPage":false,"hasPreviousPage":false,"startCursor":"WzEsMF0=","endCursor":"WzEyMjcsMV0="},"edges":[{"cursor":"WzEsMF0="},{"cursor":"WzEyMjcsMV0="}],"total":2}},"cursor":"WzEsMV0="}],"total":2}}}}
+        status_message: OK
+        proto_major: 0
+        proto_minor: 0
+        timestamp: 2024-06-28T19:36:40.836816005Z
+    objects: []
+    assertions:
+        noise:
+            body.data.createSupplierProduct.createdAt: []
+            body.data.createSupplierProduct.products.edges.node.createdAt: []
+            body.data.createSupplierProduct.suppliers.edges.node.createdAt: []
+            body.data.createSupplierProduct.updatedAt: []
+            header.Date: []
+    created: 1719603400
+curl: |-
+    curl --request POST \
+      --url http://localhost:9000/graphql \
+      --header 'User-Agent: PostmanRuntime/7.37.3' \
+      --header 'Accept: */*' \
+      --header 'Postman-Token: 3f0d932d-fcf9-40c5-add3-513bc9f992e3' \
+      --header 'Host: localhost:9000' \
+      --header 'Accept-Encoding: gzip, deflate, br' \
+      --header 'Connection: keep-alive' \
+      --header 'Content-Type: application/json' \
+      --data '{"query":"mutation CreateSupplierProduct(\n  $createSupplierProductSupplierId: Int\n  $createSupplierProductProductId: Int\n  $productsAfter: String\n  $productsFirst: Int\n  $productsBefore: String\n  $productsLast: Int\n  $suppliersAfter: String\n  $suppliersFirst: Int\n  $suppliersBefore: String\n  $suppliersLast: Int\n  $storesAfter: String\n  $storesFirst: Int\n  $storesBefore: String\n  $storesLast: Int\n  $addressesAfter: String\n  $addressesFirst: Int\n  $addressesBefore: String\n  $addressesLast: Int\n) {\n  createSupplierProduct(\n    supplierId: $createSupplierProductSupplierId\n    productId: $createSupplierProductProductId\n  ) {\n    id\n    supplierId\n    productId\n    createdAt\n    updatedAt\n    deletedAt\n    products(\n      after: $productsAfter\n      first: $productsFirst\n      before: $productsBefore\n      last: $productsLast\n    ) {\n      pageInfo {\n        hasNextPage\n        hasPreviousPage\n        startCursor\n        endCursor\n      }\n      edges {\n        node {\n          id\n          name\n          category\n          amount\n          createdAt\n          updatedAt\n          deletedAt\n          suppliers(\n            after: $suppliersAfter\n            first: $suppliersFirst\n            before: $suppliersBefore\n            last: $suppliersLast\n          ) {\n            pageInfo {\n              hasNextPage\n              hasPreviousPage\n              startCursor\n              endCursor\n            }\n            edges {\n              cursor\n            }\n            total\n          }\n          stores(\n            after: $storesAfter\n            first: $storesFirst\n            before: $storesBefore\n            last: $storesLast\n          ) {\n            pageInfo {\n              hasNextPage\n              hasPreviousPage\n              startCursor\n              endCursor\n            }\n            edges {\n              cursor\n            }\n            total\n          }\n        }\n        cursor\n      }\n      total\n    }\n    suppliers(\n      after: $suppliersAfter\n      first: $suppliersFirst\n      before: $suppliersBefore\n      last: $suppliersLast\n    ) {\n      pageInfo {\n        hasNextPage\n        hasPreviousPage\n        startCursor\n        endCursor\n      }\n      edges {\n        node {\n          id\n          name\n          addressId\n          createdAt\n          updatedAt\n          deletedAt\n          addresses(\n            after: $addressesAfter\n            first: $addressesFirst\n            before: $addressesBefore\n            last: $addressesLast\n          ) {\n            pageInfo {\n              hasNextPage\n              hasPreviousPage\n              startCursor\n              endCursor\n            }\n            edges {\n              cursor\n            }\n            total\n          }\n          products(\n            after: $productsAfter\n            first: $productsFirst\n            before: $productsBefore\n            last: $productsLast\n          ) {\n            pageInfo {\n              hasNextPage\n              hasPreviousPage\n              startCursor\n              endCursor\n            }\n            edges {\n              cursor\n            }\n            total\n          }\n        }\n        cursor\n      }\n      total\n    }\n  }\n}\n","variables":{
+      "createSupplierProductSupplierId": 1,
+      "createSupplierProductProductId": 1,
+      "productsAfter": null,
+      "productsFirst": 10,
+      "productsBefore": null,
+      "productsLast": null,
+      "suppliersAfter": null,
+      "suppliersFirst": 10,
+      "suppliersBefore": null,
+      "suppliersLast": null,
+      "storesAfter": null,
+      "storesFirst": 10,
+      "storesBefore": null,
+      "storesLast": null,
+      "addressesAfter": null,
+      "addressesFirst": 10,
+      "addressesBefore": null,
+      "addressesLast": null
+    }
+    }'

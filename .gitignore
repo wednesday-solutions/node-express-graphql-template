@@ -95,3 +95,9 @@ typings/
 .DS_Store
 report.json
 reports/test-report.xml
+
+# Keploy test reports
+dedupData.yaml
+duplicates.yaml
+keploy/reports
+docker-compose-tmp.yaml
