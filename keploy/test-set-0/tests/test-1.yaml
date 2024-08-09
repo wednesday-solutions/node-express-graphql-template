@@ -1,0 +1,76 @@
+version: api.keploy.io/v1beta1
+kind: Http
+name: test-1
+spec:
+    metadata: {}
+    req:
+        method: POST
+        proto_major: 1
+        proto_minor: 1
+        url: http://localhost:9000/graphql
+        header:
+            Accept: '*/*'
+            Accept-Encoding: gzip, deflate, br
+            Connection: keep-alive
+            Content-Length: "899"
+            Content-Type: application/json
+            Host: localhost:9000
+            Postman-Token: 8d5c0e04-9ed5-4089-b0d8-f52b1b52d6d2
+            User-Agent: PostmanRuntime/7.37.3
+        body: |-
+            {"query":"query Users(\n  $usersAfter: Int\n  $usersFirst: Int\n  $usersBefore: Int\n  $usersLast: Int\n  $usersLimit: Int!\n  $usersOrder: String\n  $usersWhere: SequelizeJSON\n  $usersOffset: Int!\n) {\n  users(\n    after: $usersAfter\n    first: $usersFirst\n    before: $usersBefore\n    last: $usersLast\n    limit: $usersLimit\n    order: $usersOrder\n    where: $usersWhere\n    offset: $usersOffset\n  ) {\n    pageInfo {\n      hasNextPage\n      hasPreviousPage\n      startCursor\n      endCursor\n    }\n    edges {\n      node {\n        firstName\n        lastName\n        id\n        email\n        createdAt\n        updatedAt\n        deletedAt\n      }\n      cursor\n    }\n    total\n  }\n}\n","variables":{
+              "usersAfter": null,
+              "usersFirst": 10,
+              "usersBefore": null,
+              "usersLast": null,
+              "usersLimit": 10,
+              "usersOrder":"id",
+              "usersWhere": {},
+              "usersOffset": 0
+            }
+            }
+        timestamp: 2024-06-28T06:07:27.430153152Z
+    resp:
+        status_code: 200
+        header:
+            Cache-Control: no-store
+            Connection: keep-alive
+            Content-Length: "2023"
+            Content-Type: application/json; charset=utf-8
+            Date: Fri, 28 Jun 2024 06:07:27 GMT
+            Etag: W/"7e7-thYsq787KGx72EHHhMdFrvzxN1c"
+            Keep-Alive: timeout=5
+            X-Powered-By: Express
+        body: |
+            {"data":{"users":{"pageInfo":{"hasNextPage":true,"hasPreviousPage":false,"startCursor":"WzEsMF0=","endCursor":"WzEwLDld"},"edges":[{"node":{"firstName":"Libbie","lastName":"Bode","id":"1","email":"Jedidiah_Herzog@hotmail.com","createdAt":"2023-08-23T10:49:56.620Z","updatedAt":null,"deletedAt":null},"cursor":"WzEsMF0="},{"node":{"firstName":"Henri","lastName":"Hamill","id":"2","email":"Brielle.Pfeffer@hotmail.com","createdAt":"2023-01-26T11:56:30.499Z","updatedAt":null,"deletedAt":null},"cursor":"WzIsMV0="},{"node":{"firstName":"Davion","lastName":"Sporer","id":"3","email":"Jaydon_Pfeffer@hotmail.com","createdAt":"2022-09-03T17:05:41.586Z","updatedAt":null,"deletedAt":null},"cursor":"WzMsMl0="},{"node":{"firstName":"Vincenzo","lastName":"Willms","id":"4","email":"Reece_Nolan3@yahoo.com","createdAt":"2023-11-13T12:17:25.446Z","updatedAt":null,"deletedAt":null},"cursor":"WzQsM10="},{"node":{"firstName":"Karlee","lastName":"Roob","id":"5","email":"Candido.Gislason@gmail.com","createdAt":"2024-05-28T18:19:57.048Z","updatedAt":null,"deletedAt":null},"cursor":"WzUsNF0="},{"node":{"firstName":"Garth","lastName":"Casper","id":"6","email":"Fannie.OConner@hotmail.com","createdAt":"2023-01-09T01:14:28.958Z","updatedAt":null,"deletedAt":null},"cursor":"WzYsNV0="},{"node":{"firstName":"Kavon","lastName":"Reinger","id":"7","email":"Lexus87@gmail.com","createdAt":"2023-02-11T14:20:02.648Z","updatedAt":null,"deletedAt":null},"cursor":"WzcsNl0="},{"node":{"firstName":"Luz","lastName":"Douglas","id":"8","email":"Hugh_Wyman@gmail.com","createdAt":"2023-08-10T13:07:21.464Z","updatedAt":null,"deletedAt":null},"cursor":"WzgsN10="},{"node":{"firstName":"Shayna","lastName":"Little","id":"9","email":"Logan19@gmail.com","createdAt":"2024-06-18T11:38:56.084Z","updatedAt":null,"deletedAt":null},"cursor":"WzksOF0="},{"node":{"firstName":"Guadalupe","lastName":"Crist","id":"10","email":"Alia_Bruen@hotmail.com","createdAt":"2024-05-14T13:07:42.900Z","updatedAt":null,"deletedAt":null},"cursor":"WzEwLDld"}],"total":99}}}
+        status_message: OK
+        proto_major: 0
+        proto_minor: 0
+        timestamp: 2024-06-28T06:07:29.532200888Z
+    objects: []
+    assertions:
+        noise:
+            body.data.users.edges.node.createdAt: []
+            header.Date: []
+    created: 1719554849
+curl: |-
+    curl --request POST \
+      --url http://localhost:9000/graphql \
+      --header 'Host: localhost:9000' \
+      --header 'Accept-Encoding: gzip, deflate, br' \
+      --header 'Connection: keep-alive' \
+      --header 'Content-Type: application/json' \
+      --header 'User-Agent: PostmanRuntime/7.37.3' \
+      --header 'Accept: */*' \
+      --header 'Postman-Token: 8d5c0e04-9ed5-4089-b0d8-f52b1b52d6d2' \
+      --data '{"query":"query Users(\n  $usersAfter: Int\n  $usersFirst: Int\n  $usersBefore: Int\n  $usersLast: Int\n  $usersLimit: Int!\n  $usersOrder: String\n  $usersWhere: SequelizeJSON\n  $usersOffset: Int!\n) {\n  users(\n    after: $usersAfter\n    first: $usersFirst\n    before: $usersBefore\n    last: $usersLast\n    limit: $usersLimit\n    order: $usersOrder\n    where: $usersWhere\n    offset: $usersOffset\n  ) {\n    pageInfo {\n      hasNextPage\n      hasPreviousPage\n      startCursor\n      endCursor\n    }\n    edges {\n      node {\n        firstName\n        lastName\n        id\n        email\n        createdAt\n        updatedAt\n        deletedAt\n      }\n      cursor\n    }\n    total\n  }\n}\n","variables":{
+      "usersAfter": null,
+      "usersFirst": 10,
+      "usersBefore": null,
+      "usersLast": null,
+      "usersLimit": 10,
+      "usersOrder":"id",
+      "usersWhere": {},
+      "usersOffset": 0
+    }
+    }'

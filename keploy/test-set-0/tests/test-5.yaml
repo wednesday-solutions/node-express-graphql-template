@@ -1,0 +1,94 @@
+version: api.keploy.io/v1beta1
+kind: Http
+name: test-5
+spec:
+    metadata: {}
+    req:
+        method: POST
+        proto_major: 1
+        proto_minor: 1
+        url: http://localhost:9000/graphql
+        header:
+            Accept: '*/*'
+            Accept-Encoding: gzip, deflate, br
+            Connection: keep-alive
+            Content-Length: "2586"
+            Content-Type: application/json
+            Host: localhost:9000
+            Postman-Token: 38c7d2b9-3c16-411c-a190-87cb5e83313d
+            User-Agent: PostmanRuntime/7.37.3
+        body: |-
+            {"query":"query StoreProducts(\n  $storeProductsAfter: Int\n  $storeProductsFirst: Int\n  $storeProductsBefore: Int\n  $storeProductsLast: Int\n  $storeProductsLimit: Int!\n  $storeProductsOrder: String\n  $storeProductsWhere: SequelizeJSON\n  $storeProductsOffset: Int!\n  $productsAfter: String\n  $productsFirst: Int\n  $productsBefore: String\n  $productsLast: Int\n  $storesAfter: String\n  $storesFirst: Int\n  $storesBefore: String\n  $storesLast: Int\n) {\n  storeProducts(\n    after: $storeProductsAfter\n    first: $storeProductsFirst\n    before: $storeProductsBefore\n    last: $storeProductsLast\n    limit: $storeProductsLimit\n    order: $storeProductsOrder\n    where: $storeProductsWhere\n    offset: $storeProductsOffset\n  ) {\n    pageInfo {\n      hasNextPage\n      hasPreviousPage\n      startCursor\n      endCursor\n    }\n    edges {\n      node {\n        id\n        productId\n        storeId\n        createdAt\n        updatedAt\n        deletedAt\n        products(\n          after: $productsAfter\n          first: $productsFirst\n          before: $productsBefore\n          last: $productsLast\n        ) {\n          pageInfo {\n            hasNextPage\n            hasPreviousPage\n            startCursor\n            endCursor\n          }\n          edges {\n            node {\n              id\n              name\n              category\n              amount\n              createdAt\n              updatedAt\n              deletedAt\n            }\n            cursor\n          }\n          total\n        }\n        stores(\n          after: $storesAfter\n          first: $storesFirst\n          before: $storesBefore\n          last: $storesLast\n        ) {\n          pageInfo {\n            hasNextPage\n            hasPreviousPage\n            startCursor\n            endCursor\n          }\n          edges {\n            node {\n              id\n              name\n              addressId\n              createdAt\n              updatedAt\n              deletedAt\n            }\n            cursor\n          }\n          total\n        }\n      }\n      cursor\n    }\n    total\n  }\n}\n","variables":{
+              "storeProductsAfter": null,
+              "storeProductsFirst": 10,
+              "storeProductsBefore": null,
+              "storeProductsLast": null,
+              "storeProductsLimit": 10,
+              "storeProductsOrder":"id",
+              "storeProductsWhere": {},
+              "storeProductsOffset": 0,
+              "productsAfter": null,
+              "productsFirst": 10,
+              "productsBefore": null,
+              "productsLast": null,
+              "storesAfter": null,
+              "storesFirst": 10,
+              "storesBefore": null,
+              "storesLast": null
+            }
+            }
+        timestamp: 2024-06-28T06:08:03.483175792Z
+    resp:
+        status_code: 200
+        header:
+            Cache-Control: no-store
+            Connection: keep-alive
+            Content-Length: "10746"
+            Content-Type: application/json; charset=utf-8
+            Date: Fri, 28 Jun 2024 06:08:03 GMT
+            Etag: W/"29fa-zoOMgUUBW/hhbzLhUMezPGWRrXQ"
+            Keep-Alive: timeout=5
+            X-Powered-By: Express
+        body: |
+            {"data":{"storeProducts":{"pageInfo":{"hasNextPage":true,"hasPreviousPage":false,"startCursor":"WzEsMF0=","endCursor":"WzEwLDld"},"edges":[{"node":{"id":"1","productId":1,"storeId":972,"createdAt":"2024-06-28T05:42:33.941Z","updatedAt":null,"deletedAt":null,"products":{"pageInfo":{"hasNextPage":false,"hasPreviousPage":false,"startCursor":"WzEsMF0=","endCursor":"WzEsMF0="},"edges":[{"node":{"id":"1","name":"Unbranded Wooden Shoes","category":"Tools","amount":25200,"createdAt":"2024-06-28T05:42:33.592Z","updatedAt":null,"deletedAt":null},"cursor":"WzEsMF0="}],"total":1},"stores":{"pageInfo":{"hasNextPage":false,"hasPreviousPage":false,"startCursor":"Wzk3MiwwXQ==","endCursor":"Wzk3Miw0XQ=="},"edges":[{"node":{"id":"972","name":"Walter LLC","addressId":1968,"createdAt":"2024-06-28T05:42:33.771Z","updatedAt":null,"deletedAt":null},"cursor":"Wzk3MiwwXQ=="},{"node":{"id":"972","name":"Walter LLC","addressId":1968,"createdAt":"2024-06-28T05:42:33.771Z","updatedAt":null,"deletedAt":null},"cursor":"Wzk3MiwxXQ=="},{"node":{"id":"972","name":"Walter LLC","addressId":1968,"createdAt":"2024-06-28T05:42:33.771Z","updatedAt":null,"deletedAt":null},"cursor":"Wzk3MiwyXQ=="},{"node":{"id":"972","name":"Walter LLC","addressId":1968,"createdAt":"2024-06-28T05:42:33.771Z","updatedAt":null,"deletedAt":null},"cursor":"Wzk3MiwzXQ=="},{"node":{"id":"972","name":"Walter LLC","addressId":1968,"createdAt":"2024-06-28T05:42:33.771Z","updatedAt":null,"deletedAt":null},"cursor":"Wzk3Miw0XQ=="}],"total":5}},"cursor":"WzEsMF0="},{"node":{"id":"2","productId":2,"storeId":1777,"createdAt":"2024-06-28T05:42:33.941Z","updatedAt":null,"deletedAt":null,"products":{"pageInfo":{"hasNextPage":false,"hasPreviousPage":false,"startCursor":"WzIsMF0=","endCursor":"WzIsMF0="},"edges":[{"node":{"id":"2","name":"Small Steel Computer","category":"Clothing","amount":12800,"createdAt":"2024-06-28T05:42:33.592Z","updatedAt":null,"deletedAt":null},"cursor":"WzIsMF0="}],"total":1},"stores":{"pageInfo":{"hasNextPage":false,"hasPreviousPage":false,"startCursor":"WzE3NzcsMF0=","endCursor":"WzE3NzcsM10="},"edges":[{"node":{"id":"1777","name":"Senger - Ferry","addressId":1707,"createdAt":"2024-06-28T05:42:33.771Z","updatedAt":null,"deletedAt":null},"cursor":"WzE3NzcsMF0="},{"node":{"id":"1777","name":"Senger - Ferry","addressId":1707,"createdAt":"2024-06-28T05:42:33.771Z","updatedAt":null,"deletedAt":null},"cursor":"WzE3NzcsMV0="},{"node":{"id":"1777","name":"Senger - Ferry","addressId":1707,"createdAt":"2024-06-28T05:42:33.771Z","updatedAt":null,"deletedAt":null},"cursor":"WzE3NzcsMl0="},{"node":{"id":"1777","name":"Senger - Ferry","addressId":1707,"createdAt":"2024-06-28T05:42:33.771Z","updatedAt":null,"deletedAt":null},"cursor":"WzE3NzcsM10="}],"total":4}},"cursor":"WzIsMV0="},{"node":{"id":"3","productId":3,"storeId":1162,"createdAt":"2024-06-28T05:42:33.941Z","updatedAt":null,"deletedAt":null,"products":{"pageInfo":{"hasNextPage":false,"hasPreviousPage":false,"startCursor":"WzMsMF0=","endCursor":"WzMsMF0="},"edges":[{"node":{"id":"3","name":"Handcrafted Soft Car","category":"Health","amount":36400,"createdAt":"2024-06-28T05:42:33.592Z","updatedAt":null,"deletedAt":null},"cursor":"WzMsMF0="}],"total":1},"stores":{"pageInfo":{"hasNextPage":false,"hasPreviousPage":false,"startCursor":"WzExNjIsMF0=","endCursor":"WzExNjIsMV0="},"edges":[{"node":{"id":"1162","name":"Parisian and Sons","addressId":1551,"createdAt":"2024-06-28T05:42:33.771Z","updatedAt":null,"deletedAt":null},"cursor":"WzExNjIsMF0="},{"node":{"id":"1162","name":"Parisian and Sons","addressId":1551,"createdAt":"2024-06-28T05:42:33.771Z","updatedAt":null,"deletedAt":null},"cursor":"WzExNjIsMV0="}],"total":2}},"cursor":"WzMsMl0="},{"node":{"id":"4","productId":4,"storeId":1474,"createdAt":"2024-06-28T05:42:33.941Z","updatedAt":null,"deletedAt":null,"products":{"pageInfo":{"hasNextPage":false,"hasPreviousPage":false,"startCursor":"WzQsMF0=","endCursor":"WzQsMF0="},"edges":[{"node":{"id":"4","name":"Licensed Fresh Chicken","category":"Outdoors","amount":19800,"createdAt":"2024-06-28T05:42:33.592Z","updatedAt":null,"deletedAt":null},"cursor":"WzQsMF0="}],"total":1},"stores":{"pageInfo":{"hasNextPage":false,"hasPreviousPage":false,"startCursor":"WzE0NzQsMF0=","endCursor":"WzE0NzQsM10="},"edges":[{"node":{"id":"1474","name":"Schaefer - Bernier","addressId":1326,"createdAt":"2024-06-28T05:42:33.771Z","updatedAt":null,"deletedAt":null},"cursor":"WzE0NzQsMF0="},{"node":{"id":"1474","name":"Schaefer - Bernier","addressId":1326,"createdAt":"2024-06-28T05:42:33.771Z","updatedAt":null,"deletedAt":null},"cursor":"WzE0NzQsMV0="},{"node":{"id":"1474","name":"Schaefer - Bernier","addressId":1326,"createdAt":"2024-06-28T05:42:33.771Z","updatedAt":null,"deletedAt":null},"cursor":"WzE0NzQsMl0="},{"node":{"id":"1474","name":"Schaefer - Bernier","addressId":1326,"createdAt":"2024-06-28T05:42:33.771Z","updatedAt":null,"deletedAt":null},"cursor":"WzE0NzQsM10="}],"total":4}},"cursor":"WzQsM10="},{"node":{"id":"5","productId":5,"storeId":1949,"createdAt":"2024-06-28T05:42:33.941Z","updatedAt":null,"deletedAt":null,"products":{"pageInfo":{"hasNextPage":false,"hasPreviousPage":false,"startCursor":"WzUsMF0=","endCursor":"WzUsMF0="},"edges":[{"node":{"id":"5","name":"Generic Plastic Chicken","category":"Automotive","amount":45500,"createdAt":"2024-06-28T05:42:33.592Z","updatedAt":null,"deletedAt":null},"cursor":"WzUsMF0="}],"total":1},"stores":{"pageInfo":{"hasNextPage":false,"hasPreviousPage":false,"startCursor":"WzE5NDksMF0=","endCursor":"WzE5NDksMV0="},"edges":[{"node":{"id":"1949","name":"Kris Group","addressId":539,"createdAt":"2024-06-28T05:42:33.771Z","updatedAt":null,"deletedAt":null},"cursor":"WzE5NDksMF0="},{"node":{"id":"1949","name":"Kris Group","addressId":539,"createdAt":"2024-06-28T05:42:33.771Z","updatedAt":null,"deletedAt":null},"cursor":"WzE5NDksMV0="}],"total":2}},"cursor":"WzUsNF0="},{"node":{"id":"6","productId":6,"storeId":491,"createdAt":"2024-06-28T05:42:33.941Z","updatedAt":null,"deletedAt":null,"products":{"pageInfo":{"hasNextPage":false,"hasPreviousPage":false,"startCursor":"WzYsMF0=","endCursor":"WzYsMF0="},"edges":[{"node":{"id":"6","name":"Refined Frozen Computer","category":"Beauty","amount":39900,"createdAt":"2024-06-28T05:42:33.592Z","updatedAt":null,"deletedAt":null},"cursor":"WzYsMF0="}],"total":1},"stores":{"pageInfo":{"hasNextPage":false,"hasPreviousPage":false,"startCursor":"WzQ5MSwwXQ==","endCursor":"WzQ5MSwzXQ=="},"edges":[{"node":{"id":"491","name":"Gutmann, Blick and Schowalter","addressId":1452,"createdAt":"2024-06-28T05:42:33.771Z","updatedAt":null,"deletedAt":null},"cursor":"WzQ5MSwwXQ=="},{"node":{"id":"491","name":"Gutmann, Blick and Schowalter","addressId":1452,"createdAt":"2024-06-28T05:42:33.771Z","updatedAt":null,"deletedAt":null},"cursor":"WzQ5MSwxXQ=="},{"node":{"id":"491","name":"Gutmann, Blick and Schowalter","addressId":1452,"createdAt":"2024-06-28T05:42:33.771Z","updatedAt":null,"deletedAt":null},"cursor":"WzQ5MSwyXQ=="},{"node":{"id":"491","name":"Gutmann, Blick and Schowalter","addressId":1452,"createdAt":"2024-06-28T05:42:33.771Z","updatedAt":null,"deletedAt":null},"cursor":"WzQ5MSwzXQ=="}],"total":4}},"cursor":"WzYsNV0="},{"node":{"id":"7","productId":7,"storeId":174,"createdAt":"2024-06-28T05:42:33.941Z","updatedAt":null,"deletedAt":null,"products":{"pageInfo":{"hasNextPage":false,"hasPreviousPage":false,"startCursor":"WzcsMF0=","endCursor":"WzcsMF0="},"edges":[{"node":{"id":"7","name":"Handmade Soft Pants","category":"Sports","amount":1700,"createdAt":"2024-06-28T05:42:33.592Z","updatedAt":null,"deletedAt":null},"cursor":"WzcsMF0="}],"total":1},"stores":{"pageInfo":{"hasNextPage":false,"hasPreviousPage":false,"startCursor":"WzE3NCwwXQ==","endCursor":"WzE3NCwwXQ=="},"edges":[{"node":{"id":"174","name":"Littel, Hettinger and Muller","addressId":1838,"createdAt":"2024-06-28T05:42:33.771Z","updatedAt":null,"deletedAt":null},"cursor":"WzE3NCwwXQ=="}],"total":1}},"cursor":"WzcsNl0="},{"node":{"id":"8","productId":8,"storeId":1446,"createdAt":"2024-06-28T05:42:33.941Z","updatedAt":null,"deletedAt":null,"products":{"pageInfo":{"hasNextPage":false,"hasPreviousPage":false,"startCursor":"WzgsMF0=","endCursor":"WzgsMF0="},"edges":[{"node":{"id":"8","name":"Small Soft Fish","category":"Books","amount":47700,"createdAt":"2024-06-28T05:42:33.592Z","updatedAt":null,"deletedAt":null},"cursor":"WzgsMF0="}],"total":1},"stores":{"pageInfo":{"hasNextPage":false,"hasPreviousPage":false,"startCursor":"WzE0NDYsMF0=","endCursor":"WzE0NDYsMV0="},"edges":[{"node":{"id":"1446","name":"Hessel, Hayes and Maggio","addressId":1331,"createdAt":"2024-06-28T05:42:33.771Z","updatedAt":null,"deletedAt":null},"cursor":"WzE0NDYsMF0="},{"node":{"id":"1446","name":"Hessel, Hayes and Maggio","addressId":1331,"createdAt":"2024-06-28T05:42:33.771Z","updatedAt":null,"deletedAt":null},"cursor":"WzE0NDYsMV0="}],"total":2}},"cursor":"WzgsN10="},{"node":{"id":"9","productId":9,"storeId":61,"createdAt":"2024-06-28T05:42:33.941Z","updatedAt":null,"deletedAt":null,"products":{"pageInfo":{"hasNextPage":false,"hasPreviousPage":false,"startCursor":"WzksMF0=","endCursor":"WzksMF0="},"edges":[{"node":{"id":"9","name":"Sleek Frozen Hat","category":"Sports","amount":66700,"createdAt":"2024-06-28T05:42:33.592Z","updatedAt":null,"deletedAt":null},"cursor":"WzksMF0="}],"total":1},"stores":{"pageInfo":{"hasNextPage":false,"hasPreviousPage":false,"startCursor":"WzYxLDBd","endCursor":"WzYxLDFd"},"edges":[{"node":{"id":"61","name":"Kilback - Senger","addressId":1905,"createdAt":"2024-06-28T05:42:33.771Z","updatedAt":null,"deletedAt":null},"cursor":"WzYxLDBd"},{"node":{"id":"61","name":"Kilback - Senger","addressId":1905,"createdAt":"2024-06-28T05:42:33.771Z","updatedAt":null,"deletedAt":null},"cursor":"WzYxLDFd"}],"total":2}},"cursor":"WzksOF0="},{"node":{"id":"10","productId":10,"storeId":1578,"createdAt":"2024-06-28T05:42:33.941Z","updatedAt":null,"deletedAt":null,"products":{"pageInfo":{"hasNextPage":false,"hasPreviousPage":false,"startCursor":"WzEwLDBd","endCursor":"WzEwLDBd"},"edges":[{"node":{"id":"10","name":"Unbranded Cotton Pizza","category":"Music","amount":58100,"createdAt":"2024-06-28T05:42:33.592Z","updatedAt":null,"deletedAt":null},"cursor":"WzEwLDBd"}],"total":1},"stores":{"pageInfo":{"hasNextPage":false,"hasPreviousPage":false,"startCursor":"WzE1NzgsMF0=","endCursor":"WzE1NzgsMV0="},"edges":[{"node":{"id":"1578","name":"Kunze - Carter","addressId":769,"createdAt":"2024-06-28T05:42:33.771Z","updatedAt":null,"deletedAt":null},"cursor":"WzE1NzgsMF0="},{"node":{"id":"1578","name":"Kunze - Carter","addressId":769,"createdAt":"2024-06-28T05:42:33.771Z","updatedAt":null,"deletedAt":null},"cursor":"WzE1NzgsMV0="}],"total":2}},"cursor":"WzEwLDld"}],"total":1999}}}
+        status_message: OK
+        proto_major: 0
+        proto_minor: 0
+        timestamp: 2024-06-28T06:08:05.711656377Z
+    objects: []
+    assertions:
+        noise:
+            body.data.storeProducts.edges.node.createdAt: []
+            body.data.storeProducts.edges.node.products.edges.node.createdAt: []
+            body.data.storeProducts.edges.node.stores.edges.node.createdAt: []
+            header.Date: []
+    created: 1719554885
+curl: |-
+    curl --request POST \
+      --url http://localhost:9000/graphql \
+      --header 'Content-Type: application/json' \
+      --header 'User-Agent: PostmanRuntime/7.37.3' \
+      --header 'Accept: */*' \
+      --header 'Postman-Token: 38c7d2b9-3c16-411c-a190-87cb5e83313d' \
+      --header 'Host: localhost:9000' \
+      --header 'Accept-Encoding: gzip, deflate, br' \
+      --header 'Connection: keep-alive' \
+      --data '{"query":"query StoreProducts(\n  $storeProductsAfter: Int\n  $storeProductsFirst: Int\n  $storeProductsBefore: Int\n  $storeProductsLast: Int\n  $storeProductsLimit: Int!\n  $storeProductsOrder: String\n  $storeProductsWhere: SequelizeJSON\n  $storeProductsOffset: Int!\n  $productsAfter: String\n  $productsFirst: Int\n  $productsBefore: String\n  $productsLast: Int\n  $storesAfter: String\n  $storesFirst: Int\n  $storesBefore: String\n  $storesLast: Int\n) {\n  storeProducts(\n    after: $storeProductsAfter\n    first: $storeProductsFirst\n    before: $storeProductsBefore\n    last: $storeProductsLast\n    limit: $storeProductsLimit\n    order: $storeProductsOrder\n    where: $storeProductsWhere\n    offset: $storeProductsOffset\n  ) {\n    pageInfo {\n      hasNextPage\n      hasPreviousPage\n      startCursor\n      endCursor\n    }\n    edges {\n      node {\n        id\n        productId\n        storeId\n        createdAt\n        updatedAt\n        deletedAt\n        products(\n          after: $productsAfter\n          first: $productsFirst\n          before: $productsBefore\n          last: $productsLast\n        ) {\n          pageInfo {\n            hasNextPage\n            hasPreviousPage\n            startCursor\n            endCursor\n          }\n          edges {\n            node {\n              id\n              name\n              category\n              amount\n              createdAt\n              updatedAt\n              deletedAt\n            }\n            cursor\n          }\n          total\n        }\n        stores(\n          after: $storesAfter\n          first: $storesFirst\n          before: $storesBefore\n          last: $storesLast\n        ) {\n          pageInfo {\n            hasNextPage\n            hasPreviousPage\n            startCursor\n            endCursor\n          }\n          edges {\n            node {\n              id\n              name\n              addressId\n              createdAt\n              updatedAt\n              deletedAt\n            }\n            cursor\n          }\n          total\n        }\n      }\n      cursor\n    }\n    total\n  }\n}\n","variables":{
+      "storeProductsAfter": null,
+      "storeProductsFirst": 10,
+      "storeProductsBefore": null,
+      "storeProductsLast": null,
+      "storeProductsLimit": 10,
+      "storeProductsOrder":"id",
+      "storeProductsWhere": {},
+      "storeProductsOffset": 0,
+      "productsAfter": null,
+      "productsFirst": 10,
+      "productsBefore": null,
+      "productsLast": null,
+      "storesAfter": null,
+      "storesFirst": 10,
+      "storesBefore": null,
+      "storesLast": null
+    }
+    }'

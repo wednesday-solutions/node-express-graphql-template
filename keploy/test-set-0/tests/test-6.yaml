@@ -1,0 +1,86 @@
+version: api.keploy.io/v1beta1
+kind: Http
+name: test-6
+spec:
+    metadata: {}
+    req:
+        method: POST
+        proto_major: 1
+        proto_minor: 1
+        url: http://localhost:9000/graphql
+        header:
+            Accept: '*/*'
+            Accept-Encoding: gzip, deflate, br
+            Connection: keep-alive
+            Content-Length: "2021"
+            Content-Type: application/json
+            Host: localhost:9000
+            Postman-Token: 2b1386c8-32ff-4800-a98c-588cdc1dc4db
+            User-Agent: PostmanRuntime/7.37.3
+        body: |-
+            {"query":"query PurchasedProducts(\n  $purchasedProductsAfter: Int\n  $purchasedProductsFirst: Int\n  $purchasedProductsBefore: Int\n  $purchasedProductsLast: Int\n  $purchasedProductsLimit: Int!\n  $purchasedProductsOrder: String\n  $purchasedProductsWhere: SequelizeJSON\n  $purchasedProductsOffset: Int!\n  $productsAfter: String\n  $productsFirst: Int\n  $productsBefore: String\n  $productsLast: Int\n) {\n  purchasedProducts(\n    after: $purchasedProductsAfter\n    first: $purchasedProductsFirst\n    before: $purchasedProductsBefore\n    last: $purchasedProductsLast\n    limit: $purchasedProductsLimit\n    order: $purchasedProductsOrder\n    where: $purchasedProductsWhere\n    offset: $purchasedProductsOffset\n  ) {\n    pageInfo {\n      hasNextPage\n      hasPreviousPage\n      startCursor\n      endCursor\n    }\n    edges {\n      node {\n        id\n        price\n        discount\n        deliveryDate\n        productId\n        storeId\n        createdAt\n        updatedAt\n        deletedAt\n        products(\n          after: $productsAfter\n          first: $productsFirst\n          before: $productsBefore\n          last: $productsLast\n        ) {\n          pageInfo {\n            hasNextPage\n            hasPreviousPage\n            startCursor\n            endCursor\n          }\n          edges {\n            node {\n              id\n              name\n              category\n              amount\n              createdAt\n              updatedAt\n              deletedAt\n            }\n            cursor\n          }\n          total\n        }\n      }\n      cursor\n    }\n    total\n  }\n}\n","variables":{
+              "purchasedProductsAfter": null,
+              "purchasedProductsFirst": 10,
+              "purchasedProductsBefore": null,
+              "purchasedProductsLast": null,
+              "purchasedProductsLimit": 10,
+              "purchasedProductsOrder":"id",
+              "purchasedProductsWhere": {},
+              "purchasedProductsOffset": 0,
+              "productsAfter": null,
+              "productsFirst": 10,
+              "productsBefore": null,
+              "productsLast": null
+            }
+            }
+        timestamp: 2024-06-28T06:08:15.800141423Z
+    resp:
+        status_code: 200
+        header:
+            Cache-Control: no-store
+            Connection: keep-alive
+            Content-Length: "5697"
+            Content-Type: application/json; charset=utf-8
+            Date: Fri, 28 Jun 2024 06:08:16 GMT
+            Etag: W/"1641-TSQWjDMPBGW1aIZrtDIye+hIKJs"
+            Keep-Alive: timeout=5
+            X-Powered-By: Express
+        body: |
+            {"data":{"purchasedProducts":{"pageInfo":{"hasNextPage":true,"hasPreviousPage":false,"startCursor":"WzEsMF0=","endCursor":"WzEwLDld"},"edges":[{"node":{"id":"1","price":61800,"discount":46892,"deliveryDate":"2022-03-11T06:49:10.749Z","productId":"1397","storeId":"1968","createdAt":"1994-10-24T06:38:06.236Z","updatedAt":null,"deletedAt":null,"products":{"pageInfo":{"hasNextPage":false,"hasPreviousPage":false,"startCursor":"WzEzOTcsMF0=","endCursor":"WzEzOTcsMF0="},"edges":[{"node":{"id":"1397","name":"Gorgeous Wooden Sausages","category":"Computers","amount":72100,"createdAt":"2024-06-28T05:42:33.592Z","updatedAt":null,"deletedAt":null},"cursor":"WzEzOTcsMF0="}],"total":1}},"cursor":"WzEsMF0="},{"node":{"id":"2","price":72000,"discount":1395,"deliveryDate":"2022-03-12T06:49:10.749Z","productId":"1034","storeId":"563","createdAt":"1994-10-25T06:38:06.236Z","updatedAt":null,"deletedAt":null,"products":{"pageInfo":{"hasNextPage":false,"hasPreviousPage":false,"startCursor":"WzEwMzQsMF0=","endCursor":"WzEwMzQsMF0="},"edges":[{"node":{"id":"1034","name":"Generic Concrete Chicken","category":"Industrial","amount":75000,"createdAt":"2024-06-28T05:42:33.592Z","updatedAt":null,"deletedAt":null},"cursor":"WzEwMzQsMF0="}],"total":1}},"cursor":"WzIsMV0="},{"node":{"id":"3","price":90200,"discount":4765,"deliveryDate":"2022-03-13T06:49:10.749Z","productId":"1706","storeId":"1961","createdAt":"1994-10-26T06:38:06.236Z","updatedAt":null,"deletedAt":null,"products":{"pageInfo":{"hasNextPage":false,"hasPreviousPage":false,"startCursor":"WzE3MDYsMF0=","endCursor":"WzE3MDYsMF0="},"edges":[{"node":{"id":"1706","name":"Fantastic Frozen Salad","category":"Sports","amount":99600,"createdAt":"2024-06-28T05:42:33.592Z","updatedAt":null,"deletedAt":null},"cursor":"WzE3MDYsMF0="}],"total":1}},"cursor":"WzMsMl0="},{"node":{"id":"4","price":66200,"discount":1245,"deliveryDate":"2022-03-14T06:49:10.749Z","productId":"887","storeId":"12","createdAt":"1994-10-27T06:38:06.236Z","updatedAt":null,"deletedAt":null,"products":{"pageInfo":{"hasNextPage":false,"hasPreviousPage":false,"startCursor":"Wzg4NywwXQ==","endCursor":"Wzg4NywwXQ=="},"edges":[{"node":{"id":"887","name":"Sleek Steel Computer","category":"Outdoors","amount":34600,"createdAt":"2024-06-28T05:42:33.592Z","updatedAt":null,"deletedAt":null},"cursor":"Wzg4NywwXQ=="}],"total":1}},"cursor":"WzQsM10="},{"node":{"id":"5","price":95300,"discount":2273,"deliveryDate":"2022-03-15T06:49:10.749Z","productId":"489","storeId":"198","createdAt":"1994-10-28T06:38:06.236Z","updatedAt":null,"deletedAt":null,"products":{"pageInfo":{"hasNextPage":false,"hasPreviousPage":false,"startCursor":"WzQ4OSwwXQ==","endCursor":"WzQ4OSwwXQ=="},"edges":[{"node":{"id":"489","name":"Ergonomic Steel Tuna","category":"Movies","amount":26900,"createdAt":"2024-06-28T05:42:33.592Z","updatedAt":null,"deletedAt":null},"cursor":"WzQ4OSwwXQ=="}],"total":1}},"cursor":"WzUsNF0="},{"node":{"id":"6","price":42000,"discount":4940,"deliveryDate":"2022-03-16T06:49:10.749Z","productId":"999","storeId":"1157","createdAt":"1994-10-29T06:38:06.236Z","updatedAt":null,"deletedAt":null,"products":{"pageInfo":{"hasNextPage":false,"hasPreviousPage":false,"startCursor":"Wzk5OSwwXQ==","endCursor":"Wzk5OSwwXQ=="},"edges":[{"node":{"id":"999","name":"Handcrafted Rubber Chair","category":"Clothing","amount":51800,"createdAt":"2024-06-28T05:42:33.592Z","updatedAt":null,"deletedAt":null},"cursor":"Wzk5OSwwXQ=="}],"total":1}},"cursor":"WzYsNV0="},{"node":{"id":"7","price":78300,"discount":1065,"deliveryDate":"2022-03-17T06:49:10.749Z","productId":"902","storeId":"1551","createdAt":"1994-10-30T06:38:06.236Z","updatedAt":null,"deletedAt":null,"products":{"pageInfo":{"hasNextPage":false,"hasPreviousPage":false,"startCursor":"WzkwMiwwXQ==","endCursor":"WzkwMiwwXQ=="},"edges":[{"node":{"id":"902","name":"Sleek Frozen Chips","category":"Sports","amount":25000,"createdAt":"2024-06-28T05:42:33.592Z","updatedAt":null,"deletedAt":null},"cursor":"WzkwMiwwXQ=="}],"total":1}},"cursor":"WzcsNl0="},{"node":{"id":"8","price":72500,"discount":1311,"deliveryDate":"2022-03-18T06:49:10.749Z","productId":"950","storeId":"840","createdAt":"1994-10-31T06:38:06.236Z","updatedAt":null,"deletedAt":null,"products":{"pageInfo":{"hasNextPage":false,"hasPreviousPage":false,"startCursor":"Wzk1MCwwXQ==","endCursor":"Wzk1MCwwXQ=="},"edges":[{"node":{"id":"950","name":"Intelligent Frozen Soap","category":"Electronics","amount":94200,"createdAt":"2024-06-28T05:42:33.592Z","updatedAt":null,"deletedAt":null},"cursor":"Wzk1MCwwXQ=="}],"total":1}},"cursor":"WzgsN10="},{"node":{"id":"9","price":80400,"discount":982,"deliveryDate":"2022-03-19T06:49:10.749Z","productId":"597","storeId":"681","createdAt":"1994-11-01T06:38:06.236Z","updatedAt":null,"deletedAt":null,"products":{"pageInfo":{"hasNextPage":false,"hasPreviousPage":false,"startCursor":"WzU5NywwXQ==","endCursor":"WzU5NywwXQ=="},"edges":[{"node":{"id":"597","name":"Practical Metal Computer","category":"Computers","amount":27500,"createdAt":"2024-06-28T05:42:33.592Z","updatedAt":null,"deletedAt":null},"cursor":"WzU5NywwXQ=="}],"total":1}},"cursor":"WzksOF0="},{"node":{"id":"10","price":24800,"discount":349,"deliveryDate":"2022-03-20T06:49:10.749Z","productId":"230","storeId":"541","createdAt":"1994-11-02T06:38:06.236Z","updatedAt":null,"deletedAt":null,"products":{"pageInfo":{"hasNextPage":false,"hasPreviousPage":false,"startCursor":"WzIzMCwwXQ==","endCursor":"WzIzMCwwXQ=="},"edges":[{"node":{"id":"230","name":"Gorgeous Granite Salad","category":"Home","amount":48700,"createdAt":"2024-06-28T05:42:33.592Z","updatedAt":null,"deletedAt":null},"cursor":"WzIzMCwwXQ=="}],"total":1}},"cursor":"WzEwLDld"}],"total":9999}}}
+        status_message: OK
+        proto_major: 0
+        proto_minor: 0
+        timestamp: 2024-06-28T06:08:18.086524883Z
+    objects: []
+    assertions:
+        noise:
+            body.data.purchasedProducts.edges.node.createdAt: []
+            body.data.purchasedProducts.edges.node.deliveryDate: []
+            body.data.purchasedProducts.edges.node.products.edges.node.createdAt: []
+            header.Date: []
+    created: 1719554898
+curl: |-
+    curl --request POST \
+      --url http://localhost:9000/graphql \
+      --header 'Host: localhost:9000' \
+      --header 'Accept-Encoding: gzip, deflate, br' \
+      --header 'Connection: keep-alive' \
+      --header 'Content-Type: application/json' \
+      --header 'User-Agent: PostmanRuntime/7.37.3' \
+      --header 'Accept: */*' \
+      --header 'Postman-Token: 2b1386c8-32ff-4800-a98c-588cdc1dc4db' \
+      --data '{"query":"query PurchasedProducts(\n  $purchasedProductsAfter: Int\n  $purchasedProductsFirst: Int\n  $purchasedProductsBefore: Int\n  $purchasedProductsLast: Int\n  $purchasedProductsLimit: Int!\n  $purchasedProductsOrder: String\n  $purchasedProductsWhere: SequelizeJSON\n  $purchasedProductsOffset: Int!\n  $productsAfter: String\n  $productsFirst: Int\n  $productsBefore: String\n  $productsLast: Int\n) {\n  purchasedProducts(\n    after: $purchasedProductsAfter\n    first: $purchasedProductsFirst\n    before: $purchasedProductsBefore\n    last: $purchasedProductsLast\n    limit: $purchasedProductsLimit\n    order: $purchasedProductsOrder\n    where: $purchasedProductsWhere\n    offset: $purchasedProductsOffset\n  ) {\n    pageInfo {\n      hasNextPage\n      hasPreviousPage\n      startCursor\n      endCursor\n    }\n    edges {\n      node {\n        id\n        price\n        discount\n        deliveryDate\n        productId\n        storeId\n        createdAt\n        updatedAt\n        deletedAt\n        products(\n          after: $productsAfter\n          first: $productsFirst\n          before: $productsBefore\n          last: $productsLast\n        ) {\n          pageInfo {\n            hasNextPage\n            hasPreviousPage\n            startCursor\n            endCursor\n          }\n          edges {\n            node {\n              id\n              name\n              category\n              amount\n              createdAt\n              updatedAt\n              deletedAt\n            }\n            cursor\n          }\n          total\n        }\n      }\n      cursor\n    }\n    total\n  }\n}\n","variables":{
+      "purchasedProductsAfter": null,
+      "purchasedProductsFirst": 10,
+      "purchasedProductsBefore": null,
+      "purchasedProductsLast": null,
+      "purchasedProductsLimit": 10,
+      "purchasedProductsOrder":"id",
+      "purchasedProductsWhere": {},
+      "purchasedProductsOffset": 0,
+      "productsAfter": null,
+      "productsFirst": 10,
+      "productsBefore": null,
+      "productsLast": null
+    }
+    }'
