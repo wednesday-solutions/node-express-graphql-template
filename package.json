@@ -22,7 +22,7 @@
     "build:qa": "export ENVIRONMENT_NAME=qa && rm -rf dist && webpack --mode development --config  webpack.dev.config.js",
     "build:prod": "export ENVIRONMENT_NAME=production && rm -rf dist && webpack --mode production --config webpack.prod.config.js",
     "build:docker": "export ENVIRONMENT_NAME=docker && rm -rf dist && webpack --mode production --config webpack.prod.config.js",
-    "start": "node ./dist/main.js",
+    "start": "nyc node ./dist/main.js",
     "clean": "rimraf dist",
     "format": "prettier-standard './**/**/*.js'",
     "lint": "yarn lint:js",
@@ -37,6 +37,7 @@
   },
   "dependencies": {
     "@apollo/server": "^4.10.4",
+    "@keploy/sdk": "2.0.9-alpha1",
     "aws-sdk": "^2.949.0",
     "axios": "^0.26.0",
     "bufferutil": "^4.0.8",
@@ -141,6 +142,26 @@
     "sequelize-cli": "^6.2.0",
     "sequelize-mock": "^0.10.2",
     "shelljs": "^0.8.3"
+  },
+  "nyc": {
+    "all": true,
+    "include": [
+      "server/**/*.js"
+    ],
+    "exclude": [
+      "**/*.test.js",
+      "/proc/**",
+      "/sys/**"
+    ],
+    "reporter": [
+      "lcov",
+      "text"
+    ],
+    "extension": [
+      ".js"
+    ],
+    "sourceMap": true,
+    "instrument": true
   },
   "precommit": "lint:staged",
   "lint-staged": {

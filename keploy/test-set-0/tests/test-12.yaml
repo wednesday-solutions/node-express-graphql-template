@@ -1,0 +1,98 @@
+version: api.keploy.io/v1beta1
+kind: Http
+name: test-12
+spec:
+    metadata: {}
+    req:
+        method: POST
+        proto_major: 1
+        proto_minor: 1
+        url: http://localhost:9000/graphql
+        header:
+            Accept: '*/*'
+            Accept-Encoding: gzip, deflate, br
+            Connection: keep-alive
+            Content-Length: "3715"
+            Content-Type: application/json
+            Host: localhost:9000
+            Postman-Token: a8705202-c60a-40c8-a81d-161c0f54f1e2
+            User-Agent: PostmanRuntime/7.37.3
+        body: |-
+            {"query":"query Store(\n  $storeId: Int\n  $storeWhere: SequelizeJSON\n  $addressesAfter: String\n  $addressesFirst: Int\n  $addressesBefore: String\n  $addressesLast: Int\n  $suppliersAfter: String\n  $suppliersFirst: Int\n  $suppliersBefore: String\n  $suppliersLast: Int\n  $storesAfter: String\n  $storesFirst: Int\n  $storesBefore: String\n  $storesLast: Int\n  $productsAfter: String\n  $productsFirst: Int\n  $productsBefore: String\n  $productsLast: Int\n) {\n  store(id: $storeId, where: $storeWhere) {\n    id\n    name\n    addressId\n    createdAt\n    updatedAt\n    deletedAt\n    addresses(\n      after: $addressesAfter\n      first: $addressesFirst\n      before: $addressesBefore\n      last: $addressesLast\n    ) {\n      pageInfo {\n        hasNextPage\n        hasPreviousPage\n        startCursor\n        endCursor\n      }\n      edges {\n        node {\n          id\n          address1\n          address2\n          city\n          country\n          latitude\n          longitude\n          createdAt\n          updatedAt\n          deletedAt\n          suppliers(\n            after: $suppliersAfter\n            first: $suppliersFirst\n            before: $suppliersBefore\n            last: $suppliersLast\n          ) {\n            pageInfo {\n              hasNextPage\n              hasPreviousPage\n              startCursor\n              endCursor\n            }\n            edges {\n              cursor\n            }\n            total\n          }\n          stores(\n            after: $storesAfter\n            first: $storesFirst\n            before: $storesBefore\n            last: $storesLast\n          ) {\n            pageInfo {\n              hasNextPage\n              hasPreviousPage\n              startCursor\n              endCursor\n            }\n            edges {\n              cursor\n            }\n            total\n          }\n        }\n        cursor\n      }\n      total\n    }\n    products(\n      after: $productsAfter\n      first: $productsFirst\n      before: $productsBefore\n      last: $productsLast\n    ) {\n      pageInfo {\n        hasNextPage\n        hasPreviousPage\n        startCursor\n        endCursor\n      }\n      edges {\n        node {\n          id\n          name\n          category\n          amount\n          createdAt\n          updatedAt\n          deletedAt\n          suppliers(\n            after: $suppliersAfter\n            first: $suppliersFirst\n            before: $suppliersBefore\n            last: $suppliersLast\n          ) {\n            pageInfo {\n              hasNextPage\n              hasPreviousPage\n              startCursor\n              endCursor\n            }\n            edges {\n              cursor\n            }\n            total\n          }\n          stores(\n            after: $storesAfter\n            first: $storesFirst\n            before: $storesBefore\n            last: $storesLast\n          ) {\n            pageInfo {\n              hasNextPage\n              hasPreviousPage\n              startCursor\n              endCursor\n            }\n            edges {\n              cursor\n            }\n            total\n          }\n        }\n        cursor\n      }\n      total\n    }\n  }\n}\n","variables":{
+              "storeId": null,
+              "storeWhere": {"id": 10},
+              "addressesAfter": null,
+              "addressesFirst": 10,
+              "addressesBefore": null,
+              "addressesLast": null,
+              "suppliersAfter": null,
+              "suppliersFirst": 10,
+              "suppliersBefore": null,
+              "suppliersLast": null,
+              "storesAfter": null,
+              "storesFirst": 10,
+              "storesBefore": null,
+              "storesLast": null,
+              "productsAfter": null,
+              "productsFirst": 10,
+              "productsBefore": null,
+              "productsLast": null
+            }
+            }
+        timestamp: 2024-06-28T06:09:23.752509538Z
+    resp:
+        status_code: 200
+        header:
+            Cache-Control: no-store
+            Connection: keep-alive
+            Content-Length: "1547"
+            Content-Type: application/json; charset=utf-8
+            Date: Fri, 28 Jun 2024 06:09:23 GMT
+            Etag: W/"60b-ku8VyU6bgGcqBIxJ2TmtnydZt7o"
+            Keep-Alive: timeout=5
+            X-Powered-By: Express
+        body: |
+            {"data":{"store":{"id":"10","name":"Kreiger, Herman and Veum","addressId":1954,"createdAt":"2024-06-28T05:42:33.771Z","updatedAt":null,"deletedAt":null,"addresses":{"pageInfo":{"hasNextPage":false,"hasPreviousPage":false,"startCursor":"WzE5NTQsMF0=","endCursor":"WzE5NTQsMF0="},"edges":[{"node":{"id":"1954","address1":"Shields Extensions","address2":"06388 Kohler Keys","city":"Port Chloeton","country":"Mauritius","latitude":65.0882,"longitude":149.9064,"createdAt":"2024-06-28T05:42:33.693Z","updatedAt":null,"deletedAt":null,"suppliers":{"pageInfo":{"hasNextPage":false,"hasPreviousPage":false,"startCursor":null,"endCursor":null},"edges":[],"total":0},"stores":{"pageInfo":{"hasNextPage":false,"hasPreviousPage":false,"startCursor":"WzEwLDBd","endCursor":"WzczOCwxXQ=="},"edges":[{"cursor":"WzEwLDBd"},{"cursor":"WzczOCwxXQ=="}],"total":2}},"cursor":"WzE5NTQsMF0="}],"total":1},"products":{"pageInfo":{"hasNextPage":false,"hasPreviousPage":false,"startCursor":"WzE0MTcsMF0=","endCursor":"WzE0MTcsMF0="},"edges":[{"node":{"id":"1417","name":"Tasty Frozen Chicken","category":"Games","amount":29900,"createdAt":"2024-06-28T05:42:33.592Z","updatedAt":null,"deletedAt":null,"suppliers":{"pageInfo":{"hasNextPage":false,"hasPreviousPage":false,"startCursor":"WzU2MCwwXQ==","endCursor":"WzU2MCwwXQ=="},"edges":[{"cursor":"WzU2MCwwXQ=="}],"total":1},"stores":{"pageInfo":{"hasNextPage":false,"hasPreviousPage":false,"startCursor":"WzEwLDBd","endCursor":"WzEwLDBd"},"edges":[{"cursor":"WzEwLDBd"}],"total":1}},"cursor":"WzE0MTcsMF0="}],"total":1}}}}
+        status_message: OK
+        proto_major: 0
+        proto_minor: 0
+        timestamp: 2024-06-28T06:09:25.995880178Z
+    objects: []
+    assertions:
+        noise:
+            body.data.store.addresses.edges.node.createdAt: []
+            body.data.store.createdAt: []
+            body.data.store.products.edges.node.createdAt: []
+            header.Date: []
+    created: 1719554965
+curl: |-
+    curl --request POST \
+      --url http://localhost:9000/graphql \
+      --header 'Content-Type: application/json' \
+      --header 'User-Agent: PostmanRuntime/7.37.3' \
+      --header 'Accept: */*' \
+      --header 'Postman-Token: a8705202-c60a-40c8-a81d-161c0f54f1e2' \
+      --header 'Host: localhost:9000' \
+      --header 'Accept-Encoding: gzip, deflate, br' \
+      --header 'Connection: keep-alive' \
+      --data '{"query":"query Store(\n  $storeId: Int\n  $storeWhere: SequelizeJSON\n  $addressesAfter: String\n  $addressesFirst: Int\n  $addressesBefore: String\n  $addressesLast: Int\n  $suppliersAfter: String\n  $suppliersFirst: Int\n  $suppliersBefore: String\n  $suppliersLast: Int\n  $storesAfter: String\n  $storesFirst: Int\n  $storesBefore: String\n  $storesLast: Int\n  $productsAfter: String\n  $productsFirst: Int\n  $productsBefore: String\n  $productsLast: Int\n) {\n  store(id: $storeId, where: $storeWhere) {\n    id\n    name\n    addressId\n    createdAt\n    updatedAt\n    deletedAt\n    addresses(\n      after: $addressesAfter\n      first: $addressesFirst\n      before: $addressesBefore\n      last: $addressesLast\n    ) {\n      pageInfo {\n        hasNextPage\n        hasPreviousPage\n        startCursor\n        endCursor\n      }\n      edges {\n        node {\n          id\n          address1\n          address2\n          city\n          country\n          latitude\n          longitude\n          createdAt\n          updatedAt\n          deletedAt\n          suppliers(\n            after: $suppliersAfter\n            first: $suppliersFirst\n            before: $suppliersBefore\n            last: $suppliersLast\n          ) {\n            pageInfo {\n              hasNextPage\n              hasPreviousPage\n              startCursor\n              endCursor\n            }\n            edges {\n              cursor\n            }\n            total\n          }\n          stores(\n            after: $storesAfter\n            first: $storesFirst\n            before: $storesBefore\n            last: $storesLast\n          ) {\n            pageInfo {\n              hasNextPage\n              hasPreviousPage\n              startCursor\n              endCursor\n            }\n            edges {\n              cursor\n            }\n            total\n          }\n        }\n        cursor\n      }\n      total\n    }\n    products(\n      after: $productsAfter\n      first: $productsFirst\n      before: $productsBefore\n      last: $productsLast\n    ) {\n      pageInfo {\n        hasNextPage\n        hasPreviousPage\n        startCursor\n        endCursor\n      }\n      edges {\n        node {\n          id\n          name\n          category\n          amount\n          createdAt\n          updatedAt\n          deletedAt\n          suppliers(\n            after: $suppliersAfter\n            first: $suppliersFirst\n            before: $suppliersBefore\n            last: $suppliersLast\n          ) {\n            pageInfo {\n              hasNextPage\n              hasPreviousPage\n              startCursor\n              endCursor\n            }\n            edges {\n              cursor\n            }\n            total\n          }\n          stores(\n            after: $storesAfter\n            first: $storesFirst\n            before: $storesBefore\n            last: $storesLast\n          ) {\n            pageInfo {\n              hasNextPage\n              hasPreviousPage\n              startCursor\n              endCursor\n            }\n            edges {\n              cursor\n            }\n            total\n          }\n        }\n        cursor\n      }\n      total\n    }\n  }\n}\n","variables":{
+      "storeId": null,
+      "storeWhere": {"id": 10},
+      "addressesAfter": null,
+      "addressesFirst": 10,
+      "addressesBefore": null,
+      "addressesLast": null,
+      "suppliersAfter": null,
+      "suppliersFirst": 10,
+      "suppliersBefore": null,
+      "suppliersLast": null,
+      "storesAfter": null,
+      "storesFirst": 10,
+      "storesBefore": null,
+      "storesLast": null,
+      "productsAfter": null,
+      "productsFirst": 10,
+      "productsBefore": null,
+      "productsLast": null
+    }
+    }'

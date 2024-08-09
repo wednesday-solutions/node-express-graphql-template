@@ -1,28 +1,25 @@
 version: '3'
+networks:
+  node-express-graphql-template_node-express-graphql-template_default:
+    external: true
 services:
-  db_postgres:
-    image: postgres
-    ports:
-      - 5432:5432
-    restart: always
-    env_file:
-      - .env.docker
-  redis:
-    image: 'redis:alpine'
-    ports:
-      - '6379:6379'
-    command: ['redis-server', '--bind', 'redis', '--port', '6379']
   app:
+    networks:
+      - node-express-graphql-template_node-express-graphql-template_default
     build:
       context: .
       args:
         ENVIRONMENT_NAME: .docker
         BUILD_NAME: docker
+        PLATFORM: amd64
+        APP_PATH: ${APP_PATH}
     restart: always
-    depends_on:
-      - db_postgres
-      - redis
     ports:
       - 9000:9000
+    environment:
+      ENABLE_DEDUP: "false"
     env_file:
       - ./.env.docker
+    volumes:
+      - ${APP_PATH}/dedupData.yaml:${APP_PATH}/dedupData.yaml
+    stop_grace_period: 50s

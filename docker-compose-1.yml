@@ -1,0 +1,30 @@
+version: '3'
+networks:
+  node-express-graphql-template_default: {}
+services:
+  db_postgres:
+    networks:
+      - node-express-graphql-template_default
+    image: postgres
+    ports:
+      - 5432:5432
+    restart: always
+    env_file:
+      - ./.env.docker
+  redis:
+    networks:
+      - node-express-graphql-template_default
+    image: 'redis:alpine'
+    depends_on:
+      wait-for-db:
+        condition: service_completed_successfully
+    ports:
+      - '6379:6379'
+    command: ['redis-server', '--bind', 'redis', '--port', '6379']
+  wait-for-db:
+    networks:
+      - node-express-graphql-template_default
+    image: atkrad/wait4x
+    depends_on:
+      - db_postgres
+    command: tcp db_postgres:${POSTGRES_PORT} -t 30s -i 250ms

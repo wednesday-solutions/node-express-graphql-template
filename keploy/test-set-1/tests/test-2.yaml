@@ -1,0 +1,100 @@
+version: api.keploy.io/v1beta1
+kind: Http
+name: test-2
+spec:
+    metadata: {}
+    req:
+        method: POST
+        proto_major: 1
+        proto_minor: 1
+        url: http://localhost:9000/graphql
+        header:
+            Accept: '*/*'
+            Accept-Encoding: gzip, deflate, br
+            Connection: keep-alive
+            Content-Length: "3890"
+            Content-Type: application/json
+            Host: localhost:9000
+            Postman-Token: cacebfcc-eacf-43e8-b85b-d590441f1aa5
+            User-Agent: PostmanRuntime/7.37.3
+        body: |-
+            {"query":"mutation UpdateStore(\n  $updateStoreId: ID!\n  $updateStoreName: String\n  $updateStoreAddressId: Int!\n  $addressesAfter: String\n  $addressesFirst: Int\n  $addressesBefore: String\n  $addressesLast: Int\n  $suppliersAfter: String\n  $suppliersFirst: Int\n  $suppliersBefore: String\n  $suppliersLast: Int\n  $storesAfter: String\n  $storesFirst: Int\n  $storesBefore: String\n  $storesLast: Int\n  $productsAfter: String\n  $productsFirst: Int\n  $productsBefore: String\n  $productsLast: Int\n) {\n  updateStore(\n    id: $updateStoreId\n    name: $updateStoreName\n    addressId: $updateStoreAddressId\n  ) {\n    id\n    name\n    addressId\n    createdAt\n    updatedAt\n    deletedAt\n    addresses(\n      after: $addressesAfter\n      first: $addressesFirst\n      before: $addressesBefore\n      last: $addressesLast\n    ) {\n      pageInfo {\n        hasNextPage\n        hasPreviousPage\n        startCursor\n        endCursor\n      }\n      edges {\n        node {\n          id\n          address1\n          address2\n          city\n          country\n          latitude\n          longitude\n          createdAt\n          updatedAt\n          deletedAt\n          suppliers(\n            after: $suppliersAfter\n            first: $suppliersFirst\n            before: $suppliersBefore\n            last: $suppliersLast\n          ) {\n            pageInfo {\n              hasNextPage\n              hasPreviousPage\n              startCursor\n              endCursor\n            }\n            edges {\n              cursor\n            }\n            total\n          }\n          stores(\n            after: $storesAfter\n            first: $storesFirst\n            before: $storesBefore\n            last: $storesLast\n          ) {\n            pageInfo {\n              hasNextPage\n              hasPreviousPage\n              startCursor\n              endCursor\n            }\n            edges {\n              cursor\n            }\n            total\n          }\n        }\n        cursor\n      }\n      total\n    }\n    products(\n      after: $productsAfter\n      first: $productsFirst\n      before: $productsBefore\n      last: $productsLast\n    ) {\n      pageInfo {\n        hasNextPage\n        hasPreviousPage\n        startCursor\n        endCursor\n      }\n      edges {\n        node {\n          id\n          name\n          category\n          amount\n          createdAt\n          updatedAt\n          deletedAt\n          suppliers(\n            after: $suppliersAfter\n            first: $suppliersFirst\n            before: $suppliersBefore\n            last: $suppliersLast\n          ) {\n            pageInfo {\n              hasNextPage\n              hasPreviousPage\n              startCursor\n              endCursor\n            }\n            edges {\n              cursor\n            }\n            total\n          }\n          stores(\n            after: $storesAfter\n            first: $storesFirst\n            before: $storesBefore\n            last: $storesLast\n          ) {\n            pageInfo {\n              hasNextPage\n              hasPreviousPage\n              startCursor\n              endCursor\n            }\n            edges {\n              cursor\n            }\n            total\n          }\n        }\n        cursor\n      }\n      total\n    }\n  }\n}\n","variables":{
+              "updateStoreId": 2002,
+              "updateStoreName": "Johnson, Turner and Erdman 3",
+              "updateStoreAddressId": 1707,
+              "addressesAfter": null,
+              "addressesFirst": 10,
+              "addressesBefore": null,
+              "addressesLast": null,
+              "suppliersAfter": null,
+              "suppliersFirst": 10,
+              "suppliersBefore": null,
+              "suppliersLast": null,
+              "storesAfter": null,
+              "storesFirst": 10,
+              "storesBefore": null,
+              "storesLast": null,
+              "productsAfter": null,
+              "productsFirst": 10,
+              "productsBefore": null,
+              "productsLast": null
+            }
+            }
+        timestamp: 2024-06-28T07:32:08.94315699Z
+    resp:
+        status_code: 200
+        header:
+            Cache-Control: no-store
+            Connection: keep-alive
+            Content-Length: "1123"
+            Content-Type: application/json; charset=utf-8
+            Date: Fri, 28 Jun 2024 07:32:09 GMT
+            Etag: W/"463-Db4H/I+hxXJ1wNyImGTkxFF4EyA"
+            Keep-Alive: timeout=5
+            X-Powered-By: Express
+        body: |
+            {"data":{"updateStore":{"id":"2002","name":"Johnson, Turner and Erdman 3","addressId":1707,"createdAt":"2024-06-28T07:31:45.902Z","updatedAt":"2024-06-28T07:32:08.984Z","deletedAt":null,"addresses":{"pageInfo":{"hasNextPage":false,"hasPreviousPage":false,"startCursor":"WzE3MDcsMF0=","endCursor":"WzE3MDcsMF0="},"edges":[{"node":{"id":"1707","address1":"Delia Summit","address2":"57720 Christiansen Skyway","city":"West Verla","country":"Romania","latitude":9.3597,"longitude":-139.0689,"createdAt":"2024-06-28T07:13:00.163Z","updatedAt":null,"deletedAt":null,"suppliers":{"pageInfo":{"hasNextPage":false,"hasPreviousPage":false,"startCursor":"WzgzMCwwXQ==","endCursor":"WzgzMCwwXQ=="},"edges":[{"cursor":"WzgzMCwwXQ=="}],"total":1},"stores":{"pageInfo":{"hasNextPage":false,"hasPreviousPage":false,"startCursor":"Wzg5OCwwXQ==","endCursor":"WzIwMDIsMl0="},"edges":[{"cursor":"Wzg5OCwwXQ=="},{"cursor":"WzE5NDQsMV0="},{"cursor":"WzIwMDIsMl0="}],"total":3}},"cursor":"WzE3MDcsMF0="}],"total":1},"products":{"pageInfo":{"hasNextPage":false,"hasPreviousPage":false,"startCursor":null,"endCursor":null},"edges":[],"total":0}}}}
+        status_message: OK
+        proto_major: 0
+        proto_minor: 0
+        timestamp: 2024-06-28T07:32:11.274440129Z
+    objects: []
+    assertions:
+        noise:
+            body.data.updateStore.addresses.edges.node.createdAt: []
+            body.data.updateStore.createdAt: []
+            body.data.updateStore.updatedAt: []
+            header.Date: []
+    created: 1719559931
+curl: |-
+    curl --request POST \
+      --url http://localhost:9000/graphql \
+      --header 'Postman-Token: cacebfcc-eacf-43e8-b85b-d590441f1aa5' \
+      --header 'Host: localhost:9000' \
+      --header 'Accept-Encoding: gzip, deflate, br' \
+      --header 'Connection: keep-alive' \
+      --header 'Content-Type: application/json' \
+      --header 'User-Agent: PostmanRuntime/7.37.3' \
+      --header 'Accept: */*' \
+      --data '{"query":"mutation UpdateStore(\n  $updateStoreId: ID!\n  $updateStoreName: String\n  $updateStoreAddressId: Int!\n  $addressesAfter: String\n  $addressesFirst: Int\n  $addressesBefore: String\n  $addressesLast: Int\n  $suppliersAfter: String\n  $suppliersFirst: Int\n  $suppliersBefore: String\n  $suppliersLast: Int\n  $storesAfter: String\n  $storesFirst: Int\n  $storesBefore: String\n  $storesLast: Int\n  $productsAfter: String\n  $productsFirst: Int\n  $productsBefore: String\n  $productsLast: Int\n) {\n  updateStore(\n    id: $updateStoreId\n    name: $updateStoreName\n    addressId: $updateStoreAddressId\n  ) {\n    id\n    name\n    addressId\n    createdAt\n    updatedAt\n    deletedAt\n    addresses(\n      after: $addressesAfter\n      first: $addressesFirst\n      before: $addressesBefore\n      last: $addressesLast\n    ) {\n      pageInfo {\n        hasNextPage\n        hasPreviousPage\n        startCursor\n        endCursor\n      }\n      edges {\n        node {\n          id\n          address1\n          address2\n          city\n          country\n          latitude\n          longitude\n          createdAt\n          updatedAt\n          deletedAt\n          suppliers(\n            after: $suppliersAfter\n            first: $suppliersFirst\n            before: $suppliersBefore\n            last: $suppliersLast\n          ) {\n            pageInfo {\n              hasNextPage\n              hasPreviousPage\n              startCursor\n              endCursor\n            }\n            edges {\n              cursor\n            }\n            total\n          }\n          stores(\n            after: $storesAfter\n            first: $storesFirst\n            before: $storesBefore\n            last: $storesLast\n          ) {\n            pageInfo {\n              hasNextPage\n              hasPreviousPage\n              startCursor\n              endCursor\n            }\n            edges {\n              cursor\n            }\n            total\n          }\n        }\n        cursor\n      }\n      total\n    }\n    products(\n      after: $productsAfter\n      first: $productsFirst\n      before: $productsBefore\n      last: $productsLast\n    ) {\n      pageInfo {\n        hasNextPage\n        hasPreviousPage\n        startCursor\n        endCursor\n      }\n      edges {\n        node {\n          id\n          name\n          category\n          amount\n          createdAt\n          updatedAt\n          deletedAt\n          suppliers(\n            after: $suppliersAfter\n            first: $suppliersFirst\n            before: $suppliersBefore\n            last: $suppliersLast\n          ) {\n            pageInfo {\n              hasNextPage\n              hasPreviousPage\n              startCursor\n              endCursor\n            }\n            edges {\n              cursor\n            }\n            total\n          }\n          stores(\n            after: $storesAfter\n            first: $storesFirst\n            before: $storesBefore\n            last: $storesLast\n          ) {\n            pageInfo {\n              hasNextPage\n              hasPreviousPage\n              startCursor\n              endCursor\n            }\n            edges {\n              cursor\n            }\n            total\n          }\n        }\n        cursor\n      }\n      total\n    }\n  }\n}\n","variables":{
+      "updateStoreId": 2002,
+      "updateStoreName": "Johnson, Turner and Erdman 3",
+      "updateStoreAddressId": 1707,
+      "addressesAfter": null,
+      "addressesFirst": 10,
+      "addressesBefore": null,
+      "addressesLast": null,
+      "suppliersAfter": null,
+      "suppliersFirst": 10,
+      "suppliersBefore": null,
+      "suppliersLast": null,
+      "storesAfter": null,
+      "storesFirst": 10,
+      "storesBefore": null,
+      "storesLast": null,
+      "productsAfter": null,
+      "productsFirst": 10,
+      "productsBefore": null,
+      "productsLast": null
+    }
+    }'

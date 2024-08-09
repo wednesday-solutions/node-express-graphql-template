@@ -11,7 +11,7 @@ module.exports = function(api) {
   // Environment-specific configuration
   const env = process.env.BABEL_ENV || process.env.NODE_ENV;
   if (env !== 'test') {
-    plugins.push([
+    plugins.push('babel-plugin-istanbul', [
       'module-resolver',
       {
         root: ['./src'],

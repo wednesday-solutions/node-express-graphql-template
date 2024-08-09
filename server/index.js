@@ -10,14 +10,14 @@ import 'whatwg-fetch';
 import dotenv from 'dotenv';
 import { createServer } from 'http';
 import axios from 'axios';
-import { corsOptionsDelegate, apolloServerContextResolver } from '@middleware/gqlAuth';
 import { newCircuitBreaker } from '@services/circuitbreaker';
+import { corsOptionsDelegate, apolloServerContextResolver } from '@middleware/gqlAuth';
 import rTracer from 'cls-rtracer';
 import bodyParser from 'body-parser';
 import { connect } from '@database';
 import { QueryRoot } from '@gql/queries';
 import { MutationRoot } from '@gql/mutations';
-import { isLocalEnv, isTestEnv, logger } from '@utils/index';
+import { isKeploy, isLocalEnv, isTestEnv, logger } from '@utils/index';
 import cluster from 'cluster';
 import os from 'os';
 import 'source-map-support/register';
@@ -54,6 +54,10 @@ export const init = async () => {
     app = express();
   }
 
+  if (process.env.ENABLE_DEDUP) {
+    const kMiddleware = require('@keploy/sdk/dist/v2/dedup/middleware.js');
+    app.use(kMiddleware());
+  }
   app.use(express.json());
   app.use(rTracer.expressMiddleware());
   app.use(cors(corsOptionsDelegate));
@@ -123,7 +127,7 @@ export const init = async () => {
 
 logger().info({ ENV: process.env.NODE_ENV });
 
-if (!isTestEnv() && !isLocalEnv() && cluster.isMaster) {
+if (!isKeploy() && !isTestEnv() && !isLocalEnv() && cluster.isMaster) {
   console.log(`Number of CPUs is ${totalCPUs}`);
   console.log(`Master ${process.pid} is running`);
 
