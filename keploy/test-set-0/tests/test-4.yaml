@@ -1,0 +1,54 @@
+version: api.keploy.io/v1beta1
+kind: Http
+name: test-4
+spec:
+    metadata: {}
+    req:
+        method: POST
+        proto_major: 1
+        proto_minor: 1
+        url: http://localhost:9000/graphql
+        header:
+            Accept: '*/*'
+            Content-Length: "370"
+            Content-Type: application/json
+            Host: localhost:9000
+            User-Agent: curl/8.1.2
+        body: '{"query":"query Product {\n  address {\n    id\n    address1\n    address2\n    city\n    country\n    latitude\n    longitude\n    createdAt\n    updatedAt\n    deletedAt\n    suppliers {\n      edges {\n        node {\n          id\n          name\n          addressId\n          createdAt\n          updatedAt\n          deletedAt\n        }\n      }\n    }\n  }\n}"}'
+        body_type: ""
+        timestamp: 2024-01-19T10:59:46.907292991Z
+        host: ""
+    resp:
+        status_code: 200
+        header:
+            Access-Control-Allow-Origin: '*'
+            Connection: keep-alive
+            Content-Length: "545"
+            Content-Type: application/json; charset=utf-8
+            Date: Fri, 19 Jan 2024 10:59:46 GMT
+            Etag: W/"221-rYUJmJgOBJs+57nBFgG4feDIiM4"
+            Keep-Alive: timeout=5
+            Vary: Origin
+            X-Powered-By: Express
+        body: |
+            {"data":{"address":{"id":"1","address1":"Pacocha Corner","address2":"5165 Molly Isle","city":"East Annefort","country":"Monaco","latitude":-52.7322,"longitude":-10.0744,"createdAt":"2024-01-19T10:40:38.823Z","updatedAt":null,"deletedAt":null,"suppliers":{"edges":[{"node":{"id":"1","name":"testSupplier","addressId":1,"createdAt":"2024-01-19T10:40:42.544Z","updatedAt":null,"deletedAt":null}},{"node":{"id":"926","name":"Watsica, Dooley and Leuschke","addressId":1,"createdAt":"2024-01-19T10:40:42.544Z","updatedAt":null,"deletedAt":null}}]}}}}
+        body_type: ""
+        status_message: ""
+        proto_major: 0
+        proto_minor: 0
+        timestamp: 2024-01-19T10:59:46.966614789Z
+    objects: []
+    assertions:
+        noise:
+            body.data.address.createdAt: []
+            body.data.address.suppliers.edges.node.createdAt: []
+            header.Date: []
+    created: 1705661988
+curl: |-
+    curl --request POST \
+      --url http://localhost:9000/graphql \
+      --header 'Host: localhost:9000' \
+      --header 'User-Agent: curl/8.1.2' \
+      --header 'Accept: */*' \
+      --header 'Content-Type: application/json' \
+      --data '{"query":"query Product {\n  address {\n    id\n    address1\n    address2\n    city\n    country\n    latitude\n    longitude\n    createdAt\n    updatedAt\n    deletedAt\n    suppliers {\n      edges {\n        node {\n          id\n          name\n          addressId\n          createdAt\n          updatedAt\n          deletedAt\n        }\n      }\n    }\n  }\n}"}'

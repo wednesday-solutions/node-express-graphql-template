@@ -1,0 +1,55 @@
+version: api.keploy.io/v1beta1
+kind: Http
+name: test-6
+spec:
+    metadata: {}
+    req:
+        method: POST
+        proto_major: 1
+        proto_minor: 1
+        url: http://localhost:9000/graphql
+        header:
+            Accept: '*/*'
+            Content-Length: "329"
+            Content-Type: application/json
+            Host: localhost:9000
+            User-Agent: curl/8.1.2
+        body: '{"query":"query Product {\n  store {\n    id\n    name\n    addressId\n    createdAt\n    updatedAt\n    deletedAt\n    products {\n      edges {\n        node {\n          id\n          name\n          category\n          amount\n          createdAt\n          updatedAt\n          deletedAt\n        }\n      }\n    }\n  }\n}"}'
+        body_type: ""
+        timestamp: 2024-01-19T10:59:54.773115887Z
+        host: ""
+    resp:
+        status_code: 200
+        header:
+            Access-Control-Allow-Origin: '*'
+            Connection: keep-alive
+            Content-Length: "324"
+            Content-Type: application/json; charset=utf-8
+            Date: Fri, 19 Jan 2024 10:59:54 GMT
+            Etag: W/"144-X3rY3KJCjMMti9pMUYIyZY+1hrg"
+            Keep-Alive: timeout=5
+            Vary: Origin
+            X-Powered-By: Express
+        body: |
+            {"data":{"store":{"id":"1","name":"testStore","addressId":1,"createdAt":"2024-01-19T10:40:40.643Z","updatedAt":null,"deletedAt":null,"products":{"edges":[{"node":{"id":"139","name":"Ergonomic Cotton Table","category":"Computers","amount":86300,"createdAt":"2024-01-19T10:40:37.020Z","updatedAt":null,"deletedAt":null}}]}}}}
+        body_type: ""
+        status_message: ""
+        proto_major: 0
+        proto_minor: 0
+        timestamp: 2024-01-19T10:59:54.820184782Z
+    objects: []
+    assertions:
+        noise:
+            body.data.store.createdAt: []
+            body.data.store.products.edges.node.amount: []
+            body.data.store.products.edges.node.createdAt: []
+            header.Date: []
+    created: 1705661996
+curl: |-
+    curl --request POST \
+      --url http://localhost:9000/graphql \
+      --header 'Accept: */*' \
+      --header 'Content-Type: application/json' \
+      --header 'Host: localhost:9000' \
+      --header 'User-Agent: curl/8.1.2' \
+      --data '{"query":"query Product {\n  store {\n    id\n    name\n    addressId\n    createdAt\n    updatedAt\n    deletedAt\n    products {\n      edges {\n        node {\n          id\n          name\n          category\n          amount\n          createdAt\n          updatedAt\n          deletedAt\n        }\n      }\n    }\n  }\n}"}'

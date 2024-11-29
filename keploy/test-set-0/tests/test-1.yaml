@@ -1,0 +1,55 @@
+version: api.keploy.io/v1beta1
+kind: Http
+name: test-1
+spec:
+    metadata: {}
+    req:
+        method: POST
+        proto_major: 1
+        proto_minor: 1
+        url: http://localhost:9000/graphql
+        header:
+            Accept: '*/*'
+            Content-Length: "326"
+            Content-Type: application/json
+            Host: localhost:9000
+            User-Agent: curl/8.1.2
+        body: '{"query":"query Product {\n  product {\n    id\n    name\n    category\n    amount\n    createdAt\n    updatedAt\n    deletedAt\n    suppliers {\n      edges {\n        node {\n          id\n          name\n          addressId\n          createdAt\n          updatedAt\n          deletedAt\n        }\n      }\n    }\n  }\n}"}'
+        body_type: ""
+        timestamp: 2024-01-19T10:59:27.983615471Z
+        host: ""
+    resp:
+        status_code: 200
+        header:
+            Access-Control-Allow-Origin: '*'
+            Connection: keep-alive
+            Content-Length: "329"
+            Content-Type: application/json; charset=utf-8
+            Date: Fri, 19 Jan 2024 10:59:28 GMT
+            Etag: W/"149-O76D8d1e4xgvRF3Y7c5a3Zio4s0"
+            Keep-Alive: timeout=5
+            Vary: Origin
+            X-Powered-By: Express
+        body: |
+            {"data":{"product":{"id":"1","name":"test1","category":"category1","amount":10,"createdAt":"2024-01-19T10:40:37.020Z","updatedAt":null,"deletedAt":null,"suppliers":{"edges":[{"node":{"id":"736","name":"Runolfsson, Thiel and Abshire","addressId":120,"createdAt":"2024-01-19T10:40:42.544Z","updatedAt":null,"deletedAt":null}}]}}}}
+        body_type: ""
+        status_message: ""
+        proto_major: 0
+        proto_minor: 0
+        timestamp: 2024-01-19T10:59:28.35481138Z
+    objects: []
+    assertions:
+        noise:
+            body.data.product.createdAt: []
+            body.data.product.suppliers.edges.node.addressId: []
+            body.data.product.suppliers.edges.node.createdAt: []
+            header.Date: []
+    created: 1705661970
+curl: |-
+    curl --request POST \
+      --url http://localhost:9000/graphql \
+      --header 'Content-Type: application/json' \
+      --header 'Host: localhost:9000' \
+      --header 'User-Agent: curl/8.1.2' \
+      --header 'Accept: */*' \
+      --data '{"query":"query Product {\n  product {\n    id\n    name\n    category\n    amount\n    createdAt\n    updatedAt\n    deletedAt\n    suppliers {\n      edges {\n        node {\n          id\n          name\n          addressId\n          createdAt\n          updatedAt\n          deletedAt\n        }\n      }\n    }\n  }\n}"}'

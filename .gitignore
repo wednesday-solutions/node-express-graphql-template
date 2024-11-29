@@ -95,3 +95,6 @@ typings/
 .DS_Store
 report.json
 reports/test-report.xml
+
+# Docker slim
+slim.report.json
